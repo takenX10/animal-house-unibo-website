@@ -1,6 +1,30 @@
 # animal-house-unibo-website
  A website for a project of web tecnologies.
 
+## Eseguire il server
+Abbiamo tre container da eseguire:
+- Il container di node con express (per il backend), porta `3001`
+- Il container di React, porta `3000`
+- Il container di vue, porta `3002`
+
+Per runnarli, su tre terminali diversi:
+
+Runnare React
+```bash
+cd client
+npm start
+```
+
+Runnare Vue
+```bash
+cd client-vue
+npm run dev
+```
+
+Runnare backend node
+```bash
+npm start
+```
 
 ## TODOS
 
