@@ -1,0 +1,24 @@
+{
+  "name": "animal-house-unibo-website",
+  "version": "1.0.0",
+  "description": "A website for a project of web tecnologies.",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "sudo node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takenX10/animal-house-unibo-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/takenX10/animal-house-unibo-website/issues"
+  },
+  "homepage": "https://github.com/takenX10/animal-house-unibo-website#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
