@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>{data}</p>
+        <p class="text-primary h1">{data}</p>
       </header>
     </div>
   );
