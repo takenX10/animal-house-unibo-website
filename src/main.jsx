@@ -14,6 +14,10 @@ import {
 import AppReact from './Appreact'
 import Expenses from "./views/react/expenses";
 
+import BootstrapVue3 from 'bootstrap-vue-3'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
+
 const reactRoutes = [
   {
     path: "/expenses",
@@ -57,6 +61,7 @@ if (isInVueRoutes()) {
   const app = createApp(AppVue)
 
   app.use(createPinia())
+  app.use(BootstrapVue3)
 
   app.use(router)
 

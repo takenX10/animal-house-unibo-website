@@ -38,7 +38,7 @@ export const routes = [
   {
     path: '/games',
     name: 'games',
-    component: () => import('../views/Games.vue')
+    component: () => import('../views/vue/GameSelectionView.vue')
   }
 ]
 
