@@ -5,17 +5,16 @@
 
 <script>
 
-import Memory from '@/views/Memory.vue'
+import Memory from '@/views/vue/Memory.vue'
 import Hangman from '@/views/vue/Hangman.vue'
-import Wordle from '@/views/Wordle.vue'
+import Wordle from '@/views/vue/Wordle.vue'
+import Slider from '@/views/vue/Slider.vue'
 
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 
 import { runOnReady, ResCarouselSize } from '@/assets/js/game_selection/main.js';
 import GameHeader from './GameHeader.vue';
-import { PhTicket } from 'phosphor-vue';
-import { nextTick } from 'vue';
 
 let game = ""
 let games = [
@@ -33,6 +32,11 @@ let games = [
     "title": "Wordle",
     "component": "Wordle",
     "color": ""
+  },
+  {
+    "title": "Slider",
+    "component": "Slider",
+    "color": ""
   }
 ]
 
@@ -41,6 +45,7 @@ export default {
     Wordle,
     Hangman,
     Memory,
+    Slider,
     Carousel,
     Slide,
     Pagination,
@@ -101,7 +106,7 @@ export default {
     <GameHeader class="mb-3"/>
     <div v-if="component">
       <div class="row">
-        <div class="col mx-auto">
+        <div class="col mx-auto text-start">
           <h2>
             <i @click="goback" id="go-back" class="fa fa-angle-left pl-5"></i>
           </h2>

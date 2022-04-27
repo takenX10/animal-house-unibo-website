@@ -1,7 +1,7 @@
 <template>
-  <div id="game">
+  <div :id="name">
     <div
-      header="Game"
+      :header="name"
       border-variant="primary"
       bg-variant="light"
       header-bg-variant="primary"

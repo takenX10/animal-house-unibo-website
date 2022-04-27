@@ -1,0 +1,9 @@
+.preview {
+  max-width: 250px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
