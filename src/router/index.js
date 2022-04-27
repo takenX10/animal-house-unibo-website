@@ -28,7 +28,7 @@ export const routes = [
   {
     path: '/hangman',
     name: 'hangman',
-    component: () => import('../views/Hangman.vue')
+    component: () => import('../views/vue/Hangman.vue')
   },
   {
     path: '/memory',

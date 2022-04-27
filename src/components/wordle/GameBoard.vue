@@ -33,6 +33,8 @@
     @backspace="game.handleBackspace"
     @enter="game.handleSubmit"
     @keypress="game.handleKeypress"
+    @arrow="game.handleArrow"
+    @space="game.handleSpace"
   ></game-keyboard>
 </template>
 
@@ -46,7 +48,7 @@ import GameSettings from "@/components/wordle/GameSettings.vue"
 import GameErrors from "@/components/wordle/GameErrors.vue"
 import VModal from "@/components/wordle/VModal.vue"
 import { useGame } from "@/assets/js/wordle/game"
-import {ref, watch} from 'vue';
+import { ref, watch } from 'vue';
 
 const game = useGame()
 const showResultModal = ref<boolean>(false)
@@ -57,6 +59,12 @@ function playAgain() {
   showResultModal.value = false
   game.reset()
 }
+
+const props = defineProps({
+  getCurr: Function
+})
+
+game.setGetCurr(props.getCurr)
 
 watch(
   () => game.over,

@@ -1,12 +1,12 @@
 <template>
   <div class="wordle">
-    <app-header></app-header>
-    <game-board></game-board>
+    <!-- <app-header></app-header> -->
+    <game-board :getCurr="getCurr"></game-board>
   </div>
-  <app-footer></app-footer>
+  <!-- <app-footer></app-footer> -->
 </template>
 
-<script setup>
+<script>
 import AppHeader from "@/components/wordle/AppHeader.vue"
 import AppFooter from "@/components/wordle/AppFooter.vue"
 import GameBoard from "@/components/wordle/GameBoard.vue"
@@ -31,26 +31,22 @@ stats.$subscribe(
   },
   { detached: true }
 )
+
+export default {
+  components: {
+    AppHeader, AppFooter, GameBoard
+  },
+  props: {
+    getCurr: { type: Function },
+  },
+}
 </script>
 
-<style>
+<style scoped>
 
 .wordle {
-  background-color: #000000;
+  background-color: var(--bg-color-game);
   padding-bottom: 10px;
 }
 
-:root {
-  --text-color: #ffffff;
-  --text-accent-color: #818384;
-  --bg-color: #1c1e20;
-  --bg-accent-color: #818384;
-  --border-color: #444c56;
-  --bg-transparent-color: rgba(#141516, 0.75);
-  --shadow-color: 5px 5px 5px rgba(#0f0f0f21, 0.25);
-  --absent-color: #3a3a3c;
-  --present-color: #b59f3b;
-  --correct-color: #538d4e;
-  --incorrect-color: #ec5d5d;
-}
 </style>

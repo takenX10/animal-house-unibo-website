@@ -28,7 +28,7 @@ defineProps<Props>()
   gap: 0.5rem;
   &__error {
     font-weight: 400;
-    background-color: var(--text-color);
+    background-color: var(--background-color);
     padding: 0.5rem;
     border-radius: 5px;
     box-shadow: 5px 5px 5px rgba($color: #000000, $alpha: 0.25);

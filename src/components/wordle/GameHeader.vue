@@ -1,5 +1,5 @@
 <template>
-  <main class="gameheader">
+  <main class="gameheader pt-3">
     <section class="gameheader__section">
       <ph-question :size="28" @click="emits('openhelp')"></ph-question>
       <ph-chart-bar :size="28" @click="emits('openstats')"></ph-chart-bar>

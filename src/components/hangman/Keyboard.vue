@@ -1,10 +1,10 @@
 <template>
-  <div id="buttons" :set="l = 0">
-    <div v-for="(row, r) in keys" :key="row">
+  <div id="buttons" :set="len = 0">
+    <div v-for="row in keys" :key="row">
       <b-button
-        v-for="(key,i) in row"
+        v-for="key in row"
         :key="key"
-        :id="'hangman_btn_' + (++l)"
+        :id="'hangman_btn_' + calcOffset(key)"
         size="sm"
         pill
         variant="dark"
@@ -24,6 +24,7 @@ let keys = ["QWERTYUIOP",
   "ASDFGHJKL",
   "ZXCVBNM"
 ]
+
 
 let len = 0;
 for (var r = 0; r < keys.length; ++r) {
@@ -46,8 +47,8 @@ export default {
       l: l
     }
   },
-  mounted() {
-    l = 0;
+  computed() {
+    len = 0
   },
   methods: {
     click(key, e) {
@@ -57,6 +58,15 @@ export default {
     restart(e) {
       this.$emit('restart');
       e.target.blur();
+    },
+    calcOffset(letter) {
+      let l = 0
+      for (var r = 0; r < keys.length; ++r) {
+        for (var c = 0; c < keys[r].length; ++c) {
+          if (keys[r][c] == letter) return l;
+          ++l;
+        }
+      }
     }
   }
 }

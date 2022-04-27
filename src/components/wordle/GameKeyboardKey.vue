@@ -34,7 +34,7 @@ const classObj = computed(() => {
 .gamekeyboard__key {
   cursor: pointer;
   user-select: none;
-  color: var(--text-color);
+  color: var(--text-color-key);
   background-color: var(--bg-accent-color);
   width: 40px;
   height: 60px;

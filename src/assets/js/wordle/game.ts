@@ -2,14 +2,16 @@ import { defineStore } from "pinia"
 import Keyboard from "@/assets/js/wordle/keyboard"
 import Board from "@/assets/js/wordle/board"
 import Wordle from "@/assets/js/wordle/wordle"
-import { GameStatus, type GameResult, type ValidKey } from "@/assets/js/wordle/types"
+import { GameStatus, type GameResult, type ValidKey, ValidKey as EnumValidKey } from "@/assets/js/wordle/types"
 import { watch } from "vue"
 import { useStats } from "./stats"
 
 export const LOCAL_STORAGE_KEY = "gamestate"
 const DEFAULT_WORD_LENGTH = 5
 
-export const useGame = defineStore("game", {
+const name = "Wordle"
+
+export const useGame = defineStore(name, {
   state: () => ({
     length: DEFAULT_WORD_LENGTH,
     availableLengths: [3, 4, 5, 6, 7, 8],
@@ -20,6 +22,8 @@ export const useGame = defineStore("game", {
     over: false,
     errors: [] as string[],
     result: {} as GameResult,
+    getCurr: () => { },
+    focusKey: 0,
   }),
   getters: {
     word: (state) => state.wordle.word,
@@ -57,23 +61,78 @@ export const useGame = defineStore("game", {
         }
       )
     },
+    setGetCurr(f) {
+      this.getCurr = f;
+    },
+    handleArrow(key) {
+      if (this.getCurr() != name) return;
+      let keyboard = this.keyboard.state
+      keyboard = keyboard.slice(0, keyboard.length)
+      let len = keyboard.length;
+      if (key.toUpperCase() == "ARROWRIGHT") {
+        if (this.focusKey > len - 1) {
+          this.focusKey = 0;
+        }
+        else ++this.focusKey;
+
+        let el = document.getElementById("wordle_btn_" + this.focusKey)
+        if (el) el.focus()
+      }
+      if (key.toUpperCase() == "ARROWLEFT") {
+        if (this.focusKey <= 0) {
+          this.focusKey = len;
+        }
+        else
+          --this.focusKey;
+        let el = document.getElementById("wordle_btn_" + this.focusKey)
+        if (el) el.focus()
+      }
+    },
+    handleSpace() {
+      if (this.getCurr() == name) {
+        let keyboard = this.keyboard.state
+        keyboard = keyboard.slice(0, keyboard.length)
+        let len = keyboard.length;
+
+        let el = document.getElementById("wordle_btn_" + this.focusKey)
+        let key;
+        if (!el || !el.innerText) {
+          if (this.focusKey >= len - 1) {
+            this.handleBackspace();
+          } else this.handleSubmit();
+
+          return
+        } else {
+          key = el.innerText as ValidKey;
+        }
+
+        this.handleKeypress(key);
+      }
+    },
     handleBackspace() {
-      this.board.clearLastCellWithLetter()
+      if (this.getCurr() == name) {
+        this.board.clearLastCellWithLetter()
+      }
     },
     handleSubmit() {
-      if (this.board.currentRowComplete) {
-        if (this.isValid(this.board.inputtedWord)) {
-          this.evaluateInputtedWord(this.board.inputtedWord)
-          this.board.currentRow++
+      if (this.getCurr() == name) {
+        if (this.board.currentRowComplete) {
+          if (this.isValid(this.board.inputtedWord)) {
+            this.evaluateInputtedWord(this.board.inputtedWord)
+            this.board.currentRow++
+          } else {
+            this.errors.unshift("Not a valid word!")
+          }
         } else {
-          this.errors.unshift("Not a valid word!")
+          this.errors.unshift("Not enough letters in word!")
         }
-      } else {
-        this.errors.unshift("Not enough letters in word!")
       }
     },
     handleKeypress(key: ValidKey) {
-      this.board.updateCell(this.board.nextEmptyCellIndex, { value: key })
+      if (this.getCurr() == name) {
+        console.log(key)
+        this.board.updateCell(this.board.nextEmptyCellIndex, { value: key })
+      }
     },
     evaluateInputtedWord(input: string) {
       const index = this.board.nextUnevaluatedCellIndex

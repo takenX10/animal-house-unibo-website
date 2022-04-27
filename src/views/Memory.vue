@@ -63,7 +63,6 @@ export default {
 </script>
 
 <style scoped>
-@import "https://pro.fontawesome.com/releases/v5.9.0/css/all.css";
 @import "https://fonts.googleapis.com/css?family=Coda";
 @import "https://cdn.jsdelivr.net/sweetalert2/3.0.3/sweetalert2.min.css";
 @import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css";
@@ -90,10 +89,14 @@ export default {
         <i class="fa fa-repeat"></i>
       </div>
     </div>
-    <ul class="deck row justify-content-center">
-      <li class="col-3 mx-auto" v-for="c in this.cards">
-        <i class="card fa" :class="['fa-' + c]"></i>
-      </li>
-    </ul>
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-lg-6 col-xl-8 mx-auto">
+        <ul class="deck row justify-content-center">
+          <li class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mx-auto" v-for="c in this.cards">
+            <i :class="['card mx-auto', 'fa', 'fa-' + c]"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>

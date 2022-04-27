@@ -7,9 +7,9 @@
     </div>
     <div v-if="fails >=0 && fails <7">
     Attempts left
-        <span class="badge" v-if="fails < 3" variant="success">{{7-fails}}</span>
-        <span class="badge" v-else-if="fails < 5" variant="warning">{{7-fails}}</span>
-        <span class="badge" v-else variant="danger">{{7-fails}}</span>
+        <span class="badge bg-success" v-if="fails < 3" variant="success">{{7-fails}}</span>
+        <span class="badge bg-warning" v-else-if="fails < 5" variant="warning">{{7-fails}}</span>
+        <span class="badge bg-danger" v-else variant="danger">{{7-fails}}</span>
      </div>
     <div v-else-if="fails == 7">
     Game over! 
@@ -134,7 +134,7 @@ export default {
 
 <style scoped>
 .stickMan {
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
   font-size: 14pt;
 }
 #progress {

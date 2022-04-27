@@ -1,8 +1,24 @@
+:root {
+  --text-color: #292b2c;
+  --text-color-key: #ffffff;
+  --text-accent-color: #292b2c;
+  --bg-color: #1c1ffe20;
+  --bg-color-game: #ffffff;
+  --bg-accent-color: #292b2c;
+  --border-color: #292b2c;
+  --bg-transparent-color: rgba(#141516, 0.75);
+  --shadow-color: 5px 5px 5px rgba(#0f0f0f21, 0.25);
+  --absent-color: #3a3a3c;
+  --present-color: #b59f3b;
+  --correct-color: #538d4e;
+  --incorrect-color: #ec5d5d;
+}
+
 .carousel__item {
   min-height: 200px;
   width: 100%;
   background-color: var(--vc-clr-primary);
-  color:  var(--vc-clr-white);
+  color: var(--vc-clr-white);
   font-size: 20px;
   border-radius: 8px;
   display: flex;
@@ -18,4 +34,109 @@
 .carousel__next {
   box-sizing: content-box;
   border: 5px solid white;
+}
+
+.carousel__slide>.carousel__item {
+  transform: scale(1);
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+.carousel__slide--visible>.carousel__item {
+  opacity: 1;
+  transform: rotateY(0);
+}
+
+.carousel__slide--next>.carousel__item {
+  transform: scale(0.9) translate(-10px);
+}
+
+.carousel__slide--prev>.carousel__item {
+  transform: scale(0.9) translate(10px);
+}
+
+.carousel__slide--active>.carousel__item {
+  transform: scale(1.1);
+}
+
+.slide__item {
+  max-height: 150px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .carousel__item {
+    max-width: 80%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .carousel__item {
+    max-width: 60%;
+  }
+}
+
+.carousel__item {
+  cursor: pointer;
+}
+
+.MultiCarousel {
+  float: left;
+  overflow: hidden;
+  padding: 15px;
+  position: relative;
+}
+
+.MultiCarousel .MultiCarousel-inner {
+  transition: 1s ease all;
+  float: left;
+}
+
+.MultiCarousel .MultiCarousel-inner .item {
+  float: left;
+}
+
+.MultiCarousel .MultiCarousel-inner .item>div {
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+  background: #f1f1f1;
+  color: var(--text-color);
+}
+
+.MultiCarousel .leftLst,
+.MultiCarousel .rightLst {
+  position: absolute;
+  border-radius: 50%;
+  top: calc(50% - 20px);
+}
+
+.MultiCarousel .leftLst {
+  left: 0;
+}
+
+.MultiCarousel .rightLst {
+  right: 0;
+}
+
+.MultiCarousel .leftLst.over,
+.MultiCarousel .rightLst.over {
+  pointer-events: none;
+  background: #ccc;
+}
+
+
+.box-part {
+  background: #FFF;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px 10px;
+  margin: 10px 0px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#go-back {
+  cursor: pointer;
 }
