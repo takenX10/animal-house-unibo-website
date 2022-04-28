@@ -9,144 +9,144 @@ app.use(express.static(__dirname + '/static/dist'));
 app.use(express.static(__dirname + '/static/dist/assets'));
 
 app.get('*', function (req, res, next) {
-  //res.status(404).send('senti tu coso , non e\' che posso avere tutto eh! insomma un po\' di comprensione uffa!');
-  //(__dirname + '/static/dist')
-  if (isAPI(req.url)) return next();
-  res.sendFile('index.html', { 'root': __dirname + '/static/dist' })
+    //res.status(404).send('senti tu coso , non e\' che posso avere tutto eh! insomma un po\' di comprensione uffa!');
+    //(__dirname + '/static/dist')
+    if (isAPI(req.url)) return next();
+    res.sendFile('index.html', { 'root': __dirname + '/static/dist' })
 });
 
 app.get('/', (req, res) => {
-  //res.send('Hello World!')
-  res.sendFile('index.html', { 'root': __dirname + '/static/dist' })
+    //res.send('Hello World!')
+    res.sendFile('index.html', { 'root': __dirname + '/static/dist' })
 })
 
 app.get('/api/bacheca', (req, res) => {
-  res.send("ciao2")
+    res.send("ciao2")
 })
 
 app.get('/api/testConsole', (req, res) => {
-  printDebug(`Debug test\n`);
-  printError(`Error test\n`);
-  printInfo(`Info test\n`);
-  printWarning(`Warning test\n`);
-  printCustom("Cstm", `Custom test\n`);
-  res.redirect('/console');
+    printDebug(`Debug test\n`);
+    printError(`Error test\n`);
+    printInfo(`Info test\n`);
+    printWarning(`Warning test\n`);
+    printCustom("Cstm", `Custom test\n`);
+    res.redirect('/console');
 })
 
 app.get('/api/console', (req, res) => {
 
-  var full = req.query.full;
+    var full = req.query.full;
 
-  /*
-  exec('ls /log/node-out-*', (error, stdout, stderr) => {
-      if (error) {
-          printDebug(`error: ${error.message}`);
-          return;
-      }
-      if (stderr) {
-          printDebug(`stderr: ${stderr}`);
-          return;
-      }
-      fileToRead = stdout.replace("\n", "");
+    /*
+    exec('ls /log/node-out-*', (error, stdout, stderr) => {
+        if (error) {
+            printDebug(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            printDebug(`stderr: ${stderr}`);
+            return;
+        }
+        fileToRead = stdout.replace("\n", "");
+  
+    });
+    */
 
-  });
-  */
+    fileToRead = "/log/node-out-" + getCurrentDate() + ".log";
+    fs.readFile(fileToRead, 'utf8', (err, data) => {
+        if (err) {
+            printError(err)
+            res.send(err);
+            return
+        }
 
-  fileToRead = "/log/node-out-" + getCurrentDate() + ".log";
-  fs.readFile(fileToRead, 'utf8', (err, data) => {
-    if (err) {
-      printError(err)
-      res.send(err);
-      return
-    }
+        data = data.replace(/m/, "<br>").replace(/\[39m /gm, "<br>").replace(/\[33m/gm, "").replace(/\[32m/gm, "").replace(/\[31m/gm, "");
+        data = data.replace(/\n/gm, "<br>");
 
-    data = data.replace(/m, "<br>").replace(/\[39m / gm, "<br>").replace(/\[33m/gm, "").replace(/\[32m/gm, "").replace(/\[31m/gm, "");
-    data = data.replace(/\n/gm, "<br>");
+        splitted = data.split("<br>")
 
-    splitted = data.split("<br>")
+        textToSend = ""
 
-    textToSend = ""
+        lines = []
+        for (var i = splitted.length - 1; i >= 0; i--) {
+            if ((!splitted[i].includes("[nodemon]") || full != undefined) && splitted[i] != "") {
+                textToSend += splitted[i] + "<br>"
+                lines.push(splitted[i])
+            }
+        }
 
-    lines = []
-    for (var i = splitted.length - 1; i >= 0; i--) {
-      if ((!splitted[i].includes("[nodemon]") || full != undefined) && splitted[i] != "") {
-        textToSend += splitted[i] + "<br>"
-        lines.push(splitted[i])
-      }
-    }
-
-    res.send(generateConsolePage(lines));
-  })
+        res.send(generateConsolePage(lines));
+    })
 })
 
 app.get('/api/cmd', (req, res) => {
-  var cmd = req.query.cmd;
-  //ls -la /usr/local/bin/exec-node.sh
-  exec(cmd, (error, stdout, stderr) => {
-    if (error) {
-      printDebug(`error: ${error.message}`);
-      res.send(`error: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      printDebug(`stderr: ${stderr}`);
-      res.send(`stderr: ${stderr}`);
-      return;
-    }
-    printDebug(`stdout: ${stdout}`);
-    res.send(`stdout: ${stdout}`);
-  });
+    var cmd = req.query.cmd;
+    //ls -la /usr/local/bin/exec-node.sh
+    exec(cmd, (error, stdout, stderr) => {
+        if (error) {
+            printDebug(`error: ${error.message}`);
+            res.send(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            printDebug(`stderr: ${stderr}`);
+            res.send(`stderr: ${stderr}`);
+            return;
+        }
+        printDebug(`stdout: ${stdout}`);
+        res.send(`stdout: ${stdout}`);
+    });
 })
 
 
 app.listen(port, () => {
-  printDebug(`Example app listening on port ${port}`)
+    printDebug(`Example app listening on port ${port}`)
 })
 
 function isAPI(url) {
-  return url.startsWith("/api/");
+    return url.startsWith("/api/");
 }
 
 function getCurrentDate() {
-  var date_ob = new Date();
-  // adjust 0 before single digit date
-  var day = ("0" + date_ob.getDate()).slice(-2);
-  // current month
-  var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-  // current year
-  var year = date_ob.getFullYear();
-  return year + "-" + month + "-" + day;
+    var date_ob = new Date();
+    // adjust 0 before single digit date
+    var day = ("0" + date_ob.getDate()).slice(-2);
+    // current month
+    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    // current year
+    var year = date_ob.getFullYear();
+    return year + "-" + month + "-" + day;
 }
 
 function getTime() {
-  var date_ob = new Date();
+    var date_ob = new Date();
 
-  // current date
-  // adjust 0 before single digit date
-  var date = ("0" + date_ob.getDate()).slice(-2);
+    // current date
+    // adjust 0 before single digit date
+    var date = ("0" + date_ob.getDate()).slice(-2);
 
-  // current month
-  var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    // current month
+    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
 
-  // current year
-  var year = date_ob.getFullYear();
+    // current year
+    var year = date_ob.getFullYear();
 
-  // current hours
-  var hours = date_ob.getHours();
+    // current hours
+    var hours = date_ob.getHours();
 
-  // current minutes
-  var minutes = date_ob.getMinutes();
+    // current minutes
+    var minutes = date_ob.getMinutes();
 
-  // current seconds
-  var seconds = date_ob.getSeconds();
+    // current seconds
+    var seconds = date_ob.getSeconds();
 
-  // prints date & time in YYYY-MM-DD HH:MM:SS format
-  return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
+    // prints date & time in YYYY-MM-DD HH:MM:SS format
+    return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
 
 }
 
 function generateConsolePage(lines) {
-  var page = `
+    var page = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -161,7 +161,7 @@ function generateConsolePage(lines) {
     <body class="fw-bold text-light">
     `
 
-  page += `<div class="container">
+    page += `<div class="container">
                 <div class="row mt-4 mb-2 text-center">
                     <div class="col fw-bold fs-2 text-dark">
                         <h2>
@@ -173,48 +173,48 @@ function generateConsolePage(lines) {
 
 
 
-  for (var i = 0; i < lines.length; i++) {
-    var color = "bg-dark"
-    if (lines[i].includes("[ERROR]")) color = "bg-danger"
-    else if (lines[i].includes("[WARNING]")) color = "bg-warning"
-    else if (lines[i].includes("[DEBUG]")) color = "bg-secondary"
-    else if (lines[i].includes("[INFO]")) color = "bg-info"
-    else if (lines[i].match(/^\[.*?\]/gm) != undefined) color = "bg-primary"
+    for (var i = 0; i < lines.length; i++) {
+        var color = "bg-dark"
+        if (lines[i].includes("[ERROR]")) color = "bg-danger"
+        else if (lines[i].includes("[WARNING]")) color = "bg-warning"
+        else if (lines[i].includes("[DEBUG]")) color = "bg-secondary"
+        else if (lines[i].includes("[INFO]")) color = "bg-info"
+        else if (lines[i].match(/^\[.*?\]/gm) != undefined) color = "bg-primary"
 
-    page += `<div class="row ">
+        page += `<div class="row ">
                     <div class="col">
                         <div class="${color} p-3 mb-2">${lines[i]}</div>
                     </div>
                 </div>`
-  }
-  page += `</div>`
+    }
+    page += `</div>`
 
 
-  page += `</body></html>`
-  return page;
+    page += `</body></html>`
+    return page;
 }
 
 
 function printCustom(code, str) {
-  print(`[${code}] {${getTime()}}\t` + str);
+    print(`[${code}] {${getTime()}}\t` + str);
 }
 
 function printError(str) {
-  printCustom("ERROR", str);
+    printCustom("ERROR", str);
 }
 
 function printWarning(str) {
-  printCustom("WARNING", str);
+    printCustom("WARNING", str);
 }
 
 function printDebug(str) {
-  printCustom("DEBUG", str);
+    printCustom("DEBUG", str);
 }
 
 function printInfo(str) {
-  printCustom("INFO", str);
+    printCustom("INFO", str);
 }
 
 function print(str) {
-  console.log(str);
+    console.log(str);
 }
