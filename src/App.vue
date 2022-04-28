@@ -6,8 +6,3 @@ import HelloWorld from '@/components/HelloWorld.vue'
 <template>
   <RouterView />
 </template>
-
-<style>
-@import '@/assets/css/base.css';
-@import '@/assets/css/bootstrap.min.css';
-</style>

@@ -6,6 +6,7 @@ import {
     Route,
 } from "react-router-dom";
 import Expenses from '@/views/react/Expenses';
+import CercoPartner from '@/views/react/comunita/CercoPartner';
 
 export const ReactRoutes = [
     {
@@ -25,6 +26,10 @@ export const ReactRoutes = [
     //     { path: "/settings", element: <Settings /> },
     //   ],
     // },
+    {
+        path: "/comunita/cerco-partner",
+        element: <CercoPartner />
+    },
 ];
 
 
