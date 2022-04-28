@@ -1,3 +1,27 @@
+# animal-house
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+<!-- TODO: Explain how to deploy the project -->
+
+# Old readme
+
 # animal-house-unibo-website
  A website for a project of web tecnologies.
 

@@ -1,24 +1,37 @@
 {
-  "name": "animal-house-unibo-website",
-  "version": "1.0.0",
-  "description": "A website for a project of web tecnologies.",
-  "main": "server/index.js",
+  "name": "gamearea",
+  "version": "0.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "sudo node server/index.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 5050"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/takenX10/animal-house-unibo-website.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/takenX10/animal-house-unibo-website/issues"
-  },
-  "homepage": "https://github.com/takenX10/animal-house-unibo-website#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "@vitejs/plugin-react": "^1.3.1",
+    "blueimp-load-image": "^5.16.0",
+    "bootstrap": "^5.1.3",
+    "bootstrap-vue-3": "^0.1.11",
+    "canvas-confetti": "^1.5.1",
+    "express": "^4.18.0",
+    "lodash": "^4.17.21",
+    "lodash.sample": "^4.2.1",
+    "phosphor-vue": "^4.4.0",
+    "pinia": "^2.0.13",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.3.0",
+    "sass": "^1.50.1",
+    "vue": "^3.2.33",
+    "vue-head": "^2.2.0",
+    "vue-router": "^4.0.13",
+    "vue-slick-carousel": "^1.0.6",
+    "vue3-carousel": "^0.1.38",
+    "vueperslides": "^3.3.2",
+    "wordlist-js": "^1.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.1",
+    "@vitejs/plugin-vue-jsx": "^1.3.10",
+    "vite": "^2.9.5"
   }
 }

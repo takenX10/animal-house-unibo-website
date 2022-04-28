@@ -4,6 +4,9 @@ const fs = require('fs')
 const app = express()
 const port = 8000
 
+const APIJS = require("./api.js");
+const BASE_API_PATH = APIJS.BASE_API_PATH;
+
 app.use(express.static(__dirname + '/static'));
 app.use(express.static(__dirname + '/static/dist'));
 app.use(express.static(__dirname + '/static/dist/assets'));
@@ -11,7 +14,7 @@ app.use(express.static(__dirname + '/static/dist/assets'));
 app.get('*', function (req, res, next) {
     //res.status(404).send('senti tu coso , non e\' che posso avere tutto eh! insomma un po\' di comprensione uffa!');
     //(__dirname + '/static/dist')
-    if (isAPI(req.url)) return next();
+    if(isAPI(req.url)) return next();
     res.sendFile('index.html', { 'root': __dirname + '/static/dist' })
 });
 
@@ -20,11 +23,11 @@ app.get('/', (req, res) => {
     res.sendFile('index.html', { 'root': __dirname + '/static/dist' })
 })
 
-app.get('/api/bacheca', (req, res) => {
-    res.send("ciao2")
+app.get(`${BASE_API_PATH}bacheca`, (req, res) => {
+    res.send("ciao")
 })
 
-app.get('/api/testConsole', (req, res) => {
+app.get(`${BASE_API_PATH}testConsole`, (req, res) => {
     printDebug(`Debug test\n`);
     printError(`Error test\n`);
     printInfo(`Info test\n`);
@@ -33,7 +36,7 @@ app.get('/api/testConsole', (req, res) => {
     res.redirect('/console');
 })
 
-app.get('/api/console', (req, res) => {
+app.get(`${BASE_API_PATH}console`, (req, res) => {
 
     var full = req.query.full;
 
@@ -48,7 +51,7 @@ app.get('/api/console', (req, res) => {
             return;
         }
         fileToRead = stdout.replace("\n", "");
-  
+
     });
     */
 
@@ -60,7 +63,7 @@ app.get('/api/console', (req, res) => {
             return
         }
 
-        data = data.replace(/m/, "<br>").replace(/\[39m /gm, "<br>").replace(/\[33m/gm, "").replace(/\[32m/gm, "").replace(/\[31m/gm, "");
+        data = data.replace(//gm, "<br>").replace(/\[39m/gm, "<br>").replace(/\[33m/gm, "").replace(/\[32m/gm, "").replace(/\[31m/gm, "");
         data = data.replace(/\n/gm, "<br>");
 
         splitted = data.split("<br>")
@@ -79,7 +82,7 @@ app.get('/api/console', (req, res) => {
     })
 })
 
-app.get('/api/cmd', (req, res) => {
+app.get(`${BASE_API_PATH}cmd`, (req, res) => {
     var cmd = req.query.cmd;
     //ls -la /usr/local/bin/exec-node.sh
     exec(cmd, (error, stdout, stderr) => {
@@ -98,13 +101,14 @@ app.get('/api/cmd', (req, res) => {
     });
 })
 
+APIJS.initAPI(app);
 
 app.listen(port, () => {
     printDebug(`Example app listening on port ${port}`)
 })
 
 function isAPI(url) {
-    return url.startsWith("/api/");
+    return url.startsWith(`${BASE_API_PATH}`);
 }
 
 function getCurrentDate() {
@@ -218,3 +222,4 @@ function printInfo(str) {
 function print(str) {
     console.log(str);
 }
+
