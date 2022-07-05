@@ -5,18 +5,13 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import Expenses from '@/views/react/Expenses';
 import CercoPartner from '@/views/react/comunita/CercoPartner/CercoPartner';
+import HomePage from '@/views/react/HomePage';
 
 export const ReactRoutes = [
     {
-        path: "/expenses",
-        element: <Expenses />,
-        // children: [
-        //   { path: ":id", element: <Invoice /> },
-        //   { path: "/pending", element: <Pending /> },
-        //   { path: "/complete", element: <Complete /> },
-        // ],
+        path:"/",
+        element: <HomePage />
     },
     // {
     //   path: "/users",

@@ -1,16 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/vue/HomeView.vue'
 import { createApp } from 'vue'
 import AppVue from '@/App.vue'
 import { createPinia } from "pinia"
 import BootstrapVue3 from 'bootstrap-vue-3';
 
 export const VueRoutes = [
-    {
-        path: '/',
-        name: 'home',
-        component: HomeView
-    },
     {
         path: '/games/about',
         name: 'about',

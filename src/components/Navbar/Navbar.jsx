@@ -19,7 +19,7 @@ const NavbarServizi = () => {
                     { title:"Bacheca cerco partner", href:"comunita/cerco-partner", disabled:true },
                     { title:"Bacheca aiutatemi", href:"comunita/aiutatemi", disabled:true },
                 ]}
-            ></Dropdown>
+            />
             <Dropdown
                 title={{
                     href:"presenza/home",
@@ -32,7 +32,7 @@ const NavbarServizi = () => {
                     { title:"Toelettatura", href:"presenza/toelettatura", disabled:true},
                     { title:"Visite animali soli", href:"presenza/visite-animali-soli", disabled:true},
                 ]}
-            ></Dropdown>
+            />
             <Dropdown
                 title={{
                     href:"online/home",
@@ -44,7 +44,7 @@ const NavbarServizi = () => {
                     { title:"Videoconferenza con il veterinario", href:"online/veterinario", disabled:true},
                     { title:"Videoconferenza con il tuo animale", href:"online/tuo-animale", disabled:true},
                 ]}
-            ></Dropdown>
+            />
         </>
     );
 }
@@ -74,8 +74,8 @@ const NavbarGiochi = () => {
                     title: "Slider",
                     href: "games/slider"
                 },
-            ]}>
-        </Dropdown>
+            ]}
+        />
     );
 }
 
@@ -92,7 +92,7 @@ const NavbarShop = () => {
                 { title:"Prodotti sanitari", href:"shop/sanitari", disabled:true },
                 { title:"Accessoristica", href:"shop/accessori", disabled:true },
             ]}
-        ></Dropdown>
+        />
     );
         
 }
@@ -100,18 +100,18 @@ const NavbarShop = () => {
 export default function Navbar(){
     return (
         <>
-            <nav class="navbar navbar-expand-lg bg-light p-3 border-bottom border-5">
-                <div class="container-fluid">
-                    <h1><a class="navbar-brand fs-1 text-dark" href="#">AnimalHouse</a></h1>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"  data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon text-dark"><FaBars></FaBars></span>
+            <nav className="navbar navbar-expand-lg bg-light p-3 border-bottom border-5">
+                <div className="container-fluid">
+                    <h1><a className="navbar-brand fs-1 text-dark" href="/">AnimalHouse</a></h1>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"  data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon text-dark"><FaBars /></span>
                     </button>
-                    <div class="collapse navbar-collapse mx-lg-5 px-lg-5 p-2" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            <NavbarShop></NavbarShop>
-                            <NavbarGiochi></NavbarGiochi>
-                            <NavbarServizi></NavbarServizi>
-                            <a class="text-dark nav-link disabled text-muted" href="back/home">Back office</a>
+                    <div className="collapse navbar-collapse mx-lg-5 px-lg-5 p-2" id="navbarNavAltMarkup">
+                        <div className="navbar-nav">
+                            <NavbarShop />
+                            <NavbarGiochi />
+                            <NavbarServizi />
+                            <a className="text-dark nav-link disabled text-muted" href="back/home">Back office</a>
                         </div>
                     </div>
                 </div>
