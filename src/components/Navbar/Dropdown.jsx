@@ -8,7 +8,7 @@ export default function Dropdown({title, elements}){
                 {
                     elements.map((element)=>{
                         return (
-                            <li><a className={"dropdown-item"+(element.disabled?" disabled":"")} href={element.href}>{element.title}</a></li>            
+                            <li key={element.href}><a className={"dropdown-item"+(element.disabled?" disabled":"")} href={element.href}>{element.title}</a></li>            
                         )
                     })
                 }

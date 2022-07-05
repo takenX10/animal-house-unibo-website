@@ -1,11 +1,11 @@
-import { CreateReactApp, isInReactRoutes } from './router/ReactRouter';
+import { CreateReactApp, isInReactRoutes, ReactRoutes } from './router/ReactRouter';
 import { CreateVueApp, isInVueRoutes } from './router/VueRouter';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
 
 if (isInVueRoutes()) {
     CreateVueApp();
-} else if (isInReactRoutes()) {
+} else if (isInReactRoutes(ReactRoutes, "")) {
     CreateReactApp();
 } else {
     /* idk man why you opening this page! */
