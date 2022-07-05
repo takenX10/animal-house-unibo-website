@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './CercoPartner.scss';
 import { Stack } from 'swing';
-
+import Navbar from '@/components/Navbar/Navbar';
 
 
 export default function CercoPartner() {
@@ -15,6 +15,8 @@ export default function CercoPartner() {
         var stack;
         stack = Stack();
         // this is not really React style, but I didn't find a better way to do this.
+        // the React component version of this snippet was made for React 16.0.2 and is 
+        // not compatible with our version, so we are stuck with this.
         [].forEach.call(document.querySelectorAll('.stack li'), function (targetElement) {
             stack.createCard(targetElement);
             targetElement.classList.add('in-deck');
@@ -25,7 +27,6 @@ export default function CercoPartner() {
 
             e.target.classList.remove('in-deck');
         });
-
         stack.on('throwin', function (e) {
             console.log(e.target.innerText || e.target.textContent, 'has been thrown into the stack from the', e.throwDirection, 'direction.');
 
@@ -36,6 +37,7 @@ export default function CercoPartner() {
 
     return (
         <>
+            <Navbar />
             <div id="viewport">
                 <ul className="stack">
                     {cardList.map(card => {

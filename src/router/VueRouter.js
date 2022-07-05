@@ -12,7 +12,7 @@ export const VueRoutes = [
         component: HomeView
     },
     {
-        path: '/about',
+        path: '/games/about',
         name: 'about',
         // route level code-splitting
         // this generates a separate chunk (About.[hash].js) for this route
@@ -20,32 +20,27 @@ export const VueRoutes = [
         component: () => import('../views/vue/AboutView.vue')
     },
     {
-        path: '/memory',
+        path: '/games/memory',
         name: 'memory',
         component: () => import('../views/vue/Memory.vue')
     },
     {
-        path: '/wordle',
+        path: '/games/wordle',
         name: 'wordle',
         component: () => import('../views/vue/Wordle.vue')
     },
     {
-        path: '/hangman',
+        path: '/games/hangman',
         name: 'hangman',
         component: () => import('../views/vue/Hangman.vue')
     },
     {
-        path: '/memory',
-        name: 'memory',
-        component: () => import('../views/vue/Memory.vue')
-    },
-    {
-        path: '/games',
+        path: '/games/games',
         name: 'games',
         component: () => import('../views/vue/GameSelectionView.vue')
     },
     {
-        path: '/slider',
+        path: '/games/slider',
         name: 'slider',
         component: () => import('../views/vue/Slider.vue')
     }

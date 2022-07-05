@@ -6,7 +6,7 @@ import {
     Route,
 } from "react-router-dom";
 import Expenses from '@/views/react/Expenses';
-import CercoPartner from '@/views/react/comunita/CercoPartner';
+import CercoPartner from '@/views/react/comunita/CercoPartner/CercoPartner';
 
 export const ReactRoutes = [
     {

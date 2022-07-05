@@ -60,6 +60,20 @@ npm start
 ## Cose da fare
 
 
+## Domande da fare al prof
+
+- Cosa e' la bacheca "eccolo qua"?
+
+- In cosa deve consistere la bachecha "aiutatemi"? chi deve avere la possibilita' di rispondere
+alle richieste d'aiuto? chi puo vedere le richieste d'aiuto? le risposte devono essere pubbliche?
+puo avvenire una conversazione intera (quindi botta e risposta) tra aiutante e aiutato?
+
+- Come possiamo fare la leaderboard dei giochi se ha detto che nei giochi non vuole che utilizziamo il database?
+
+- Nel back office, che cosa si intende con registrazione e login nella sezione di anagrafica clienti?
+
+
+
 ## Appunti iniziali
 Colori (per ora):
 - foreground: #f6efee
@@ -95,7 +109,7 @@ Tecnologie utilizzate:
       - cibo
       - prodotti sanitari
       - accessoristica
-      - ~ cuccioli
+      - ~ cuccioli (NON LO FACCIAMO PER NESSUN MOTIVO)
   - Servizi in presenza
     - Veterinario
     - Dog sitter
