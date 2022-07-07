@@ -12,7 +12,7 @@ import HomeComunita from '../views/react/HomeComunita';
 
 export const ReactRoutes = [
     {
-        path:"/",
+        path: "/",
         element: <HomePage />
     },
     {
@@ -24,11 +24,11 @@ export const ReactRoutes = [
         element: <HomeComunita />,
         children:[
             {
-                path:"home",
+                path:"/comunita/home",
                 element:<HomeComunita />
             },
             {
-                path:"cerco-partner",
+                path:"/comunita/cerco-partner",
                 element:<CercoPartner />
             },
         ]
@@ -44,21 +44,26 @@ export const ReactRoutes = [
 ];
 
 
-export function isInReactRoutes(routes, start) {
+export function isInReactRoutes(routes) {
     if(!routes) return false;
     let p = window.location.pathname;
     for (var i = 0; i < routes.length; i++) {
-        if (p == start + routes[i].path)
+        if (p == routes[i].path){
+            console.log("si normale");
             return true;
-        if(isInReactRoutes(routes[i].children, routes[i].path))
+        }
+        if(isInReactRoutes(routes[i].children)){
+            console.log("si figlio");
             return true;
+        }
     }
     return false;
 }
 
 function createRoute (currentRoute){
     return (
-        <Route path={currentRoute.path} element={currentRoute.element} key={currentRoute.path}>
+        <>
+            <Route path={currentRoute.path} element={currentRoute.element} key={currentRoute.path}></Route>
             {   
                 (currentRoute.children != undefined?
                     currentRoute.children.map((child)=>{
@@ -67,7 +72,7 @@ function createRoute (currentRoute){
                     (<></>)
                 )
             }
-        </Route>
+        </>
     );
 }
 
@@ -76,9 +81,9 @@ export const CreateReactApp = () => {
         <React.StrictMode>
             <BrowserRouter>
                 <Routes>
-                    {ReactRoutes.map((route) => {
-                        return createRoute(route)
-                    })}
+                {ReactRoutes.map((route) => {
+                    return createRoute(route)
+                })}
                 </Routes>
             </BrowserRouter>
         </React.StrictMode>

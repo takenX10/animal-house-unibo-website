@@ -5,7 +5,7 @@ import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
 
 if (isInVueRoutes()) {
     CreateVueApp();
-} else if (isInReactRoutes(ReactRoutes, "")) {
+} else if (isInReactRoutes(ReactRoutes)) {
     CreateReactApp();
 } else {
     /* idk man why you opening this page! */
