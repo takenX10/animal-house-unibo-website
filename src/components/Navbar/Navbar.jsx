@@ -9,40 +9,40 @@ const NavbarServizi = () => {
         <>
             <Dropdown
                 title={{
-                    href:"comunita/home",
+                    href:"/comunita/home",
                     id:"home-comunita",
                     name:"Servizi della comunita",
                 }}
                 elements={[
-                    { title:"Leaderboard giochi", href:"comunita/giochi", disabled:true },
-                    { title:"Bacheca eccolo qua", href:"comunita/eccolo-qua" },
-                    { title:"Bacheca cerco partner", href:"comunita/cerco-partner", disabled:true },
-                    { title:"Bacheca aiutatemi", href:"comunita/aiutatemi", disabled:true },
+                    { title:"Leaderboard giochi", href:"/comunita/leaderboard-giochi", disabled:true },
+                    { title:"Bacheca eccolo qua", href:"/comunita/eccolo-qua", disabled:true },
+                    { title:"Bacheca cerco partner", href:"/comunita/cerco-partner"},
+                    { title:"Bacheca aiutatemi", href:"/comunita/aiutatemi", disabled:true },
                 ]}
             />
             <Dropdown
                 title={{
-                    href:"presenza/home",
+                    href:"/presenza/home",
                     id:"servizi-presenza-home",
                     name:"Servizi in presenza",
                 }}
                 elements={[
-                    { title:"Veterinario", href:"presenza/veterinario", disabled:true},
-                    { title:"Dogsitter", href:"presenza/dogsitter", disabled:true},
-                    { title:"Toelettatura", href:"presenza/toelettatura", disabled:true},
-                    { title:"Visite animali soli", href:"presenza/visite-animali-soli", disabled:true},
+                    { title:"Veterinario", href:"/presenza/veterinario", disabled:true},
+                    { title:"Dogsitter", href:"/presenza/dogsitter", disabled:true},
+                    { title:"Toelettatura", href:"/presenza/toelettatura", disabled:true},
+                    { title:"Visite animali soli", href:"/presenza/visite-animali-soli", disabled:true},
                 ]}
             />
             <Dropdown
                 title={{
-                    href:"online/home",
+                    href:"/online/home",
                     id:"servizi-online-home",
                     name:"Servizi online",
                 }}
                 elements={[
-                    { title:"Videoconferenza con l'esperto", href:"online/esperto", disabled:true},
-                    { title:"Videoconferenza con il veterinario", href:"online/veterinario", disabled:true},
-                    { title:"Videoconferenza con il tuo animale", href:"online/tuo-animale", disabled:true},
+                    { title:"Videoconferenza con l'esperto", href:"/online/esperto", disabled:true},
+                    { title:"Videoconferenza con il veterinario", href:"/online/veterinario", disabled:true},
+                    { title:"Videoconferenza con il tuo animale", href:"/online/tuo-animale", disabled:true},
                 ]}
             />
         </>
@@ -53,26 +53,26 @@ const NavbarGiochi = () => {
     return (
         <Dropdown   
             title={{
-                href : "games/home",
+                href : "/games/home",
                 id : "home-giochi",
                 name : "Giochi",
             }} 
             elements={[
                 {
                     title: "Hangman",
-                    href: "games/hangman"
+                    href: "/games/hangman"
                 },
                 {
                     title: "Wordle",
-                    href: "games/wordle"
+                    href: "/games/wordle"
                 },
                 {
                     title: "Memory",
-                    href: "games/memory"
+                    href: "/games/memory"
                 },
                 {
                     title: "Slider",
-                    href: "games/slider"
+                    href: "/games/slider"
                 },
             ]}
         />
