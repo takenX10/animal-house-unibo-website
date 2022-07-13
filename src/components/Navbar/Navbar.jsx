@@ -15,7 +15,7 @@ const NavbarServizi = () => {
                 }}
                 elements={[
                     { title:"Leaderboard giochi", href:"/comunita/leaderboard-giochi", disabled:true },
-                    { title:"Bacheca eccolo qua", href:"/comunita/eccolo-qua", disabled:true },
+                    { title:"Bacheca eccolo qua", href:"/comunita/eccolo-qua" },
                     { title:"Bacheca cerco partner", href:"/comunita/cerco-partner"},
                     { title:"Bacheca aiutatemi", href:"/comunita/aiutatemi", disabled:true },
                 ]}

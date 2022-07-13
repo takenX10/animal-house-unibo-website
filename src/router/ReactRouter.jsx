@@ -9,6 +9,7 @@ import CercoPartner from '@/views/react/comunita/CercoPartner/CercoPartner';
 import HomePage from '@/views/react/HomePage';
 import HomeFrontOffice from '../views/react/HomeFrontOffice';
 import HomeComunita from '../views/react/HomeComunita';
+import EccoloQua from '../views/react/comunita/EccoloQua';
 
 export const ReactRoutes = [
     {
@@ -30,6 +31,10 @@ export const ReactRoutes = [
             {
                 path:"/comunita/cerco-partner",
                 element:<CercoPartner />
+            },
+            {
+                path:"/comunita/eccolo-qua",
+                element:<EccoloQua />
             },
         ]
     },
