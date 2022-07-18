@@ -56,6 +56,12 @@ export default function EccoloQua(){
     
     useEffect(()=>{
         setPosts(getPosts());
+        const myModal = document.getElementById('new-message-modal');
+        const myInput = document.getElementById('new-message-button');
+
+        myModal.addEventListener('shown.bs.modal', () => {
+            myInput.focus()
+        });
     },[]);
 
     function showAnswers(id){
@@ -73,12 +79,34 @@ export default function EccoloQua(){
                 <div className="container-fluid post-container">
                     <div className="row justify-content-center">
                         <div className="col-7">
-                            <button type="button" className="btn btn-dark m-3">Crea un post!</button>
+                            <button type="button" id="new-message-button" className="btn btn-dark m-3"  data-bs-toggle="modal" data-bs-target="#new-message-modal">Crea un post!</button>
                             {posts.map((mypost)=>{return (<Post author={mypost.author} text={mypost.text} id={mypost.id} key={mypost.text} />)})}
                         </div>
                         <div className="col-5" style={myStyle}>
                             <button type="button" className="btn btn-danger m-3" onClick={hideAnswers}>Chiudi risposte</button>
                             {answers.map((myanswer)=>{return (<Answer author={myanswer.author} text={myanswer.text} />)})}
+                        </div>
+                    </div>
+                </div>
+                <div className="modal fade" id="new-message-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Nuovo post</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form>
+                                <div className="mb-3">
+                                    <label for="message-text" className="col-form-label">Messaggio post:</label>
+                                    <textarea className="form-control" id="message-text"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Crea post</button>
+                        </div>
                         </div>
                     </div>
                 </div>
