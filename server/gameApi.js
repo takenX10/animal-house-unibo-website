@@ -1,108 +1,31 @@
-
-/*
- * roba interessante
-    https://madewithvuejs.com/vue-swing
- * 
- */
 const fetch = require("node-fetch");
 const FileReader = require("fs")
 
-
-const BASE_API_PATH = "/api/";
 const IMAGE_DOG_API = "https://dog.ceo/api/breeds/image/random";
 const IMAGE_CAT_API = "https://api.thecatapi.com/v1/images/search";
 const RANDOM_FACT = "https://fungenerators.com/random/facts/animal/";
 const RANDOM_ANIMAL = "https://zoo-animal-api.herokuapp.com";
 
 function initAPI(app) {
-  app.get(`${BASE_API_PATH}dogimage`, getDogImageAPI);
-  app.get(`${BASE_API_PATH}catimage`, getCatImageAPI);
-  app.get(`${BASE_API_PATH}randomfact`, getRandomFactAPI);
-  app.get(`${BASE_API_PATH}randomanimal`, getRandomAnimalAPI);
-  app.get(`${BASE_API_PATH}catfact`, getRandomCatFactAPI);
-  app.get(`${BASE_API_PATH}randomimagebase64`, getRandomImageBase64API);
-}
-
-
-function readFileAsDataURLAsync(file) {
-  return new Promise((resolve, reject) => {
-    let reader = new FileReader();
-
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-
-    reader.onerror = reject;
-
-    reader.readAsDataURL(file);
-  })
+  app.get("/api/dogimage", getDogImageAPI);
+  app.get("/api/catimage", getCatImageAPI);
+  app.get("/api/randomfact", getRandomFactAPI);
+  app.get("/api/randomanimal", getRandomAnimalAPI);
+  app.get("/api/catfact", getRandomCatFactAPI);
+  app.get("/api/randomimagebase64", getRandomImageBase64API);
 }
 
 async function getRandomImageBase64API(req, res) {
   try {
     let dogdata = await getDogImageData();
-    // console.log(dogdata.message)
     let r = await fetch(dogdata.message);
-    // let bb = await r.blob();
     const data = await r.buffer()
     let b64 = data.toString('base64');
     b64 = "data:image/jpg;base64," + b64
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
     res.json({ status: 200, image: b64 });
   } catch (e) {
     console.log(e)
-    showError(res);
-  }
-}
-
-async function convertImageToBase64(url) {
-  try {
-    let res = await fetch("https://base64.guru/converter/encode/image", {
-      "headers": {
-        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "accept-language": "en-US,en;q=0.9",
-        "cache-control": "max-age=0",
-        "content-type": "multipart/form-data; boundary=----WebKitFormBoundary1Ms6cvBRBwktHzUa",
-        "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"100\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Linux\"",
-        "sec-fetch-dest": "document",
-        "sec-fetch-mode": "navigate",
-        "sec-fetch-site": "same-origin",
-        "sec-fetch-user": "?1",
-        "upgrade-insecure-requests": "1",
-        "cookie": "_ga=GA1.2.809304031.1651097146; _gid=GA1.2.1066281358.1651097146; __gads=ID=021d117f05e35821-2263049183cd0027:T=1651097148:RT=1651097148:S=ALNI_MaColNXw0t8I2XV1Gi9_lidV28arw; _gat_gtag_UA_134607367_1=1",
-        "Referer": "https://base64.guru/converter/encode/image",
-        "Referrer-Policy": "strict-origin-when-cross-origin"
-      },
-      "body": `------WebKitFormBoundary1Ms6cvBRBwktHzUa\r\nContent-Disposition: form-data; name=\"form_is_submited\"\r\n\r\nbase64-converter-encode-image\r\n------WebKitFormBoundary1Ms6cvBRBwktHzUa\r\nContent-Disposition: form-data; name=\"form_action_url\"\r\n\r\n/converter/encode/image\r\n------WebKitFormBoundary1Ms6cvBRBwktHzUa\r\nContent-Disposition: form-data; name=\"datatype\"\r\n\r\nurl\r\n------WebKitFormBoundary1Ms6cvBRBwktHzUa\r\nContent-Disposition: form-data; name=\"url\"\r\n\r\n${url}\r\n------WebKitFormBoundary1Ms6cvBRBwktHzUa\r\nContent-Disposition: form-data; name=\"format\"\r\n\r\ntxt\r\n------WebKitFormBoundary1Ms6cvBRBwktHzUa\r\nContent-Disposition: form-data; name=\"encode\"\r\n\r\n1\r\n------WebKitFormBoundary1Ms6cvBRBwktHzUa--\r\n`,
-      "method": "POST"
-    });
-    let data = await res.text();
-    console.log(data);
-  } catch (e) {
-    throw (e);
-  }
-}
-
-async function getRandomImageAPI(req, res) {
-  try {
-    let choices = 5;
-    let rand = Math.floor(Math.random() * choices.length)
-  } catch (e) {
     showError(res);
   }
 }
@@ -179,7 +102,6 @@ async function getDogImageData() {
   try {
     let r = await fetch(IMAGE_DOG_API);
     let data = await r.json();
-
     return data;
   } catch (e) {
     throw e;
@@ -361,4 +283,4 @@ function getLocalCatFact() {
   return li;
 }
 
-module.exports = { initAPI, BASE_API_PATH }
+module.exports = { initAPI }
