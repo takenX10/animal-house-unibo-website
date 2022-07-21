@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const port = 8000
 
+const DB = require("./database.js");
+DB.init();
 const APIJS = require("./gameApi.js");
 APIJS.initAPI(app);
 const BACKOFFICE = require("./backoffice.js");

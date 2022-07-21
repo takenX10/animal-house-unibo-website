@@ -141,3 +141,21 @@ Tecnologie utilizzate:
     - Calendari separati dei servizi.
   - ~ Servizi online
     - ~ Prenotare servizi, modificare o cancellare prenotazioni, visualizzare disponibilita'.
+
+
+database:
+- Utenti
+  - Nome
+  - password
+  - Tipo ("azienda", "privato")
+- Animali
+  - Utente
+  - Nome
+  - razza
+  - Eta
+  - peso
+- Post
+  - Nome
+  - Testo
+  - id
+  - risposta (0 = no, numero = id a cui sta rispondendo)
