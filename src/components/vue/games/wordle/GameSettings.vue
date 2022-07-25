@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import BlurredWord from "@/components/wordle/BlurredWord.vue"
+import BlurredWord from "@/components/vue/games/wordle/BlurredWord.vue"
 
 interface Props {
   word: string

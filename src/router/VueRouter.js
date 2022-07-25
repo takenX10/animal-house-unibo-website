@@ -1,8 +1,14 @@
+// Author : Gianmaria Rovelli
+
 import { createRouter, createWebHistory } from 'vue-router'
 import { createApp } from 'vue'
 import AppVue from '@/App.vue'
+import VueCarousel from 'vue-carousel';
 import { createPinia } from "pinia"
 import BootstrapVue3 from 'bootstrap-vue-3';
+import BalmUI from 'balm-ui'; // Official Google Material Components
+import BalmUIPlus from 'balm-ui-plus'; // BalmJS Team Material Components
+import 'balm-ui-css';
 
 export const VueRoutes = [
     {
@@ -16,27 +22,27 @@ export const VueRoutes = [
     {
         path: '/games/memory',
         name: 'memory',
-        component: () => import('../views/vue/Memory.vue')
+        component: () => import('../views/vue/games/Memory.vue')
     },
     {
         path: '/games/wordle',
         name: 'wordle',
-        component: () => import('../views/vue/Wordle.vue')
+        component: () => import('../views/vue/games/Wordle.vue')
     },
     {
         path: '/games/hangman',
         name: 'hangman',
-        component: () => import('../views/vue/Hangman.vue')
+        component: () => import('../views/vue/games/Hangman.vue')
     },
     {
-        path: '/games/games',
+        path: '/games',
         name: 'games',
-        component: () => import('../views/vue/GameSelectionView.vue')
+        component: () => import('../views/vue/games/GameSelectionView.vue')
     },
     {
         path: '/games/slider',
         name: 'slider',
-        component: () => import('../views/vue/Slider.vue')
+        component: () => import('../views/vue/games/Slider.vue')
     }
 ]
 
@@ -59,6 +65,9 @@ export const CreateVueApp = () => {
     app.use(createPinia())
     app.use(BootstrapVue3)
     app.use(VueRouter)
+    app.use(BalmUI);
+    app.use(BalmUIPlus);
+    app.use(VueCarousel)
     app.mount('#app')
 };
 

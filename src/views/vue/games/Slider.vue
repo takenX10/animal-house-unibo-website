@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Board from '@/components/vue/slider/Board.vue'
-import OptionsPane from '@/components/vue/slider/OptionsPane.vue'
+import Board from '@/components/vue/games/slider/Board.vue'
+import OptionsPane from '@/components/vue/games/slider/OptionsPane.vue'
 
 let name = "Slider"
 

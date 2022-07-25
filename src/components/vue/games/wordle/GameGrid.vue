@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue"
-import GameBoardCell from "@/components/wordle/GameGridCell.vue"
+import GameBoardCell from "@/components/vue/games/wordle/GameGridCell.vue"
 import type { Board } from "@/assets/js/wordle/board"
 
 interface Props {

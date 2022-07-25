@@ -2,13 +2,16 @@
   <div class="board">
     <div class="frame-wrapper" :style="frameSize">
       <p v-if="valid" class="win">You Win!</p>
-      <div class="original"
-          v-if="showingOriginal && image"
-          @click="showingOriginal = false"
-          :style="{ background: `url(${image})`}">
-      </div>
+      <div
+        id="original"
+        class="original"
+        v-if="showingOriginal && image"
+        @click="showingOriginal = false"
+        :style="{ background: `url(${image})`, backgroundSize: 'contain' }"
+      ></div>
       <div class="frame" :style="frameSize">
-        <Tile v-for="tile in tiles"
+        <Tile
+          v-for="tile in tiles"
           :key="tile.position"
           :tile="tile"
           @moving="moveTile"
@@ -17,27 +20,37 @@
       </div>
     </div>
 
-    <div class="controls">
-      <a class="toggle-original" href="#" @click.prevent="showingOriginal = !showingOriginal">
-        Toggle Original Image
-      </a>
-      <a class="shuffle" href="#" @click.prevent="shuffleTiles">Reshuffle</a>
-      <a class="reset" href="#" @click.prevent="reset">Reset</a>
-      <a class="restart" href="#" @click.prevent="restart">New Game</a>
+    <div class="controls text-center">
+      <ui-grid>
+        <ui-grid-cell columns="12">
+          <ui-button
+            raised
+            class="toggle-original"
+            @click="showingOriginal = !showingOriginal"
+          >Toggle Original Image</ui-button>
+        </ui-grid-cell>
+        <ui-grid-cell columns="12">
+        <ui-button raised class="shuffle" @click="shuffleTiles">Reshuffle</ui-button>
+        </ui-grid-cell>
+        <ui-grid-cell columns="12">
+        <ui-button raised class="reset" @click="reset">Reset</ui-button>
+        <ui-button raised class="restart" href="#" @click.prevent="restart">New Game</ui-button>
+        </ui-grid-cell>
+      </ui-grid>
     </div>
   </div>
 </template>
 
 <script>
 import sample from 'lodash.sample'
-import Tile from '@/components/vue/slider/Tile.vue'
+import Tile from '@/components/vue/games/slider/Tile.vue'
 
 let backupTiles = null
 
 export default {
   components: { Tile },
 
-  data () {
+  data() {
     return {
       image: null,
       showingOriginal: false,
@@ -54,7 +67,7 @@ export default {
   },
 
   computed: {
-    frameSize () {
+    frameSize() {
       return {
         width: `${this.tileSize.width * this.size.horizontal}px`,
         height: `${this.tileSize.height * this.size.vertical}px`
@@ -65,7 +78,7 @@ export default {
      * The total number of tiles in the current board.
      * @return {Number}
      */
-    totalTiles () {
+    totalTiles() {
       return this.size.horizontal * this.size.vertical
     },
 
@@ -73,7 +86,7 @@ export default {
      * Determine if the current board is valid (solved).
      * @return {boolean}
      */
-    valid () {
+    valid() {
       if (!this.tiles.length) {
         return false
       }
@@ -89,12 +102,16 @@ export default {
   },
 
   methods: {
-    start ({ image, size }) {
+    start({ image, size }) {
       this.size = size
       this.image = image
+
       // detect the width and height of the frame
       const img = new Image()
       img.onload = () => {
+        let ratio = img.width / img.height;
+        img.width = Math.min(document.querySelector(".board").clientWidth, 400);
+        img.height = img.width / ratio;
         this.tileSize.width = Math.floor(img.width / size.horizontal)
         this.tileSize.height = Math.floor(img.height / size.vertical)
         this.generateTiles()
@@ -106,7 +123,7 @@ export default {
     /**
      * Generate the tiles for the current game.
      */
-    generateTiles () {
+    generateTiles() {
       this.tiles = []
       for (let i = 0; i < this.totalTiles; ++i) {
         this.tiles.push({
@@ -116,7 +133,8 @@ export default {
             backgroundPositionY: `-${Math.floor(i / this.size.horizontal) * this.tileSize.height}px`,
             width: `${this.tileSize.width}px`,
             height: `${this.tileSize.height}px`,
-            order: i
+            order: i,
+            backgroundSize: `${this.tileSize.width * this.size.horizontal}px ${this.tileSize.height * this.size.vertical}px !important`,
           },
           position: i,
           isEmpty: i === 0
@@ -127,7 +145,7 @@ export default {
     /**
      * Shuffle the generated tiles.
      */
-    shuffleTiles () {
+    shuffleTiles() {
       // To make sure the puzzle is solvable, we execute a series of random moves
       for (let i = 0, j = this.totalTiles * 5; i < j; ++i) {
         const emptyTile = this.tiles.find(t => t.isEmpty)
@@ -145,7 +163,7 @@ export default {
      * Move a (movable) tile
      * @param  {Object} tile
      */
-    moveTile (tile) {
+    moveTile(tile) {
       if (tile.isEmpty) {
         return
       }
@@ -164,7 +182,7 @@ export default {
      * @param  {Object} a First tile
      * @param  {Object} b Second tile
      */
-    switchTiles (a, b) {
+    switchTiles(a, b) {
       [a.styles.order, b.styles.order] = [b.styles.order, a.styles.order]
     },
 
@@ -173,7 +191,7 @@ export default {
      * @param  {Object} tile
      * @return {Array.<Number>}
      */
-    getAdjacentOrders (tile) {
+    getAdjacentOrders(tile) {
       const pos = tile.styles.order
       return [
         pos % this.size.horizontal ? pos - 1 : null,
@@ -186,14 +204,14 @@ export default {
     /**
      * Reset the board.
      */
-    reset () {
+    reset() {
       this.tiles = JSON.parse(backupTiles)
     },
 
     /**
      * Restart the game.
      */
-    restart () {
+    restart() {
       this.$emit('restart')
     }
   }
@@ -223,7 +241,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, .5);
+    background: rgba(0, 0, 0, 0.5);
     color: #fff;
     font-size: 40px;
     margin: 0 0;
@@ -235,32 +253,26 @@ export default {
 .frame {
   display: flex;
   flex-wrap: wrap;
-  background: #612211 url('../assets/board.jpg');
+  background: #612211 url("../assets/board.jpg");
   background-size: cover;
 }
 
 .controls {
   margin-top: 30px;
 
-  a {
-    display: inline-block;
-    text-decoration: none;
-    padding: 6px 12px;
-    background: #f78403;
-    color: #fff;
-    border-radius: 3px;
+  .shuffle {
+    background: #3ebb5c;
+  }
+  .restart {
+    background: #368ba0;
+    margin-left: 10px !important;
+  }
+  .toggle-original {
+    background: #d05b88 !important;
+  }
 
-    &.toggle-original {
-      background: #d05b88;
-    }
-
-    &.restart {
-      background: #368ba0;
-    }
-
-    &.shuffle {
-      background: #3ebb5c;
-    }
+  .reset {
+    margin-right: 10px !important;
   }
 }
 </style>

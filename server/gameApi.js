@@ -1,18 +1,57 @@
+// Author : Gianmaria Rovelli
+
 const fetch = require("node-fetch");
-const FileReader = require("fs")
+var cors = require('cors')
 
 const IMAGE_DOG_API = "https://dog.ceo/api/breeds/image/random";
 const IMAGE_CAT_API = "https://api.thecatapi.com/v1/images/search";
 const RANDOM_FACT = "https://fungenerators.com/random/facts/animal/";
 const RANDOM_ANIMAL = "https://zoo-animal-api.herokuapp.com";
 
+const ENDPOINTS = [
+  { endpoint: "/api/dogimage", function: getDogImageAPI },
+  { endpoint: "/api/catimage", function: getCatImageAPI },
+  { endpoint: "/api/randomfact", function: getRandomFactAPI },
+  { endpoint: "/api/randomanimal", function: getRandomAnimalAPI },
+  { endpoint: "/api/catfact", function: getRandomCatFactAPI },
+  { endpoint: "/api/randomimagebase64", function: getRandomImageBase64API },
+  { endpoint: "/api/funnyvideo", function: getFunnyVideoAPI },
+  { endpoint: "/api/scoreboard/:game", function: getScoreboardAPI },
+]
+
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 function initAPI(app) {
-  app.get("/api/dogimage", getDogImageAPI);
-  app.get("/api/catimage", getCatImageAPI);
-  app.get("/api/randomfact", getRandomFactAPI);
-  app.get("/api/randomanimal", getRandomAnimalAPI);
-  app.get("/api/catfact", getRandomCatFactAPI);
-  app.get("/api/randomimagebase64", getRandomImageBase64API);
+  for (let i = 0; i < ENDPOINTS.length; i++) {
+    app.get(ENDPOINTS[i].endpoint, cors(corsOptions), ENDPOINTS[i].function);
+  }
+}
+
+async function getScoreboardAPI(req, res) {
+  try {
+    let game = req.params.game;
+    let board = getScoreboard(game);
+    res.json(board)
+  } catch (e) {
+    showError(res);
+  }
+}
+
+function getScoreboard(game) {
+  let board = {
+    status: "ok",
+    data:
+      [
+        { username: "lollo", uuid: "223321323218724", score: "20" },
+        { username: "gatto", uuid: "223321323218724", score: "10" },
+        { username: "pesce", uuid: "223321323218724", score: "2" },
+        { username: "dino", uuid: "223321323218724", score: "0" }
+      ]
+  }
+  return board;
 }
 
 async function getRandomImageBase64API(req, res) {
@@ -129,11 +168,37 @@ async function getCatImageData() {
   }
 }
 
+async function getFunnyVideoAPI(req, res) {
+  try {
+    let list = getFunnyVideoList();
+    let q = 1;
+    if (req.query.number) q = req.query.number;
+    let urls = [];
+    for (let i = 0; i < q; i++) {
+      let r = generateRandomInteger(list.length);
+      urls.push(list[r]);
+    }
+    let data = { "status": "ok", "urls": urls }
+    res.json(data)
+  } catch (e) {
+    showError(res);
+  }
+}
+
 function showError(res) {
   res.status(500);
   res.redirect('/errore');
 }
 
+function generateRandomInteger(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function getFunnyVideoList() {
+
+  return ['https://www.youtube.com/embed/O-qqRaHVHiE', 'https://www.youtube.com/embed/qpZula9aYS0', 'https://www.youtube.com/embed/NOhyduxTOGo']
+
+}
 
 function getLocalCatFact() {
   const li = [
@@ -283,4 +348,4 @@ function getLocalCatFact() {
   return li;
 }
 
-module.exports = { initAPI }
+module.exports = { initAPI, ENDPOINTS }

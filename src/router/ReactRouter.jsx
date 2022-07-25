@@ -17,7 +17,7 @@ export const ReactRoutes = [
         element: <HomePage />
     },
     {
-        path: "/office/home",
+        path: "/office",
         element: <HomeFrontOffice />
     },
     {
@@ -25,7 +25,7 @@ export const ReactRoutes = [
         element: <HomeComunita />,
         children:[
             {
-                path:"/comunita/home",
+                path:"/comunita",
                 element:<HomeComunita />
             },
             {

@@ -1,6 +1,5 @@
 <script>
-import 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'
-import 'https://cdn.jsdelivr.net/sweetalert2/3.0.3/sweetalert2.min.js'
+import '@/assets/js/jquery-3.6.0.min.js'
 import * as code from '@/assets/js/memory/script'
 
 

@@ -1,0 +1,1 @@
+scp -r dist gianmaria.rovelli2@ernesto.cs.unibo.it:~/gianmaria.rovelli2/html/nodejs/static/dist

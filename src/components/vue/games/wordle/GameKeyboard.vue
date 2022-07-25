@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import GameKeyboardKey from "@/components/wordle/GameKeyboardKey.vue"
+import GameKeyboardKey from "@/components/vue/games/wordle/GameKeyboardKey.vue"
 import { ValidKey } from "@/assets/js/wordle/types"
 import type { Keyboard } from "@/assets/js/wordle/keyboard"
 import { onMounted, onUnmounted, computed } from 'vue';

@@ -1,29 +1,39 @@
 <template>
   <form id="optionsForm" @submit.prevent="start">
     <img class="preview" :src="image" v-if="image" />
-    <div>
-      <div>
-        <label for="file">
-          Select an image
-          <input
-            type="file"
-            id="file"
+    <ui-spinner v-if="!image" active></ui-spinner>
+    <div >
+      <ui-grid>
+        <ui-grid-cell columns="12">
+          <ui-file 
             accept="image/gif, image/jpeg, image/png"
+            id="file"
+            type="file"
             @change="fileChanged"
-          />
-        </label>
-        Board size:
-        <input
-          type="number"
-          name="width"
-          min="2"
-          max="10"
-          v-model.number="size.horizontal"
-        />
-        ×
-        <input type="number" name="height" min="2" max="10" v-model.number="size.vertical" />
-      </div>
-      <button v-if="image">Start</button>
+          ></ui-file>
+        </ui-grid-cell>
+      </ui-grid>
+      <ui-grid >
+        <ui-grid-cell columns="12">
+          <ui-textfield
+            inputType="number"
+            name="width"
+            min="2"
+            max="10"
+            v-model.number="size.horizontal"
+            outlined
+          >Width</ui-textfield> ×
+          <ui-textfield
+            inputType="number"
+            name="height"
+            min="2"
+            max="10"
+            v-model.number="size.vertical"
+            outlined
+          >Height</ui-textfield>
+        </ui-grid-cell>
+      </ui-grid>
+      <ui-button raised v-if="image" @click="start">Start</ui-button>
     </div>
   </form>
 </template>
@@ -57,13 +67,16 @@ export default {
     }
   },
   mounted() {
-    fetch("http://127.0.0.1:8000/api/randomimagebase64")
-    .then((data) => data.json())
-    .then((json) => {
-      this.image = json.image;
-    })
+    this.fetchNewImage()
   },
   methods: {
+    fetchNewImage() {
+      fetch("http://192.168.1.8:8000/api/randomimagebase64")
+        .then((data) => data.json())
+        .then((json) => {
+          this.image = json.image;
+        })
+    },
     fileChanged(e) {
       if (!e.target.files.length) {
         this.image = null
@@ -72,12 +85,11 @@ export default {
 
       loadImage(e.target.files[0], canvas => {
         this.image = canvas.toDataURL();
-        console.log(this.image)
       }, {
-        maxWidth: 600,
-        maxHeight: 600,
-        minWidth: 200,
-        minHeight: 200,
+        maxWidth: 400,
+        maxHeight: 400,
+        minWidth: 400,
+        minHeight: 400,
         canvas: true
       })
 
@@ -102,6 +114,7 @@ export default {
     reset() {
       this.image = null
       document.querySelector('#optionsForm').reset()
+      this.fetchNewImage();
     }
   }
 }

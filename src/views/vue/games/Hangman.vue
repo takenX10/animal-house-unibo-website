@@ -2,6 +2,7 @@
   <div :id="name">
     <div
       :header="name"
+      class="text-center"
       border-variant="primary"
       bg-variant="light"
       header-bg-variant="primary"
@@ -25,9 +26,9 @@
 </template>
 
 <script>
-import StickMan from '@/components/hangman/StickMan.vue'
-import Letters from '@/components/hangman/Letters.vue'
-import Keyboard from '@/components/hangman/Keyboard.vue'
+import StickMan from '@/components/vue/games/hangman/StickMan.vue'
+import Letters from '@/components/vue/games/hangman/Letters.vue'
+import Keyboard from '@/components/vue/games/hangman/Keyboard.vue'
 import json from '@/assets/data/hangman/words.json'
 
 const len = Keyboard.data().len;

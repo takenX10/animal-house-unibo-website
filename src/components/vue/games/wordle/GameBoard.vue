@@ -39,14 +39,14 @@
 </template>
 
 <script setup lang="ts">
-import GameGrid from "@/components/wordle/GameGrid.vue"
-import GameKeyboard from "@/components/wordle/GameKeyboard.vue"
-import GameHeader from "@/components/wordle/GameHeader.vue"
-import GameHelp from "@/components/wordle/GameHelp.vue"
-import GameResult from "@/components/wordle/GameResult.vue"
-import GameSettings from "@/components/wordle/GameSettings.vue"
-import GameErrors from "@/components/wordle/GameErrors.vue"
-import VModal from "@/components/wordle/VModal.vue"
+import GameGrid from "@/components/vue/games/wordle/GameGrid.vue"
+import GameKeyboard from "@/components/vue/games/wordle/GameKeyboard.vue"
+import GameHeader from "@/components/vue/games/wordle/GameHeader.vue"
+import GameHelp from "@/components/vue/games/wordle/GameHelp.vue"
+import GameResult from "@/components/vue/games/wordle/GameResult.vue"
+import GameSettings from "@/components/vue/games/wordle/GameSettings.vue"
+import GameErrors from "@/components/vue/games/wordle/GameErrors.vue"
+import VModal from "@/components/vue/games/wordle/VModal.vue"
 import { useGame } from "@/assets/js/wordle/game"
 import { ref, watch } from 'vue';
 

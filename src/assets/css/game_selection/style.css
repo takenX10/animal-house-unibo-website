@@ -140,3 +140,7 @@ body {
 #go-back {
   cursor: pointer;
 }
+
+.section_header {
+  font-size: x-large;
+}
