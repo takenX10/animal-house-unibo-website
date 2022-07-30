@@ -6,45 +6,56 @@
 </style>
 
 <script>
+import { defineAsyncComponent } from "vue";
 
-import Memory from '@/views/vue/games/Memory.vue'
-import Hangman from '@/views/vue/games/Hangman.vue'
-import Wordle from '@/views/vue/games/Wordle.vue'
-import Slider from '@/views/vue/games/Slider.vue'
+// import Memory from '@/views/vue/games/Memory.vue'
+const Memory = defineAsyncComponent(() =>
+  import("@/views/vue/games/Memory.vue")
+);
+// import Hangman from '@/views/vue/games/Hangman.vue'
+const Hangman = defineAsyncComponent(() =>
+  import("@/views/vue/games/Hangman.vue")
+);
+// import Wordle from '@/views/vue/games/Wordle.vue'
+const Wordle = defineAsyncComponent(() =>
+  import("@/views/vue/games/Wordle.vue")
+);
+// import Slider from '@/views/vue/games/Slider.vue'
+const Slider = defineAsyncComponent(() =>
+  import("@/views/vue/games/Slider.vue")
+);
 
-import 'vue3-carousel/dist/carousel.css';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
-import { runOnReady, ResCarouselSize } from '@/assets/js/game_selection/main.js';
-import GameHeader from './GameHeader.vue';
-import { useToast } from 'balm-ui/plugins/toast';
+import GameHeader from "./GameHeader.vue";
+import { useToast } from "balm-ui/plugins/toast";
 const $toast = useToast();
+import { useEvent } from "balm-ui";
 
-const BACKEND_SERVER = 'http://192.168.1.8:8000'
-
-let game = ""
+let game = "";
 let games = [
   {
-    "title": "Memory",
-    "component": "Memory",
-    "color": ""
+    title: "Memory",
+    component: "Memory",
+    color: "",
   },
   {
-    "title": "Hangman",
-    "component": "Hangman",
-    "color": ""
+    title: "Hangman",
+    component: "Hangman",
+    color: "",
   },
   {
-    "title": "Wordle",
-    "component": "Wordle",
-    "color": ""
+    title: "Wordle",
+    component: "Wordle",
+    color: "",
   },
   {
-    "title": "Slider",
-    "component": "Slider",
-    "color": ""
-  }
-]
+    title: "Slider",
+    component: "Slider",
+    color: "",
+  },
+];
 
 export default {
   components: {
@@ -56,39 +67,26 @@ export default {
     Slide,
     Pagination,
     Navigation,
-    GameHeader
+    GameHeader,
   },
   data() {
     return {
       component: game,
       games: games,
-      expanded: true,
-      settings: {
-        itemsToShow: 2,
-        snapAlign: 'center',
-      },
-      // breakpoints are mobile first
-      // any settings not specified will fallback to the carousel settings
-      breakpoints: {
-        // 350px and up
-        350: {
-          itemsToShow: 1.5,
-          snapAlign: 'center',
-        },
-        // 700px and up
-        700: {
-          itemsToShow: 3.5,
-          snapAlign: 'center',
-        },
-        // 1024 and up
-        1024: {
-          itemsToShow: 5,
-          snapAlign: 'center',
-        },
-      },
-    }
+      funnyvideo: "",
+      random_fact: "",
+      dog_breed_loading: false,
+      dog_breed_guesses: [],
+      cat_breed_loading: false,
+      cat_breed_guesses: [],
+      balmUI: useEvent(),
+      files: [],
+    };
   },
   methods: {
+    refreshPage: function () {
+      this.$forceUpdate();
+    },
     changeGame: function (g) {
       this.component = g;
       location.hash = "#" + g;
@@ -99,46 +97,82 @@ export default {
       }
     },
     goback: function () {
-      this.component = ""
-      location.hash = "#"
+      this.component = "";
+      location.hash = "#";
     },
-    updateScoreboard: function (g) {
-      if (!g) return
-      fetch(`${BACKEND_SERVER}/api/scoreboard/${String(g)}`)
-        .then((data) => data.json()).then((data) => {
-          this.scoreboards = data.data;
-          console.log(this.scoreboards)
-          this.$forceUpdate();
-        })
+    updateScoreboard: async function (g) {
+      if (!g) return;
+      let res = await fetch(
+        `${this.BACKEND_SERVER}/api/scoreboard/${String(g)}`
+      );
+      let data = await res.json();
+      if (data.status == "ok") {
+        this.scoreboards = data.data;
+        this.refreshPage();
+      }
     },
-    showRandomFact: function () {
-      fetch(`${BACKEND_SERVER}/api/randomfact`)
-        .then((data) => data.json()).then((data) => {
-          // $toast({ message: "Random fact : " + data.text, timeoutMs: 3500 })
-          this.random_fact = data.text;
-          this.$forceUpdate();
-        })
+    showRandomFact: async function () {
+      let res = await fetch(`${this.BACKEND_SERVER}/api/randomfact`);
+      let data = await res.json();
+      if (data.status == "ok") {
+        // $toast({ message: "Random fact : " + data.text, timeoutMs: 3500 })
+        this.random_fact = data.text;
+        this.refreshPage();
+      }
     },
-    getFunnyVideos: function () {
-      fetch(`${BACKEND_SERVER}/api/funnyvideo`)
-        .then((data) => data.json())
-        .then((data) => {
-          console.log(data.urls[0])
-          this.funnyvideo = data.urls[0];
-          this.$forceUpdate();
-        })
+    getFunnyVideos: async function () {
+      let res = await fetch(`${this.BACKEND_SERVER}/api/funnyvideo`);
+      let data = await res.json();
+      if (data.status == "ok") {
+        this.funnyvideo = data.urls[0];
+      }
+    },
+    uploadImageDogBreedRecognition: async function () {
+      this.dog_breed_loading = true;
+      this.dog_breed_guesses = [];
+      this.refreshPage();
+
+      let form = new FormData();
+      form.append("dog", this.files[0].sourceFile);
+      let res = await fetch(`${this.BACKEND_SERVER}/api/dogbreedrec`, {
+        body: form,
+        method: "POST",
+      });
+      let data = await res.json();
+      if (data.status == "ok") {
+        console.log(data);
+        this.dog_breed_guesses = data.data;
+        this.dog_breed_loading = false;
+        this.refreshPage();
+      }
+    },
+    uploadImageCatBreedRecognition: async function () {
+      this.cat_breed_loading = true;
+      this.cat_breed_guesses = [];
+      this.refreshPage();
+
+      let form = new FormData();
+      form.append("cat", this.files[0].sourceFile);
+      let res = await fetch(`${this.BACKEND_SERVER}/api/catbreedrec`, {
+        body: form,
+        method: "POST",
+      });
+      let data = await res.json();
+      if (data.status == "ok") {
+        this.cat_breed_guesses = data.data.results;
+        this.cat_breed_loading = false;
+        this.refreshPage();
+      }
     },
     getCurr: function () {
-      return this.component
+      return this.component;
     },
-    ResCarouselSize: ResCarouselSize
   },
   created() {
     let game = location.hash.slice(1);
     this.changeGame(game);
   },
-}
-
+};
 </script>
 
 <template>
@@ -148,7 +182,7 @@ export default {
       <div class="row">
         <div class="col-1 mx-auto text-start">
           <i
-            style="font-size: x-large; vertical-align: middle;"
+            style="font-size: x-large; vertical-align: middle"
             @click="goback"
             id="go-back"
             class="fa fa-angle-left pl-5"
@@ -170,7 +204,8 @@ export default {
           class="col col-lg-8 col-md-8 col-sm-8 mx-auto"
           v-b-toggle.collapse-1
           variant="primary"
-        >Scoreboard</b-button>
+          >Scoreboard</b-button
+        >
         <b-collapse id="collapse-1" class="mt-2">
           <ui-list single-selection>
             <ui-item v-for="(user, i) in scoreboards" :key="index">
@@ -201,9 +236,9 @@ export default {
           <div class="btn btn-primary" v-on:click="changeGame(game.component)">Play now!</div>
         </ui-grid-cell>
       </ui-grid>-->
-      <ui-grid v-if="funnyvideo">
+      <ui-grid class="text-center" id="funnyvideo_container" v-if="funnyvideo">
         <ui-grid-cell columns="12">
-          <div class="text-center fw-bold section_header">In case you're a bit sad 🤣</div>
+          <div class="fw-bold section_header">In case you're a bit sad 🤣</div>
         </ui-grid-cell>
         <ui-grid-cell columns="12">
           <iframe
@@ -217,25 +252,116 @@ export default {
           ></iframe>
         </ui-grid-cell>
       </ui-grid>
-      <ui-grid v-if="random_fact">
+
+      <ui-grid class="text-center" id="dogbreedai-container">
+        <ui-grid-cell columns="12">
+          <div class="text-center fw-bold section_header">
+            Do you want to find out what breed your dog is? 🧪👨🏼‍💻
+          </div>
+        </ui-grid-cell>
+
+        <ui-grid-cell v-if="dog_breed_loading" columns="12" class="mx-auto">
+          <ui-spinner active></ui-spinner>
+        </ui-grid-cell>
+
+        <ui-grid-cell
+          v-if="dog_breed_guesses.length > 0"
+          columns="12"
+          class="mx-auto"
+        >
+          <div class="text-center fw-bold section_header_small">
+            My guesses are :
+          </div>
+          <ui-list :type="2">
+            <ui-item v-for="breed in dog_breed_guesses" :key="i">
+              <ui-item-text-content class="mx-auto">
+                <ui-item-text1 class="dog_breed_guesses">{{
+                  breed.name
+                }}</ui-item-text1>
+                <ui-item-text2>{{ breed.perc }} %</ui-item-text2>
+              </ui-item-text-content>
+            </ui-item>
+          </ui-list>
+        </ui-grid-cell>
+
+        <ui-grid-cell columns="12">
+          <ui-file
+            text="ABSOLUTELY"
+            accept="image/*"
+            @change="
+              balmUI.onChange('files', $event);
+              uploadImageDogBreedRecognition();
+            "
+          ></ui-file>
+        </ui-grid-cell>
+      </ui-grid>
+
+      <ui-grid class="text-center" id="catbreedai-container">
+        <ui-grid-cell columns="12">
+          <div class="text-center fw-bold section_header">
+            Do you want to find out what breed your <b>cat</b> is? 🧪👨🏼‍💻
+          </div>
+        </ui-grid-cell>
+
+        <ui-grid-cell v-if="cat_breed_loading" columns="12" class="mx-auto">
+          <ui-spinner active></ui-spinner>
+        </ui-grid-cell>
+
+        <ui-grid-cell
+          v-if="cat_breed_guesses.length > 0"
+          columns="12"
+          class="mx-auto"
+        >
+          <div class="text-center fw-bold section_header_small">
+            My guesses are :
+          </div>
+          <ui-list :type="2">
+            <ui-item v-for="breed in cat_breed_guesses" :key="i">
+              <ui-item-text-content class="mx-auto">
+                <ui-item-text1 class="cat_breed_guesses">{{
+                  breed.name
+                }}</ui-item-text1>
+                <ui-item-text2>{{ breed.perc }} %</ui-item-text2>
+              </ui-item-text-content>
+            </ui-item>
+          </ui-list>
+        </ui-grid-cell>
+
+        <ui-grid-cell columns="12">
+          <ui-file
+            text="ABSOLUTELY"
+            accept="image/*"
+            @change="
+              balmUI.onChange('files', $event);
+              uploadImageCatBreedRecognition();
+            "
+          ></ui-file>
+        </ui-grid-cell>
+      </ui-grid>
+
+      <ui-grid class="text-center" id="randomfact_container" v-if="random_fact">
         <ui-grid-cell columns="12">
           <ui-grid-cell columns="12">
-            <div class="text-center fw-bold section_header">🧠 Did you know that ...</div>
+            <div class="fw-bold section_header">🧠 Did you know that ...</div>
           </ui-grid-cell>
           <ui-grid-cell columns="12">
-            <div class="text-center fw-bold">{{ random_fact }}</div>
+            <div class="fw-bold">{{ random_fact }}</div>
           </ui-grid-cell>
         </ui-grid-cell>
       </ui-grid>
     </div>
     <div class="games-area mb-5">
-      <div class="fw-bold text-center section_header">Are you getting bored?</div>
-      <carousel :items-to-show="3" style="margin: 0 10px 0 10px;">
+      <div class="fw-bold text-center section_header">
+        Are you getting bored?
+      </div>
+      <carousel :items-to-show="3" style="margin: 0 10px 0 10px">
         <slide class="item" v-for="game in games" :key="game">
           <div>
             <!-- <h4>{{ game.title }}</h4> -->
             <!-- <ui-icon-button>videogame_asset</ui-icon-button> -->
-            <ui-button raised @click="changeGame(game.component)">{{ game.title }}</ui-button>
+            <ui-button raised @click="changeGame(game.component)">{{
+              game.title
+            }}</ui-button>
           </div>
         </slide>
 

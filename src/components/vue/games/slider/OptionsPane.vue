@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     fetchNewImage() {
-      fetch("http://192.168.1.8:8000/api/randomimagebase64")
+      fetch(`${this.BACKEND_SERVER}/api/randomimagebase64`)
         .then((data) => data.json())
         .then((json) => {
           this.image = json.image;

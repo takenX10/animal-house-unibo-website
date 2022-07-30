@@ -1,5 +1,4 @@
 <script>
-import '@/assets/js/jquery-3.6.0.min.js'
 import * as code from '@/assets/js/memory/script'
 
 

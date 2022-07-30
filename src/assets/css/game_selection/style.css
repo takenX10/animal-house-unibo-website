@@ -144,3 +144,11 @@ body {
 .section_header {
   font-size: x-large;
 }
+
+.section_header_small {
+  font-size: large;
+}
+
+.dog_breed_guesses {
+  font-size: medium !important;
+}
