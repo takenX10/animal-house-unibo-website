@@ -1,6 +1,5 @@
 // Author : Gianmaria Rovelli
 
-// const os = require("os");
 import os from "os";
 import multer from "multer";
 const upload = multer({ dest: os.tmpdir() });
