@@ -5,6 +5,7 @@ import multer from "multer";
 import express from "express";
 import path from "path";
 import cors from "cors";
+import METHODS from "./methods.js";
 import { fileURLToPath } from "url";
 const upload = multer({ dest: os.tmpdir() });
 const app = express();
@@ -16,16 +17,12 @@ app.use(express.static(__dirname + "/static"));
 app.use(express.static(__dirname + "/static/dist"));
 app.use(express.static(__dirname + "/static/dist/assets"));
 
-// TODO: find a better way to do this
-const METHODS = {
-  GET: 0,
-  POST: 1,
-};
-
 let backendRouter = [];
 
 import GAMEAPI from "./gameApi/gameApi.js";
 backendRouter.push(GAMEAPI.ENDPOINTS);
+import BACKOFFICE from "./backoffice.js";
+backendRouter.push(BACKOFFICE.ENDPOINTS);
 
 const corsOptions = {
   origin: "*",
@@ -48,7 +45,6 @@ function initAPI() {
 function isInRouter(path) {
   for (let ENDPOINTS of backendRouter) {
     for(let route of ENDPOINTS){
-      console.log(path, route.endpoint.split(":")[0], path.startsWith(route.endpoint.split(":")[0]));
       if (path.startsWith(route.endpoint.split(":")[0])) return true;
     }
   }

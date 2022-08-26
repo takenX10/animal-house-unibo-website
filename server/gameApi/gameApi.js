@@ -5,6 +5,7 @@ import jsdom from "jsdom";
 import os from "os";
 import multer from "multer";
 import { FormData } from "formdata-node"; // You can use `File` from fetch-blob >= 3.x
+import METHODS from "../methods.js";
 import { fileFromSync } from "fetch-blob/from.js";
 const { JSDOM } = jsdom;
 const upload = multer({ dest: os.tmpdir() });
@@ -15,11 +16,6 @@ const IMAGE_DOG_API = "https://dog.ceo/api/breeds/image/random";
 const IMAGE_CAT_API = "https://api.thecatapi.com/v1/images/search";
 const RANDOM_FACT = "https://fungenerators.com/random/facts/animal/";
 const RANDOM_ANIMAL = "https://zoo-animal-api.herokuapp.com";
-
-const METHODS = {
-  GET: 0,
-  POST: 1,
-};
 
 const ENDPOINTS = [
   { endpoint: "/api/dogimage", method: METHODS.GET, function: getDogImageAPI },

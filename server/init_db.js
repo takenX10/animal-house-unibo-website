@@ -1,23 +1,21 @@
-import mongoose from 'mongoose';
 import DATABASE from './database_schema.js';
-const DBNAME = "animalhouse";
-const url = `mongodb://localhost:27017/${DBNAME}`;
 
+// s3cr3t_aldo
 var fakeUsers = ["aldo", "giovanni", "giacomo"]
 
 async function init(){
+    let mongoose = await DATABASE.connect();
     console.log("Clearing database...");
-    await mongoose.connect(url);
-    console.log("connected...");
-    await mongoose.connection.db.dropDatabase(console.log(`${mongoose.connection.db.databaseName} e' stato pulito`));
+    await mongoose.connection.db.dropDatabase(console.log(`${mongoose.connection.db.databaseName}-db has been cleared`));
+    console.log("Adding starting elements to database...");
     for(let u of fakeUsers){
-        console.log(u)
-        var u = await DATABASE.User.create({
+        await DATABASE.User.create({
             username:u,
-            password:`s3cr3t${u}`,
+            password:`s3cr3t_${u}`,
             isPoster:false
         });
     }
+    console.log("done!");
     process.exit();
 }
   

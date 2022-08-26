@@ -1,6 +1,13 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+const DBNAME = "animalhouse";
+const url = `mongodb://localhost:27017/${DBNAME}`;
 
+async function connect(){
+    await mongoose.connect(url);
+    console.log("connected...");
+    return mongoose;
+}
 const userSchema = new Schema({
     username:{
         type:String,
@@ -58,4 +65,4 @@ const Post = mongoose.model('Post', postSchema);
 const User = mongoose.model('User', userSchema);
 const Pet = mongoose.model('Pet', petSchema);
 
-export default {User, Post, Pet};
+export default {User, Post, Pet, connect};
