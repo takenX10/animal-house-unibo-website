@@ -2,40 +2,55 @@
 
 import os from "os";
 import multer from "multer";
-const upload = multer({ dest: os.tmpdir() });
 import express from "express";
+import path from "path";
+import cors from "cors";
+import { fileURLToPath } from "url";
+const upload = multer({ dest: os.tmpdir() });
 const app = express();
 const port = 8000;
 
-import path from "path";
-import { fileURLToPath } from "url";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// const DB = require("./database.js");
-// DB.init();
-import GAMEAPI from "./gameApi/gameApi.js";
-GAMEAPI.initAPI(app);
-// import BACKOFFICE from "./backoffice.js";
-// BACKOFFICE.initBackoffice(app);
-let backendRouter = [];
-
-function generateBackendRouterWhitelist() {
-  for (let i = 0; i < GAMEAPI.ENDPOINTS.length; i++) {
-    // in case of routing like /api/scoreboard/:game
-    let e = GAMEAPI.ENDPOINTS[i].endpoint.split(":")[0];
-    backendRouter.push(e);
-  }
-}
-
 app.use(express.static(__dirname + "/static"));
 app.use(express.static(__dirname + "/static/dist"));
 app.use(express.static(__dirname + "/static/dist/assets"));
 
+// TODO: find a better way to do this
+const METHODS = {
+  GET: 0,
+  POST: 1,
+};
+
+let backendRouter = [];
+
+import GAMEAPI from "./gameApi/gameApi.js";
+backendRouter.push(GAMEAPI.ENDPOINTS);
+
+const corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+function initAPI() {
+  let cors_ = cors(corsOptions);
+  for (let ENDPOINTS of backendRouter) {
+    for (let i = 0; i < ENDPOINTS.length; i++) {
+      let opts = [cors_];
+      if (ENDPOINTS[i].opts) opts.push(ENDPOINTS[i].opts);
+      let params = [ENDPOINTS[i].endpoint, opts, ENDPOINTS[i].function];
+      if (ENDPOINTS[i].method == METHODS.GET) app.get(...params);
+      else if (ENDPOINTS[i].method == METHODS.POST) app.post(...params);
+    }
+  }
+}
+
 function isInRouter(path) {
-  for (let route of backendRouter) {
-    if (path.startsWith(route)) return true;
+  for (let ENDPOINTS of backendRouter) {
+    for(let route of ENDPOINTS){
+      console.log(path, route.endpoint.split(":")[0], path.startsWith(route.endpoint.split(":")[0]));
+      if (path.startsWith(route.endpoint.split(":")[0])) return true;
+    }
   }
   return false;
 }
@@ -53,6 +68,6 @@ app.get("*", function (req, res, next) {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-  generateBackendRouterWhitelist();
+  console.log(`Animalhouse Backend listening on port ${port}`);
+  initAPI();
 });

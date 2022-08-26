@@ -10,14 +10,14 @@ async function init(){
     await mongoose.connect(url);
     console.log("connected...");
     await mongoose.connection.db.dropDatabase(console.log(`${mongoose.connection.db.databaseName} e' stato pulito`));
-    fakeUsers.forEach(async(u) =>{
+    for(let u of fakeUsers){
         console.log(u)
         var u = await DATABASE.User.create({
             username:u,
             password:`s3cr3t${u}`,
             isPoster:false
         });
-    });
+    }
     process.exit();
 }
   

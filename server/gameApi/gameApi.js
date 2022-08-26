@@ -1,14 +1,12 @@
 // Author : Gianmaria Rovelli
 
-const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
-import { FormData } from "formdata-node"; // You can use `File` from fetch-blob >= 3.x
-import { fileFromSync } from "fetch-blob/from.js";
+const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
 import jsdom from "jsdom";
-const { JSDOM } = jsdom;
-import cors from "cors";
 import os from "os";
 import multer from "multer";
+import { FormData } from "formdata-node"; // You can use `File` from fetch-blob >= 3.x
+import { fileFromSync } from "fetch-blob/from.js";
+const { JSDOM } = jsdom;
 const upload = multer({ dest: os.tmpdir() });
 
 import CatBreedAI from "./catBreedAI.js";
@@ -69,22 +67,6 @@ const ENDPOINTS = [
     function: getCatBreedAIAPI,
   },
 ];
-
-const corsOptions = {
-  origin: "*",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-function initAPI(app) {
-  let cors_ = cors(corsOptions);
-  for (let i = 0; i < ENDPOINTS.length; i++) {
-    let opts = [cors_];
-    if (ENDPOINTS[i].opts) opts.push(ENDPOINTS[i].opts);
-    let params = [ENDPOINTS[i].endpoint, opts, ENDPOINTS[i].function];
-    if (ENDPOINTS[i].method == METHODS.GET) app.get(...params);
-    else if (ENDPOINTS[i].method == METHODS.POST) app.post(...params);
-  }
-}
 
 async function getDogBreedAIAPI(req, res) {
   try {
@@ -458,4 +440,4 @@ function getLocalCatFact() {
   return li;
 }
 
-export default { initAPI, ENDPOINTS };
+export default { ENDPOINTS };
