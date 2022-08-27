@@ -5,6 +5,7 @@ import multer from "multer";
 import express from "express";
 import path from "path";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import METHODS from "./methods.js";
 import { fileURLToPath } from "url";
 const upload = multer({ dest: os.tmpdir() });
@@ -16,12 +17,13 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(__dirname + "/static"));
 app.use(express.static(__dirname + "/static/dist"));
 app.use(express.static(__dirname + "/static/dist/assets"));
+app.use(cookieParser());
 
 let backendRouter = [];
 
 import GAMEAPI from "./gameApi/gameApi.js";
 backendRouter.push(GAMEAPI.ENDPOINTS);
-import BACKOFFICE from "./backoffice.js";
+import BACKOFFICE from "./backoffice/backoffice.js";
 backendRouter.push(BACKOFFICE.ENDPOINTS);
 
 const corsOptions = {

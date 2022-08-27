@@ -54,7 +54,11 @@
                         contentType: 'application/json',
                         data:JSON.stringify(formval),
                         success: (data)=>{
-                            alert(`User ${ data.response ?"created correctly":"can't be created for some reason..."}`);
+                            if(data.response){
+                                window.location="/backoffice/home";
+                            }else{
+                                alert(`User can't be created for some reason...`);
+                            }
                         }
                     });
                 }

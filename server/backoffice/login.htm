@@ -47,7 +47,12 @@
                     contentType: 'application/json',
                     data:JSON.stringify(formval),
                     success: (data)=>{
-                        alert(`User ${ data.response ?"found":"not found"}`);
+                        if(data.response){
+                            window.location="/backoffice/home";
+                        }else{
+                            alert(`User not found!`);
+                        }
+
                     }
                 });
                 event.preventDefault();
