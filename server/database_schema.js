@@ -17,6 +17,10 @@ const userSchema = new Schema({
         type:String,
         required:true
     },
+    id:{
+        type:Number,
+        required:true
+    },
     isPoster:{
         type:Boolean,
         required:true
@@ -39,11 +43,19 @@ const postSchema = new Schema({
 });
 
 const petSchema = new Schema({
-    owner:{
-        type:String,
+    petid:{
+        type:Number,
+        required:true
+    },
+    ownerid:{
+        type:Number,
         required:true
     },
     name:{
+        type:String,
+        required:true
+    },
+    description:{
         type:String,
         required:true
     },
@@ -58,6 +70,14 @@ const petSchema = new Schema({
     age:{
         type:Number,
         required:false
+    },
+    likedBy:{
+        type:Array,
+        required:true
+    },
+    matchedBy:{
+        type:Array,
+        required:true
     }
 });
 

@@ -69,6 +69,6 @@ export const CreateVueApp = () => {
   app.use(VueCarousel);
   app.config.globalProperties.BACKEND_SERVER =
     process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
-  app.config.globalProperties.BACKEND_SERVER = "http://192.168.1.17:8000";
+  //app.config.globalProperties.BACKEND_SERVER = "http://192.168.1.17:8000";
   app.mount("#app");
 };

@@ -25,6 +25,8 @@ import GAMEAPI from "./gameApi/gameApi.js";
 backendRouter.push(GAMEAPI.ENDPOINTS);
 import BACKOFFICE from "./backoffice/backoffice.js";
 backendRouter.push(BACKOFFICE.ENDPOINTS);
+import PARTNERAPI from "./backoffice/partnerapi.js";
+backendRouter.push(PARTNERAPI.ENDPOINTS);
 
 const corsOptions = {
   origin: "*",

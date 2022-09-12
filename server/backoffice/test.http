@@ -1,0 +1,18 @@
+
+
+POST http://localhost:8000/backoffice/add_like HTTP/1.1
+Host: localhost:8000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://localhost:8000/comunita/cerco-partner
+Origin: http://localhost:8000
+Content-Type: application/json
+Cookie: AUTHSESSION=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsZG8iLCJpc1Bvc3RlciI6ZmFsc2UsImlhdCI6MTY2Mjk5Njc5OX0.WOELTYy4FYisqzkuYJE-5Bl1q7p--G-gpxZauVIVwJE
+Content-Length: 30
+
+{
+    "id":1,
+    "likedid":2
+}
