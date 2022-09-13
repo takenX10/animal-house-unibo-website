@@ -8,6 +8,7 @@ async function connect(){
     console.log("connected...");
     return mongoose;
 }
+
 const userSchema = new Schema({
     username:{
         type:String,
@@ -65,11 +66,15 @@ const petSchema = new Schema({
     },
     weight:{
         type:Number,
-        required:false
+        required:true
     },
     age:{
         type:Number,
-        required:false
+        required:true
+    },
+    sex:{
+        type:String,
+        required:true
     },
     likedBy:{
         type:Array,
@@ -78,6 +83,10 @@ const petSchema = new Schema({
     matchedBy:{
         type:Array,
         required:true
+    },
+    imgList:{
+        type:Array,
+        required: true
     }
 });
 

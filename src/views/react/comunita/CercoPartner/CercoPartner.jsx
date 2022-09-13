@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Navbar from '@/components/Navbar/Navbar';
 import TinderCard from './TinderCard';
@@ -27,45 +27,71 @@ const StyledCercoPartner = styled.div`
         width: 100%;
         height: 10%;
     }
-    button {
-        height: 100%;
-    }
 `
 
-export default function CercoPartner() {    
-    async function like(id, likedid){
+export default function CercoPartner() {
+    const [currentPet, setCurrentPet] = useState({
+        age: 0,
+        weight: 0,
+        name: "loading...",
+        sex: "n/a",
+        description: "loading...",
+        imgList: ["https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg"]
+    });
+    const [myId, setMyId] = useState(null);
+    async function get_my_id(){
+        let res = await fetch("http://localhost:8000/backoffice/get_my_id");
+        res = await res.json();
+        setMyId(res.id);
+    }
+
+    async function fetch_new_puppy(){
+        let res = await fetch("http://localhost:8000/backoffice/get_new_puppy", {method:"POST"});
+        setCurrentPet(await res.json());
+    }
+
+    useEffect(()=>{
+        get_my_id();
+        fetch_new_puppy();
+    }, []);
+
+    useEffect(()=>{
+        console.log(currentPet);
+    }, [currentPet]);
+
+    async function like(){
         let res = await fetch("http://localhost:8000/backoffice/add_like", {
                 method:"POST",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                   },
-                body: JSON.stringify({id:1, likedid:2})
-            }).then(res => res.json()).then(data => console.log(data));
-        console.log(res);
+                body: JSON.stringify({id:myId, likedid:currentPet.petid})
+            });
+        fetch_new_puppy();
     }
-
     function reject(){
-
+        fetch_new_puppy();
     }
+
     return (
         <>
             <Navbar />
             <StyledCercoPartner className='p-5'>
                 <div className='view'>
                     <TinderCard 
-                        age="11 anni" 
-                        weight="5kg" 
-                        name="Baloo" 
-                        sex="Maschio" 
-                        description="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus placeat, cumque maiores eligendi blanditiis, eaque reprehenderit id repellat ab dolorem exercitationem est quam, veniam aperiam consequatur eveniet praesentium accusantium ducimus!"
-                        imgList={["http://www.petpaw.com.au/wp-content/uploads/2014/06/Maltese-4.jpg", "http://www.dogalize.com/wp-content/uploads/2017/01/maltese.jpg", "https://www.littlepuppiesonline.com/wp-content/uploads/otto1-1.jpg"]}
+                        age={currentPet.age}
+                        weight={currentPet.weight}
+                        name={currentPet.name} 
+                        sex={currentPet.sex} 
+                        description={currentPet.description}
+                        imgList={(currentPet.imgList ? currentPet.imgList: [])}
                     />                            
-                    <div className='button-container m-1'>
-                        <button type='button' className='rounded rounded-circle p-4 btn btn-danger' onClick={reject}>
+                    <div className='button-container m-1 justify-content-around'>
+                        <button type='button' className='p-4 btn btn-danger m-3 w-25 shadow' onClick={reject}>
                             <FontAwesomeIcon icon={faXmark}></FontAwesomeIcon>
                         </button>
-                        <button type='button' className='rounded rounded-circle p-4 btn btn-success' onClick={like}>
+                        <button type='button' className='p-4 btn btn-success m-3 w-25 shadow' onClick={like}>
                             <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
                         </button>
                     </div>

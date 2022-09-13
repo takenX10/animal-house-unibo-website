@@ -98,6 +98,16 @@ const NavbarShop = () => {
 }
 
 export default function Navbar(){
+    function clearCookies(){
+        var cookies = document.cookie.split(";");
+
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+    }
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light p-3 border-bottom border-5">
@@ -112,6 +122,9 @@ export default function Navbar(){
                             <NavbarGiochi />
                             <NavbarServizi />
                             <a className="text-dark nav-link disabled text-muted" href="back/home">Back office</a>
+                            <button className="btn btn-success text-light m-2" onClick={()=>{window.location="/backoffice/login"}}>Login</button>
+                            <button className="btn btn-primary text-light m-2" onClick={()=>{window.location="/backoffice/register"}}>Register</button>
+                            <button className="btn btn-danger text-light m-2" onClick={clearCookies}>Logout</button>
                         </div>
                     </div>
                 </div>
