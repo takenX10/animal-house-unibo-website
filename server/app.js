@@ -27,6 +27,8 @@ import BACKOFFICE from "./api/login.js";
 backendRouter.push(BACKOFFICE.ENDPOINTS);
 import PARTNERAPI from "./api/partnerapi.js";
 backendRouter.push(PARTNERAPI.ENDPOINTS);
+import ECOMMERCEAPI from "./api/ecommerce.js";
+backendRouter.push(ECOMMERCEAPI.ENDPOINTS);
 
 const corsOptions = {
   origin: "*",

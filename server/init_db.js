@@ -29,7 +29,47 @@ var Pets = [
         matchedBy:[],
         imgList: ["https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg"]
     }
-]
+];
+
+const products=[
+    {
+      name: 'Nika Slim shirt',
+      slug: 'nika-slim-shirt',
+      category: 'Shirts',
+      image: '/images/p1.jpg',
+      price: 120,
+      countInStock: 5,
+      brand: 'Subemelaradjio',
+      rating: 4.5,
+      numReviews: 10,
+      description: 'high quality raccoon'
+    },
+    {
+      name: 'Nika Slim Pant',
+      slug: 'nika-slim-pant',
+      category: 'Pants',
+      image: '/images/p1.jpg',
+      price: 25,
+      countInStock: 0,
+      brand: 'Subemelaradjio',
+      rating: 3.5,
+      numReviews: 42,
+      description: 'high quality raccoon'
+    },
+    {
+      name: 'Supreme jacket',
+      slug: 'supreme-drip',
+      category: 'Jackets',
+      image: '/images/drip.jpg',
+      price: 999999,
+      countInStock: 1,
+      brand: 'drippythangs',
+      rating: 5.0,
+      numReviews: 0,
+      description: 'high quality drip'
+    },
+];
+
 async function init(){
     let mongoose = await DATABASE.connect();
     console.log("Clearing database...");
@@ -46,9 +86,9 @@ async function init(){
         i++;
     }
     console.log("Adding pets to database...");
-    for(let p of Pets){
-        await DATABASE.Pet.create(p);
-    }
+    await DATABASE.Pet.insertMany(Pets);
+    console.log("Adding products...");
+    await DATABASE.Product.insertMany(products);
     console.log("done!");
     process.exit();
 }
