@@ -21,11 +21,11 @@ app.use(cookieParser());
 
 let backendRouter = [];
 
-import GAMEAPI from "./gameApi/gameApi.js";
+import GAMEAPI from "./api/gameApi.js";
 backendRouter.push(GAMEAPI.ENDPOINTS);
-import BACKOFFICE from "./backoffice/api/backoffice.js";
+import BACKOFFICE from "./api/login.js";
 backendRouter.push(BACKOFFICE.ENDPOINTS);
-import PARTNERAPI from "./backoffice/api/partnerapi.js";
+import PARTNERAPI from "./api/partnerapi.js";
 backendRouter.push(PARTNERAPI.ENDPOINTS);
 
 const corsOptions = {

@@ -98,15 +98,12 @@ const NavbarShop = () => {
 }
 
 export default function Navbar(){
-    function clearCookies(){
+    function clearListCookies(){
         var cookies = document.cookie.split(";");
-
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i];
-            var eqPos = cookie.indexOf("=");
-            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        }
+            for (var i = 0; i < cookies.length; i++){   
+                var spcook =  cookies[i].split("=");
+                document.cookie = spcook[0] + "=;expires=Thu, 21 Sep 1979 00:00:01 UTC;";                                
+            }
     }
     return (
         <>
@@ -124,7 +121,7 @@ export default function Navbar(){
                             <a className="text-dark nav-link disabled text-muted" href="back/home">Back office</a>
                             <button className="btn btn-success text-light m-2" onClick={()=>{window.location="/backoffice/login"}}>Login</button>
                             <button className="btn btn-primary text-light m-2" onClick={()=>{window.location="/backoffice/register"}}>Register</button>
-                            <button className="btn btn-danger text-light m-2" onClick={clearCookies}>Logout</button>
+                            <button className="btn btn-danger text-light m-2" onClick={()=>{clearListCookies(); window.location.reload(true);}}>Logout</button>
                         </div>
                     </div>
                 </div>

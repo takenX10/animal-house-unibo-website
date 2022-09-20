@@ -1,6 +1,6 @@
-import METHODS from "../../methods.js";
-import DATABASE from '../../database.js';
-import AUTH from '../../authentication.js'
+import METHODS from "../methods.js";
+import DATABASE from '../database.js';
+import AUTH from '../authentication.js'
 import path from "path";
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
@@ -43,7 +43,7 @@ let ENDPOINTS = [
 
 function officeHome(req, res){
     if(AUTH.check_login(req)){
-        res.sendFile("./home.htm", { root : __dirname });
+        res.sendFile("../templates/home.htm", { root : __dirname });
     }else{
         res.redirect("/backoffice/login");
     }

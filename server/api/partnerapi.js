@@ -1,6 +1,6 @@
-import METHODS from "../../methods.js";
-import DATABASE from '../../database.js';
-import AUTH from "../../authentication.js";
+import METHODS from "../methods.js";
+import DATABASE from '../database.js';
+import AUTH from "../authentication.js";
 import bodyParser from 'body-parser';
 
 var jsonParser = bodyParser.json();

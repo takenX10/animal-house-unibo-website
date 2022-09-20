@@ -49,8 +49,16 @@ export default function CercoPartner() {
         let res = await fetch("http://localhost:8000/backoffice/get_new_puppy", {method:"POST"});
         setCurrentPet(await res.json());
     }
+    async function check_login(){
+        let res = await fetch("/backoffice/is_logged_in", {method: "POST"});
+        res = await res.json();
+        if(res.success){
+            window.location = "/backoffice/login";
+        }
+    }
 
     useEffect(()=>{
+        check_login();
         get_my_id();
         fetch_new_puppy();
     }, []);
