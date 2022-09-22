@@ -19,6 +19,7 @@ import ProductScreen from '../views/react/ecommerce/ProductScreen';
 import OrderScreen from '../views/react/ecommerce/OrderScreen';
 import OrderHistoryScreen from '../views/react/ecommerce/OrderHistoryScreen';
 import PaymentMethodScreen from '../views/react/ecommerce/PaymentMethodScreen';
+import { StoreProvider } from '../context/Store';
 
 export const ReactRoutes = [
     {
@@ -131,6 +132,7 @@ function createRoute (currentRoute){
 export const CreateReactApp = () => {
     ReactDOM.createRoot(document.getElementById('app')).render(
         <React.StrictMode>
+          <StoreProvider>
             <HelmetProvider>
                 <BrowserRouter>
                     <Routes>
@@ -140,6 +142,7 @@ export const CreateReactApp = () => {
                     </Routes>
                 </BrowserRouter>
             </HelmetProvider>
+          </StoreProvider>
         </React.StrictMode>
     )
 };
