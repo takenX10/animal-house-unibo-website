@@ -152,6 +152,9 @@ export default {
       this.refreshPage();
 
       let form = new FormData();
+      var binaryData = [];
+      binaryData.push(this.files[0].sourceFile); //My blob
+      this.img_your_cat = URL.createObjectURL(new Blob(binaryData, {type:"image/*"}));
       form.append("cat", this.files[0].sourceFile);
       let res = await fetch(`${this.BACKEND_SERVER}/api/catbreedrec`, {
         body: form,
@@ -159,8 +162,10 @@ export default {
       });
       let data = await res.json();
       if (data.status == "ok") {
+        console.log(data.data.results[0])
         this.cat_breed_guesses = data.data.results;
         this.cat_breed_loading = false;
+        this.img_cat_breed = `${this.BACKEND_SERVER}/${data.data.results[0].img_name}`
         this.refreshPage();
       }
     },
@@ -310,9 +315,14 @@ export default {
         <ui-grid-cell
           v-if="cat_breed_guesses.length > 0"
           columns="12"
-          class="mx-auto"
+          class="mx-auto text-center"
         >
-          <div class="text-center fw-bold section_header_small">
+        <ui-grid>
+         <ui-grid-cell :columns="{default:2, phone:12}" class="mx-auto">
+          <img :src=img_your_cat columns="2" class="mx-auto text-center" width="100" height="100" />
+          </ui-grid-cell>
+        <ui-grid-cell columns="8">
+          <div class="text-center mx-auto fw-bold section_header_small">
             My guesses are :
           </div>
           <ui-list :type="2">
@@ -325,6 +335,11 @@ export default {
               </ui-item-text-content>
             </ui-item>
           </ui-list>
+          </ui-grid-cell>
+         <ui-grid-cell :columns="{default:2, phone:12}" class="mx-auto">
+          <img :src=img_cat_breed columns="2" class="mx-auto text-center" width="100" height="100" />
+          </ui-grid-cell>
+        </ui-grid>
         </ui-grid-cell>
 
         <ui-grid-cell columns="12">
