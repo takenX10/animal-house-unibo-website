@@ -57,7 +57,13 @@ function initAPI() {
   for (let ENDPOINTS of backendRouter) {
     for (let i = 0; i < ENDPOINTS.length; i++) {
       let opts = [cors_];
-      if (ENDPOINTS[i].opts) opts.push(ENDPOINTS[i].opts);
+      if (ENDPOINTS[i].opts) {
+        if (Array.isArray(ENDPOINTS[i].opts)) {
+          opts.push(...ENDPOINTS[i].opts);
+        } else {
+          opts.push(ENDPOINTS[i].opts);
+        }
+      }
       let params = [ENDPOINTS[i].endpoint, opts, ENDPOINTS[i].function];
       if (ENDPOINTS[i].method == METHODS.GET) app.get(...params);
       else if (ENDPOINTS[i].method == METHODS.POST) app.post(...params);
