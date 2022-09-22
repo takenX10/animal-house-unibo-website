@@ -27,7 +27,7 @@ export default function HomeFrontOffice(){
                             <button type="button" className="btn btn-primary p-5 fw-bold fs-2" onClick={()=>{window.location.pathname="/online/home"}}>SERVIZI ONLINE</button>
                         </div>
                         <div className="col">
-                            <button type="button" style={styleobj} className="btn btn-primary p-5 fw-bold fs-2" onClick={()=>{window.location.pathname="/shop/home"}}>E-COMMERCE</button>
+                            <button type="button" style={styleobj} className="btn btn-primary p-5 fw-bold fs-2" onClick={()=>{window.location.pathname="/shop"}}>E-COMMERCE</button>
                         </div>
                     </div>
                 </div>

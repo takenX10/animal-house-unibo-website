@@ -14,9 +14,9 @@ async function productOrderId(req, res){
     await DATABASE.connect();
     const order = await DATABASE.Order.findOne({ user: req.user._id, _id: req.params.id });
     if (order) {
-      res.send(order);
+      res.json(order);
     } else {
-      res.status(404).send({ message: 'Order Not Found' });
+      res.status(404).json({ message: 'Order Not Found' });
     }
 }
 
@@ -34,19 +34,19 @@ async function productOrderPost(req, res){
 
     });
     const order = await newOrder.save();
-    res.status(201).send({ message: 'New Order Created', order });
+    res.status(201).json({ message: 'New Order Created', order });
 }
 
 async function productOrderMine (req, res){
     await DATABASE.connect();
     const orders = await DATABASE.Order.find({ user: req.user._id });
-    res.send(orders);
+    res.json(orders);
 }
 
 async function productRoutes(req, res){
     await DATABASE.connect();
     const products = await DATABASE.Product.find();
-    res.send(products);
+    res.json(products);
 }
 
 export default { ENDPOINTS };

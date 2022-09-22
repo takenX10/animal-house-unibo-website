@@ -3,6 +3,7 @@ import { Button, Card, Col, Form, ListGroup, Toast } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { Link} from 'react-router-dom';
 import { Store } from '../../../context/Store';
+import { SERVER_URL } from "../../../context/utils";
 import "../../../assets/css/ecommerce.css";
 
 const reducer = (state, action) => {
@@ -38,7 +39,7 @@ export default function ProfileScreen() {
     e.preventDefault();
     try {
 
-      const request = await fetch('/api/shop/users/profile', {
+      const request = await fetch(`${SERVER_URL}/api/shop/users/profile`, {
         method: 'PUT',
         headers: new Headers({
           "authorization": `Bearer ${userInfo.token}`,

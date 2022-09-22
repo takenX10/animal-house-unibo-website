@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 const DBNAME = "animalhouse";
-const DBURL = `mongodb://localhost:27017/${DBNAME}`;
+const DBURL = `mongodb://127.0.0.1:27017/${DBNAME}`;
 
 async function connect(){
     await mongoose.connect(DBURL);

@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import { Store } from '../../../context/Store';
 import "../../../assets/css/ecommerce.css";
+import {SERVER_URL} from '../../../context/utils';
 
 export default function CartScreen() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function CartScreen() {
     cart: { cartItems },
   } = state;
   const updateCartHandler = async (item, quantity) => {
-    const data = await (await fetch(`/api/shop/products/${item._id}`)).json();
+    const data = await (await fetch(`${SERVER_URL}/api/shop/products/${item._id}`)).json();
     if (data.countInStock < quantity) {
       window.alert('Not enough product in stock :c');
       return;

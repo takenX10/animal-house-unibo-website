@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingBox from '../../../components/ecommerce/LoadingBox';
 import MessageBox from '../../../components/ecommerce/MessageBox';
 import { Store } from '../../../context/Store';
+import { SERVER_URL } from "../../../context/utils";
 import "../../../assets/css/ecommerce.css";
 
 
@@ -36,7 +37,7 @@ export default function OrderHistoryScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const request = await fetch('/api/shop/orders/mine', {
+        const request = await fetch(`${SERVER_URL}/api/shop/orders/mine`, {
           method: 'GET',
           headers: new Headers({ authorization: `Bearer ${userInfo.token}` })
         });

@@ -3,6 +3,7 @@ import { Button, Container, Form, Toast } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Store } from "../../../context/Store";
+import { SERVER_URL } from "../../../context/utils";
 import "../../../assets/css/ecommerce.css";
 
 export default function SignupScreen() {
@@ -26,7 +27,7 @@ export default function SignupScreen() {
     try {
       if (password !== confPassword)
         throw new Error('The passwords aren\'t matching!');
-      const result = await fetch('/api/users/signup', {
+      const result = await fetch(`${SERVER_URL}/api/users/signup`, {
         method: 'POST',
         headers: new Headers({ "content-type": "application/json" }),
         body: JSON.stringify({ name, email, password })

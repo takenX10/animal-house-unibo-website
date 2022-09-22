@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import CheckoutSteps from '../../../components/ecommerce/CheckoutSteps';
 import { Store } from '../../../context/Store';
+import { SERVER_URL } from "../../../context/utils";
 import "../../../assets/css/ecommerce.css";
 
 
@@ -44,7 +45,7 @@ export default function PlaceOrderScreen() {
   const placeOrderHandler = async () => {
     try {
       dispatch({ type: 'CREATE_REQUEST' });
-      const result = await fetch('/api/shop/orders', {
+      const result = await fetch(`${SERVER_URL}/api/shop/orders`, {
         method: 'POST',
         headers: new Headers({
           'authorization': `Bearer ${userInfo.token}`,

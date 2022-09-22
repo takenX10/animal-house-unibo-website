@@ -5,6 +5,7 @@ import Product from '../../../components/ecommerce/Product';
 import MessageBox from '../../../components/ecommerce/MessageBox';
 import LoadingBox from '../../../components/ecommerce/LoadingBox';
 import "../../../assets/css/ecommerce.css";
+import { SERVER_URL } from "../../../context/utils";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -32,7 +33,8 @@ export default function HomeScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await fetch('/api/shop/products');
+        console.log(SERVER_URL);
+        const result = await fetch(`${SERVER_URL}/api/shop/products`);
         const data = await result.json();
         if (!result.ok)
           throw new Error(data.message);

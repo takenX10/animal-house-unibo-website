@@ -3,6 +3,7 @@ import { Button, Container, Form, Toast } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Store } from "../../../context/Store";
+import { SERVER_URL } from "../../../context/Store";
 import "../../../assets/css/ecommerce.css";
 
 export default function SigninScreen() {
@@ -22,7 +23,7 @@ export default function SigninScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const result = await fetch('/api/users/signin', {
+      const result = await fetch(`${SERVER_URL}/api/users/signin`, {
         method: 'POST',
         headers: new Headers({ "content-type": "application/json" }),
         body: JSON.stringify({ email, password })

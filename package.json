@@ -5,7 +5,7 @@
     "client": "vite --host",
     "build": "vite build",
     "build-dev": "vite build && rm -rf server/static/dist && cp -r dist server/static/. && node server/app.js",
-    "server": "node server/app.js",
+    "server": "nodemon server/app.js",
     "init-db": "node server/init_db.js",
     "preview": "vite preview --port 5050"
   },
@@ -24,6 +24,7 @@
     "gitart-vue-dialog": "^2.4.0",
     "lodash": "^4.17.21",
     "lodash.sample": "^4.2.1",
+    "nodemon": "^2.0.20",
     "phosphor-vue": "^4.4.0",
     "pinia": "^2.0.13",
     "react": "^18.0.0",

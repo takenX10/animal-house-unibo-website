@@ -6,6 +6,7 @@ import Rating from '../../../components/ecommerce/Rating';
 import LoadingBox from '../../../components/ecommerce/LoadingBox';
 import MessageBox from '../../../components/ecommerce/MessageBox';
 import { Store } from '../../../context/Store';
+import { SERVER_URL } from "../../../context/utils";
 import "../../../assets/css/ecommerce.css";
 
 const reducer = (state, action) => {
@@ -36,7 +37,7 @@ function ProductScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await fetch(`/api/shop/products/slug/${slug}`);
+        const result = await fetch(`${SERVER_URL}/api/shop/products/slug/${slug}`);
         if (!result.ok) {
           throw new Error((await result.json()).message);
         }
@@ -57,7 +58,7 @@ function ProductScreen() {
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const res = await fetch(`/api/products/${product._id}`);
+    const res = await fetch(`${SERVER_URL}/api/products/${product._id}`);
     const data = await res.json();
     if (data.countInStock < quantity) {
       window.alert('Not enough product in stock :c');
