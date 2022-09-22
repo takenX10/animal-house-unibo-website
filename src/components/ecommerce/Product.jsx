@@ -2,6 +2,7 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from './Rating';
 import { Store } from '../../context/Store';
+import { SERVER_URL } from '../../context/utils';
 import { useContext } from "react";
 
 function Product(props) {
@@ -13,7 +14,7 @@ function Product(props) {
   const addToCartHandler = async (item) => {
     const existItem = cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const data = await (await fetch(`/api/products/${item._id}`)).json();
+    const data = await (await fetch(`${SERVER_URL}/api/shop/products/${item._id}`)).json();
     if (data.countInStock < quantity) {
       window.alert('Not enough product in stock :c');
       return;
@@ -22,11 +23,11 @@ function Product(props) {
   }
   return (
     <Card className="h-100" key={product.slug}>
-      <Link to={`/product/${product.slug}`}>
+      <Link to={`/shop/product/${product.slug}`}>
         <img src={product.image} className="prod-img card-img-top" alt={product.name} />
       </Link>
       <Card.Body>
-        <Link className="text-decoration-none text-dark " to={`/product/${product.slug}`}>
+        <Link className="text-decoration-none text-dark " to={`/shop/product/${product.slug}`}>
           <Card.Title className="fw-bold">{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews}></Rating>
