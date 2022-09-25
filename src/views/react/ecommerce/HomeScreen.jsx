@@ -33,7 +33,6 @@ export default function HomeScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        console.log(SERVER_URL);
         const result = await fetch(`${SERVER_URL}/api/shop/products`);
         const data = await result.json();
         if (!result.ok)
@@ -50,7 +49,7 @@ export default function HomeScreen() {
   return (
     <div>
       <Helmet>
-        <title>DaTrue St.Wear</title>
+        <title>Animal house</title>
       </Helmet>
       <h1>Featured Products</h1>
       <div className="products">
