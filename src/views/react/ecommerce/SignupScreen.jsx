@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Container, Form, Toast } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Store } from "../../../context/Store";
-import { SERVER_URL } from "../../../context/utils";
-import "../../../assets/css/ecommerce.css";
+import { Store } from "@/context/store";
+import { SERVER_URL } from "@/context/utils";
+import "@/assets/css/ecommerce.css";
 
 export default function SignupScreen() {
   const navigate = useNavigate();

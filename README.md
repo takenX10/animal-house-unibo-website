@@ -18,7 +18,26 @@ npm run dev
 npm run build
 ```
 
+### Open enviroment
+
+```sh
+npm run env
+```
+This will open two new terminal emulator , one with server console and the other
+with fronted console, it will also start mongodb 
+So just run this command and start developing
+
 <!-- TODO: Explain how to deploy the project -->
+
+### CONVENTIONS
+
+- Camel case for file names and directory, and pascal case for component names
+- Directory structure
+  - examplesDir
+    - vue
+      - exampleComponent.vue
+    - react
+      - wowComponent.jsx
 
 # Old readme
 

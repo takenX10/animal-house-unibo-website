@@ -17,32 +17,32 @@ export const VueRoutes = [
     // route level code-splitting
     // this generates a separate chunk (About.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import("../views/vue/AboutView.vue"),
+    component: () => import("@/views/vue/AboutView.vue"),
   },
   {
     path: "/games/memory",
     name: "memory",
-    component: () => import("../views/vue/games/Memory.vue"),
+    component: () => import("@/views/vue/games/Memory.vue"),
   },
   {
     path: "/games/wordle",
     name: "wordle",
-    component: () => import("../views/vue/games/Wordle.vue"),
+    component: () => import("@/views/vue/games/Wordle.vue"),
   },
   {
     path: "/games/hangman",
     name: "hangman",
-    component: () => import("../views/vue/games/Hangman.vue"),
+    component: () => import("@/views/vue/games/Hangman.vue"),
   },
   {
     path: "/games",
     name: "games",
-    component: () => import("../views/vue/games/GameSelectionView.vue"),
+    component: () => import("@/views/vue/games/GameSelectionView.vue"),
   },
   {
     path: "/games/slider",
     name: "slider",
-    component: () => import("../views/vue/games/Slider.vue"),
+    component: () => import("@/views/vue/games/Slider.vue"),
   },
 ];
 

@@ -2,12 +2,12 @@ import { useContext, useEffect, useReducer } from 'react';
 import { Badge, Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
-import Rating from '../../../components/ecommerce/Rating';
-import LoadingBox from '../../../components/ecommerce/LoadingBox';
-import MessageBox from '../../../components/ecommerce/MessageBox';
-import { Store } from '../../../context/Store';
-import { SERVER_URL } from "../../../context/utils";
-import "../../../assets/css/ecommerce.css";
+import Rating from '@/components/react/ecommerce/Rating';
+import LoadingBox from '@/components/react/ecommerce/LoadingBox';
+import MessageBox from '@/components/react/ecommerce/MessageBox';
+import { Store } from '@/context/store';
+import { SERVER_URL } from "@/context/utils";
+import "@/assets/css/ecommerce.css";
 
 const reducer = (state, action) => {
   switch (action.type) {

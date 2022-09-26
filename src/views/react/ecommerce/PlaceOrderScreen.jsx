@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react';
-import LoadingBox from '../../../components/ecommerce/LoadingBox';
+import LoadingBox from '@/components/react/ecommerce/LoadingBox';
 import { Button, Card, Col, ListGroup, Row, Toast } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
-import CheckoutSteps from '../../../components/ecommerce/CheckoutSteps';
-import { Store } from '../../../context/Store';
-import { SERVER_URL } from "../../../context/utils";
-import "../../../assets/css/ecommerce.css";
+import CheckoutSteps from '@/components/react/ecommerce/CheckoutSteps';
+import { Store } from '@/context/store';
+import { SERVER_URL } from "@/context/utils";
+import "@/assets/css/ecommerce.css";
 
 
 const reducer = (state, action) => {

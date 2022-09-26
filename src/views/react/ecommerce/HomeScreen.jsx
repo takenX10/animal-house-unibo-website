@@ -1,11 +1,11 @@
 import { useEffect, useReducer } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
-import Product from '../../../components/ecommerce/Product';
-import MessageBox from '../../../components/ecommerce/MessageBox';
-import LoadingBox from '../../../components/ecommerce/LoadingBox';
-import "../../../assets/css/ecommerce.css";
-import { SERVER_URL } from "../../../context/utils";
+import Product from '@/components/react/ecommerce/Product';
+import MessageBox from '@/components/react/ecommerce/MessageBox';
+import LoadingBox from '@/components/react/ecommerce/LoadingBox';
+import "@/assets/css/ecommerce.css";
+import { SERVER_URL } from "@/context/utils";
 
 const reducer = (state, action) => {
   switch (action.type) {

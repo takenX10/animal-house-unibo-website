@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Navbar from '@/components/Navbar/Navbar';
+import Navbar from '@/components/react/navbar/Navbar';
 import TinderCard from './TinderCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faXmark } from '@fortawesome/free-solid-svg-icons';

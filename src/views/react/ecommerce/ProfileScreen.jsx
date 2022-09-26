@@ -2,9 +2,9 @@ import React, { useContext, useReducer, useState } from 'react';
 import { Button, Card, Col, Form, ListGroup, Toast } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { Link} from 'react-router-dom';
-import { Store } from '../../../context/Store';
-import { SERVER_URL } from "../../../context/utils";
-import "../../../assets/css/ecommerce.css";
+import { Store } from '@/context/store';
+import { SERVER_URL } from "@/context/utils";
+import "@/assets/css/ecommerce.css";
 
 const reducer = (state, action) => {
   switch (action.type) {

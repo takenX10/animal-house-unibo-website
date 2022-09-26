@@ -7,19 +7,19 @@ import {
 } from "react-router-dom";
 import {HelmetProvider} from 'react-helmet-async';
 import CercoPartner from '@/views/react/comunita/CercoPartner/CercoPartner';
-import HomePage from '@/views/react/HomePage';
-import HomeFrontOffice from '../views/react/HomeFrontOffice';
-import HomeComunita from '../views/react/HomeComunita';
-import EccoloQua from '../views/react/comunita/EccoloQua';
-import HomeScreen from '../views/react/ecommerce/HomeScreen';
-import CartScreen from '../views/react/ecommerce/CartScreen';
-import ShippingAddressScreen from '../views/react/ecommerce/ShippingAddressScreen';
-import PlaceOrderScreen from '../views/react/ecommerce/PlaceOrderScreen';
-import ProductScreen from '../views/react/ecommerce/ProductScreen';
-import OrderScreen from '../views/react/ecommerce/OrderScreen';
-import OrderHistoryScreen from '../views/react/ecommerce/OrderHistoryScreen';
-import PaymentMethodScreen from '../views/react/ecommerce/PaymentMethodScreen';
-import { StoreProvider } from '../context/Store';
+import HomePage from '@/views/react/homes/HomePage';
+import HomeFrontOffice from '@/views/react/homes/HomeFrontOffice';
+import HomeComunita from '@/views/react/homes/HomeComunita';
+import EccoloQua from '@/views/react/comunita/EccoloQua';
+import HomeScreen from '@/views/react/ecommerce/HomeScreen';
+import CartScreen from '@/views/react/ecommerce/CartScreen';
+import ShippingAddressScreen from '@/views/react/ecommerce/ShippingAddressScreen';
+import PlaceOrderScreen from '@/views/react/ecommerce/PlaceOrderScreen';
+import ProductScreen from '@/views/react/ecommerce/ProductScreen';
+import OrderScreen from '@/views/react/ecommerce/OrderScreen';
+import OrderHistoryScreen from '@/views/react/ecommerce/OrderHistoryScreen';
+import PaymentMethodScreen from '@/views/react/ecommerce/PaymentMethodScreen';
+import { StoreProvider } from '@/context/store';
 
 export const ReactRoutes = [
     {

@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import { Store } from "../../../context/Store";
-import CheckoutSteps from "../../../components/ecommerce/CheckoutSteps";
-import "../../../assets/css/ecommerce.css";
+import { Store } from "@/context/store";
+import CheckoutSteps from "@/components/react/ecommerce/CheckoutSteps";
+import "@/assets/css/ecommerce.css";
 
 export default function ShippingAddressScreen() {
   const navigate = useNavigate();

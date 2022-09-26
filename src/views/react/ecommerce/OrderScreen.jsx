@@ -4,11 +4,11 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import LoadingBox from '../../../components/ecommerce/LoadingBox';
-import MessageBox from '../../../components/ecommerce/MessageBox';
-import { Store } from '../../../context/Store';
-import { SERVER_URL } from "../../../context/utils";
-import "../../../assets/css/ecommerce.css";
+import LoadingBox from '@/components/react/ecommerce/LoadingBox';
+import MessageBox from '@/components/react/ecommerce/MessageBox';
+import { Store } from '@/context/store';
+import { SERVER_URL } from "@/context/utils";
+import "@/assets/css/ecommerce.css";
 
 
 const reducer = (state, action) => {

@@ -1,5 +1,5 @@
-import { CreateReactApp, isInReactRoutes, ReactRoutes } from './router/ReactRouter';
-import { CreateVueApp, isInVueRoutes } from './router/VueRouter';
+import { CreateReactApp, isInReactRoutes, ReactRoutes } from './router/reactRouter';
+import { CreateVueApp, isInVueRoutes } from './router/vueRouter';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
 

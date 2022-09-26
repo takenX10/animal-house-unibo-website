@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import CheckoutSteps from '../../../components/ecommerce/CheckoutSteps';
-import { Store } from '../../../context/Store';
-import "../../../assets/css/ecommerce.css";
+import CheckoutSteps from '@/components/react/ecommerce/CheckoutSteps';
+import { Store } from '@/context/store';
+import "@/assets/css/ecommerce.css";
 
 export default function PaymentMethodScreen() {
   const navigate = useNavigate();

@@ -7,6 +7,10 @@
     "build-dev": "vite build && rm -rf server/static/dist && cp -r dist server/static/. && node server/app.js",
     "server": "nodemon server/app.js",
     "init-db": "node server/init_db.js",
+    "env-server": "$TERM npm run server &",
+    "env-client": "$TERM npm run client &",
+    "env-db": "sudo systemctl start mongodb",
+    "env": "npm run env-db && npm run env-server && npm run env-client ",
     "preview": "vite preview --port 5050"
   },
   "dependencies": {

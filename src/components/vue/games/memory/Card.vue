@@ -80,7 +80,7 @@ export default {
 }
 
 .card-face.is-back {
-  background-image: url("../../public/images/back-bg.png");
+  background-image: url("@/@/public/images/back-bg.png");
   color: white;
 
 }

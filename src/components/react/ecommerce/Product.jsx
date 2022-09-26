@@ -1,8 +1,8 @@
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from './Rating';
-import { Store } from '../../context/Store';
-import { SERVER_URL } from '../../context/utils';
+import { Store } from '@/context/store';
+import { SERVER_URL } from '@/context/utils';
 import { useContext } from "react";
 
 function Product(props) {

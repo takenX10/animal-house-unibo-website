@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from '@/components/Navbar/Navbar';
+import Navbar from '@/components/react/navbar/Navbar';
 
 /**
  * A quanto pare la bacheca eccolo qua consiste in un forum in cui la gente puo

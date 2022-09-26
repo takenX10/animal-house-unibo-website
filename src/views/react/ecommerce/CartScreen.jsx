@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import MessageBox from '../../../components/ecommerce/MessageBox';
+import MessageBox from '@/components/react/ecommerce/MessageBox';
 import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
-import { Store } from '../../../context/Store';
-import "../../../assets/css/ecommerce.css";
-import {SERVER_URL} from '../../../context/utils';
+import { Store } from '@/context/store';
+import "@/assets/css/ecommerce.css";
+import {SERVER_URL} from '@/context/utils';
 
 export default function CartScreen() {
   const navigate = useNavigate();
