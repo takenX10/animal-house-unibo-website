@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react';
-import LoadingBox from '@/components/react/ecommerce/LoadingBox';
+import LoadingBox from '@/components/react/utils/LoadingBox';
 import { Button, Card, Col, ListGroup, Row, Toast } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';

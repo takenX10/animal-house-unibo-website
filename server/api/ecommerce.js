@@ -65,8 +65,6 @@ async function productBySlug(req, res) {
   } else {
     res.status(404).json({ message: 'Product Not Found' })
   }
-
-
 }
 
 export default { ENDPOINTS };

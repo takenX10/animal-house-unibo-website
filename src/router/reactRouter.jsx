@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
-    BrowserRouter,
-    Routes,
-    Route,
+  BrowserRouter,
+  Routes,
+  Route,
 } from "react-router-dom";
-import {HelmetProvider} from 'react-helmet-async';
+import { HelmetProvider } from 'react-helmet-async';
 import CercoPartner from '@/views/react/comunita/CercoPartner/CercoPartner';
 import HomePage from '@/views/react/homes/HomePage';
 import HomeFrontOffice from '@/views/react/homes/HomeFrontOffice';
@@ -19,130 +19,141 @@ import ProductScreen from '@/views/react/ecommerce/ProductScreen';
 import OrderScreen from '@/views/react/ecommerce/OrderScreen';
 import OrderHistoryScreen from '@/views/react/ecommerce/OrderHistoryScreen';
 import PaymentMethodScreen from '@/views/react/ecommerce/PaymentMethodScreen';
+import HomeServiceFaceToFace from '@/views/react/services/HomeServiceFaceToFace';
 import { StoreProvider } from '@/context/store';
+import { isEqualPath } from '@/context/utils'
 
 export const ReactRoutes = [
-    {
-        path: "/",
-        element: <HomePage />
-    },
-    {
-        path: "/office",
-        element: <HomeFrontOffice />
-    },
-    {
+  {
+    path: "/",
+    element: <HomePage />
+  },
+  {
+    path: "/office",
+    element: <HomeFrontOffice />
+  },
+  {
+    path: "/comunita",
+    element: <HomeComunita />,
+    children: [
+      {
         path: "/comunita",
-        element: <HomeComunita />,
-        children:[
-            {
-                path:"/comunita",
-                element:<HomeComunita />
-            },
-            {
-                path:"/comunita/cerco-partner",
-                element:<CercoPartner />
-            },
-            {
-                path:"/comunita/eccolo-qua",
-                element:<EccoloQua />
-            },
-        ]
-    },
-    {
+        element: <HomeComunita />
+      },
+      {
+        path: "/comunita/cerco-partner",
+        element: <CercoPartner />
+      },
+      {
+        path: "/comunita/eccolo-qua",
+        element: <EccoloQua />
+      },
+    ]
+  },
+  {
+    path: "/services/facetoface",
+    element: <HomeServiceFaceToFace />,
+    children:
+      [
+        {
+          path: "/services/facetoface/:slug",
+          element: <HomeServiceFaceToFace />
+        },
+      ],
+  },
+  {
+    path: "/shop",
+    element: <HomeScreen />,
+    children: [
+      {
         path: "/shop",
-        element: <HomeScreen />,
-        children: [
-            {
-                path: "/shop",
-                element: <HomeScreen />
-            },
-            {
-                path:"/shop/cart",
-                element: <CartScreen />
-            },
-            {
-                path:"/shop/shipping",
-                element: <ShippingAddressScreen />
-            },
-            {
-                path:"/shop/placeorder",
-                element: <PlaceOrderScreen />
-            },
-            {
-                path: "/shop/product/:slug",
-                element: <ProductScreen />
-            },
-            {
-                path: "/shop/order/:id",
-                element: <OrderScreen />
-            },
-            {
-                path: "/shop/orderhistory/:id",
-                element: <OrderHistoryScreen />
-            },
-            {
-                path: "/shop/payment/:id",
-                element: <PaymentMethodScreen />
-            },
-        ]
-    }
-    // {
-    //   path: "/users",
-    //   element: <Users />,
-    //   children: [
-    //     { path: ":id", element: <Profile /> },
-    //     { path: "/settings", element: <Settings /> },
-    //   ],
-    // },
+        element: <HomeScreen />
+      },
+      {
+        path: "/shop/cart",
+        element: <CartScreen />
+      },
+      {
+        path: "/shop/shipping",
+        element: <ShippingAddressScreen />
+      },
+      {
+        path: "/shop/placeorder",
+        element: <PlaceOrderScreen />
+      },
+      {
+        path: "/shop/product/:slug",
+        element: <ProductScreen />
+      },
+      {
+        path: "/shop/order/:id",
+        element: <OrderScreen />
+      },
+      {
+        path: "/shop/orderhistory/:id",
+        element: <OrderHistoryScreen />
+      },
+      {
+        path: "/shop/payment/:id",
+        element: <PaymentMethodScreen />
+      },
+    ]
+  }
+  // {
+  //   path: "/users",
+  //   element: <Users />,
+  //   children: [
+  //     { path: ":id", element: <Profile /> },
+  //     { path: "/settings", element: <Settings /> },
+  //   ],
+  // },
 ];
 
 
 export function isInReactRoutes(routes) {
-    if(!routes) return false;
-    let p = window.location.pathname;
-    for (var i = 0; i < routes.length; i++) {
-        if (p == routes[i].path){
-            console.log("si normale");
-            return true;
-        }
-        if(isInReactRoutes(routes[i].children)){
-            console.log("si figlio");
-            return true;
-        }
+  if (!routes) return false;
+  let p = window.location.pathname;
+  console.log(p)
+  for (var i = 0; i < routes.length; i++) {
+    if (isEqualPath(p, routes[i].path)) {
+      console.log("si normale");
+      return true;
     }
-    return false;
+    if (isInReactRoutes(routes[i].children)) {
+      console.log("si figlio");
+      return true;
+    }
+  }
+  return false;
 }
 
-function createRoute (currentRoute){
-    return (
-        <>
-            <Route path={currentRoute.path} element={currentRoute.element} key={currentRoute.path}></Route>
-            {   
-                (currentRoute.children != undefined?
-                    currentRoute.children.map((child)=>{
-                        return(createRoute(child));
-                    }):
-                    (<></>)
-                )
-            }
-        </>
-    );
+function createRoute(currentRoute, index) {
+  return (
+    <Route path={currentRoute.path} element={currentRoute.element} key={currentRoute.path + "-" + index}>
+      {
+        currentRoute.children != undefined &&
+
+        currentRoute.children.map((child, index) => {
+          return (createRoute(child, index));
+        })
+      }</Route>
+  );
 }
 
 export const CreateReactApp = () => {
-    ReactDOM.createRoot(document.getElementById('app')).render(
-        <React.StrictMode>
-          <StoreProvider>
-            <HelmetProvider>
-                <BrowserRouter>
-                    <Routes>
-                    {ReactRoutes.map((route) => {
-                        return createRoute(route)
-                    })}
-                    </Routes>
-                </BrowserRouter>
-            </HelmetProvider>
-          </StoreProvider>
-        </React.StrictMode>
-    )
+  ReactDOM.createRoot(document.getElementById('app')).render(
+    <React.StrictMode>
+      <StoreProvider>
+        <HelmetProvider>
+          <BrowserRouter>
+            <Routes>
+              {ReactRoutes.map((route, index) => {
+                return createRoute(route, index)
+              })}
+            </Routes>
+          </BrowserRouter>
+        </HelmetProvider>
+      </StoreProvider>
+    </React.StrictMode>
+  )
 };

@@ -23,7 +23,7 @@ const reducer = (state, action) => {
 }
 
 
-function ProductScreen() {
+function ServiceScreen() {
   const navigate = useNavigate();
   const params = useParams();
   const { slug } = params;
@@ -37,7 +37,7 @@ function ProductScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await fetch(`${SERVER_URL}/api/shop/products/slug/${slug}`);
+        const result = await fetch(`${SERVER_URL}/api/services/facetoface/slug/${slug}`);
         if (!result.ok) {
           throw new Error((await result.json()).message);
         }
@@ -55,18 +55,6 @@ function ProductScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
 
-  const addToCartHandler = async () => {
-    const existItem = cart.cartItems.find((x) => x._id === product._id);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-    const res = await fetch(`${SERVER_URL}/api/products/${product._id}`);
-    const data = await res.json();
-    if (data.countInStock < quantity) {
-      window.alert('Not enough product in stock :c');
-      return;
-    }
-    ctxDispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity }, });
-    navigate('/cart');
-  }
 
   return (
     loading ? (<LoadingBox />)
@@ -128,4 +116,4 @@ function ProductScreen() {
   );
 }
 
-export default ProductScreen;
+export default ServiceScreen;

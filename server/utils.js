@@ -10,4 +10,5 @@ async function isAuth(req, res, next) {
   res.sendStatus(200);
 }
 
-export { isAuth };
+
+export { isAuth};

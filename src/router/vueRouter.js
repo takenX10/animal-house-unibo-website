@@ -9,6 +9,7 @@ import BootstrapVue3 from "bootstrap-vue-3";
 import BalmUI from "balm-ui"; // Official Google Material Components
 import BalmUIPlus from "balm-ui-plus"; // BalmJS Team Material Components
 import "balm-ui-css";
+import { isEqualPath } from '@/context/utils'
 
 export const VueRoutes = [
   {
@@ -49,7 +50,7 @@ export const VueRoutes = [
 export function isInVueRoutes() {
   let p = window.location.pathname;
   for (var i = 0; i < VueRoutes.length; i++) {
-    if (p == VueRoutes[i].path) return true;
+    if (isEqualPath(p, VueRoutes[i].path)) return true;
   }
   return false;
 }

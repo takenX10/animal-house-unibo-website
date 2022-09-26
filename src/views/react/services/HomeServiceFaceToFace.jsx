@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
-import Product from '@/components/react/ecommerce/Product';
+import Service from '@/components/react/services/Service';
 import MessageBox from '@/components/react/utils/MessageBox';
 import LoadingBox from '@/components/react/utils/LoadingBox';
 import "@/assets/css/ecommerce.css";
@@ -12,7 +12,7 @@ const reducer = (state, action) => {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
     case 'FETCH_SUCCESS':
-      return { ...state, products: action.payload, loading: false };
+      return { ...state, servicesFaceToFace: action.payload, loading: false };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     default:
@@ -21,9 +21,9 @@ const reducer = (state, action) => {
 }
 
 
-export default function HomeScreen() {
-  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
-    products: [],
+export default function HomeServiceFaceToFace() {
+  const [{ loading, error, servicesFaceToFace }, dispatch] = useReducer(reducer, {
+    servicesFaceToFace: [],
     loading: true,
     error: '',
   });
@@ -33,7 +33,7 @@ export default function HomeScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await fetch(`${SERVER_URL}/api/shop/products`);
+        const result = await fetch(`${SERVER_URL}/api/services/facetoface`);
         const data = await result.json();
         if (!result.ok)
           throw new Error(data.message);
@@ -51,8 +51,8 @@ export default function HomeScreen() {
       <Helmet>
         <title>Animal house</title>
       </Helmet>
-      <h1>Featured Products</h1>
-      <div className="products">
+      <h1>Services Face To Face</h1>
+      <div className="services">
         {
           loading ? (
             <LoadingBox />
@@ -61,9 +61,10 @@ export default function HomeScreen() {
           ) : (
             <Row>
               {
-                products.map(product => (
-                  <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
-                    <Product product={product}></Product>
+                servicesFaceToFace.map(service => (
+                  <Col key={service.id} sm={6} md={4} lg={3} className="mb-3">
+                    {service.id}
+                    <Service service={service}></Service>
                   </Col>
                 ))}
             </Row>

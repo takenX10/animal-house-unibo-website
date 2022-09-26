@@ -1,6 +1,6 @@
 import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Rating from './Rating';
+import Rating from '@/components/react/utils/Rating';
 import { Store } from '@/context/store';
 import { SERVER_URL } from '@/context/utils';
 import { useContext } from "react";
