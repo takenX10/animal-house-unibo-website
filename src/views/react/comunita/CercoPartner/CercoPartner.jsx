@@ -1,110 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import Navbar from '@/components/react/navbar/Navbar';
-import TinderCard from './TinderCard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faXmark } from '@fortawesome/free-solid-svg-icons';
-import "swiper/css/pagination";
-import "swiper/css";
+import { check_login, get_my_id, SERVER_URL } from '@/context/utils'
+import MatchPage from './MatchPage'
+import ProfilePage from './ProfilePage'
+import SearchPage from './SearchPage'
 
-const StyledCercoPartner = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .view {
-        height: 700px;
-        width: 500px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border: 3px solid gray;
-        overflow: hidden;
-    }
-    .button-container {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-        height: 10%;
-    }
-`
+
 
 export default function CercoPartner() {
-    const [currentPet, setCurrentPet] = useState({
-        age: 0,
-        weight: 0,
-        name: "loading...",
-        sex: "n/a",
-        description: "loading...",
-        imgList: ["https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg"]
-    });
+    const [pageId, setPageId] = useState(null);
+    const [currentPage, setCurrentPage] = useState("search");
     const [myId, setMyId] = useState(null);
-    async function get_my_id(){
-        let res = await fetch("http://localhost:8000/backoffice/get_my_id");
-        res = await res.json();
-        setMyId(res.id);
+
+    const pages = {
+        match: <MatchPage />,
+        profile: <ProfilePage id={pageId}/>,
+        search: <SearchPage />
     }
 
-    async function fetch_new_puppy(){
-        let res = await fetch("http://localhost:8000/backoffice/get_new_puppy", {method:"POST"});
-        setCurrentPet(await res.json());
+    async function init(){
+        await check_login();
+        setMyId(await get_my_id());
     }
-    async function check_login(){
-        let res = await fetch("/backoffice/is_logged_in", {method: "POST"});
-        res = await res.json();
-        if(res.success){
-            window.location = "/backoffice/login";
-        }
-    }
-
     useEffect(()=>{
-        check_login();
-        get_my_id();
-        fetch_new_puppy();
+        init();
     }, []);
-
-    useEffect(()=>{
-        console.log(currentPet);
-    }, [currentPet]);
-
-    async function like(){
-        let res = await fetch("http://localhost:8000/backoffice/add_like", {
-                method:"POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                  },
-                body: JSON.stringify({id:myId, likedid:currentPet.petid})
-            });
-        fetch_new_puppy();
-    }
-    function reject(){
-        fetch_new_puppy();
-    }
 
     return (
         <>
             <Navbar />
-            <StyledCercoPartner className='p-5'>
-                <div className='view'>
-                    <TinderCard 
-                        age={currentPet.age}
-                        weight={currentPet.weight}
-                        name={currentPet.name} 
-                        sex={currentPet.sex} 
-                        description={currentPet.description}
-                        imgList={(currentPet.imgList ? currentPet.imgList: [])}
-                    />                            
-                    <div className='button-container m-1 justify-content-around'>
-                        <button type='button' className='p-4 btn btn-danger m-3 w-25 shadow' onClick={reject}>
-                            <FontAwesomeIcon icon={faXmark}></FontAwesomeIcon>
-                        </button>
-                        <button type='button' className='p-4 btn btn-success m-3 w-25 shadow' onClick={like}>
-                            <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-                        </button>
+            <div className='container-fluid'>
+                <div className="row">
+                    <div className="col-5">
+                        <MatchPage />
+                    </div>
+                    <div className="col-5">
+                        {pages[currentPage]}
                     </div>
                 </div>
-            </StyledCercoPartner>
+            </div>
         </>
     );
 }

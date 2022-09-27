@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useReducer } from "react";
 import { Button } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
-import LoadingBox from '@/components/react/utilshttps://aem1k.com/aurebesh.js//LoadingBox';
+import LoadingBox from '@/components/react/utils/LoadingBox';
 import MessageBox from '@/components/react/utils/MessageBox';
 import { Store } from '@/context/store';
 import { SERVER_URL } from "@/context/utils";

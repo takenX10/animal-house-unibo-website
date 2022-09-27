@@ -1,7 +1,6 @@
 
 import React from 'react';
 import './Navbar.scss';
-import { SERVER_URL } from '../../context/utils';
 import Dropdown from './Dropdown';
 import { FaBars } from 'react-icons/fa'
 
@@ -120,8 +119,8 @@ export default function Navbar(){
                             <NavbarGiochi />
                             <NavbarServizi />
                             <a className="text-dark nav-link disabled text-muted" href="back/home">Back office</a>
-                            <button className="btn btn-success text-light m-2" onClick={()=>{window.location=`${SERVER_URL}/backoffice/login`}}>Login</button>
-                            <button className="btn btn-primary text-light m-2" onClick={()=>{console.log(SERVER_URL);window.location=`${SERVER_URL}/backoffice/register`}}>Register</button>
+                            <button className="btn btn-success text-light m-2" onClick={()=>{window.location=`/backoffice/login`}}>Login</button>
+                            <button className="btn btn-primary text-light m-2" onClick={()=>{window.location=`/backoffice/register`}}>Register</button>
                             <button className="btn btn-danger text-light m-2" onClick={()=>{clearListCookies(); window.location.reload(true);}}>Logout</button>
                         </div>
                     </div>

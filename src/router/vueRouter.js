@@ -7,7 +7,7 @@ import VueCarousel from "vue-carousel";
 import { createPinia } from "pinia";
 import BootstrapVue3 from "bootstrap-vue-3";
 import BalmUI from "balm-ui"; // Official Google Material Components
-import BalmUIPlus from "balm-ui-plus"; // BalmJS Team Material Components
+//import BalmUIPlus from "balm-ui-plus"; // BalmJS Team Material Components
 import "balm-ui-css";
 import { isEqualPath } from '@/context/utils'
 
@@ -66,7 +66,7 @@ export const CreateVueApp = () => {
   app.use(BootstrapVue3);
   app.use(VueRouter);
   app.use(BalmUI);
-  app.use(BalmUIPlus);
+  //app.use(BalmUIPlus);
   app.use(VueCarousel);
   app.config.globalProperties.BACKEND_SERVER =
     process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";

@@ -7,12 +7,16 @@ User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0
 Accept: */*
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate
-Referer: http://localhost:8000/comunita/cerco-partner
-Origin: http://localhost:8000
+Referer: http://localhost:3000/
 Content-Type: application/json
-Content-Length: 30
+Origin: http://localhost:3000
+Content-Length: 44
+DNT: 1
+Connection: keep-alive
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: cross-site
 
-{"username":"aldo","password":"secret_aldo"}
 
 
 ### Add like

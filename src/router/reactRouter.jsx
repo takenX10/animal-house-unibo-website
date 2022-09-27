@@ -20,6 +20,7 @@ import OrderScreen from '@/views/react/ecommerce/OrderScreen';
 import OrderHistoryScreen from '@/views/react/ecommerce/OrderHistoryScreen';
 import PaymentMethodScreen from '@/views/react/ecommerce/PaymentMethodScreen';
 import HomeServiceFaceToFace from '@/views/react/services/HomeServiceFaceToFace';
+import Login from '@/views/react/logins/Login';
 import { StoreProvider } from '@/context/store';
 import { isEqualPath } from '@/context/utils'
 
@@ -31,6 +32,10 @@ export const ReactRoutes = [
   {
     path: "/office",
     element: <HomeFrontOffice />
+  },
+  {
+    path: "/backoffice/login",
+    element: <Login />
   },
   {
     path: "/comunita",
@@ -113,14 +118,11 @@ export const ReactRoutes = [
 export function isInReactRoutes(routes) {
   if (!routes) return false;
   let p = window.location.pathname;
-  console.log(p)
   for (var i = 0; i < routes.length; i++) {
     if (isEqualPath(p, routes[i].path)) {
-      console.log("si normale");
       return true;
     }
     if (isInReactRoutes(routes[i].children)) {
-      console.log("si figlio");
       return true;
     }
   }
