@@ -1,15 +1,11 @@
 import METHODS from "../methods.js";
 import DATABASE from '../database.js';
-import AUTH from '../authentication.js'
-import path from "path";
-import { fileURLToPath } from 'url';
+import AUTH from '../authentication.js';
+import { __dirname } from '../utils.js';
 import bodyParser from 'body-parser';
 
 
 var jsonParser = bodyParser.json()
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 let ENDPOINTS = [
   {
@@ -41,19 +37,21 @@ let ENDPOINTS = [
   },
 ]
 
-function officeHome(req, res) {
-  if (AUTH.check_login(req)) {
-    res.sendFile("../templates/home.htm", { root: __dirname });
+async function officeHome(req, res) {
+  if (await AUTH.check_login(req)) {
+    res.sendFile("/templates/home.htm", { root: __dirname });
   } else {
     res.redirect("/backoffice/login");
   }
 }
 
-function officeLogin(req, res) {
-  if (AUTH.check_login(req)) {
+async function officeLogin(req, res) {
+  if (await AUTH.check_login(req)) {
+    console.log("TRUE");
     res.redirect("/backoffice/home");
   } else {
-    res.sendFile("./login.htm", { root: __dirname });
+    console.log("FALSE");
+    res.sendFile("/templates/login.htm", { root: __dirname });
   }
 }
 
@@ -67,11 +65,11 @@ async function officePostLogin(req, res) {
   }
 }
 
-function officeRegister(req, res) {
-  if (AUTH.check_login(req)) {
+async function officeRegister(req, res) {
+  if (await AUTH.check_login(req)) {
     res.redirect("/backoffice/home");
   } else {
-    res.sendFile("./register.htm", { root: __dirname });
+    res.sendFile("/templates/register.htm", { root: __dirname });
   }
 }
 

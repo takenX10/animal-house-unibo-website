@@ -10,10 +10,11 @@ async function connect() {
 }
 
 const userSchema = new Schema({
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-  id: { type: Number, required: true },
-  isPoster: { type: Boolean, required: true }
+    username:{ type:String, required:true},
+    password:{ type:String, required:true},
+    id:{type:Number, required:true},
+    isPoster:{type:Boolean, required:true},
+    petList:{type:Array, required:true}
 });
 
 const postSchema = new Schema({

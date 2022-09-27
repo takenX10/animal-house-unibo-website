@@ -1,5 +1,5 @@
 import METHODS from "../methods.js";
-import { isAuth } from '../utils.js';
+import { isAuth } from "../utils.js";
 import DATABASE from '../database.js';
 
 const ENDPOINTS = [
