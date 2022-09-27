@@ -8,8 +8,7 @@ const ENDPOINTS = [
 
 async function serviceFaceToFaceBySlug(req, res) {
 
-  const prod = await DATABASE.Service.findOne({ slug: req.params.slug });
-  console.log(prod)
+  const prod = await DATABASE.ServiceFaceToFace.findOne({ slug: req.params.slug });
   if (prod) {
     res.json(prod);
   } else {

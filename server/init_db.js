@@ -36,7 +36,8 @@ const products = [
     name: 'Nika Slim shirt',
     slug: 'nika-slim-shirt',
     category: 'Shirts',
-    image: '/images/p1.jpg',
+    poster: '/images/p1.jpg',
+    images: [],
     price: 120,
     countInStock: 5,
     brand: 'Subemelaradjio',
@@ -48,7 +49,8 @@ const products = [
     name: 'Nika Slim Pant',
     slug: 'nika-slim-pant',
     category: 'Pants',
-    image: '/images/p1.jpg',
+    poster: '/images/p1.jpg',
+    images: [],
     price: 25,
     countInStock: 0,
     brand: 'Subemelaradjio',
@@ -60,7 +62,8 @@ const products = [
     name: 'Supreme jacket',
     slug: 'supreme-drip',
     category: 'Jackets',
-    image: '/images/drip.jpg',
+    poster: '/images/p1.jpg',
+    images: [],
     price: 999999,
     countInStock: 1,
     brand: 'drippythangs',
@@ -75,6 +78,8 @@ const servicesFaceToFace = [
     slug: "wow-vet",
     userId: 1,
     title: "Vet wow!",
+    poster: "https://img.freepik.com/free-photo/close-up-veterinarian-taking-care-cat_23-2149100168.jpg?w=2000",
+    category: "vet",
     shifts: [
       {
         day: "Monday",
@@ -87,7 +92,7 @@ const servicesFaceToFace = [
         end: "19:00"
       },
     ],
-    images: ['wow'],
+    images: ['https://img.freepik.com/free-photo/close-up-veterinarian-taking-care-cat_23-2149100168.jpg?w=2000'],
     hourlyRate: 10,
     description: "Something idk this should be vet",
     rating: 5,
@@ -95,6 +100,9 @@ const servicesFaceToFace = [
     opts: [
       {
         type: "select",
+        name: "label",
+        label: "animal",
+        required: true,
         fields: [
           "cat",
           "dog",
@@ -104,9 +112,84 @@ const servicesFaceToFace = [
       },
       {
         type: "checkbox",
-        field: "is aggressive",
-        default: false,
+        name: "Properties",
+        required: false,
+        labels: ["is aggressive"],
       },
+      {
+        type: "radio",
+        name: "Gender",
+        required: true,
+        labels: [
+          'male',
+          'female',
+        ]
+      },
+      {
+        type: "text",
+        name: "Pet name",
+        required: true,
+        description: "So what's your pet name?",
+      },
+      {
+        type: "text",
+        name: "Pet best friend",
+        required: true,
+        description: "So what's your pet's best friend name?",
+      }
+    ]
+  },
+  {
+    slug: "wow-sitter",
+    userId: 1,
+    title: "Dog sitter wow!",
+    poster: "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
+    category: "dog-sitter",
+    shifts: [
+      {
+        day: "Monday",
+        begin: "8:00",
+        end: "13:00"
+      },
+      {
+        day: "Wednesday",
+        begin: "14:00",
+        end: "19:00"
+      },
+    ],
+    images: ['https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg'],
+    hourlyRate: 15,
+    description: "Something idk this should be dog sitter",
+    rating: 5,
+    numReviews: 10,
+    opts: [
+      {
+        type: "checkbox",
+        name: "Properties",
+        required: false,
+        labels: ["is aggressive", "shit often"],
+      },
+      {
+        type: "radio",
+        name: "Gender",
+        required: true,
+        labels: [
+          'male',
+          'female',
+        ]
+      },
+      {
+        type: "text",
+        name: "Pet name",
+        required: true,
+        description: "So what's your pet name?",
+      },
+      {
+        type: "text",
+        name: "Pet best place to shit",
+        required: true,
+        description: "Where does your pet shit?",
+      }
     ]
   },
 ]

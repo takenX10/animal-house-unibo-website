@@ -20,11 +20,12 @@ import OrderScreen from '@/views/react/ecommerce/OrderScreen';
 import OrderHistoryScreen from '@/views/react/ecommerce/OrderHistoryScreen';
 import PaymentMethodScreen from '@/views/react/ecommerce/PaymentMethodScreen';
 import HomeServiceFaceToFace from '@/views/react/services/HomeServiceFaceToFace';
+import ServiceScreen from '@/views/react/services/ServiceScreen';
 import Login from '@/views/react/logins/Login';
 import { StoreProvider } from '@/context/store';
 import { isEqualPath } from '@/context/utils'
 
-export const ReactRoutes = [
+const ReactRoutes = [
   {
     path: "/",
     element: <HomePage />
@@ -62,7 +63,7 @@ export const ReactRoutes = [
       [
         {
           path: "/services/facetoface/:slug",
-          element: <HomeServiceFaceToFace />
+          element: <ServiceScreen />
         },
       ],
   },
@@ -70,10 +71,6 @@ export const ReactRoutes = [
     path: "/shop",
     element: <HomeScreen />,
     children: [
-      {
-        path: "/shop",
-        element: <HomeScreen />
-      },
       {
         path: "/shop/cart",
         element: <CartScreen />
@@ -116,29 +113,33 @@ export const ReactRoutes = [
 
 
 export function isInReactRoutes(routes) {
-  if (!routes) return false;
+  if (!routes)
+    routes = ReactRoutes;
   let p = window.location.pathname;
   for (var i = 0; i < routes.length; i++) {
     if (isEqualPath(p, routes[i].path)) {
       return true;
     }
-    if (isInReactRoutes(routes[i].children)) {
+    if (routes[i].children && isInReactRoutes(routes[i].children)) {
       return true;
     }
   }
   return false;
 }
 
-function createRoute(currentRoute, index) {
+function createRoute(currentRoute) {
   return (
-    <Route path={currentRoute.path} element={currentRoute.element} key={currentRoute.path + "-" + index}>
+    <React.Fragment key={currentRoute.path + "-main"}>
+      <Route path={currentRoute.path} element={currentRoute.element} key={currentRoute.path}>
+      </Route>
       {
         currentRoute.children != undefined &&
 
-        currentRoute.children.map((child, index) => {
-          return (createRoute(child, index));
+        currentRoute.children.map((child) => {
+          return createRoute(child);
         })
-      }</Route>
+      }
+    </React.Fragment>
   );
 }
 
@@ -149,8 +150,8 @@ export const CreateReactApp = () => {
         <HelmetProvider>
           <BrowserRouter>
             <Routes>
-              {ReactRoutes.map((route, index) => {
-                return createRoute(route, index)
+              {ReactRoutes.map((route) => {
+                return createRoute(route)
               })}
             </Routes>
           </BrowserRouter>

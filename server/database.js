@@ -10,11 +10,11 @@ async function connect() {
 }
 
 const userSchema = new Schema({
-    username:{ type:String, required:true},
-    password:{ type:String, required:true},
-    id:{type:Number, required:true},
-    isPoster:{type:Boolean, required:true},
-    petList:{type:Array, required:true}
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  id: { type: Number, required: true },
+  isPoster: { type: Boolean, required: true },
+  petList: { type: Array, required: true }
 });
 
 const postSchema = new Schema({
@@ -83,7 +83,8 @@ const orderSchema = new mongoose.Schema({
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   slug: { type: String, required: true, unique: true },
-  image: { type: String, required: true },
+  poster: { type: String, required: true },
+  images: { type: Array, required: true },
   brand: { type: String, required: true },
   category: { type: String, required: true },
   description: { type: String, required: true },
@@ -99,7 +100,9 @@ const productSchema = new mongoose.Schema({
 const serviceFaceToFaceSchema = new mongoose.Schema({
   slug: { type: String, required: true, unique: true },
   userId: { type: Number, required: true, },
+  poster: { type: String, required: true },
   title: { type: String, required: true, },
+  category: { type: String, required: true },
   shifts: { type: Array, required: true, },
   images: { type: Array, required: true, },
   hourlyRate: { type: Number, required: true },

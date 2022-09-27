@@ -82,7 +82,7 @@ function ProductScreen() {
           </Row>
           <Row>
             <Col md={6} >
-              <img className='img-fluid' src={product.image} alt={product.name}>
+              <img className='img-fluid' src={product.poster} alt={product.name}>
               </img>
             </Col>
             <Col md={6} >

@@ -62,8 +62,7 @@ export default function HomeServiceFaceToFace() {
             <Row>
               {
                 servicesFaceToFace.map(service => (
-                  <Col key={service.id} sm={6} md={4} lg={3} className="mb-3">
-                    {service.id}
+                  <Col key={service.slug} sm={6} md={4} lg={3} className="mb-3">
                     <Service service={service}></Service>
                   </Col>
                 ))}
