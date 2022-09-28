@@ -1,4 +1,5 @@
 // Author : Gianmaria Rovelli
+// Author : Alessandro Frau
 
 import fs from "fs";
 import os from "os";
@@ -19,6 +20,11 @@ app.use(express.static(__dirname + "/static"));
 app.use(express.static(__dirname + "/static/dist"));
 app.use(express.static(__dirname + "/static/dist/assets"));
 app.use(cookieParser());
+const corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 const API_ENDPOINT_PATH = path.join(__dirname, "api")
 let backendRouter = [];
@@ -45,16 +51,10 @@ async function importAPI(api_dir) {
   }
 }
 
-const corsOptions = {
-  origin: "*",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
 function initAPI() {
-  let cors_ = cors(corsOptions);
   for (let ENDPOINTS of backendRouter) {
     for (let i = 0; i < ENDPOINTS.length; i++) {
-      let opts = [cors_];
+      let opts = [];
       if (ENDPOINTS[i].opts) {
         if (Array.isArray(ENDPOINTS[i].opts)) {
           opts.push(...ENDPOINTS[i].opts);
