@@ -23,7 +23,7 @@ async function get_my_id(req, res) {
         res.json({ success: false, error: "you are not logged in" });
         return
     }
-    let usr = await AUTH.get_user(cookie);
+    let usr = await AUTH.get_user(req);
     res.json({ success: true, id: usr.id });
 }
 
