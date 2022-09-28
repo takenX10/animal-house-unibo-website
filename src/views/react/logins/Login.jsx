@@ -17,7 +17,7 @@ export default function Login(){
         });
         res = await res.json();
         if(res.response){
-            //window.location = "/";
+            window.location = "/";
         }
     }
     
