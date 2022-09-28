@@ -1,5 +1,7 @@
-// const SERVER_URL = "http://localhost:8000"
-const SERVER_URL = "http://192.168.107.31:8000"
+const SERVER_URL = process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
+// import ip from 'ip'
+// const SERVER_URL = "http://192.168.107.31:8000"
+// let SERVER_URL = "http://localhost:8000"
 
 export function isEqualPath(path, test) {
   if (test.includes(":")) {

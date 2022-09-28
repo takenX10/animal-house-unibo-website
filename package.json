@@ -2,6 +2,8 @@
   "name": "gamearea",
   "version": "0.0.0",
   "scripts": {
+    "init": "npm run env-db && npm i --force && npm run init-server && npm run init-db",
+    "init-server": "cd server; npm i",
     "client": "vite --host",
     "build": "vite build",
     "build-dev": "vite build && rm -rf server/static/dist && cp -r dist server/static/. && node server/app.js",
@@ -9,7 +11,7 @@
     "init-db": "node server/init_db.js",
     "env-server": "$TERM npm run server &",
     "env-client": "$TERM npm run client &",
-    "env-db": "sudo systemctl start mongodb",
+    "env-db": "bash -c 'if [[ \"bash -c (cat /etc/os-release| head -n 1)\" == *\"Arch Linux\"* ]]; then echo \"sudo systemctl start mongodb\"; else echo \"sudo systemctl start mongod\"; fi'",
     "env": "npm run env-db && npm run env-server && npm run env-client ",
     "preview": "vite preview --port 5050"
   },
