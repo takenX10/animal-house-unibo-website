@@ -1,6 +1,10 @@
 import path from "path";
 import { fileURLToPath } from 'url';
 import AUTH from './authentication.js';
+import bodyParser from 'body-parser';
+
+const jsonParser = bodyParser.json();
+
 
 const SERVER_URL = "http://localhost:8000";
 const CLIENT_URL = "http://localhost:3000";
@@ -18,4 +22,4 @@ async function isAuth(req, res, next){
     }
 }
 
-export { isAuth, CLIENT_URL, __dirname };
+export { isAuth, CLIENT_URL, __dirname, jsonParser };

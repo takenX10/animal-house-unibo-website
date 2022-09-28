@@ -9,7 +9,7 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { __dirname } from "./utils.js";
+import { __dirname, CLIENT_URL } from "./utils.js";
 import METHODS from "./methods.js";
 
 const upload = multer({ dest: os.tmpdir() });
@@ -21,8 +21,9 @@ app.use(express.static(__dirname + "/static/dist"));
 app.use(express.static(__dirname + "/static/dist/assets"));
 app.use(cookieParser());
 const corsOptions = {
-  origin: "*",
+  origin: CLIENT_URL,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials:true,
 };
 app.use(cors(corsOptions));
 

@@ -8,9 +8,17 @@ export default function Login(){
     async function login(){
         let res = await fetch(`${SERVER_URL}/backoffice/login`, {
             method:"POST",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify({username:username.current.value, password:password.current.value})
+            credentials: 'include',
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"username":username.current.value, "password":password.current.value})
         });
+        res = await res.json();
+        if(res.response){
+            //window.location = "/";
+        }
     }
     
     return (
