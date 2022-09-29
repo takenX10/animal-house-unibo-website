@@ -1,13 +1,14 @@
 import { useContext, useEffect, useReducer } from 'react';
-import { Badge, Button, Card, Col, ListGroup, Row, Form } from 'react-bootstrap';
+import { useForm } from "react-hook-form";
+import { Button, Col, ListGroup, Row, Form } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import Rating from '@/components/react/utils/Rating';
 import LoadingBox from '@/components/react/utils/LoadingBox';
 import MessageBox from '@/components/react/utils/MessageBox';
-import { Store } from '@/context/store';
+import CustomForm from '@/components/react/utils/input/CustomForm';
 import { SERVER_URL } from "@/context/utils";
-import "@/assets/css/ecommerce.css";
+import "@/assets/css/services/services.css";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -21,87 +22,13 @@ const reducer = (state, action) => {
       return state;
   }
 }
-function renderOpts(opt) {
-  let render = <></>
-  let props = {}
-  switch (opt.type) {
-    case 'checkbox':
-      if (opt.required)
-        props = { required: true }
-      render = <div><p><b>{opt.name}</b></p>
-        {
-          opt.labels.map((l, index) => {
-            return <Form.Check
-              name={opt.name}
-              {...props}
-              type={opt.type}
-              key={`${opt.name}-${opt.type}-${index}`}
-              label={l}>
-            </Form.Check>
-          })
-        }</div>
-      break
-    case 'radio':
-      if (opt.required)
-        props = { required: true }
-      render = <div ><p><b>{opt.name}</b></p>
-        {
-          opt.labels.map((l, index) => {
-            return <Form.Check
-              inline
-              label={l}
-              {...props}
-              name={opt.name}
-              type={opt.type}
-              key={`${opt.name}-${opt.type}-${index}`}
-            />
-          })
-        }</div>
-      break
-    case 'select':
-      if (opt.required)
-        props = { required: true }
-      render = <div><p><b>{opt.label}</b></p>
-        <Form.Select {...props} name={opt.name} aria-label={opt.label}>
-          {
-            opt.fields.map((f, index) => {
-              return <option key={`${opt.label}-${opt.type}-${index}`} value={f}>{f}</option>
-            })
-          }
-        </Form.Select></div>
-      break
-    case 'text':
-      let id = `${opt.name}-${opt.type}-control`
-      let idDesc = `${opt.name}-${opt.type}-control-desc`
-      if (opt.required)
-        props = { required: true }
-      render =
-        <>
-          <Form.Label htmlFor={id}>{opt.name}</Form.Label>
-          <Form.Control
-            type={opt.type}
-            id={id}
-            aria-describedby={idDesc}
-            {...props}
-          />
-          <Form.Text id={idDesc} name={opt.name}>
-            {opt.description}
-          </Form.Text>
-        </>
-  }
-  return (
-    <Col key={`${opt.name}-${opt.type}`} md={3} className="text-center mx-auto py-3 " >
-      {render}
-      <hr />
-    </Col>
-  )
-}
 
 
 function ProductScreen() {
   const navigate = useNavigate();
   const params = useParams();
   const { slug } = params;
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const [{ loading, error, service }, dispatch] = useReducer(reducer, {
     service: [],
     loading: true,
@@ -123,12 +50,17 @@ function ProductScreen() {
     }
 
   };
+  async function book(data) {
+    console.log("ciao")
+    console.log(data)
+    return false
+  }
 
   useEffect(() => {
+    // called twice becasue in React.strict mode, will not happend in prod
     fetchData();
   }, [slug]);
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { cart } = state;
+  // const { state, dispatch: ctxDispatch } = useContext(Store);
 
   return (
     loading ? (<LoadingBox />)
@@ -171,14 +103,8 @@ function ProductScreen() {
           <Row className='mx-auto text-center'>
             <h3 className='fw-bold mx-auto'>Booking</h3>
           </Row>
-          <Form>
-            <Row className='mx-3'>
-              {
-                service.opts.map((opt, index) => {
-                  return renderOpts(opt, index);
-                })
-              }
-            </Row>
+          <Form key={'form'} onSubmit={handleSubmit(book)}>
+            <CustomForm register={register} opts={service.opts} />
             <Row className='mx-auto text-center'>
               <Col md={3} sm={10} xs={10} className="mx-auto">
                 <Button variant="primary" className='w-100' type="submit">

@@ -11,7 +11,7 @@
     "init-db": "node server/init_db.js",
     "env-server": "$TERM npm run server &",
     "env-client": "$TERM npm run client &",
-    "env-db": "bash -c 'if [[ \"bash -c (cat /etc/os-release| head -n 1)\" == *\"Arch Linux\"* ]]; then echo \"sudo systemctl start mongodb\"; else echo \"sudo systemctl start mongod\"; fi'",
+    "env-db": "bash -c 'if [[ \"bash -c (cat /etc/os-release| head -n 1)\" == *\"Arch Linux\"* ]]; then bash -c \"sudo systemctl start mongod\"; else bash -c \"sudo systemctl start mongodb\"; fi'",
     "env": "npm run env-db && npm run env-server && npm run env-client ",
     "preview": "vite preview --port 5050"
   },
@@ -37,6 +37,7 @@
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.0.0",
     "react-helmet-async": "^1.3.0",
+    "react-hook-form": "^7.36.1",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
     "sass": "^1.51.0",

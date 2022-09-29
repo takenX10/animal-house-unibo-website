@@ -100,9 +100,9 @@ const servicesFaceToFace = [
     opts: [
       {
         type: "select",
-        name: "label",
+        name: "animal",
         label: "animal",
-        required: true,
+        required: false,
         fields: [
           "cat",
           "dog",
@@ -112,14 +112,16 @@ const servicesFaceToFace = [
       },
       {
         type: "checkbox",
-        name: "Properties",
+        name: "properties",
+        label: "Properties",
         required: false,
         labels: ["is aggressive"],
       },
       {
         type: "radio",
-        name: "Gender",
-        required: true,
+        name: "gender",
+        label: "Gender",
+        required: false,
         labels: [
           'male',
           'female',
@@ -127,14 +129,16 @@ const servicesFaceToFace = [
       },
       {
         type: "text",
-        name: "Pet name",
-        required: true,
+        name: "pet_name",
+        label: "Pet name",
+        required: false,
         description: "So what's your pet name?",
       },
       {
         type: "text",
-        name: "Pet best friend",
-        required: true,
+        name: "pet_best_friend",
+        label: "Pet best friend",
+        required: false,
         description: "So what's your pet's best friend name?",
       }
     ]
@@ -165,13 +169,15 @@ const servicesFaceToFace = [
     opts: [
       {
         type: "checkbox",
-        name: "Properties",
+        name: "properties",
+        label: "Properties",
         required: false,
         labels: ["is aggressive", "shit often"],
       },
       {
         type: "radio",
-        name: "Gender",
+        name: "gender",
+        label: "Gender",
         required: true,
         labels: [
           'male',
@@ -180,13 +186,15 @@ const servicesFaceToFace = [
       },
       {
         type: "text",
-        name: "Pet name",
+        name: "pet_name",
+        label: "Pet name",
         required: true,
         description: "So what's your pet name?",
       },
       {
         type: "text",
-        name: "Pet best place to shit",
+        name: "pet_best_place_to_shit",
+        label: "Pet best place to shit",
         required: true,
         description: "Where does your pet shit?",
       }
