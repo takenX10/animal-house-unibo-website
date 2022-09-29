@@ -27,6 +27,12 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.use((err, req, res, next) => {
+  console.log('mistakes were made');
+  res.status(500).send({ message: err.message });
+});
+
+
 const API_ENDPOINT_PATH = path.join(__dirname, "api")
 let backendRouter = [];
 

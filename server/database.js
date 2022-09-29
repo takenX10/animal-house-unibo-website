@@ -10,21 +10,20 @@ async function connect() {
 }
 
 const userSchema = new Schema({
-  username: { type: String, required: true },
+  email: { type: String, required: true, unique:true},
+  name: { type: String, required: true},
+  surname:{ type: String, required: true},
   password: { type: String, required: true },
-  id: { type: Number, required: true },
-  isPoster: { type: Boolean, required: true },
-  petList: { type: Array, required: true }
+  isAdmin: { type: Boolean, default:false, required: true },
+  petList: { type: Array, required: false },
 });
 
 const postSchema = new Schema({
   author: { type: String, required: true },
   message: { type: String, required: true },
-  id: { type: Number, required: true }
 });
 
 const petSchema = new Schema({
-  petid: { type: Number, required: true },
   ownerid: { type: Number, required: true },
   name: { type: String, required: true },
   description: { type: String, required: true },

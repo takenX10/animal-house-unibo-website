@@ -1,7 +1,25 @@
 import DATABASE from './database.js';
+import bcrypt, { genSaltSync } from 'bcrypt';
 
 // s3cr3t_aldo
-var fakeUsers = ["aldo", "giovanni", "giacomo"]
+var fakeUsers = [{
+    name:"Aldo",
+    surname:"Baglio",
+    email:"aldo@baglio.tk",
+    password:bcrypt.hashSync("aldobaglio",genSaltSync()),
+  },
+  {
+    name:"Giovanni",
+    surname:"Storti",
+    email:"giovanni@storti.tk",
+    password:bcrypt.hashSync("giovannistorti",genSaltSync()),
+  }, 
+  {
+    name:"Giacomo",
+    surname:"Poretti",
+    email:"giacomo@poretti.tk",
+    password:bcrypt.hashSync("giacomoporetti",genSaltSync()),
+  },]
 var Pets = [
   {
     ownerid: 1,
@@ -207,15 +225,8 @@ async function init() {
   console.log("Clearing database...");
   await mongoose.connection.db.dropDatabase(console.log(`${mongoose.connection.db.databaseName}-db has been cleared`));
   console.log("Adding starting elements to database...");
-  let i = 1;
   for (let u of fakeUsers) {
-    await DATABASE.User.create({
-      username: u,
-      password: `secret_${u}`,
-      id: i,
-      isPoster: false
-    });
-    i++;
+    await DATABASE.User.create(u);
   }
   console.log("Adding pets to database...");
   await DATABASE.Pet.insertMany(Pets);

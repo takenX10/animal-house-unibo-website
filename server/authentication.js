@@ -8,11 +8,11 @@ async function get_user(req) {
         return null;
     }
     const decrypted_cookie = jwt.verify(req.cookies.AUTHSESSION, JWT_SECRET_KEY);
-    return await DATABASE.User.findOne({ username: decrypted_cookie.username });
+    return await DATABASE.User.findOne({ email: decrypted_cookie.email });
 }
 
 function generate_cookie(req) {
-    return jwt.sign({ username: req.body.username, isPoster: false }, JWT_SECRET_KEY);
+    return jwt.sign({ email: req.body.email, isAdmin: false }, JWT_SECRET_KEY);
 }
 
 // true -> correctly logged in, false otherwise
