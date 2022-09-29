@@ -9,7 +9,6 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import expressAsyncHandler from 'express-async-handler';
 import { __dirname, CLIENT_URL } from "./utils.js";
 import METHODS from "./methods.js";
 
@@ -60,12 +59,11 @@ async function importAPI(api_dir) {
 }
 
 function wrapper(func) {
-      return (req,res) => {
+      return async (req,res,next) => {
         try {
-          return func(req,res)
+          await func(req,res,next)
         }catch(e){
-          console.log("weee");
-            console.error(e);
+          console.log("wajo no eh");
           }
         }
 }

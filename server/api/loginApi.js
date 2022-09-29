@@ -21,14 +21,13 @@ async function officeLogin(req, res) {
     res.sendFile("/templates/login.htm", { root: __dirname });
 }
 
-async function officePostLogin(req, res, next) {
-console.log(next)
+async function officePostLogin(req, res) {
+    let d = undefined;
+    console.log(d.ciao);
     const user = await DATABASE.User.findOne({ email: req?.body?.email});
     if (user && bcrypt.compareSync(req?.body?.password, user.password)){
       AUTH.set_cookie(res, AUTH.generate_cookie(req), {sameSite:'None', secure:true})
 
-    let d = undefined;
-    console.log(d.ciao);
       res.json({
         _id:user._id,
         name:user.name,
