@@ -3,8 +3,12 @@ import React from 'react';
 import './Navbar.scss';
 import Dropdown from './Dropdown';
 import { FaBars } from 'react-icons/fa'
+import {Store} from '@/context/store';
+import { useContext } from 'react';
 
 const NavbarServizi = () => {
+
+
     return (
         <>
             <Dropdown
@@ -105,6 +109,7 @@ export default function Navbar(){
                 document.cookie = spcook[0] + "=;expires=Thu, 21 Sep 1979 00:00:01 UTC;";                                
             }
     }
+    const { dispatch: ctxDispatch } = useContext(Store);
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light p-3 border-bottom border-5">
@@ -121,7 +126,7 @@ export default function Navbar(){
                             <a className="text-dark nav-link disabled text-muted" href="back/home">Back office</a>
                             <button className="btn btn-success text-light m-2" onClick={()=>{window.location=`/backoffice/login`}}>Login</button>
                             <button className="btn btn-primary text-light m-2" onClick={()=>{window.location=`/backoffice/register`}}>Register</button>
-                            <button className="btn btn-danger text-light m-2" onClick={()=>{clearListCookies(); window.location.reload(true);}}>Logout</button>
+                            <button className="btn btn-danger text-light m-2" onClick={()=>{clearListCookies(); window.location.reload(true);ctxDispatch({type:'USER_SIGNOUT'})}}>Logout</button>
                         </div>
                     </div>
                 </div>

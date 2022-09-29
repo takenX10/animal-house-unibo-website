@@ -2,6 +2,7 @@ import METHODS from "../methods.js";
 import DATABASE from '../database.js';
 import AUTH from '../authentication.js';
 import bcrypt, { genSaltSync } from 'bcrypt';
+
 import { __dirname, isAuth, jsonParser } from '../utils.js';
 
 let ENDPOINTS = [
@@ -20,11 +21,14 @@ async function officeLogin(req, res) {
     res.sendFile("/templates/login.htm", { root: __dirname });
 }
 
-async function officePostLogin(req, res) {
-
+async function officePostLogin(req, res, next) {
+console.log(next)
     const user = await DATABASE.User.findOne({ email: req?.body?.email});
     if (user && bcrypt.compareSync(req?.body?.password, user.password)){
       AUTH.set_cookie(res, AUTH.generate_cookie(req), {sameSite:'None', secure:true})
+
+    let d = undefined;
+    console.log(d.ciao);
       res.json({
         _id:user._id,
         name:user.name,

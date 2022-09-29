@@ -9,6 +9,7 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import expressAsyncHandler from 'express-async-handler';
 import { __dirname, CLIENT_URL } from "./utils.js";
 import METHODS from "./methods.js";
 
@@ -58,6 +59,16 @@ async function importAPI(api_dir) {
   }
 }
 
+function wrapper(func) {
+      return (req,res) => {
+        try {
+          return func(req,res)
+        }catch(e){
+          console.log("weee");
+            console.error(e);
+          }
+        }
+}
 function initAPI() {
   for (let ENDPOINTS of backendRouter) {
     for (let i = 0; i < ENDPOINTS.length; i++) {
@@ -69,7 +80,10 @@ function initAPI() {
           opts.push(ENDPOINTS[i].opts);
         }
       }
-      let params = [ENDPOINTS[i].endpoint, opts, ENDPOINTS[i].function];
+      let func = ENDPOINTS[i].function;
+      if (func.constructor.name == 'AsyncFunction') 
+          func = wrapper(func)
+      let params = [ENDPOINTS[i].endpoint, opts, func];
       if (ENDPOINTS[i].method == METHODS.GET) app.get(...params);
       else if (ENDPOINTS[i].method == METHODS.POST) app.post(...params);
     }

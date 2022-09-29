@@ -27,6 +27,7 @@
     "bootstrap-vue-3": "^0.1.11",
     "canvas-confetti": "^1.5.1",
     "express": "^4.18.0",
+    "express-async-handler": "^1.2.0",
     "gitart-scroll-carousel": "^1.2.4",
     "gitart-vue-dialog": "^2.4.0",
     "lodash": "^4.17.21",
