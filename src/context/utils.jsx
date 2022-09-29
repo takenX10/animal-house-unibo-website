@@ -15,7 +15,6 @@ export function isEqualPath(path, test) {
 async function check_login() {
     let res = await fetch(`${SERVER_URL}/backoffice/is_logged_in`, { method: "POST", credentials:'include' });
     res = await res.json();
-    console.log(res);
     if (!res.success) {
         window.location = "/backoffice/login";
     }

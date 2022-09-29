@@ -14,6 +14,7 @@ const userSchema = new Schema({
   name: { type: String, required: true},
   surname:{ type: String, required: true},
   password: { type: String, required: true },
+  contact: { type: String, required: true },
   isAdmin: { type: Boolean, default:false, required: true },
   petList: { type: Array, required: false },
 });

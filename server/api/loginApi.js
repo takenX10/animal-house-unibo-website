@@ -22,8 +22,6 @@ async function officeLogin(req, res) {
 }
 
 async function officePostLogin(req, res) {
-    let d = undefined;
-    console.log(d.ciao);
     const user = await DATABASE.User.findOne({ email: req?.body?.email});
     if (user && bcrypt.compareSync(req?.body?.password, user.password)){
       AUTH.set_cookie(res, AUTH.generate_cookie(req), {sameSite:'None', secure:true})

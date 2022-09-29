@@ -6,18 +6,21 @@ var fakeUsers = [{
     name:"Aldo",
     surname:"Baglio",
     email:"aldo@baglio.tk",
+    contact: "+39 333 333 3333",
     password:bcrypt.hashSync("aldobaglio",genSaltSync()),
   },
   {
     name:"Giovanni",
     surname:"Storti",
     email:"giovanni@storti.tk",
+    contact: "+39 333 333 3333",
     password:bcrypt.hashSync("giovannistorti",genSaltSync()),
   }, 
   {
     name:"Giacomo",
     surname:"Poretti",
     email:"giacomo@poretti.tk",
+    contact: "+39 333 333 3333",
     password:bcrypt.hashSync("giacomoporetti",genSaltSync()),
   },]
 var Pets = [
@@ -31,7 +34,7 @@ var Pets = [
     age: 11,
     petid: 1,
     likedBy: [],
-    matchedBy: [],
+    matchedBy: [2],
     imgList: ["https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg"]
   },
   {

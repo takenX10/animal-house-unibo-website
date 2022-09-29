@@ -102,13 +102,6 @@ const NavbarShop = () => {
 }
 
 export default function Navbar(){
-    function clearListCookies(){
-        var cookies = document.cookie.split(";");
-            for (var i = 0; i < cookies.length; i++){   
-                var spcook =  cookies[i].split("=");
-                document.cookie = spcook[0] + "=;expires=Thu, 21 Sep 1979 00:00:01 UTC;";                                
-            }
-    }
     const { dispatch: ctxDispatch } = useContext(Store);
     return (
         <>
@@ -126,7 +119,7 @@ export default function Navbar(){
                             <a className="text-dark nav-link disabled text-muted" href="back/home">Back office</a>
                             <button className="btn btn-success text-light m-2" onClick={()=>{window.location=`/backoffice/login`}}>Login</button>
                             <button className="btn btn-primary text-light m-2" onClick={()=>{window.location=`/backoffice/register`}}>Register</button>
-                            <button className="btn btn-danger text-light m-2" onClick={()=>{clearListCookies(); window.location.reload(true);ctxDispatch({type:'USER_SIGNOUT'})}}>Logout</button>
+                            <button className="btn btn-danger text-light m-2" onClick={()=>{document.cookie="AUTHSESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; window.location.reload(true);ctxDispatch({type:'USER_SIGNOUT'})}}>Logout</button>
                         </div>
                     </div>
                 </div>
