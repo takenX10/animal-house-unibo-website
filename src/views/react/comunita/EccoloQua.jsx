@@ -1,46 +1,127 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Navbar from '@/components/react/navbar/Navbar';
+import { Modal, Form, Button } from 'react-bootstrap';
+import { SERVER_URL } from '@/context/utils';
 
-/**
- * A quanto pare la bacheca eccolo qua consiste in un forum in cui la gente puo
- * scrivere, creando post in cui la gente puo rispondere.
- * I vincoli di questa bacheca sono che la gente NON loggata possa solo leggere, mentre
- * la gente loggata puo sia leggere sia scrivere.
- * 
- * Dunque e' necessaria:
- * - un api che ti permetta di ottenere la lista dei post, prendendo per esempio massimo 10 post e potendo richiedere un altra pagina
- * - un api che ti permette di visualizzare le risposte ad un post, prendendone 10 alla volta.
- * - un api che ti permetta di creare un nuovo post
- * - un api che ti permetta di rispondere ad un post gia esistente (per esempio prendendone l'id)
- *
- */
+async function getAnswers(id){
+    try{
+        let res = await fetch(`${SERVER_URL}/backoffice/get_answers`, {
+            method:"POST",
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id:id})
+        });
+        res = await res.json();
+        return res.answers;
+    }catch(e){
+        alert(e);
+    }
+}
 
-// {postid:11, resPage:page}, parte da 1 e va avanti
-function getAnswers(id){
-    return [
-        {author:"giovanni", text:"risposta 1"},
-        {author:"aldo", text:"risposta 2"},
-        {author:"giacomo", text:"risposta 3"},
-    ]
+async function getPosts(){
+    try {
+        let res = await fetch(`${SERVER_URL}/backoffice/get_posts`, {method:"POST"});
+        res = await res.json();
+        return res.posts;
+    }catch(e){
+        alert(e);
+    }
 }
-// {postPage:page}
-function getPosts(page){
-    return [
-        {author:"Aldo baglio", text:"non posso ne scendere ne salire, NE SCENDERE NE SALIRE!", id:10},
-        {author:"Pietro smusi", text:"Sai come lo pago il sito? con la carta dello zio peppe!", id:11}
-    ]
-}
+
+
+
 
 export default function EccoloQua(){
     const [posts, setPosts] = useState([]);
     const [answers, setAnswers] = useState([]);
     const [myStyle, setMyStyle] = useState({display:"none"});
+    const [show, setShow] = useState(false);
+    const [currentAnswer, setCurrentAnswer] = useState(null);
+    const showModal = ()=>{setShow(true);}
+    const hideModal = ()=>{setShow(false); setCurrentAnswer(null);}
+
+    async function create_post(e, value, answer){
+        e.preventDefault();
+        try{
+            let postData = {message:value};
+            if(answer){
+                postData.answerFrom = answer;
+            }
+            console.log(postData, answer);
+            let res = await fetch(`${SERVER_URL}/backoffice/create_post`, {
+                method:"POST",
+                credentials:'include',
+                headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            });
+            res = await res.json();
+            hideModal();
+            if(res.success){
+                alert("Post created correctly");
+            }
+            setPosts(await getPosts());
+        }catch(err){
+            hideModal();
+            alert(err);
+        }
+    }
+
+    async function showAnswers(id){
+        setMyStyle({display:"block"});
+        setAnswers(await getAnswers(id.id));
+    }
+
+    function hideAnswers(){
+        setMyStyle({display:"none"});
+    }
+
+    async function init(){
+        setPosts(await getPosts());
+    }
+
+    useEffect(()=>{
+        init();
+    }, []);
+
+    useEffect(()=>{
+        if(currentAnswer){
+            showModal();
+        }
+    }, [currentAnswer]);
+
+
+    const MyModal = ({answer}) =>{
+        const messageRef = useRef();
+        return (
+            <Modal show={show} onHide={hideModal} backdrop="static" keyboard={false} centered>
+                <Modal.Header closeButton>
+                <Modal.Title>{answer ? "Your Answer:":"New post" }</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={(e)=>{create_post(e, messageRef.current.value, answer)}}>
+                        <Form.Group>
+                            <Form.Label>Write your message:</Form.Label>
+                            <Form.Control as="textarea" placeholder="Write your message..." ref={messageRef}></Form.Control>
+                        </Form.Group>
+                        <Button className="mt-3 p-2 me-3" variant="secondary" onClick={hideModal}>Close</Button>
+                        <Button className="p-2 mt-3" variant="primary" type="submit">Submit</Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+        );
+    };
     function Post({author, text, id}){
         return (
             <div className="post border border-dark border-width-1 p-3 m-2">
                 <h3 className="fw-bold post-author">{author}</h3>
                 <p className="post-text">{text}</p>
-                <button type="button" className="btn btn-success post-answers-button" onClick={()=>{showAnswers({id})}}>Visualizza risposte</button>
+                <Button className="btn btn-success post-answers-button" onClick={()=>{showAnswers({id})}}>Visualizza risposte</Button>
+                <Button className="btn btn-primary m-3" onClick={()=>{setCurrentAnswer(id);}}>Rispondi</Button>
             </div>
         );
     }
@@ -53,25 +134,6 @@ export default function EccoloQua(){
             </div>
         );
     }
-    
-    useEffect(()=>{
-        setPosts(getPosts());
-        const myModal = document.getElementById('new-message-modal');
-        const myInput = document.getElementById('new-message-button');
-
-        myModal.addEventListener('shown.bs.modal', () => {
-            myInput.focus()
-        });
-    },[]);
-
-    function showAnswers(id){
-        setMyStyle({display:"block"});
-        setAnswers(getAnswers(id));
-    }
-
-    function hideAnswers(){
-        setMyStyle({display:"none"});
-    }
     return (
         <>
             <Navbar />
@@ -79,37 +141,16 @@ export default function EccoloQua(){
                 <div className="container-fluid post-container">
                     <div className="row justify-content-center">
                         <div className="col-7">
-                            <button type="button" id="new-message-button" className="btn btn-dark m-3"  data-bs-toggle="modal" data-bs-target="#new-message-modal">Crea un post!</button>
-                            {posts.map((mypost)=>{return (<Post author={mypost.author} text={mypost.text} id={mypost.id} key={mypost.text} />)})}
+                            <Button type="button" className="btn btn-dark m-3" onClick={showModal}>Crea un post!</Button>
+                            {posts.map((mypost)=>{return (<Post key={mypost.id} author={mypost.author} text={mypost.message} id={mypost.id}/>)})}
                         </div>
                         <div className="col-5" style={myStyle}>
                             <button type="button" className="btn btn-danger m-3" onClick={hideAnswers}>Chiudi risposte</button>
-                            {answers.map((myanswer)=>{return (<Answer author={myanswer.author} text={myanswer.text} />)})}
+                            {answers.map((myanswer)=>{return (<Answer key={myanswer.id} author={myanswer.author} text={myanswer.message} />)})}
                         </div>
                     </div>
                 </div>
-                <div className="modal fade" id="new-message-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Nuovo post</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <form>
-                                <div className="mb-3">
-                                    <label for="message-text" className="col-form-label">Messaggio post:</label>
-                                    <textarea className="form-control" id="message-text"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Crea post</button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
+                <MyModal answer={currentAnswer} />
             </main>
         </>
     );

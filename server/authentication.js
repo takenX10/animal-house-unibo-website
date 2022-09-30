@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET_KEY = "idkman_something_not_real";
 
 async function get_user(req) {
-    if (!req.cookies || !req.cookies.AUTHSESSION) {
+    if (!req?.cookies?.AUTHSESSION) {
         return null;
     }
     const decrypted_cookie = jwt.verify(req.cookies.AUTHSESSION, JWT_SECRET_KEY);
