@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import Navbar from '@/components/react/navbar/Navbar';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
 import { SERVER_URL } from '@/context/utils';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 async function getAnswers(id){
     try{
@@ -16,7 +19,7 @@ async function getAnswers(id){
         res = await res.json();
         return res.answers;
     }catch(e){
-        alert(e);
+        toast(e);
     }
 }
 
@@ -26,7 +29,7 @@ async function getPosts(){
         res = await res.json();
         return res.posts;
     }catch(e){
-        alert(e);
+        toast(e);
     }
 }
 
@@ -62,12 +65,12 @@ export default function EccoloQua(){
             res = await res.json();
             hideModal();
             if(res.success){
-                alert("Post created correctly");
+                toast("Post created correctly");
             }
             setPosts(await getPosts());
         }catch(err){
             hideModal();
-            alert(err);
+            toast(err);
         }
     }
 
@@ -151,6 +154,7 @@ export default function EccoloQua(){
                     </div>
                 </div>
                 <MyModal answer={currentAnswer} />
+                <ToastContainer />
             </main>
         </>
     );
