@@ -40,7 +40,7 @@ async function create_post(req, res){
             myres.answerFrom = req.body.answerFrom;
         }
         await DATABASE.Post.create(myres);
-        res.json({success:true})
+        res.json({success:true});
     }catch(e){
         console.log(e);
         res.status(500).send();

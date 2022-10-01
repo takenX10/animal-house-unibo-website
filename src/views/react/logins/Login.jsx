@@ -8,6 +8,7 @@ import { Store } from "@/context/store";
 import { useForm } from "react-hook-form"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { check_login } from '@/context/utils';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -41,9 +42,10 @@ export default function Login() {
             toast(err.message);
         }
     }
+
     useEffect(() => {
         if (userInfo) {
-            navigate(redirect)
+            check_login(false).then((r)=>{if(r){navigate(redirect);}});
         }
     }, [navigate, redirect, userInfo])
 

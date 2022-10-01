@@ -12,12 +12,13 @@ export function isEqualPath(path, test) {
     return path == test
 }
 
-async function check_login() {
+async function check_login(redirect) {
     let res = await fetch(`${SERVER_URL}/backoffice/is_logged_in`, { method: "POST", credentials:'include' });
     res = await res.json();
-    if (!res.success) {
+    if (redirect && !res.success) {
         window.location = "/backoffice/login";
     }
+    return res.success;
 }
 
 async function get_my_id() {
