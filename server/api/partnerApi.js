@@ -9,14 +9,35 @@ let ENDPOINTS = [
     { endpoint: "/backoffice/get_a_puppy", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_a_puppy },
     { endpoint: "/backoffice/get_matches", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_matches },
     { endpoint: "/backoffice/get_my_puppies", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_my_puppies },
+    { endpoint: "/backoffice/unmatch", method: METHODS.POST, opts: [jsonParser, isAuth], function: unmatch },
+
 
 ]
 
+async function unmatch(req, res){
+    const user = await AUTH.get_user(req);
+    const unmatchpet = await DATABASE.Pet.findById(req.body.id);
+    for (let p of user.petList){
+        const currentpet = await DATABASE.Pet.findById(p);
+        if(currentpet.matchedBy.includes(req.body.id)){
+            currentpet.matchedBy.splice(currentpet.matchedBy.indexOf(req.body.id), 1);
+            await DATABASE.Pet.findByIdAndUpdate(currentpet.id, {
+                matchedBy:currentpet.matchedBy
+            });
+            unmatchpet.matchedBy.splice(unmatchpet.matchedBy.indexOf(p), 1);
+            await DATABASE.Pet.findByIdAndUpdate(unmatchpet.id, {
+                matchedBy: unmatchpet.matchedBy
+            });
+        }
+    }
+    res.json({success:true});
+}
+
+
 async function get_matches(req, res) {
     const user = await AUTH.get_user(req);
-    const pets = user.petList;
     let matches = [];
-    for (let p of pets){
+    for (let p of user.petList){
         const currentpet = await DATABASE.Pet.findById(p);
         for(let m of currentpet.matchedBy){
             const currentm = await DATABASE.Pet.findById(m);

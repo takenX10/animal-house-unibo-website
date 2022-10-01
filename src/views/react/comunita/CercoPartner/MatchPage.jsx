@@ -13,6 +13,28 @@ export default function MatchPage({setCurrentPage, setPageId}){
         }
     }
 
+    async function unmatch(id){
+        try{
+            let res = await fetch(`${SERVER_URL}/backoffice/unmatch`,{
+                method: "POST",
+                credentials:"include",
+                headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id:id})
+            });
+            res = await res.json()
+            if(res.success){
+                getMatches();
+            }else{
+                alert(res);
+            }
+        }catch(e){
+            alert(e);
+        }
+    }
+
     async function showProfile(id){
         setPageId(id);
         setCurrentPage("profile");
@@ -37,7 +59,7 @@ export default function MatchPage({setCurrentPage, setPageId}){
                                 <h2>{match.name}</h2>
                                 <p>{match.contact}</p>
                                 <Button variant='success' onClick={()=>{showProfile(match.id)}}>Vedi profilo</Button>
-                                <Button variant='danger' className='m-2'>Unmatch</Button>
+                                <Button variant='danger' onClick={()=>{unmatch(match.id)}} className='m-2'>Unmatch</Button>
                             </div>);
                         })
                     }
