@@ -26,7 +26,7 @@ const postSchema = new Schema({
 });
 
 const petSchema = new Schema({
-  ownerid: { type: Number, required: true },
+  ownerid: { type: String, required: true },
   name: { type: String, required: true },
   description: { type: String, required: true },
   race: { type: String, required: true },

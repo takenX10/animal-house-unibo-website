@@ -6,54 +6,51 @@ var fakeUsers = [{
     name: "Aldo",
     surname: "Baglio",
     email: "aldo@baglio.tk",
-    contact: "+39 333 333 3333",
+    contact: "+39 111 111 1111",
     password: bcrypt.hashSync("aldobaglio", genSaltSync()),
+    petList: [],
 },
 {
     name: "Giovanni",
     surname: "Storti",
     email: "giovanni@storti.tk",
-    contact: "+39 333 333 3333",
+    contact: "+39 444 444 4444",
     password: bcrypt.hashSync("giovannistorti", genSaltSync()),
+    petList: [],
 },
 {
     name: "Giacomo",
     surname: "Poretti",
     email: "giacomo@poretti.tk",
-    contact: "+39 333 333 3333",
+    contact: "+39 555 555 5555",
     password: bcrypt.hashSync("giacomoporetti", genSaltSync()),
+    petList: [],
 },];
 
 var posts = [
     { author: "aldo@baglio.tk", message: "Non posso ne scendere ne salire, ne scendere ne salire" },
     { author: "giovanni@storti.tk", message: "- Ci sono solo due cose che possono salvarci: ordine e re-go-le! - Re-go-le! - Eh, ridiamo, ridiamo, ridevano anche i Maya e...si sono estinti!" },
     { author: "giacomo@poretti.tk", message: "Ma hai visto quel cane lì? Gli hanno montato… le tibie al contrario?" },
-    { author: "giovanni@storti.tk", message: "- Ci sono solo due cose che possono salvarci: ordine e re-go-le! - Re-go-le! - Eh, ridiamo, ridiamo, ridevano anche i Maya e...si sono estinti!", answerFrom: "6336b7ce75220be4e7e8d40a"},
-    { author: "giacomo@poretti.tk", message: "Ma hai visto quel cane lì? Gli hanno montato… le tibie al contrario?", answerFrom: "6336b7ce75220be4e7e8d40a" },
 ]
 var Pets = [
     {
-        ownerid: 1,
         name: "Baloo",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi distinctio adipisci esse possimus, earum odio amet? Blanditiis magni ratione quas assumenda eum corporis quod dolores facilis, enim nam voluptatum porro?",
         weight: 5,
         race: "Dog",
         sex: "Male",
         age: 11,
-        petid: 1,
         likedBy: [],
-        matchedBy: [2],
+        matchedBy: [],
         imgList: ["https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg"]
     },
     {
-        ownerid: 2,
         name: "Arturo",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi distinctio adipisci esse possimus, earum odio amet? Blanditiis magni ratione quas assumenda eum corporis quod dolores facilis, enim nam voluptatum porro?",
         weight: 3,
         race: "Dog",
         sex: "Male",
         age: 13,
-        petid: 2,
         likedBy: [],
         matchedBy: [],
         imgList: ["https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg"]
@@ -240,7 +237,23 @@ async function init() {
     console.log("Adding posts to database");
     await DATABASE.Post.insertMany(posts);
     console.log("Adding pets to database...");
-    await DATABASE.Pet.insertMany(Pets);
+    for (let i in Pets){
+        const user = await DATABASE.User.findOne({email:fakeUsers[i].email});
+        Pets[i].ownerid = user.id
+        let matchPet = null;
+        if(i%2){
+            matchPet = await DATABASE.Pet.findOne({name:Pets[i-1].name});
+            Pets[i].matchedBy = [matchPet.id];
+        }
+        const pet = await DATABASE.Pet.create(Pets[i]);
+        if(i%2){
+            await DATABASE.Pet.findByIdAndUpdate(matchPet.id, { matchedBy : [pet.id]});
+        }
+        await DATABASE.User.findByIdAndUpdate(user.id, {
+            petList: [...user.petList, pet.id]
+        });
+    }
+    console.log(await DATABASE.Pet.find());
     console.log("Adding products...");
     await DATABASE.Product.insertMany(products);
     console.log("Adding face to face services...");

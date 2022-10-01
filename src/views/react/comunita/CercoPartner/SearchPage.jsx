@@ -11,8 +11,8 @@ display: flex;
 justify-content: center;
 align-items: center;
 .view {
-    height: 700px;
-    width: 500px;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -34,22 +34,31 @@ export default function SearchPage(){
     const [currentSearchPet, setCurrentSearchPet] = useState(PlaceholderPuppy);
     
     async function fetch_new_puppy(){
-        let res = await fetch(`${SERVER_URL}/backoffice/get_new_puppy`, {method:"POST"});
-        setCurrentSearchPet(await res.json());
+        try{
+            let res = await fetch(`${SERVER_URL}/backoffice/get_new_puppy`, {method:"POST", credentials:'include'});
+            setCurrentSearchPet(await res.json());
+        }catch(e){
+            alert(e);
+        }
     }
     function reject(){
         fetch_new_puppy();
     }
     async function like(){
-        let _ = await fetch(`${SERVER_URL}/backoffice/add_like`, {
-                method:"POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({id:myId, likedid:currentSearchPet.petid})
-            });
-        fetch_new_puppy();
+        try{
+            let _ = await fetch(`${SERVER_URL}/backoffice/add_like`, {
+                    method:"POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    credentials:'include',
+                    body: JSON.stringify({id:myId, likedid:currentSearchPet.petid})
+                });
+            fetch_new_puppy();
+        }catch(e){
+            alert(e);
+        }
     }
 
     useEffect(()=>{
@@ -57,7 +66,7 @@ export default function SearchPage(){
     }, []);
 
     return (
-        <StyledCercoPartner className='p-5'>
+        <StyledCercoPartner className='m-2'>
             <div className='view'>
                 <TinderCard 
                     age={currentSearchPet.age}

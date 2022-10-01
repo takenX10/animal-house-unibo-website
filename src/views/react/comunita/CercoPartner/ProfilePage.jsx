@@ -1,21 +1,28 @@
 import { useEffect, useState } from 'react';
-import { SERVER_URL, get_my_id } from '@/context/utils';
+import { SERVER_URL } from '@/context/utils';
 import PlaceholderPuppy from '@/components/react/comunita/PlaceHolderPuppy'
-import { initial } from 'lodash';
+import TinderCard from './TinderCard';
 
 
 export default function ProfilePage({id}){
     const [currentPetProfile, setCurrentPetProfile] = useState(<PlaceholderPuppy />);
 
     async function fetch_a_puppy(id){
-        return await fetch(`${SERVER_URL}/backoffice/get_a_puppy`, {
-            method:"POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({puppyId:id})
-        });
+        try{
+            let res = await fetch(`${SERVER_URL}/backoffice/get_a_puppy`, {
+                method:"POST",
+                credentials:'include',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({id:id})
+            });
+            res = await res.json();
+            return res;
+        }catch(e){
+            alert(e);
+        }
     }
 
     async function init(){
@@ -25,7 +32,21 @@ export default function ProfilePage({id}){
         init();
     }, []);
 
+    async function newid(){
+        setCurrentPetProfile(await fetch_a_puppy(id));
+    }
+    useEffect(()=>{
+        newid();
+    }, [id]);
+
     return (
-        <></>
+        <TinderCard 
+            age={currentPetProfile.age}
+            weight={currentPetProfile.weight}
+            name={currentPetProfile.name} 
+            sex={currentPetProfile.sex} 
+            description={currentPetProfile.description}
+            imgList={(currentPetProfile.imgList ? currentPetProfile.imgList: [])}
+        />
     );
 }

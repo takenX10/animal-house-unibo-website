@@ -63,9 +63,10 @@ function wrapper(func) {
         try {
           await func(req,res,next)
         }catch(e){
-          console.log("wajo no eh");
-          }
+          console.log("wajo no eh", e);
+          res.status(500).send();
         }
+      }
 }
 function initAPI() {
   for (let ENDPOINTS of backendRouter) {
