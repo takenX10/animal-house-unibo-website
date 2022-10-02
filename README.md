@@ -1,5 +1,7 @@
 # animal-house
 
+A website for a project of web tecnologies.
+
 ## Project Setup
 
 ```sh
@@ -23,158 +25,82 @@ npm run build
 ```sh
 npm run env
 ```
+
 This will open two new terminal emulator , one with server console and the other
 with fronted console, it will also start mongodb 
 So just run this command and start developing
 
 <!-- TODO: Explain how to deploy the project -->
 
-### CONVENTIONS
+## Conventions
 
 - Camel case for file names and directory, and pascal case for component names
 - Directory structure
   - examplesDir
     - vue
-      - exampleComponent.vue
+      - ExampleComponent.vue
     - react
-      - wowComponent.jsx
+      - WowComponent.jsx
 
-# Old readme
+## Technologies used
 
-# animal-house-unibo-website
- A website for a project of web tecnologies.
+> Backend: NodeJs, EJS
 
-## Eseguire il server
-Abbiamo tre container da eseguire:
-- Il container di node con express (per il backend), porta `3001`
-- Il container di React, porta `3000`
-- Il container di vue, porta `3002`
+> Database: MongoDB
 
-Per runnarli, su tre terminali diversi:
+> Frontend: React, Vue, JQuery, Bootstrap
 
-Runnare React
-```bash
-cd client
-npm start
-```
+## Todo list
 
-Runnare Vue
-```bash
-cd client-vue
-npm run dev
-```
-
-Runnare backend node
-```bash
-npm start
-```
-
-## TODOS
-
-- [ ]
-- [ ]
-
-## Note implementative
-
-## Cose da fare
-
-
-## Domande da fare al prof
-
-- Cosa e' la bacheca "eccolo qua"?
-
-- In cosa deve consistere la bachecha "aiutatemi"? chi deve avere la possibilita' di rispondere
-alle richieste d'aiuto? chi puo vedere le richieste d'aiuto? le risposte devono essere pubbliche?
-puo avvenire una conversazione intera (quindi botta e risposta) tra aiutante e aiutato?
-
-- Come possiamo fare la leaderboard dei giochi se ha detto che nei giochi non vuole che utilizziamo il database?
-
-- Nel back office, che cosa si intende con registrazione e login nella sezione di anagrafica clienti?
-
-
-
-## Appunti iniziali
-Colori (per ora):
-- foreground: #f6efee
-- background: #004A33
-- secondary: #FE2F20
-- on hover change opacity.
-
-Tecnologie utilizzate:
-- Backend
-  - Node
-  - MongoDB
-- Frontend
-    - Stili: Bootstrap
-    - Framework front: JQuery, React, Vue
-
-- Game app
-  - Curiosita' sugli animali come i miei
-  - Curiosita' sugli animali in generale
-  - Informazioni utili sanitarie e legali
-  - Video buffi ed interessanti da Youtube
-  - Quiz
-  - ~ Memory
-  - ~ Impiccato
-  - ~ Scova le differenze
-- Front office
-  - Servizi di comunita'
-    - Leaderboard dei giochi
-    - bacheca eccolo qua
-    - ~ bacheca cerco partner
-    - ~ bacheca aiutatemi
-  - e-commerce
-    - catalogo di prodotti
-      - cibo
-      - prodotti sanitari
-      - accessoristica
-      - ~ cuccioli (NON LO FACCIAMO PER NESSUN MOTIVO)
-  - Servizi in presenza
-    - Veterinario
-    - Dog sitter
-    - ~ Toelettatura
-    - ~ Pensione estiva
-    - ~ psicologo
-    - ~ visita a domicilio per animali soli
-  - ~Servizi online
-    - ~ Videoconferenza con l'esperto
-    - ~ Videoconferenza con il veterinario
-    - ~ Videoconferenza con l'animale in ospedale o pensione
-- Back office
-  - Anagrafica Clienti
-    - Registrazione
-    - Login
-    - Cambio password
-    - Reset password
-    - Cancellazione
-    - Preferenze e animali preferiti
-    - Punteggio giochi
-  - Servizi di comunita'
-    - Controllare o cancellare messaggi nelle bacheche
-  - Gestione e-commerce
-    - Aggiungere e togliere prodotti, prezzi, descrizioni.
-    - ~ Sottocategorie dei prodotti
-    - Immagini dei prodotti (~ con upload)
-  - Servizi in presenza
-    - Prenotare servizi, modificare o cancellare prenotazioni, visualizzare disponibilita'.
-    - Calendari separati dei servizi.
-  - ~ Servizi online
-    - ~ Prenotare servizi, modificare o cancellare prenotazioni, visualizzare disponibilita'.
-
-
-database:
-- Utenti
-  - Nome
-  - password
-  - Tipo ("azienda", "privato")
-- Animali
-  - Utente
-  - Nome
-  - razza
-  - Eta
-  - peso
-- Post
-  - Nome
-  - Testo
-  - id
-  - risposta (0 = no, numero = id a cui sta rispondendo)
+- [ ] Game app
+  - [ ] Curiosita' sugli animali come i miei
+  - [ ] Curiosita' sugli animali in generale
+  - [ ] Informazioni utili sanitarie e legali
+  - [ ] Video buffi ed interessanti da Youtube
+  - [ ] Quiz
+  - [x] OPZIONALE: Memory
+  - [x] OPZIONALE: Impiccato
+  - [x] OPZIONALE: Scova le differenze
+- [ ] Servizi di comunita' #Ale
+  - [ ] Leaderboard dei giochi #Ale
+  - [x] bacheca eccolo qua #Ale
+  - [x] OPZIONALE: bacheca cerco partner #Ale
+  - [x] OPZIONALE: bacheca aiutatemi #Ale
+- [ ] e-commerce #Yonas
+  - [ ] catalogo di prodotti #Yonas
+    - [ ] cibo #Yonas
+    - [ ] prodotti sanitari #Yonas
+    - [ ] accessoristica #Yonas
+    - [ ] OPZIONALE: cuccioli (NON LO FACCIAMO PER NESSUN MOTIVO)
+- [ ] Servizi in presenza #Gian
+  - [ ] Veterinario #Gian
+  - [ ] Dog sitter #Gian
+  - [ ] OPZIONALE: Toelettatura #Gian
+  - [ ] OPZIONALE: Pensione estiva #Gian
+  - [ ] OPZIONALE: psicologo #Gian
+  - [ ] OPZIONALE: visita a domicilio per animali soli #Gian
+- [ ] OPZIONALE: Servizi online
+  - [ ] OPZIONALE: Videoconferenza con l'esperto
+  - [ ] OPZIONALE: Videoconferenza con il veterinario
+  - [ ] OPZIONALE: Videoconferenza con l'animale in ospedale o pensione
+- [ ] Back office
+  - [ ] Gestione clienti #Ale
+    - [ ] Anagrafica Clienti #Ale
+    - [x] Registrazione #Ale
+    - [x] Login #Ale
+    - [ ] Cambio password #Ale
+    - [ ] Reset password #Ale
+    - [ ] Cancellazione #Ale
+    - [ ] Preferenze e animali preferiti #Ale
+    - [ ] Punteggio giochi #Ale
+  - [ ] Servizi di comunita' #Ale
+    - [ ] Controllare o cancellare messaggi nelle bacheche
+  - [ ] Gestione e-commerce #Yonas
+    - [ ] Aggiungere e togliere prodotti, prezzi, descrizioni. #Yonas
+    - [ ] OPZIONALE: Sottocategorie dei prodotti #Yonas
+    - [ ] Immagini dei prodotti (OPZIONALE:  con upload) #Yonas
+  - [ ] Servizi in presenza #Gian
+    - [ ] Prenotare servizi, modificare o cancellare prenotazioni, visualizzare disponibilita'. #Gian
+    - [ ] Calendari separati dei servizi. #Gian
+    - [ ] OPZIONALE: Servizi online #Gian
+    - [ ] OPZIONALE: Prenotare servizi, modificare o cancellare prenotazioni, visualizzare disponibilita'. #Gian
