@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SERVER_URL } from '@/context/utils';
-import PlaceholderPuppy from '@/components/react/comunita/PlaceHolderPuppy'
+import PlaceholderPuppy from './PlaceHolderPuppy'
 import TinderCard from './TinderCard';
 
 

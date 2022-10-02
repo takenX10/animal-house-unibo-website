@@ -4,7 +4,7 @@ import { faHeart, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { SERVER_URL } from '@/context/utils';
 import styled from 'styled-components';
 import TinderCard from './TinderCard';
-import PlaceholderPuppy from '@/components/react/comunita/PlaceHolderPuppy'
+import PlaceholderPuppy from './PlaceHolderPuppy'
 
 const StyledCercoPartner = styled.div`
 display: flex;
@@ -48,11 +48,11 @@ export default function SearchPage(){
         try{
             let _ = await fetch(`${SERVER_URL}/backoffice/add_like`, {
                     method:"POST",
+                    credentials:'include',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    credentials:'include',
                     body: JSON.stringify({id:myId, likedid:currentSearchPet.petid})
                 });
             fetch_new_puppy();

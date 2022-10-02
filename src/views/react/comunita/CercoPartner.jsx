@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/react/navbar/Navbar';
 import { check_login, get_my_id, SERVER_URL } from '@/context/utils'
 import { Button, Row, Col } from 'react-bootstrap';
-import MatchPage from './MatchPage'
-import ProfilePage from './ProfilePage'
-import SearchPage from './SearchPage'
+import MatchPage from '@/components/react/comunita/cercopartner/MatchPage'
+import ProfilePage from '@/components/react/comunita/cercopartner/ProfilePage'
+import SearchPage from '@/components/react/comunita/cercopartner/SearchPage'
 
 
 

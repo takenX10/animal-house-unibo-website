@@ -6,7 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
-import CercoPartner from '@/views/react/comunita/CercoPartner/CercoPartner';
+import CercoPartner from '@/views/react/comunita/CercoPartner';
 import HomePage from '@/views/react/homes/HomePage';
 import HomeFrontOffice from '@/views/react/homes/HomeFrontOffice';
 import HomeComunita from '@/views/react/homes/HomeComunita';

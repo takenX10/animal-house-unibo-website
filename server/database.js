@@ -22,6 +22,7 @@ const userSchema = new Schema({
 const postSchema = new Schema({
   author: { type: String, required: true },
   message: { type: String, required: true },
+  type: { type: String, required: false },
   answerFrom: { type: String, required: false }
 });
 

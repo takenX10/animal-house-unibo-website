@@ -1,4 +1,4 @@
-@cookie = AUTHSESSION=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsZG8iLCJpc1Bvc3RlciI6ZmFsc2UsImlhdCI6MTY2NDEzMTI2OH0.Wppze8lY9BaaatKTQgIRG1ZlD1S4Hx8hbfGpR5XvsqU; Path=/
+@cookie = AUTHSESSION=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsZG9AYmFnbGlvLnRrIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY2NDUzMTE1NH0.VICFt8xVuW8CMg476dyo7ll4WKNkj3EUaGEDVhikBUk; Path=/
 
 ### Login
 POST http://localhost:8000/backoffice/login HTTP/1.1
@@ -7,16 +7,12 @@ User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0
 Accept: */*
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate
-Referer: http://localhost:3000/
 Content-Type: application/json
-Origin: http://localhost:3000
-Content-Length: 44
-DNT: 1
-Connection: keep-alive
-Sec-Fetch-Dest: empty
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: cross-site
+Referer: http://localhost:8000/comunita/cerco-partner
+Origin: http://localhost:8000
+Content-Length: 30
 
+{"email":"aldo@baglio.tk","password":"aldobaglio"}
 
 
 ### Add like
@@ -73,3 +69,46 @@ Content-Length: 30
 {
     "puppyId":1,
 }
+
+
+### Get posts
+POST http://localhost:8000/backoffice/get_posts HTTP/1.1
+Host: localhost:8000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/json
+Referer: http://localhost:8000/comunita/cerco-partner
+Origin: http://localhost:8000
+Content-Length: 30
+
+
+### Get answers
+POST http://localhost:8000/backoffice/get_answers HTTP/1.1
+Host: localhost:8000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/json
+Referer: http://localhost:8000/comunita/cerco-partner
+Origin: http://localhost:8000
+Content-Length: 30
+
+{"id":"6336b81cc80ed6180b244d59"}
+
+### Create post
+POST http://localhost:8000/backoffice/create_post HTTP/1.1
+Host: localhost:8000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/json
+Referer: http://localhost:8000/comunita/cerco-partner
+Origin: http://localhost:8000
+Cookie: AUTHSESSION=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFsZG9AYmFnbGlvLnRrIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY2NDUzMTMxNX0.VgPo6jNZW03CDVhlFch5X-vT91oUlW9Znx5MxhqOxL0; Path=/
+Content-Length: 30
+
+{"message":"ma tgz ses narendi o bollinoh!"}
