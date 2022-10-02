@@ -1,10 +1,11 @@
 
-import React from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './Navbar.scss';
 import Dropdown from './Dropdown';
 import { FaBars } from 'react-icons/fa'
-import {Store} from '@/context/store';
-import { useContext } from 'react';
+import { Button } from 'react-bootstrap';
+import { Store } from '@/context/store';
+import { check_login, logout } from '@/context/utils';
 
 const NavbarServizi = () => {
     return (
@@ -100,7 +101,14 @@ const NavbarShop = () => {
 }
 
 export default function Navbar(){
+    const [loggedin, setLoggedin] = useState(false);
     const { dispatch: ctxDispatch } = useContext(Store);
+    async function verify_login(){
+        setLoggedin(await check_login(false));
+    }
+    useEffect(()=>{
+        verify_login();
+    }, [])
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-light p-3 border-bottom border-5">
@@ -115,9 +123,34 @@ export default function Navbar(){
                             <NavbarGiochi />
                             <NavbarServizi />
                             <a className="text-dark nav-link disabled text-muted" href="back/home">Back office</a>
-                            <button className="btn btn-success text-light m-2" onClick={()=>{window.location=`/backoffice/login`}}>Login</button>
-                            <button className="btn btn-primary text-light m-2" onClick={()=>{window.location=`/backoffice/register`}}>Register</button>
-                            <button className="btn btn-danger text-light m-2" onClick={()=>{document.cookie="AUTHSESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; window.location.reload(true);ctxDispatch({type:'USER_SIGNOUT'})}}>Logout</button>
+                            {
+                                (loggedin?
+                                    <>
+                                        <Button 
+                                            variant="danger" 
+                                            className="text-light m-2" 
+                                            onClick={()=>{logout(ctxDispatch)}}
+                                        >Logout</Button>
+                                        <Button 
+                                            variant="primary" 
+                                            className="text-light m-2" 
+                                            onClick={()=>{window.location="/profile"}}
+                                        >Profile</Button>
+                                    </>:
+                                    <>
+                                        <Button 
+                                            variant="success" 
+                                            className="text-light m-2" 
+                                            onClick={()=>{window.location=`/backoffice/login`}}
+                                        >Login</Button>
+                                        <Button 
+                                            variant="primary" 
+                                            className="text-light m-2" 
+                                            onClick={()=>{window.location=`/backoffice/register`}}
+                                        >Register</Button>
+                                </>
+                                )
+                            }
                         </div>
                     </div>
                 </div>

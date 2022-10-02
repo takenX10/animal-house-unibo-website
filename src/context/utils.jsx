@@ -1,3 +1,4 @@
+
 const SERVER_URL = process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
 // import ip from 'ip'
 // const SERVER_URL = "http://192.168.107.31:8000"
@@ -27,5 +28,10 @@ async function get_my_id() {
     return res.id;
 }
 
+function logout(ctxDispatch) {
+    document.cookie="AUTHSESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+    ctxDispatch({type:'USER_SIGNOUT'})
+    window.location = '/';
+}
 
-export { SERVER_URL, check_login, get_my_id };
+export { SERVER_URL, check_login, get_my_id, logout };

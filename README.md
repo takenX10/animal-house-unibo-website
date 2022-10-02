@@ -86,15 +86,16 @@ So just run this command and start developing
 - [ ] Back office
   - [ ] Gestione clienti #Ale
     - [ ] Anagrafica Clienti #Ale
+    - [x] Profilo #Ale
     - [x] Registrazione #Ale
     - [x] Login #Ale
-    - [ ] Cambio password #Ale
+    - [x] Cambio password #Ale
     - [ ] Reset password #Ale
-    - [ ] Cancellazione #Ale
+    - [x] Cancellazione #Ale
     - [ ] Preferenze e animali preferiti #Ale
     - [ ] Punteggio giochi #Ale
   - [ ] Servizi di comunita' #Ale
-    - [ ] Controllare o cancellare messaggi nelle bacheche
+    - [ ] Controllare o cancellare messaggi nelle bacheche #Ale
   - [ ] Gestione e-commerce #Yonas
     - [ ] Aggiungere e togliere prodotti, prezzi, descrizioni. #Yonas
     - [ ] OPZIONALE: Sottocategorie dei prodotti #Yonas

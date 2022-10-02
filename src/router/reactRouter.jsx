@@ -6,6 +6,9 @@ import {
   Route,
 } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
+import { StoreProvider } from '@/context/store';
+import { isEqualPath } from '@/context/utils';
+
 // Homepages
 import HomePage from '@/views/react/homes/HomePage';
 import HomeFrontOffice from '@/views/react/homes/HomeFrontOffice';
@@ -29,14 +32,18 @@ import HomeServiceFaceToFace from '@/views/react/services/HomeServiceFaceToFace'
 import ServiceScreen from '@/views/react/services/ServiceScreen';
 
 // Login
-import Login from '@/views/react/logins/Login';
-import { StoreProvider } from '@/context/store';
-import { isEqualPath } from '@/context/utils'
+import Login from '@/views/react/User/Login';
+import Profile from '@/views/react/User/Profile';
+
 
 const ReactRoutes = [
   {
     path: "/",
     element: <HomePage />
+  },
+  {
+    path: "/profile",
+    element: <Profile />
   },
   {
     path: "/office",
