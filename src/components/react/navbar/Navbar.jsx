@@ -7,8 +7,6 @@ import {Store} from '@/context/store';
 import { useContext } from 'react';
 
 const NavbarServizi = () => {
-
-
     return (
         <>
             <Dropdown
@@ -21,7 +19,7 @@ const NavbarServizi = () => {
                     { title:"Leaderboard giochi", href:"/comunita/leaderboard-giochi", disabled:true },
                     { title:"Bacheca eccolo qua", href:"/comunita/eccolo-qua" },
                     { title:"Bacheca cerco partner", href:"/comunita/cerco-partner"},
-                    { title:"Bacheca aiutatemi", href:"/comunita/aiutatemi", disabled:true },
+                    { title:"Bacheca aiutatemi", href:"/comunita/aiutatemi" },
                 ]}
             />
             <Dropdown

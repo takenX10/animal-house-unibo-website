@@ -6,11 +6,17 @@ import {
   Route,
 } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
-import CercoPartner from '@/views/react/comunita/CercoPartner';
+// Homepages
 import HomePage from '@/views/react/homes/HomePage';
 import HomeFrontOffice from '@/views/react/homes/HomeFrontOffice';
 import HomeComunita from '@/views/react/homes/HomeComunita';
+
+//Comunita
+import CercoPartner from '@/views/react/comunita/CercoPartner';
 import EccoloQua from '@/views/react/comunita/EccoloQua';
+import Aiutatemi from '@/views/react/comunita/Aiutatemi';
+
+// Ecommerce
 import HomeScreen from '@/views/react/ecommerce/HomeScreen';
 import CartScreen from '@/views/react/ecommerce/CartScreen';
 import ShippingAddressScreen from '@/views/react/ecommerce/ShippingAddressScreen';
@@ -21,6 +27,8 @@ import OrderHistoryScreen from '@/views/react/ecommerce/OrderHistoryScreen';
 import PaymentMethodScreen from '@/views/react/ecommerce/PaymentMethodScreen';
 import HomeServiceFaceToFace from '@/views/react/services/HomeServiceFaceToFace';
 import ServiceScreen from '@/views/react/services/ServiceScreen';
+
+// Login
 import Login from '@/views/react/logins/Login';
 import { StoreProvider } from '@/context/store';
 import { isEqualPath } from '@/context/utils'
@@ -53,6 +61,10 @@ const ReactRoutes = [
       {
         path: "/comunita/eccolo-qua",
         element: <EccoloQua />
+      },
+      {
+        path: "/comunita/aiutatemi",
+        element: <Aiutatemi />
       },
     ]
   },
