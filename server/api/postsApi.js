@@ -1,12 +1,14 @@
 import METHODS from "../methods.js";
 import DATABASE from '../database.js';
 import AUTH from "../authentication.js";
-import { isAuth, jsonParser } from "../utils.js";
+import { isAuth, isAdmin, jsonParser } from "../utils.js";
 
 let ENDPOINTS = [
     { endpoint: "/backoffice/get_posts", method: METHODS.POST, opts: [jsonParser], function: get_posts },
     { endpoint: "/backoffice/get_answers", method: METHODS.POST, opts: [jsonParser], function: get_answers },
     { endpoint: "/backoffice/create_post", method: METHODS.POST, opts: [jsonParser, isAuth], function: create_post },   
+    { endpoint: "/backoffice/delete_post", method: METHODS.POST, opts: [jsonParser, isAuth, isAdmin], function: delete_post },   
+
 ]
 
 async function get_posts(req, res){
@@ -14,6 +16,15 @@ async function get_posts(req, res){
         const posts = await DATABASE.Post.find({answerFrom:undefined, type:req.body.type});
         let postList = posts.map((p)=>{return {author:p.author, message:p.message, id:p.id}});
         res.json({posts:postList});
+    }catch(e){
+        res.status(500).send();
+    }
+}
+
+async function delete_post(req, res){
+    try{
+        await DATABASE.Post.findByIdAndDelete(req.body.id);
+        res.json({success:true});
     }catch(e){
         res.status(500).send();
     }

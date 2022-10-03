@@ -19,12 +19,13 @@ var fakeUsers = [{
   petList: [],
 },
 {
-  name: "Giacomo",
-  surname: "Poretti",
-  email: "giacomo@poretti.tk",
-  contact: "+39 555 555 5555",
-  password: bcrypt.hashSync("giacomoporetti", genSaltSync()),
-  petList: [],
+    name: "Giacomo",
+    surname: "Poretti",
+    email: "giacomo@poretti.tk",
+    contact: "+39 555 555 5555",
+    password: bcrypt.hashSync("giacomoporetti", genSaltSync()),
+    isAdmin: true,
+    petList: [],
 },];
 
 var posts = [

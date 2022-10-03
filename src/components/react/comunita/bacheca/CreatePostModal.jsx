@@ -4,9 +4,6 @@ import { Modal, Form, Button } from 'react-bootstrap';
 
 export default function CreatePostModal ({answer, show, hideModal, refreshPosts, type, toast}){
     const messageRef = useRef();
-    useEffect(()=>{
-        console.log(answer);
-    }, [answer])
     async function create_post(e, value, answer){
         e.preventDefault();
         try{

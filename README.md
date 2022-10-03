@@ -94,8 +94,8 @@ So just run this command and start developing
     - [x] Cancellazione #Ale
     - [ ] Preferenze e animali preferiti #Ale
     - [ ] Punteggio giochi #Ale
-  - [ ] Servizi di comunita' #Ale
-    - [ ] Controllare o cancellare messaggi nelle bacheche #Ale
+  - [x] Servizi di comunita' #Ale
+    - [x] Controllare o cancellare messaggi nelle bacheche #Ale
   - [ ] Gestione e-commerce #Yonas
     - [ ] Aggiungere e togliere prodotti, prezzi, descrizioni. #Yonas
     - [ ] OPZIONALE: Sottocategorie dei prodotti #Yonas

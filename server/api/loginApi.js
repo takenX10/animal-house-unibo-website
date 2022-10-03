@@ -3,7 +3,7 @@ import DATABASE from '../database.js';
 import AUTH from '../authentication.js';
 import bcrypt, { genSaltSync } from 'bcrypt';
 
-import { __dirname, isAuth, jsonParser } from '../utils.js';
+import { __dirname, isAdmin, isAuth, jsonParser } from '../utils.js';
 
 let ENDPOINTS = [
     //{ endpoint: "/backoffice/login", method: METHODS.GET,opts: [jsonParser, isAuth], function: officeLogin },
@@ -13,9 +13,13 @@ let ENDPOINTS = [
     { endpoint: "/backoffice/get_user", method: METHODS.POST, opts:[jsonParser, isAuth], function: get_user},
     { endpoint: "/backoffice/change_password", method: METHODS.POST, opts:[jsonParser, isAuth], function: change_password},
     { endpoint: "/backoffice/delete_user", method: METHODS.POST, opts:[jsonParser, isAuth], function: delete_user},
-
-
+    { endpoint: "/backoffice/is_admin", method: METHODS.POST, opts:[jsonParser, isAuth, isAdmin], function: is_admin},
 ]
+
+
+async function is_admin(req, res){
+    res.json({success:true});
+}
 
 async function delete_user(req, res){
     const usr = await AUTH.get_user(req);

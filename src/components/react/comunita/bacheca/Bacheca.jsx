@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Col } from 'react-bootstrap';
-import { SERVER_URL } from '@/context/utils';
+import { SERVER_URL, isAdmin } from '@/context/utils';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -27,6 +27,7 @@ async function getAnswers(id){
 
 export default function EccoloQua({type}){
     const [posts, setPosts] = useState([]);
+    const [admin, setAdmin] = useState(false);
     const [answers, setAnswers] = useState([]);
     const [myStyle, setMyStyle] = useState({display:"none"});
     const [show, setShow] = useState(false);
@@ -43,11 +44,14 @@ export default function EccoloQua({type}){
                 body: JSON.stringify({type:type})
             });
             res = await res.json();
+            console.log(res.posts);
             return res.posts;
         }catch(e){
             toast(e);
         }
     }
+
+    
 
     async function showAnswers(id){
         setMyStyle({display:"block"});
@@ -67,12 +71,14 @@ export default function EccoloQua({type}){
     }, [currentAnswer]);
 
     async function init(){
+        setAdmin(await isAdmin());
         setPosts(await getPosts());
     }
 
     useEffect(()=>{
         init();
     }, []);
+
     return (
         <>
             <Container fluid className="post-container">
@@ -87,13 +93,15 @@ export default function EccoloQua({type}){
                                 id={thispost.id} 
                                 showAnswersHandler={showAnswers} 
                                 answerHandler={setCurrentAnswer}
+                                isAdmin={admin}
+                                refresh={async()=>{setPosts(await getPosts()); console.log("wewe ricarica")}}
                             />
                         )})}
                     </Col>
                     <Col lg="5" style={myStyle}>
                         <Button variant="danger" className="m-3" onClick={hideAnswers}>Chiudi risposte</Button>
                         {answers.map((ans)=>{return (
-                            <Answer key={ans.id} author={ans.author} text={ans.message}/>
+                            <Answer key={ans.id} id={ans.id} author={ans.author} text={ans.message} isAdmin={admin} refresh={async()=>{setAnswers(await getAnswers(ans.id))}}/>
                         )})}
                     </Col>
                 </Row>
@@ -102,7 +110,7 @@ export default function EccoloQua({type}){
                 answer={currentAnswer} 
                 show={show} 
                 hideModal={hideModal}
-                refreshPosts={async()=>{setPosts(await getPosts());}}
+                refreshPosts={async()=>{currentAnswer?setAnswers(await getAnswers(currentAnswer)):setPosts(await getPosts())}}
                 type={type}
                 toast={toast}
             />

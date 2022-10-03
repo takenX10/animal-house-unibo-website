@@ -34,4 +34,36 @@ function logout(ctxDispatch) {
     window.location = '/';
 }
 
-export { SERVER_URL, check_login, get_my_id, logout };
+async function deletePost(id){
+    try{
+        let res = await fetch(`${SERVER_URL}/backoffice/delete_post`, {
+            method:"POST",
+            credentials:"include",
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id:id})
+        });
+        res = await res.json();
+        if(!res.success){
+            alert("Can't delete post");
+        }
+    }catch(e){
+        alert(e);
+    }
+}
+
+async function isAdmin(){
+    try{
+        let res = await fetch(`${SERVER_URL}/backoffice/is_admin`, {method:"POST", credentials:"include"});
+        res = await res.json();
+        return res.success;
+    }catch(e){
+        alert(e);
+        return false;
+    }
+    return false;
+}
+
+export { SERVER_URL, check_login, get_my_id, logout, deletePost, isAdmin };
