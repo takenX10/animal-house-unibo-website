@@ -10,12 +10,12 @@ async function connect() {
 }
 
 const userSchema = new Schema({
-  email: { type: String, required: true, unique:true},
-  name: { type: String, required: true},
-  surname:{ type: String, required: true},
+  email: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  surname: { type: String, required: true },
   password: { type: String, required: true },
   contact: { type: String, required: true },
-  isAdmin: { type: Boolean, default:false, required: true },
+  isAdmin: { type: Boolean, default: false, required: true },
   petList: { type: Array, required: false },
 });
 
@@ -105,7 +105,7 @@ const serviceFaceToFaceSchema = new mongoose.Schema({
   poster: { type: String, required: true },
   title: { type: String, required: true, },
   category: { type: String, required: true },
-  shifts: { type: Array, required: true, },
+  availabilities: { type: Array, required: true, },
   images: { type: Array, required: true, },
   hourlyRate: { type: Number, required: true },
   description: { type: String, required: true },

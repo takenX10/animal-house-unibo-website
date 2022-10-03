@@ -29,17 +29,16 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 import GameHeader from "./GameHeader.vue";
-import { useToast } from "balm-ui/plugins/toast";
-const $toast = useToast();
+//import $toast from "balm-ui/plugins/toast";
 import { useEvent } from "balm-ui";
 
 let game = "";
 let games = [
-  {
-    title: "Memory",
-    component: "Memory",
-    color: "",
-  },
+ // {
+   // title: "Memory",
+    //component: "Memory",
+    //color: "",
+ // },
   {
     title: "Hangman",
     component: "Hangman",
@@ -211,16 +210,18 @@ export default {
           variant="primary"
           >Scoreboard</b-button
         >
-        <b-collapse id="collapse-1" class="mt-2">
+        <b-collapse id="collapse-1" style="width:100% !important; margin:0px auto !important;" class="mt-2 mx-auto text-center">
           <ui-list single-selection>
-            <ui-item v-for="(user, i) in scoreboards" :key="index">
+            <ui-item v-for="(user, i) in scoreboards" style="width:100% !important;" class="text-center mx-auto" :key="index">
+            <span style="width: 100% !important;" >
               <ui-item-first-content>
                 <i v-if="i == 0" class="fa fa-trophy"></i>
                 <i v-if="i == 1 || i == 2" class="fa fa-medal"></i>
                 <br />
                 {{ user.score }}
               </ui-item-first-content>
-              <ui-item-text-content>{{ user.username }}</ui-item-text-content>
+              <ui-item-text-content> {{ user.username }}</ui-item-text-content>
+              </span>
             </ui-item>
             <hr />
           </ui-list>

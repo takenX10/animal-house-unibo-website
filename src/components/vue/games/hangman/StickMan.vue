@@ -15,7 +15,7 @@
     Game over! 
     </div>
     <div v-else>
-    You guessed the country name!
+    You guessed the animal name!
     </div>
   </div> 
 </template>
