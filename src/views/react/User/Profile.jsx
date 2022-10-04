@@ -3,6 +3,7 @@ import { Store } from "@/context/store";
 import Navbar from '@/components/react/navbar/Navbar';
 import { Modal, Form, Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { SERVER_URL, check_login, logout } from '@/context/utils';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile(){
     const {dispatch: ctxDispatch } = useContext(Store);
@@ -41,7 +42,6 @@ export default function Profile(){
             res = await res.json();
             if(res.success){
                 logout(ctxDispatch);
-                window.location = "/";
             }
         }catch(err){
             alert(err);
@@ -100,7 +100,9 @@ export default function Profile(){
     }
 
     async function init(){
-        await check_login(true);
+        if(await check_login()){
+            useNavigate("/backoffice/login");
+        }
         get_user();
     }
     useEffect(()=>{

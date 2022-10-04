@@ -1,4 +1,5 @@
 
+
 const SERVER_URL = process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
 // import ip from 'ip'
 // const SERVER_URL = "http://192.168.107.31:8000"
@@ -13,12 +14,9 @@ export function isEqualPath(path, test) {
     return path == test
 }
 
-async function check_login(redirect) {
+async function check_login() {
     let res = await fetch(`${SERVER_URL}/backoffice/is_logged_in`, { method: "POST", credentials:'include' });
     res = await res.json();
-    if (redirect && !res.success) {
-        window.location = "/backoffice/login";
-    }
     return res.success;
 }
 

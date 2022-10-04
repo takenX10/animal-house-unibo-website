@@ -33,6 +33,7 @@ import ServiceScreen from '@/views/react/services/ServiceScreen';
 
 // Login
 import Login from '@/views/react/User/Login';
+import Register from '@/views/react/User/Register';
 import Profile from '@/views/react/User/Profile';
 
 
@@ -52,6 +53,10 @@ const ReactRoutes = [
   {
     path: "/backoffice/login",
     element: <Login />
+  },
+  {
+    path: "/backoffice/register",
+    element: <Register />
   },
   {
     path: "/comunita",

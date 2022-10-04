@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/react/navbar/Navbar';
 import { check_login, get_my_id, SERVER_URL } from '@/context/utils'
 import { Button, Row, Col } from 'react-bootstrap';
@@ -12,6 +13,7 @@ export default function CercoPartner() {
     const [myPuppies, setMyPuppies] = useState([]);
     const [pageId, setPageId] = useState(null);
     const [currentPage, setCurrentPage] = useState("search");
+    const navigate = useNavigate();
     const [myId, setMyId] = useState(null);
 
     const pages = {
@@ -31,7 +33,9 @@ export default function CercoPartner() {
     }
 
     async function init(){
-        await check_login(true);
+        if(await check_login()){
+            navigate("/backoffice/login");
+        }
         setMyId(await get_my_id());
         setMyPuppies(await get_my_puppies());
     }

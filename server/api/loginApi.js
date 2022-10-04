@@ -8,7 +8,7 @@ import { __dirname, isAdmin, isAuth, jsonParser } from '../utils.js';
 let ENDPOINTS = [
     //{ endpoint: "/backoffice/login", method: METHODS.GET,opts: [jsonParser, isAuth], function: officeLogin },
     { endpoint: "/backoffice/login", method: METHODS.POST, opts: [jsonParser], function: officePostLogin },
-    { endpoint: "/backoffice/register", method: METHODS.POST, opts: [jsonParser, isAuth], function: officePostRegister },
+    { endpoint: "/backoffice/register", method: METHODS.POST, opts: [jsonParser], function: officePostRegister },
     { endpoint: "/backoffice/home", method: METHODS.GET, opts: [jsonParser, isAuth], function: officeHome },
     { endpoint: "/backoffice/get_user", method: METHODS.POST, opts:[jsonParser, isAuth], function: get_user},
     { endpoint: "/backoffice/change_password", method: METHODS.POST, opts:[jsonParser, isAuth], function: change_password},
@@ -80,22 +80,20 @@ async function officeRegister(req, res) {
 }
 
 async function officePostRegister(req, res) {
-    if (await DATABASE.User.exists({ email: req.body.email }) || req.body.email == "") {
-        res.json({ "response": false });
-    } else {
+    if (!req?.body?.email || await DATABASE.User.exists({ email: req.body.email })) {
+        res.json({ success: false, message:"user already exist" });
+    } else if( !req?.body?.name || !req?.body?.surname || !req?.body?.contact || !req?.body?.password){
+        res.json({success:false, message:"Some fields are missing"});
+    } else{
         await DATABASE.User.create({
             email: req.body.email,
             name: req.body.name,
             surname: req.body.surname,
+            contact: req.body.contact,
             password: bcrypt.hashSync(req.body.password,genSaltSync()),
         });
         AUTH.set_cookie(res, AUTH.generate_cookie(req))
-        res.json({
-          _id:user._id,
-          name:user.name,
-          surname:user.surname,
-          isAdmin:user.isAdmin,
-        });
+        res.json({success:true});
     }
 }
 

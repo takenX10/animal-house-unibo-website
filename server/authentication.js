@@ -12,7 +12,7 @@ async function get_user(req) {
 }
 
 function generate_cookie(req) {
-    return jwt.sign({ email: req.body.email, isAdmin: false }, JWT_SECRET_KEY);
+    return jwt.sign({ email: req.body.email }, JWT_SECRET_KEY);
 }
 
 // true -> correctly logged in, false otherwise

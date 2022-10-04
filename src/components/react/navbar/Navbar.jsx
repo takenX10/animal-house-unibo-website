@@ -6,6 +6,7 @@ import { FaBars } from 'react-icons/fa'
 import { Button } from 'react-bootstrap';
 import { Store } from '@/context/store';
 import { check_login, logout } from '@/context/utils';
+import { useNavigate } from 'react-router-dom';
 
 const NavbarServizi = () => {
     return (
@@ -103,8 +104,9 @@ const NavbarShop = () => {
 export default function Navbar(){
     const [loggedin, setLoggedin] = useState(false);
     const { dispatch: ctxDispatch } = useContext(Store);
+    const navigate = useNavigate();
     async function verify_login(){
-        setLoggedin(await check_login(false));
+        setLoggedin(await check_login());
     }
     useEffect(()=>{
         verify_login();
@@ -134,19 +136,19 @@ export default function Navbar(){
                                         <Button 
                                             variant="primary" 
                                             className="text-light m-2" 
-                                            onClick={()=>{window.location="/profile"}}
+                                            onClick={()=>{navigate("/profile")}}
                                         >Profile</Button>
                                     </>:
                                     <>
                                         <Button 
                                             variant="success" 
                                             className="text-light m-2" 
-                                            onClick={()=>{window.location=`/backoffice/login`}}
+                                            onClick={()=>{navigate(`/backoffice/login`)}}
                                         >Login</Button>
                                         <Button 
                                             variant="primary" 
                                             className="text-light m-2" 
-                                            onClick={()=>{window.location=`/backoffice/register`}}
+                                            onClick={()=>{navigate(`/backoffice/register`)}}
                                         >Register</Button>
                                 </>
                                 )
