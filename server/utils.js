@@ -7,7 +7,7 @@ const jsonParser = bodyParser.json();
 
 
 const SERVER_URL = "http://localhost:8000";
-const CLIENT_URL = "http://localhost:3000";
+const CLIENT_URL = "http://localhost:8000";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname( __filename );

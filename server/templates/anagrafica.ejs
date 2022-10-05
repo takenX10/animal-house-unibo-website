@@ -1,0 +1,72 @@
+<%- include('./head.ejs', {headTitle:title}); %>
+<style>
+    .btn {
+        width: fit-content !important;
+        height: fit-content !important;
+    }
+</style>
+<h1 class="text-center m-3 p-2">Client anagraphics</h1>
+<div class="container-fluid w-100 user-container">
+
+</div>
+<template class="user-template">
+    <div class="row m-5 border border-dark p-3">
+        <div class="col">
+            <h2 id="name">Name surname</h2>
+            <h4 id="email">email@email.com</h4>
+            <p id="contact">+39 696 969 6969</p>
+            <p id="id">198374F5980274F9KERS55TSU</p>
+        </div>
+        <div class="col align-items-center justify-content-center d-flex pet-container">                
+        </div>
+        <div class="col d-flex justify-content-end align-items-center">
+            <button type="button" class="btn btn-secondary m-2" id="account-edit">Modifica account</button>
+            <button type="button" class="btn btn-danger m-2" id="account-delete">Elimina account</button>
+        </div>
+    </div>
+</template>
+
+<template id="pet-button">
+    <button type="button" class="btn btn-success m-2" id="my-pet-button">Modifica Baloo</button>
+</template>
+
+<script>
+
+function redirect(id){
+    window.location = `/backoffice/pet?id=${id}`;
+}
+
+async function loadUsers(data){
+    data = data.users;
+    for(let usr of data){
+        const newUser = $(".user-template").clone()[0].content;
+        $("#name",newUser).text(`${usr.name} ${usr.surname}`);
+        $("#email",newUser).text(usr.email);
+        $("#contact",newUser).text(usr.contact);
+        $("#id",newUser).text(usr._id);
+        for(let id of usr.petList){
+            const petButton = $("#pet-button").clone()[0].content;
+            console.log(petButton);
+            petButton.textContent = `Modifica ${id}`;
+            petButton.onclick="redirect";
+            $("#pet-container", newUser).append(petButton);
+            console.log(petButton);
+        }
+        $('.user-container').append(newUser);
+    }
+}
+
+$(document).ready(function() {
+    console.log("ready");
+    $.ajax({
+        type:"POST",
+        url:"/backoffice/get_all_users",
+        withCredentials: true,
+        success: loadUsers
+    });
+    //let user = $("#user-template").cloneNode();
+});
+</script>
+
+
+<%- include('./foot.ejs'); %>

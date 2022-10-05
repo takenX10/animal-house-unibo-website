@@ -56,8 +56,8 @@ So just run this command and start developing
   - [ ] Curiosita' sugli animali come i miei
   - [ ] Curiosita' sugli animali in generale
   - [ ] Informazioni utili sanitarie e legali
-  - [ ] Video buffi ed interessanti da Youtube
-  - [ ] Quiz
+  - [x] Video buffi ed interessanti da Youtube
+  - [ ] Quiz #Ale
   - [x] OPZIONALE: Memory
   - [x] OPZIONALE: Impiccato
   - [x] OPZIONALE: Scova le differenze
@@ -90,7 +90,7 @@ So just run this command and start developing
     - [x] Registrazione #Ale
     - [x] Login #Ale
     - [x] Cambio password #Ale
-    - [ ] Reset password #Ale
+    - [ ] Reset password #Ale (Forse non lo facciamo)
     - [x] Cancellazione #Ale
     - [ ] Preferenze e animali preferiti #Ale
     - [ ] Punteggio giochi #Ale
