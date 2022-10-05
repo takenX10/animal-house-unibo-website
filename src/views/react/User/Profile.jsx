@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Profile(){
     const {dispatch: ctxDispatch } = useContext(Store);
+    const navigate = useNavigate();
     const [user, setUser] = useState({
         name:"Giorgio",
         surname: "Pisu",
@@ -100,8 +101,8 @@ export default function Profile(){
     }
 
     async function init(){
-        if(await check_login()){
-            useNavigate("/backoffice/login");
+        if(!await check_login()){
+            navigate("/backoffice/login");
         }
         get_user();
     }
