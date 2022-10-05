@@ -3,19 +3,21 @@ import DATABASE from '../database.js';
 import AUTH from '../authentication.js';
 import bcrypt, { genSaltSync } from 'bcrypt';
 
-import { __dirname, isAdmin, isAuth, jsonParser } from '../utils.js';
+import { isAdmin, isAuth, jsonParser } from '../utils.js';
 
 let ENDPOINTS = [
-    //{ endpoint: "/backoffice/login", method: METHODS.GET,opts: [jsonParser, isAuth], function: officeLogin },
     { endpoint: "/backoffice/login", method: METHODS.POST, opts: [jsonParser], function: officePostLogin },
     { endpoint: "/backoffice/register", method: METHODS.POST, opts: [jsonParser], function: officePostRegister },
-    { endpoint: "/backoffice/home", method: METHODS.GET, opts: [jsonParser, isAuth], function: officeHome },
+    { endpoint: "/backoffice/home", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: officeHome },
     { endpoint: "/backoffice/get_user", method: METHODS.POST, opts:[jsonParser, isAuth], function: get_user},
     { endpoint: "/backoffice/change_password", method: METHODS.POST, opts:[jsonParser, isAuth], function: change_password},
     { endpoint: "/backoffice/delete_user", method: METHODS.POST, opts:[jsonParser, isAuth], function: delete_user},
     { endpoint: "/backoffice/is_admin", method: METHODS.POST, opts:[jsonParser, isAuth, isAdmin], function: is_admin},
 ]
 
+async function officeHome(req, res) {
+    res.render("../templates/anagrafica.ejs", {title:"Anagrafica clienti"});
+}
 
 async function is_admin(req, res){
     res.json({success:true});
@@ -50,14 +52,6 @@ async function change_password(req, res){
     res.json({success:true});
 }
 
-async function officeHome(req, res) {
-    res.sendFile("/templates/home.htm", { root: __dirname });
-}
-
-async function officeLogin(req, res) {
-    res.sendFile("/templates/login.htm", { root: __dirname });
-}
-
 async function officePostLogin(req, res) {
     const user = await DATABASE.User.findOne({ email: req?.body?.email});
     if (user && bcrypt.compareSync(req?.body?.password, user.password)){
@@ -73,10 +67,6 @@ async function officePostLogin(req, res) {
       res.status(401).send({ message: 'Invalid email or password' });
     }
 
-}
-
-async function officeRegister(req, res) {
-    res.sendFile("/templates/register.htm", { root: __dirname });
 }
 
 async function officePostRegister(req, res) {
