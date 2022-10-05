@@ -24,7 +24,7 @@ function Product(props) {
   return (
     <Card className="h-100" key={product.slug}>
       <Link to={`/shop/product/${product.slug}`}>
-        <img src={product.image} className="prod-img card-img-top" alt={product.name} />
+        <img src={`${SERVER_URL}/${product.poster}`} className="prod-img card-img-top" alt={product.name} />
       </Link>
       <Card.Body>
         <Link className="text-decoration-none text-dark " to={`/shop/product/${product.slug}`}>

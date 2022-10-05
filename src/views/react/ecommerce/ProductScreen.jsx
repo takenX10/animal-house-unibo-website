@@ -58,7 +58,7 @@ function ProductScreen() {
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const res = await fetch(`${SERVER_URL}/api/products/${product._id}`);
+    const res = await fetch(`${SERVER_URL}/api/shop/products/${product._id}`);
     const data = await res.json();
     if (data.countInStock < quantity) {
       window.alert('Not enough product in stock :c');
