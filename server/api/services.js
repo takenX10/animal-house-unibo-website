@@ -22,4 +22,9 @@ async function serviceFaceToFaceRoutes(req, res) {
   res.json(services);
 }
 
+async function serviceFaceToFaceBook(req, res) {
+
+}
+
 export default { ENDPOINTS };
+

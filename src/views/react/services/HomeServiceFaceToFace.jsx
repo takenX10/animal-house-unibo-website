@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Service from '@/components/react/services/Service';
 import MessageBox from '@/components/react/utils/MessageBox';
 import LoadingBox from '@/components/react/utils/LoadingBox';
+import Navbar from "@/components/react/navbar/Navbar";
 import "@/assets/css/ecommerce.css";
 import { SERVER_URL } from "@/context/utils";
 
@@ -47,29 +48,32 @@ export default function HomeServiceFaceToFace() {
   }, []);
 
   return (
-    <div>
-      <Helmet>
-        <title>Animal house</title>
-      </Helmet>
-      <h1>Services Face To Face</h1>
-      <div className="services">
-        {
-          loading ? (
-            <LoadingBox />
-          ) : error ? (
-            <MessageBox variant='danger'>{error}</MessageBox>
-          ) : (
-            <Row>
-              {
-                servicesFaceToFace.map(service => (
-                  <Col key={service.slug} sm={6} md={4} lg={3} className="mb-3">
-                    <Service service={service}></Service>
-                  </Col>
-                ))}
-            </Row>
-          )
-        }
+    <>
+      <Navbar />
+      <div className='container-fluid'>
+        <Helmet>
+          <title>Animal house</title>
+        </Helmet>
+        <h1>Services Face To Face</h1>
+        <div className="services">
+          {
+            loading ? (
+              <LoadingBox />
+            ) : error ? (
+              <MessageBox variant='danger'>{error}</MessageBox>
+            ) : (
+              <Row>
+                {
+                  servicesFaceToFace.map(service => (
+                    <Col key={service.slug} sm={6} md={4} lg={3} className="mb-3">
+                      <Service service={service}></Service>
+                    </Col>
+                  ))}
+              </Row>
+            )
+          }
+        </div>
       </div>
-    </div>
+    </>
   )
 }

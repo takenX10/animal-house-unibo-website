@@ -22,12 +22,18 @@ app.use(express.static(__dirname + "/static/dist/assets"));
 app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/template'))
-const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  credentials:true,
-};
-app.use(cors(corsOptions));
+
+var whitelist = ['http://localhost:3000', 'http://localhost:8000']
+var corsOptionsDelegate = function(req, callback) {
+  var corsOptions;
+  if (whitelist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: req.header('Origin'), optionsSuccessStatus: 200, credentials: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+app.use(cors(corsOptionsDelegate));
 
 app.use((err, req, res, next) => {
   console.log('mistakes were made');
@@ -61,14 +67,14 @@ async function importAPI(api_dir) {
 }
 
 function wrapper(func) {
-      return async (req,res,next) => {
-        try {
-          await func(req,res,next)
-        }catch(e){
-          console.log("wajo no eh", e);
-          res.status(500).send();
-        }
-      }
+  return async (req, res, next) => {
+    try {
+      await func(req, res, next)
+    } catch (e) {
+      console.log("wajo no eh", e);
+      res.status(500).send();
+    }
+  }
 }
 function initAPI() {
   for (let ENDPOINTS of backendRouter) {
@@ -82,8 +88,8 @@ function initAPI() {
         }
       }
       let func = ENDPOINTS[i].function;
-      if (func.constructor.name == 'AsyncFunction') 
-          func = wrapper(func)
+      if (func.constructor.name == 'AsyncFunction')
+        func = wrapper(func)
       let params = [ENDPOINTS[i].endpoint, opts, func];
       if (ENDPOINTS[i].method == METHODS.GET) app.get(...params);
       else if (ENDPOINTS[i].method == METHODS.POST) app.post(...params);

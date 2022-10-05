@@ -19,13 +19,13 @@ var fakeUsers = [{
   petList: [],
 },
 {
-    name: "Giacomo",
-    surname: "Poretti",
-    email: "giacomo@poretti.tk",
-    contact: "+39 555 555 5555",
-    password: bcrypt.hashSync("giacomoporetti", genSaltSync()),
-    isAdmin: true,
-    petList: [],
+  name: "Giacomo",
+  surname: "Poretti",
+  email: "giacomo@poretti.tk",
+  contact: "+39 555 555 5555",
+  password: bcrypt.hashSync("giacomoporetti", genSaltSync()),
+  isAdmin: true,
+  petList: [],
 },];
 
 var posts = [
@@ -114,13 +114,31 @@ const servicesFaceToFace = [
         shifts: [
           {
             day: "Monday",
-            begin: "8:00",
-            end: "13:00"
+            hours: [
+              {
+                begin: "8:00",
+                end: "13:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
           {
             day: "Wednesday",
-            begin: "14:00",
-            end: "19:00"
+            hours: [
+              {
+                begin: "14:00",
+                end: "19:00",
+                max_clients: 3,
+                current_users: 0
+              },
+              {
+                begin: "16:00",
+                end: "17:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
         ]
       },
@@ -130,13 +148,25 @@ const servicesFaceToFace = [
         shifts: [
           {
             day: "Tuesday",
-            begin: "8:00",
-            end: "13:00"
+            hours: [
+              {
+                begin: "8:00",
+                end: "13:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
           {
             day: "Thursday",
-            begin: "14:00",
-            end: "19:00"
+            hours: [
+              {
+                begin: "14:00",
+                end: "19:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
         ]
       }
@@ -205,13 +235,25 @@ const servicesFaceToFace = [
         shifts: [
           {
             day: "Monday",
-            begin: "8:00",
-            end: "13:00"
+            hours: [
+              {
+                begin: "8:00",
+                end: "13:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
           {
             day: "Wednesday",
-            begin: "14:00",
-            end: "19:00"
+            hours: [
+              {
+                begin: "14:00",
+                end: "19:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
         ]
       },
@@ -221,13 +263,25 @@ const servicesFaceToFace = [
         shifts: [
           {
             day: "Tuesday",
-            begin: "8:00",
-            end: "13:00"
+            hours: [
+              {
+                begin: "8:00",
+                end: "13:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
           {
             day: "Thursday",
-            begin: "14:00",
-            end: "19:00"
+            hours: [
+              {
+                begin: "14:00",
+                end: "19:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
         ]
       },
@@ -237,13 +291,25 @@ const servicesFaceToFace = [
         shifts: [
           {
             day: "Saturday",
-            begin: "8:00",
-            end: "13:00"
+            hours: [
+              {
+                begin: "8:00",
+                end: "13:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
           {
             day: "Friday",
-            begin: "14:00",
-            end: "19:00"
+            hours: [
+              {
+                begin: "14:00",
+                end: "19:00",
+                max_clients: 3,
+                current_users: 0
+              }
+            ]
           },
         ]
       }
@@ -285,7 +351,8 @@ const servicesFaceToFace = [
         required: true,
         description: "Where does your pet shit?",
       }
-    ]
+    ],
+    bookings: []
   },
 ]
 
@@ -314,7 +381,6 @@ async function init() {
       petList: [...user.petList, pet.id]
     });
   }
-  console.log(await DATABASE.Pet.find());
   console.log("Adding products...");
   await DATABASE.Product.insertMany(products);
   console.log("Adding face to face services...");

@@ -111,7 +111,10 @@ const serviceFaceToFaceSchema = new mongoose.Schema({
   description: { type: String, required: true },
   rating: { type: Number, required: true },
   numReviews: { type: Number, required: true },
-  opts: { type: Array }
+  opts: { type: Array, required:true },
+  bookings: {
+    type: Array, required: true
+  }
 },
   {
     timestamps: true
