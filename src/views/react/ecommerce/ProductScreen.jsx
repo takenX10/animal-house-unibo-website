@@ -8,6 +8,7 @@ import MessageBox from '@/components/react/utils/MessageBox';
 import { Store } from '@/context/store';
 import { SERVER_URL } from "@/context/utils";
 import "@/assets/css/ecommerce.css";
+import ImgCarousel from '@/components/react/utils/ImgCarousel';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -82,8 +83,7 @@ function ProductScreen() {
           </Row>
           <Row>
             <Col md={6} >
-              <img className='img-fluid' src={product.poster} alt={product.name}>
-              </img>
+                <ImgCarousel images={['/assets/products/p1.jpg','/assets/products/drip.jpg']}></ImgCarousel>
             </Col>
             <Col md={6} >
               <ListGroup variant='flush'>
