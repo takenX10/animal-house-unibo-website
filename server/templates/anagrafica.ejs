@@ -26,8 +26,10 @@
     </div>
 </template>
 
-<template id="pet-button">
-    <button type="button" class="btn btn-success m-2" id="my-pet-button">Modifica Baloo</button>
+<template class="pet-button">
+    <div>
+        <button type="button" class="btn btn-success m-2 my-pet-button">Modifica Baloo</button>
+    </div>
 </template>
 
 <script>
@@ -45,12 +47,13 @@ async function loadUsers(data){
         $("#contact",newUser).text(usr.contact);
         $("#id",newUser).text(usr._id);
         for(let id of usr.petList){
-            const petButton = $("#pet-button").clone()[0].content;
+            const petButton = $(".pet-button").clone()[0].content;
+            console.log(id);
+            $(".my-pet-button",petButton).text(`Modifica ${id}`);
+            $(".my-pet-button",petButton).click(()=>{redirect(id)});
             console.log(petButton);
-            petButton.textContent = `Modifica ${id}`;
-            petButton.onclick="redirect";
-            $("#pet-container", newUser).append(petButton);
-            console.log(petButton);
+            //petButton.appendTo($("#pet-container", newUser));
+            $(".pet-container", newUser).append(petButton);
         }
         $('.user-container').append(newUser);
     }
