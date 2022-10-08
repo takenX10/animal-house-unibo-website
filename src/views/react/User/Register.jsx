@@ -41,7 +41,6 @@ export default function Register(){
     }
     return (
         <>
-            <Navbar />
             <Container type="fluid">
             <Row className="justify-content-center m-5 p-5">
                 <Col lg="8">

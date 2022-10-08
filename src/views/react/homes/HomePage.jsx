@@ -4,7 +4,6 @@ import Navbar from "@/components/react/navbar/Navbar";
 export default function HomePage(){
     return(
         <>
-            <Navbar />
             <main>
                 <div>
                     <h2 className="fs-1 text-center p-4 m-3">Dove desideri andare?</h2>

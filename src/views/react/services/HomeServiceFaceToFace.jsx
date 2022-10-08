@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import Service from '@/components/react/services/Service';
 import MessageBox from '@/components/react/utils/MessageBox';
 import LoadingBox from '@/components/react/utils/LoadingBox';
-import Navbar from "@/components/react/navbar/Navbar";
 import "@/assets/css/ecommerce.css";
 import { SERVER_URL } from "@/context/utils";
 
@@ -49,7 +48,6 @@ export default function HomeServiceFaceToFace() {
 
   return (
     <>
-      <Navbar />
       <div className='container-fluid'>
         <Helmet>
           <title>Animal house</title>

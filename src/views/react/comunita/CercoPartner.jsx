@@ -45,7 +45,6 @@ export default function CercoPartner() {
 
     return (
         <>
-            <Navbar />
             <div className='container-fluid'>
                 <Row className="justify-content-start m-3">
                     <Col lg="2">

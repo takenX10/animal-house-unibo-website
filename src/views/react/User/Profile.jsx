@@ -111,7 +111,6 @@ export default function Profile(){
     }, []);
     return (
         <>
-            <Navbar />
             <Container fluid>
                 <Row className='mx-5 px-5 my-3'>
                     <Col>

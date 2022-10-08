@@ -8,7 +8,6 @@ export default function HomeComunita(){
     };
     return (
         <>
-            <Navbar />
             <main>
                 <div className="container-fluid">
                     <div className="row justify-content-center">

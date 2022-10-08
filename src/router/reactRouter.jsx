@@ -35,6 +35,7 @@ import ServiceScreen from '@/views/react/services/ServiceScreen';
 import Login from '@/views/react/User/Login';
 import Register from '@/views/react/User/Register';
 import Profile from '@/views/react/User/Profile';
+import Navbar from '../components/react/navbar/Navbar';
 
 
 const ReactRoutes = [
@@ -116,7 +117,7 @@ const ReactRoutes = [
         element: <OrderScreen />
       },
       {
-        path: "/shop/orderhistory/:id",
+        path: "/shop/orderhistory",
         element: <OrderHistoryScreen />
       },
       {
@@ -173,6 +174,7 @@ export const CreateReactApp = () => {
       <StoreProvider>
         <HelmetProvider>
           <BrowserRouter>
+            <Navbar/>
             <Routes>
               {ReactRoutes.map((route) => {
                 return createRoute(route)

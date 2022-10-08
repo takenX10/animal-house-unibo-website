@@ -7,7 +7,6 @@ export default function HomeFrontOffice(){
     }
     return (
         <>
-            <Navbar />
             <main>
                 <div className="container-fluid">
                     <div className="row justify-content-center mt-5">

@@ -107,7 +107,6 @@ function ProductScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <Navbar />
           <div className='container-fluid'>
             <Helmet>
               <title>{service.title}</title>

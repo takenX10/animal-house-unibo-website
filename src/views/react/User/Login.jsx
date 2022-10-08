@@ -34,8 +34,9 @@ export default function Login() {
 
             if (!res.ok)
                 throw new Error((await res.json()).message);
-
+          
             const data = await res.json();
+            console.log(data);
             ctxDispatch({ type: 'USER_SIGNIN', payload: data });
             navigate(redirect);
         } catch (err) {
@@ -45,13 +46,12 @@ export default function Login() {
 
     useEffect(() => {
         if (userInfo) {
-            check_login(false).then((r)=>{if(r){navigate(redirect);}});
+            navigate(redirect);
         }
     }, [navigate, redirect, userInfo])
 
     return (
         <>
-            <Navbar />
             <Container className="small-container">
                 <Helmet>
                     <title>Sign In</title>

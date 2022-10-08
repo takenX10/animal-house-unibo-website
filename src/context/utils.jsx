@@ -28,8 +28,8 @@ async function get_my_id() {
 
 function logout(ctxDispatch) {
     document.cookie="AUTHSESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
-    ctxDispatch({type:'USER_SIGNOUT'})
-    window.location = '/';
+    ctxDispatch({type:'USER_SIGNOUT'});
+    console.log("logging out...");
 }
 
 async function deletePost(id){
