@@ -179,13 +179,11 @@ export const CreateReactApp = () => {
               <Navbar/>
             </header>
             <main>
-              <Container>
                 <Routes>
                   {ReactRoutes.map((route) => {
                     return createRoute(route)
                   })}
                 </Routes>
-              </Container>
             </main>
           </BrowserRouter>
         </HelmetProvider>
