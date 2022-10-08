@@ -1,10 +1,12 @@
 import React from "react";
-import Navbar from "@/components/react/navbar/Navbar";
+import { Helmet } from 'react-helmet-async';
 
 export default function HomePage(){
     return(
         <>
-            <main>
+                <Helmet>
+                  <title>Animal House</title>
+                </Helmet>
                 <div>
                     <h2 className="fs-1 text-center p-4 m-3">Dove desideri andare?</h2>
                 </div>
@@ -21,7 +23,6 @@ export default function HomePage(){
                         </div>
                     </div>
                 </div>
-            </main>
         </>
     )
 }

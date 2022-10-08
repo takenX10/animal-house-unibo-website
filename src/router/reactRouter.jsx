@@ -36,6 +36,7 @@ import Login from '@/views/react/User/Login';
 import Register from '@/views/react/User/Register';
 import Profile from '@/views/react/User/Profile';
 import Navbar from '../components/react/navbar/Navbar';
+import { Container } from 'react-bootstrap';
 
 
 const ReactRoutes = [
@@ -174,12 +175,18 @@ export const CreateReactApp = () => {
       <StoreProvider>
         <HelmetProvider>
           <BrowserRouter>
-            <Navbar/>
-            <Routes>
-              {ReactRoutes.map((route) => {
-                return createRoute(route)
-              })}
-            </Routes>
+            <header>
+              <Navbar/>
+            </header>
+            <main>
+              <Container>
+                <Routes>
+                  {ReactRoutes.map((route) => {
+                    return createRoute(route)
+                  })}
+                </Routes>
+              </Container>
+            </main>
           </BrowserRouter>
         </HelmetProvider>
       </StoreProvider>

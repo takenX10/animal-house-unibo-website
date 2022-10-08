@@ -8,7 +8,6 @@ export default function HomeComunita(){
     };
     return (
         <>
-            <main>
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-8 mt-5">
@@ -31,7 +30,6 @@ export default function HomeComunita(){
                         </div>
                     </div>
                 </div>
-            </main>
         </>
     );
 }

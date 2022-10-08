@@ -7,7 +7,6 @@ export default function HomeFrontOffice(){
     }
     return (
         <>
-            <main>
                 <div className="container-fluid">
                     <div className="row justify-content-center mt-5">
                         <div className="col-8">
@@ -30,7 +29,6 @@ export default function HomeFrontOffice(){
                         </div>
                     </div>
                 </div>
-            </main>
         </>
     );
 }
