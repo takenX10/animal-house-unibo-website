@@ -178,7 +178,7 @@ export const CreateReactApp = () => {
             <header>
               <Navbar/>
             </header>
-            <main>
+            <main className='pt-3'>
                 <Routes>
                   {ReactRoutes.map((route) => {
                     return createRoute(route)

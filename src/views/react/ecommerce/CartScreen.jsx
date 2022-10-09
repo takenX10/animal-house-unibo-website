@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import MessageBox from '@/components/react/utils/MessageBox';
-import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import { Store } from '@/context/store';
@@ -26,10 +26,10 @@ export default function CartScreen() {
   }
 
   const checkoutHandler = () => {
-    navigate('/signin?redirect=/shipping')
+    navigate('/backoffice/login?redirect=/shipping')
   }
   return (
-    <div>
+    <Container>
       <Helmet>
         <title>Shopping Cart</title>
       </Helmet>
@@ -37,7 +37,7 @@ export default function CartScreen() {
       <Row>
         <Col md={8}>
           {cartItems.length === 0 ? (
-            <MessageBox> Cart is empty. <Link className="link-primary text-decoration-none" to='/'>Shop so' mo'</Link></MessageBox>
+            <MessageBox> Cart is empty. <Link className="link-primary text-decoration-none" to='/shop'>Shop so' mo'</Link></MessageBox>
           )
             :
             (
@@ -47,11 +47,11 @@ export default function CartScreen() {
                     <Row className="align-items-center">
                       <Col md={4}>
                         <img
-                          src={item.image}
+                          src={`${SERVER_URL}/${item.poster}`}
                           alt={item.name}
                           className='img-fluid rounded img-thumbnail'
                         ></img>{' '}
-                        <Link to={`/product/${item.slug}`}
+                        <Link to={`/shop/product/${item.slug}`}
                           className='link-secondary text-decoration-none'>{item.name}</Link>
                       </Col>
                       <Col md={3}>
@@ -102,6 +102,6 @@ export default function CartScreen() {
           </Card>
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 }

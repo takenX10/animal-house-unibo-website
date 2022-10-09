@@ -11,6 +11,7 @@ import { Routes, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {Navbar as Bar} from 'react-bootstrap';
 import { Route } from 'react-router-dom';
+import ShopNav from '@/components/react/ecommerce/ShopNav'; 
 
 /*const NavbarServizi = () => {
   return (
@@ -110,7 +111,7 @@ const NavbarShop = () => {
 export default function Navbar() {
   const [loggedin, setLoggedin] = useState(false);
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {userInfo}= state;
+  const {userInfo,cart}= state;
   const navigate = useNavigate();
   async function verify_login() {
     setLoggedin(await check_login());
@@ -134,7 +135,7 @@ export default function Navbar() {
           </Bar.Brand> 
         </LinkContainer>
         <Routes>
-          <Route path='/shop' element={<Bar.Text>Sei nello shop!</Bar.Text>} />
+          <Route path='/shop' element={<ShopNav cart={cart}/>} />
         </Routes>
         <Bar.Toggle aria-controls='basic-navbar-nav'/>
         <Bar.Collapse id='basic-navbar-nav' className='text-black'>
