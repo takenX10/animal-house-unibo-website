@@ -1,9 +1,7 @@
 <template>
   <div class="wordle">
-    <!-- <app-header></app-header> -->
     <game-board :getCurr="getCurr"></game-board>
   </div>
-  <!-- <app-footer></app-footer> -->
 </template>
 
 <script>

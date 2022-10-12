@@ -140,7 +140,8 @@ export const useGame = defineStore(name, {
       evaluations.forEach((evaluation, letterIndex) => {
         this.board.updateCell(index + letterIndex, { state: evaluation })
         this.keyboard.updateKeyState(input[letterIndex] as ValidKey, evaluation)
-      })
+      });
+      // TODO: handle win
       if (this.isCorrect(input)) {
         const result = {
           status: GameStatus.WIN,

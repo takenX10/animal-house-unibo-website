@@ -32,7 +32,6 @@ import Keyboard from '@/components/vue/games/hangman/Keyboard.vue'
 import json from '@/assets/data/hangman/words.json'
 
 const len = Keyboard.data().len;
-const keys = Keyboard.data().keys;
 const name = "Hangman"
 let currentGame = name
 
@@ -99,13 +98,13 @@ export default {
           if (el) el.focus()
         }
         if (letter.length == 1 && this.fails >= 0 && this.fails < 7 && !this.usedLetters.includes(letter)) {
-          if (this.secretWord.includes(letter)
-            && !this.foundLetters.includes(letter)) {
+          if (this.secretWord.includes(letter) && !this.foundLetters.includes(letter)) {
             this.foundLetters += letter;
             this.guessedWord =
               this.secretWord.split('')
                 .map(l => this.foundLetters.includes(l) ? l : '_').join("");
             if (this.guessedWord == this.secretWord) {
+              // TODO: handle win
               this.fails = -1;
             }
           } else {

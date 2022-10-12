@@ -48,6 +48,7 @@ export default {
       }
 
       // End Game if match all cards
+      // TODO: handle win
       if (code.gameCardsQTY === code.match) {
         code.setRating(code.moves);
         var score = code.setRating(code.moves).score;

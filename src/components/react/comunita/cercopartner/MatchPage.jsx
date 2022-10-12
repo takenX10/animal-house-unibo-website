@@ -49,7 +49,7 @@ export default function MatchPage({setCurrentPage, setPageId}){
             <div className='container-fluid w-100'>
                 <div className='row'>
                     <div className="col p-2 m-3">
-                        <h1 className='w-100 text-danger fw-bold text-center'>Lista dei match</h1>
+                        <h1 className='w-100 text-danger fw-bold text-center'>Match list</h1>
                     </div>
                 </div>
                 <div className='row d-flex w-100'>
@@ -58,7 +58,7 @@ export default function MatchPage({setCurrentPage, setPageId}){
                             <div key={match.id} className="col border border-dark p-2 m-3">
                                 <h2>{match.name}</h2>
                                 <p>{match.contact}</p>
-                                <Button variant='success' onClick={()=>{showProfile(match.id)}}>Vedi profilo</Button>
+                                <Button variant='success' onClick={()=>{showProfile(match.id)}}>Show profile</Button>
                                 <Button variant='danger' onClick={()=>{unmatch(match.id)}} className='m-2'>Unmatch</Button>
                             </div>);
                         })

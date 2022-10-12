@@ -2,16 +2,8 @@ import AUTH from '../authentication.js';
 import METHODS from "../methods.js";
 
 const ENDPOINTS = [
-    {
-        endpoint: "/backoffice/get_my_id",
-        method: METHODS.GET,
-        function: get_my_id
-    },
-    {
-        endpoint: "/backoffice/is_logged_in",
-        method: METHODS.POST,
-        function: loggedin
-    },
+    { endpoint: "/backoffice/get_my_id", method: METHODS.GET, function: get_my_id },
+    { endpoint: "/backoffice/is_logged_in", method: METHODS.POST, function: loggedin },
 ];
 
 async function loggedin(req, res) {

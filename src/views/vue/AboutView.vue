@@ -1,42 +1,8 @@
 
 <script>
 
-function addScript(src) {
-  let s = document.createElement('script')
-  s.setAttribute('src', src)
-  document.head.appendChild(s)
-}
-
-function addCSS(src) {
-  let s = document.createElement('link')
-  s.setAttribute('href', src)
-  document.body.appendChild(s)
-}
-
-function getBoostrapComponentInBrowser() {
-  var scripts = [
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js',
-    'https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js',
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js'
-  ]
-
-  for (var i = 0; i < scripts.length; i++) {
-    addScript(scripts[i])
-  }
-
-
-  var css = [
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
-  ]
-
-  for (var i = 0; i < css.length; i++) {
-    addCSS(css[i])
-  }
-}
-
 export default {
   mounted() {
-    
   }
 }
 </script>
