@@ -32,6 +32,37 @@ function logout(ctxDispatch) {
     console.log("logging out...");
 }
 
+async function save_score(score, scoreboard){
+    try{
+        let data = {
+            score: score,
+            leaderboard: scoreboard
+        };
+        console.log(data);
+        if(await check_login()){
+            let res = await fetch(`${SERVER_URL}/backoffice/insert_leaderboard`, {
+                method:"POST",
+                credentials: "include",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            res = await res.json();
+            if(!res.success){
+                alert(res.message);
+            }else{
+                alert("Scoreboard updated");
+            }
+        }else{
+            alert("Not logged in, so the score can't be saved!");
+        }
+    }catch(e){
+        alert(e);
+    }
+}
+
 async function deletePost(id){
     try{
         let res = await fetch(`${SERVER_URL}/backoffice/delete_post`, {
@@ -64,4 +95,4 @@ async function isAdmin(){
     return false;
 }
 
-export { SERVER_URL, check_login, get_my_id, logout, deletePost, isAdmin };
+export { SERVER_URL, check_login, get_my_id, logout, deletePost, save_score, isAdmin };

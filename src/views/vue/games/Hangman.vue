@@ -30,7 +30,7 @@ import StickMan from '@/components/vue/games/hangman/StickMan.vue'
 import Letters from '@/components/vue/games/hangman/Letters.vue'
 import Keyboard from '@/components/vue/games/hangman/Keyboard.vue'
 import json from '@/assets/data/hangman/words.json'
-
+import { save_score } from '@/context/utils.jsx';
 const len = Keyboard.data().len;
 const name = "Hangman"
 let currentGame = name
@@ -104,7 +104,8 @@ export default {
               this.secretWord.split('')
                 .map(l => this.foundLetters.includes(l) ? l : '_').join("");
             if (this.guessedWord == this.secretWord) {
-              // TODO: handle win
+              // TODO: handle the score in a better way
+              save_score(10 - this.fails,"hangman");
               this.fails = -1;
             }
           } else {

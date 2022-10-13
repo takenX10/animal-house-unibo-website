@@ -30,7 +30,7 @@ const scoreSchema = new Schema({
   author: { type: String, required: true },
   score: { type: Number, required: true },
   leaderboard: { type: String, required: true },
-  atuhorId: { type: String, required: true },
+  authorId: { type: String, required: true },
 });
 
 const petSchema = new Schema({

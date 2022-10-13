@@ -44,6 +44,7 @@
 <script>
 import sample from 'lodash.sample'
 import Tile from '@/components/vue/games/slider/Tile.vue'
+import { save_score } from '@/context/utils.jsx';
 
 let backupTiles = null
 
@@ -97,6 +98,8 @@ export default {
         }
       }
       // TODO: handle win
+      save_score( this.MAX_SCORE - this.score, "slider");
+      this.score = 0;
       return true
     }
   },
@@ -105,6 +108,9 @@ export default {
     start({ image, size }) {
       this.size = size
       this.image = image
+      this.score = 0;
+      // TODO: Handle the score in a better way
+      this.MAX_SCORE = 500;
 
       // detect the width and height of the frame
       const img = new Image()
@@ -146,6 +152,7 @@ export default {
      * Shuffle the generated tiles.
      */
     shuffleTiles() {
+      this.score = 0;
       // To make sure the puzzle is solvable, we execute a series of random moves
       for (let i = 0, j = this.totalTiles * 5; i < j; ++i) {
         const emptyTile = this.tiles.find(t => t.isEmpty)
@@ -172,7 +179,7 @@ export default {
       const target = this.tiles.find(t => {
         return t.isEmpty && this.getAdjacentOrders(tile).indexOf(t.styles.order) > -1
       })
-
+      this.score++;
       // If found the empty tile, just switch the flex order and we're good.
       target && this.switchTiles(target, tile)
     },
@@ -205,6 +212,7 @@ export default {
      * Reset the board.
      */
     reset() {
+      this.score = 0;
       this.tiles = JSON.parse(backupTiles)
     },
 
@@ -212,6 +220,7 @@ export default {
      * Restart the game.
      */
     restart() {
+      this.score = 0;
       this.$emit('restart')
     }
   }

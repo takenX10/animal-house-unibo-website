@@ -8,7 +8,7 @@ const validLeaderboards = ["wordle", "slider", "memory", "hangman"];
 
 let ENDPOINTS = [
     { endpoint: "/backoffice/get_leaderboard", method: METHODS.POST, opts: [jsonParser], function: leaderboardGetter },
-    { endpoint: "/backoffice/insert_leaderboard", method: METHODS.POST, opts: [isAuth, jsonParser], function: leaderboardInsert },
+    { endpoint: "/backoffice/insert_leaderboard", method: METHODS.POST, opts: [jsonParser, isAuth], function: leaderboardInsert },
     { endpoint: "/backoffice/get_valid_leaderboards", method: METHODS.POST, function: validLeaderboardsGetter },
 
 
@@ -28,6 +28,7 @@ async function leaderboardGetter(req, res){
 }
 
 async function leaderboardInsert(req, res){
+    console.log("insert...");
     if(!req?.body?.leaderboard || !req?.body?.score ){
         res.json({success:false, message: "missing some parameters"});
         return;
@@ -36,7 +37,8 @@ async function leaderboardInsert(req, res){
         res.json({success:false, message: "unknown leaderboard"});
         return;
     }
-    const user = await AUTH.get_user();
+    const user = await AUTH.get_user(req);
+    console.log(user);
     const name = `${user.name} ${user.surname} (${user.email})`;
     await DATABASE.Score.create({
         leaderboard: req.body.leaderboard,
@@ -44,6 +46,7 @@ async function leaderboardInsert(req, res){
         authorId: user.id,
         score: req.body.score,
     });
+    res.json({success:true});
 }
 
 function validLeaderboardsGetter(req, res){

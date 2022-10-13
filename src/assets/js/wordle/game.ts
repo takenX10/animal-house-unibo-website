@@ -5,6 +5,7 @@ import Wordle from "@/assets/js/wordle/wordle"
 import { GameStatus, type GameResult, type ValidKey, ValidKey as EnumValidKey } from "@/assets/js/wordle/types"
 import { watch } from "vue"
 import { useStats } from "./stats"
+import { save_score } from "@/context/utils.jsx";
 
 export const LOCAL_STORAGE_KEY = "gamestate"
 const DEFAULT_WORD_LENGTH = 5
@@ -141,19 +142,20 @@ export const useGame = defineStore(name, {
         this.board.updateCell(index + letterIndex, { state: evaluation })
         this.keyboard.updateKeyState(input[letterIndex] as ValidKey, evaluation)
       });
-      // TODO: handle win
       if (this.isCorrect(input)) {
+        let score = this.wordle.getScore(this.word.length, this.guesses);
         const result = {
           status: GameStatus.WIN,
           word: this.word,
           guesses: this.guesses,
-          score: this.wordle.getScore(this.word.length, this.guesses),
+          score: score,
           cheated: this.cheated,
         }
         const stats = useStats()
         stats.addStats(result)
-        this.result = result
-        this.over = true
+        this.result = result;
+        save_score(score, "wordle");
+        this.over = true;
         return
       }
       if (this.board.currentRow === this.word.length) {
