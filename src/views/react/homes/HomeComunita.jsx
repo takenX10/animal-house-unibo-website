@@ -17,7 +17,7 @@ export default function HomeComunita(){
                     </div>
                     <div className="row justify-content-around text-center mt-5">
                         <div className="col">
-                            <button type="button" className="btn btn-success rounded-pill p-4 fs-3 fw-bold" onClick={()=>{window.location.pathname="/comunita/leaderboard-giochi"}}>LEADERBOARD DEI GIOCHI</button>
+                            <button type="button" className="btn btn-success rounded-pill p-4 fs-3 fw-bold" onClick={()=>{window.location.pathname="/comunita/leaderboard"}}>LEADERBOARD DEI GIOCHI</button>
                         </div>
                         <div className="col">
                             <button type="button" className="btn btn-success rounded-pill p-4 fs-3 fw-bold" onClick={()=>{window.location.pathname="/comunita/eccolo-qua"}}>BACHECA ECCOLO QUA</button>
