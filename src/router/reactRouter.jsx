@@ -18,6 +18,8 @@ import HomeComunita from '@/views/react/homes/HomeComunita';
 import CercoPartner from '@/views/react/comunita/CercoPartner';
 import EccoloQua from '@/views/react/comunita/EccoloQua';
 import Aiutatemi from '@/views/react/comunita/Aiutatemi';
+import Leaderboard from '@/views/react/comunita/Leaderboard';
+
 
 // Ecommerce
 import HomeScreen from '@/views/react/ecommerce/HomeScreen';
@@ -36,105 +38,42 @@ import Login from '@/views/react/User/Login';
 import Register from '@/views/react/User/Register';
 import Profile from '@/views/react/User/Profile';
 import Navbar from '../components/react/navbar/Navbar';
-import { Container } from 'react-bootstrap';
 
 
 const ReactRoutes = [
+  { path: "/", element: <HomePage /> },
+  { path: "/profile", element: <Profile /> },
+  { path: "/office", element: <HomeFrontOffice /> },
+  { path: "/backoffice/login", element: <Login /> },
+  { path: "/backoffice/register", element: <Register /> },
   {
-    path: "/",
-    element: <HomePage />
-  },
-  {
-    path: "/profile",
-    element: <Profile />
-  },
-  {
-    path: "/office",
-    element: <HomeFrontOffice />
-  },
-  {
-    path: "/backoffice/login",
-    element: <Login />
-  },
-  {
-    path: "/backoffice/register",
-    element: <Register />
-  },
-  {
-    path: "/comunita",
-    element: <HomeComunita />,
+    path: "/comunita", element: <HomeComunita />,
     children: [
-      {
-        path: "/comunita",
-        element: <HomeComunita />
-      },
-      {
-        path: "/comunita/cerco-partner",
-        element: <CercoPartner />
-      },
-      {
-        path: "/comunita/eccolo-qua",
-        element: <EccoloQua />
-      },
-      {
-        path: "/comunita/aiutatemi",
-        element: <Aiutatemi />
-      },
+      { path: "/comunita", element: <HomeComunita /> },
+      { path: "/comunita/cerco-partner", element: <CercoPartner /> },
+      { path: "/comunita/eccolo-qua", element: <EccoloQua /> },
+      { path: "/comunita/aiutatemi", element: <Aiutatemi /> },
+      { path: "/comunita/leaderboard", element: <Leaderboard />},
     ]
   },
-  {
-    path: "/services/facetoface",
-    element: <HomeServiceFaceToFace />,
-    children:
-      [
-        {
-          path: "/services/facetoface/:slug",
-          element: <ServiceScreen />
-        },
-      ],
+  { 
+    path: "/services/facetoface", element: <HomeServiceFaceToFace />,
+    children:[ 
+      { path: "/services/facetoface/:slug", element: <ServiceScreen /> }, 
+    ]
   },
-  {
-    path: "/shop",
-    element: <HomeScreen />,
+  { 
+    path: "/shop", element: <HomeScreen />,
     children: [
-      {
-        path: "/shop/cart",
-        element: <CartScreen />
-      },
-      {
-        path: "/shop/shipping",
-        element: <ShippingAddressScreen />
-      },
-      {
-        path: "/shop/placeorder",
-        element: <PlaceOrderScreen />
-      },
-      {
-        path: "/shop/product/:slug",
-        element: <ProductScreen />
-      },
-      {
-        path: "/shop/order/:id",
-        element: <OrderScreen />
-      },
-      {
-        path: "/shop/orderhistory",
-        element: <OrderHistoryScreen />
-      },
-      {
-        path: "/shop/payment/:id",
-        element: <PaymentMethodScreen />
-      },
+      { path: "/shop/cart", element: <CartScreen /> },
+      { path: "/shop/shipping", element: <ShippingAddressScreen /> },
+      { path: "/shop/placeorder", element: <PlaceOrderScreen /> },
+      { path: "/shop/product/:slug", element: <ProductScreen /> },
+      { path: "/shop/order/:id", element: <OrderScreen /> },
+      { path: "/shop/orderhistory", element: <OrderHistoryScreen /> },
+      { path: "/shop/payment/:id", element: <PaymentMethodScreen /> },
     ]
   }
-  // {
-  //   path: "/users",
-  //   element: <Users />,
-  //   children: [
-  //     { path: ":id", element: <Profile /> },
-  //     { path: "/settings", element: <Settings /> },
-  //   ],
-  // },
 ];
 
 

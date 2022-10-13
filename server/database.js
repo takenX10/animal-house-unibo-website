@@ -23,7 +23,14 @@ const postSchema = new Schema({
   author: { type: String, required: true },
   message: { type: String, required: true },
   type: { type: String, required: false },
-  answerFrom: { type: String, required: false }
+  answerFrom: { type: String, required: false },
+});
+
+const scoreSchema = new Schema({
+  author: { type: String, required: true },
+  score: { type: Number, required: true },
+  leaderboard: { type: String, required: true },
+  atuhorId: { type: String, required: true },
 });
 
 const petSchema = new Schema({
@@ -36,7 +43,7 @@ const petSchema = new Schema({
   sex: { type: String, required: true },
   likedBy: { type: Array, required: true },
   matchedBy: { type: Array, required: true },
-  imgList: { type: Array, required: true }
+  imgList: { type: Array, required: true },
 });
 
 const orderSchema = new mongoose.Schema({
@@ -78,9 +85,9 @@ const orderSchema = new mongoose.Schema({
   isDelivered: { type: Boolean, default: false },
   deliveredAt: { type: Date },
 },
-  {
-    timestamps: true,
-  });
+{
+  timestamps: true,
+});
 
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
@@ -95,9 +102,9 @@ const productSchema = new mongoose.Schema({
   rating: { type: Number, required: true },
   numReviews: { type: Number, required: true },
 },
-  {
-    timestamps: true
-  });
+{
+  timestamps: true
+});
 
 const serviceFaceToFaceSchema = new mongoose.Schema({
   slug: { type: String, required: true, unique: true },
@@ -114,18 +121,19 @@ const serviceFaceToFaceSchema = new mongoose.Schema({
   opts: { type: Array, required:true },
   bookings: {
     type: Array, required: true
-  }
+  },
 },
-  {
-    timestamps: true
-  });
+{
+  timestamps: true
+});
 
 
 const Post = mongoose.model('Post', postSchema);
 const User = mongoose.model('User', userSchema);
 const Pet = mongoose.model('Pet', petSchema);
+const Score = mongoose.model('Score', scoreSchema);
 const Order = mongoose.model('Order', orderSchema);
 const Product = mongoose.model('Product', productSchema);
 const ServiceFaceToFace = mongoose.model('ServiceFaceToFace', serviceFaceToFaceSchema);
 
-export default { User, Post, Pet, Order, Product, ServiceFaceToFace, connect };
+export default { User, Post, Pet, Score, Order, Product, ServiceFaceToFace, connect };
