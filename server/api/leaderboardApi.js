@@ -10,9 +10,17 @@ let ENDPOINTS = [
     { endpoint: "/backoffice/get_leaderboard", method: METHODS.POST, opts: [jsonParser], function: leaderboardGetter },
     { endpoint: "/backoffice/insert_leaderboard", method: METHODS.POST, opts: [jsonParser, isAuth], function: leaderboardInsert },
     { endpoint: "/backoffice/get_valid_leaderboards", method: METHODS.POST, function: validLeaderboardsGetter },
-
-
+    { endpoint: "/backoffice/remove_leaderboard", method: METHODS.POST, opts:[jsonParser, isAuth, isAdmin], function: leaderboardRemove },
 ];
+
+
+async function leaderboardRemove(req, res){
+    if(!req?.body?.id){
+        res.json({success:false, message: "missing parameters"});
+    }
+    await DATABASE.Score.findByIdAndRemove(req.body.id);
+    res.json({succes:true});
+}
 
 async function leaderboardGetter(req, res){
     if(!req?.body?.leaderboard){
@@ -22,7 +30,7 @@ async function leaderboardGetter(req, res){
     const scores = await DATABASE.Score.find({leaderboard:req.body.leaderboard});
     let final = scores.sort((a,b) =>a.score>b.score);
     let p = 0;
-    final = final.map((f)=>{p++; return {author: f.author, score: f.score, position: p}})
+    final = final.map((f)=>{p++; return {author: f.author, score: f.score, position: p, id: f.id}})
     res.json({success:true, name: req.body.leaderboard, leaderboard:final});
     return;
 }

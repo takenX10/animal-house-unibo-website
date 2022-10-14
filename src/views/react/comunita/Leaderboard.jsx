@@ -17,6 +17,28 @@ async function getValidLeaderboards(){
     return null;
 }
 
+async function removeLeaderboard(id){
+    try{
+        let res = await fetch(`${SERVER_URL}/backoffice/remove_leaderboard`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id:id})
+        });
+        res = await res.json();
+        if(!res.success){
+            alert(res.message);
+        }else{
+            alert("Position removed");
+            // TODO: update current leaderboard
+        }
+    }catch(e){
+        alert(e);
+    }
+}
 
 async function getLeaderboard(l){
     try{
@@ -85,6 +107,7 @@ export default function Leaderboard(){
                                                                 <td className='p-3'>{e.position}</td>
                                                                 <td className='p-3'>{e.author}</td>
                                                                 <td className='p-3'>{e.score}</td>
+                                                                { isadmin? <Button variant="danger" onclick={()=>{removeLeaderboard(e.id)}}>Remove</Button>:<></>}
                                                             </tr>
                                                         );
                                                     })

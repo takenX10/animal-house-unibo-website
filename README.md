@@ -61,8 +61,8 @@ So just run this command and start developing
   - [x] OPZIONALE: Memory
   - [x] OPZIONALE: Impiccato
   - [x] OPZIONALE: Scova le differenze
-- [ ] Servizi di comunita' #Ale
-  - [ ] Leaderboard dei giochi #Ale
+- [x] Servizi di comunita' #Ale
+  - [x] Leaderboard dei giochi #Ale
   - [x] bacheca eccolo qua #Ale
   - [x] OPZIONALE: bacheca cerco partner #Ale
   - [x] OPZIONALE: bacheca aiutatemi #Ale
@@ -85,7 +85,7 @@ So just run this command and start developing
   - [ ] OPZIONALE: Videoconferenza con l'animale in ospedale o pensione
 - [ ] Back office
   - [ ] Gestione clienti #Ale
-    - [ ] Anagrafica Clienti #Ale
+    - [x] Anagrafica Clienti #Ale
     - [x] Profilo #Ale
     - [x] Registrazione #Ale
     - [x] Login #Ale
@@ -93,7 +93,7 @@ So just run this command and start developing
     - [ ] Reset password #Ale (Forse non lo facciamo)
     - [x] Cancellazione #Ale
     - [ ] Preferenze e animali preferiti #Ale
-    - [ ] Punteggio giochi #Ale
+    - [x] Punteggio giochi #Ale
   - [x] Servizi di comunita' #Ale
     - [x] Controllare o cancellare messaggi nelle bacheche #Ale
   - [ ] Gestione e-commerce #Yonas
