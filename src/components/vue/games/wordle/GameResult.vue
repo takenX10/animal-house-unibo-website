@@ -141,7 +141,7 @@ const stats = useStats()
     justify-content: center;
     padding-top: 1rem;
     button {
-      color: var(--text-color);
+      color : white;
       background-color: var(--bg-accent-color);
       padding: 0.5rem 1rem 0.5rem 1rem;
       cursor: pointer;

@@ -48,19 +48,19 @@ export default function HomeServiceFaceToFace() {
 
   return (
     <>
-      <div className='container-fluid'>
+      <div className='container-fluid text-center'>
         <Helmet>
           <title>Animal house</title>
         </Helmet>
         <h1>Services Face To Face</h1>
-        <div className="services">
+        <div className="services mx-auto">
           {
             loading ? (
               <LoadingBox />
             ) : error ? (
               <MessageBox variant='danger'>{error}</MessageBox>
             ) : (
-              <Row>
+              <Row className='mx-auto'>
                 {
                   servicesFaceToFace.map(service => (
                     <Col key={service.slug} sm={6} md={4} lg={3} className="mb-3">

@@ -9,13 +9,14 @@ import METHODS from "../methods.js";
 import { fileFromSync } from "fetch-blob/from.js";
 const { JSDOM } = jsdom;
 const upload = multer({ dest: os.tmpdir() });
+import DATABASE from '../database.js';
 
 import CatBreedAI from "./catBreedAI.js";
 
 const IMAGE_DOG_API = "https://dog.ceo/api/breeds/image/random";
 const IMAGE_CAT_API = "https://api.thecatapi.com/v1/images/search";
 const RANDOM_FACT = "https://fungenerators.com/random/facts/animal/";
-const RANDOM_ANIMAL = "https://zoo-animal-api.herokuapp.com";
+const RANDOM_ANIMAL = "https://zoo-animal-api.herokuapp.com/animals/rand";
 
 const ENDPOINTS = [
   { endpoint: "/api/dogimage", method: METHODS.GET, function: getDogImageAPI },
@@ -68,7 +69,7 @@ async function getDogBreedAIAPI(req, res) {
   try {
     const file = req.file;
     let data = await getDogBreedAI(file.path);
-    res.json({ status: "ok", data });
+    res.json({ success: true, data });
   } catch (e) {
     showError(res);
   }
@@ -117,7 +118,7 @@ async function getCatBreedAIAPI(req, res) {
   try {
     let file = req.file;
     let data = await CatBreedAI.getCatBreedAI(file.path);
-    res.json({ status: "ok", data });
+    res.json({ success: true, data });
   } catch (e) {
     throw e;
   }
@@ -126,22 +127,24 @@ async function getCatBreedAIAPI(req, res) {
 async function getScoreboardAPI(req, res) {
   try {
     let game = req.params.game;
-    let board = getScoreboard(game);
+    let board = await getScoreboard(game);
     res.json(board);
   } catch (e) {
     showError(res);
   }
 }
 
-function getScoreboard(game) {
+async function getScoreboard(game) {
+  if (!game) {
+    return ({ success: false, message: "missing leaderboard" });
+  }
+  const scores = await DATABASE.Score.find({ leaderboard: game });
+  let final = scores.sort((a, b) => a.score > b.score);
+  let p = 0;
+  final = final.map((f) => { p++; return { author: f.author, score: f.score, position: p, id: f.id } })
   let board = {
-    status: "ok",
-    data: [
-      { username: "lollo", uuid: "223321323218724", score: "20" },
-      { username: "gatto", uuid: "223321323218724", score: "10" },
-      { username: "pesce", uuid: "223321323218724", score: "2" },
-      { username: "dino", uuid: "223321323218724", score: "0" },
-    ],
+    success: true,
+    data: final
   };
   return board;
 }
@@ -154,7 +157,7 @@ async function getRandomImageBase64API(req, res) {
     let b64 = data.toString("base64");
     b64 = "data:image/jpg;base64," + b64;
 
-    res.json({ status: 200, image: b64 });
+    res.json({ success: true, image: b64 });
   } catch (e) {
     console.log(e);
     showError(res);
@@ -166,7 +169,7 @@ async function getRandomCatFactAPI(req, res) {
 
   let fact = facts[Math.floor(Math.random() * facts.length)];
 
-  res.json({ status: 200, text: fact });
+  res.json({ success: true, text: fact });
 }
 
 async function getRandomAnimalAPI(req, res) {
@@ -203,10 +206,10 @@ async function getRandomFact() {
     let r = await fetch(RANDOM_FACT);
     let data = await r.text();
     let reg = /data-wow-delay.*?>(.*?)<span class="text-muted"><small>/;
-    let jsonBody = JSON.parse('{"status":404, "text": ""}');
+    let jsonBody = JSON.parse('{"success":false, "text": ""}');
     if (reg.test(data)) {
       let fact = reg.exec(data)[1];
-      jsonBody.status = 200;
+      jsonBody.success = true;
       jsonBody.text = fact;
     }
     return jsonBody;
@@ -264,7 +267,7 @@ async function getFunnyVideoAPI(req, res) {
       let r = generateRandomInteger(list.length);
       urls.push(list[r]);
     }
-    let data = { status: "ok", urls: urls };
+    let data = { success: true, urls: urls };
     res.json(data);
   } catch (e) {
     showError(res);
@@ -283,7 +286,6 @@ function generateRandomInteger(max) {
 function getFunnyVideoList() {
   return [
     "https://www.youtube.com/embed/O-qqRaHVHiE",
-    "https://www.youtube.com/embed/qpZula9aYS0",
     "https://www.youtube.com/embed/NOhyduxTOGo",
   ];
 }

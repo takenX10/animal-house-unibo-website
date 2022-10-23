@@ -10,12 +10,13 @@ export default defineConfig({
   server: {
     port: '3000'
   },
+  css: {
+    devSourcemap: true,
+  },
   plugins: [vue(), vueJsx(), react()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      'balm-ui-plus': 'balm-ui/dist/balm-ui-plus.js',
-      'balm-ui-css': 'balm-ui/dist/balm-ui.css',
     }
   }
 })

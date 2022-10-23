@@ -21,35 +21,43 @@
     </div>
 
     <div class="controls text-center">
-      <ui-grid>
-        <ui-grid-cell columns="12">
-          <ui-button
+      <MDBContainer>
+        <MDBRow >
+        <MDBCol class="mx-auto col-sm-6 col-md-6">
+          <MDBBtn
             raised
-            class="toggle-original"
+            class="toggle-original w-100 text-light"
             @click="showingOriginal = !showingOriginal"
-          >Toggle Original Image</ui-button>
-        </ui-grid-cell>
-        <ui-grid-cell columns="12">
-        <ui-button raised class="shuffle" @click="shuffleTiles">Reshuffle</ui-button>
-        </ui-grid-cell>
-        <ui-grid-cell columns="12">
-        <ui-button raised class="reset" @click="reset">Reset</ui-button>
-        <ui-button raised class="restart" href="#" @click.prevent="restart">New Game</ui-button>
-        </ui-grid-cell>
-      </ui-grid>
+          >Toggle Original Image</MDBBtn>
+          </MDBCol>
+        <MDBCol class="mx-auto col-sm-6 col-md-6">
+        <MDBBtn raised class="shuffle w-100 text-light" @click="shuffleTiles">Reshuffle</MDBBtn>
+        </MDBCol>
+        </MDBRow>
+        <MDBRow >
+        <MDBCol class="mx-auto col-sm-6 col-md-6">
+        <MDBBtn raised class="reset w-100" @click="reset">Reset</MDBBtn>
+        </MDBCol>
+        <MDBCol class="mx-auto col-sm-6 col-md-6">
+        <MDBBtn raised class="restart w-100 text-light" @click="restart">New Game</MDBBtn>
+        </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     </div>
   </div>
 </template>
+
 
 <script>
 import sample from 'lodash.sample'
 import Tile from '@/components/vue/games/slider/Tile.vue'
 import { save_score } from '@/context/utils.jsx';
+import { MDBBtn,MDBRow,MDBCol,MDBInput,MDBContainer,MDBFile, MDBSpinner } from "mdb-vue-ui-kit";
 
 let backupTiles = null
 
 export default {
-  components: { Tile },
+  components: { Tile, MDBBtn,MDBRow,MDBCol,MDBInput,MDBContainer,MDBFile, MDBSpinner } ,
 
   data() {
     return {
@@ -70,6 +78,7 @@ export default {
   computed: {
     frameSize() {
       return {
+        backgroundColor: '#FFFFFF',
         width: `${this.tileSize.width * this.size.horizontal}px`,
         height: `${this.tileSize.height * this.size.vertical}px`
       }
@@ -274,14 +283,12 @@ export default {
   }
   .restart {
     background: #368ba0;
-    margin-left: 10px !important;
   }
   .toggle-original {
     background: #d05b88 !important;
   }
 
   .reset {
-    margin-right: 10px !important;
   }
 }
 </style>

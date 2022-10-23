@@ -4,29 +4,15 @@ import {
   english20,
   english35,
   english40,
-  canadian10,
-  canadian20,
-  canadian35,
-  canadian40,
-  american10,
-  american20,
-  american35,
-  american40,
 } from "wordlist-js"
 
 const allWords = [
+  "abyssinian", "albatross", "alligator", "angelfish", "ant", "anteater", "antelope", "armadillo", "baboon", "badger", "bandicoot", "bat", "beagle", "bear", "beaver", "bee", "beetle", "bird", "bison", "boar", "bobcat", "bombay", "bongo", "bonobo", "booby", "buffalo", "bulldog", "bullfrog", "butterfly", "camel", "capybara", "cat", "caterpillar", "catfish", "centipede", "chameleon", "cheetah", "chicken", "chihuahua", "chimpanzee", "chinchilla", "chipmunk", "civet", "cockroach", "cougar", "cow", "coyote", "crab", "crane", "cuttlefish", "deer", "dingo", "dodo", "dog", "dolphin", "donkey", "dragon", "dragonfly", "drever", "duck", "eagle", "earwig", "eel", "elephant", "emu", "falcon", "ferret", "fish", "flamingo", "flounder", "fox", "frog", "gecko", "gerbil", "gibbon", "giraffe", "goat", "goose", "gopher", "gorilla", "grasshopper", "grey seal", "greyhound", "grizzly bear", "grouse", "guinea fowl", "guppy", "hamster", "harrier", "hedgehog", "heron", "hippopotamus", "horse", "hound", "howler monkey", "hummingbird", "hyena", "i", "ibis", "iguana", "jackal", "jaguar", "jellyfish", "kangaroo", "king crab", "kingfisher", "kiwi", "koala", "lemming", "lemur", "leopard", "lion", "lionfish", "lizard", "llama", "lobster", "lynx", "m", "macaque", "macaw", "mammoth", "manatee", "mandrill", "markhor", "marmoset", "meerkat", "millipede", "mole", "mongoose", "mongrel", "monkey", "moose", "moth", "mouse", "mule", "newt", "nightingale", "ocelot", "octopus", "opossum", "orangutan", "oriole", "ostrich", "otter", "owl", "oyster", "panther", "parrot", "peacock", "pelican", "penguin", "pheasant", "pig", "pike", "piranha", "platypus", "porcupine", "possum", "prawn", "puffin", "puma", "quail", "rabbit", "raccoon", "rat", "rattlesnake", "reindeer", "rhinoceros", "robin", "salamander", "scorpion", "seahorse", "seal", "shark", "sheep", "shrimp", "skunk", "sloth", "snail", "snake", "sparrow", "sponge", "squid", "squirrel", "stingray", "stoat", "swan", "tamarin", "tapir", "tarantula", "termite", "tiger", "toad", "tortoise", "toucan", "turkey", "turtle", "vole", "vulture", "wallaby", "walrus", "warthog", "wasp", "weasel", "whale", "wildebeest", "wolf", "wolfhound", "wolverine", "wombat", "woodpecker", "yak", "zebra",]
+const allValidWords = [
   ...english10,
   ...english20,
   ...english35,
   ...english40,
-  ...canadian10,
-  ...canadian20,
-  ...canadian35,
-  ...canadian40,
-  ...american10,
-  ...american20,
-  ...american35,
-  ...american40,
 ]
 
 // CAMBIA QUESTO PER IL POOL DELLE PAROLE
@@ -43,7 +29,7 @@ function getWord(words: string[]) {
 }
 
 function getValidWords(length: number) {
-  const filteredWords = uniqueWords.filter((w) => w.length === length)
+  const filteredWords = allValidWords.filter((w) => w.length === length)
   return filteredWords
 }
 

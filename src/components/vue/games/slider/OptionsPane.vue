@@ -3,43 +3,53 @@
     <img class="preview" :src="image" v-if="image" />
     <ui-spinner v-if="!image" active></ui-spinner>
     <div >
-      <ui-grid>
-        <ui-grid-cell columns="12">
+      <MDBContainer>
+        <MDBRow columns="12">
           <ui-file 
             accept="image/gif, image/jpeg, image/png"
             id="file"
             type="file"
             @change="fileChanged"
           ></ui-file>
-        </ui-grid-cell>
-      </ui-grid>
-      <ui-grid >
-        <ui-grid-cell columns="12">
-          <ui-textfield
-            inputType="number"
+        </MDBRow>
+      </MDBContainer>
+      <MDBContainer >
+        <MDBRow >
+        <MDBCol class="col-3 mx-auto">
+          <MDBInput
+            type="number"
             name="width"
             min="2"
             max="10"
+            label="Width"
             v-model.number="size.horizontal"
             outlined
-          >Width</ui-textfield> ×
-          <ui-textfield
-            inputType="number"
+          />
+          </MDBCol>
+        <MDBCol class="col-1 text-center">
+          ×
+          </MDBCol>
+        <MDBCol class="col-3 mx-auto">
+          <MDBInput
+            type="number"
             name="height"
+            label="Height"
             min="2"
             max="10"
             v-model.number="size.vertical"
             outlined
-          >Height</ui-textfield>
-        </ui-grid-cell>
-      </ui-grid>
-      <ui-button raised v-if="image" @click="start">Start</ui-button>
+          />
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+      <MDBBtn raised v-if="image" @click="start">Start</MDBBtn>
     </div>
   </form>
 </template>
 
 <script>
 import loadImage from 'blueimp-load-image'
+import { MDBBtn,MDBRow,MDBCol,MDBInput,MDBContainer,MDBFile, MDBSpinner } from "mdb-vue-ui-kit";
 
 
 const imageUrlToBase64 = async url => {
@@ -57,6 +67,7 @@ const imageUrlToBase64 = async url => {
 };
 
 export default {
+  components: {MDBBtn,MDBRow,MDBCol,MDBInput,MDBContainer,MDBFile, MDBSpinner},
   data() {
     return {
       image: null,

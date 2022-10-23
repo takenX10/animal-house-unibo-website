@@ -2,7 +2,6 @@
   <section class="gamekeyboard">
     <div class="gamekeyboard__row" v-for="(keyset, index) in keyboardLayout" :key="index">
       <game-keyboard-key
-        class="btn btn-dark"
         tabindex="0"
         v-for="value in keyset"
         @click="handleKeypress"

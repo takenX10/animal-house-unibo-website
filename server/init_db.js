@@ -63,7 +63,7 @@ const products = [
     name: 'Nika Slim shirt',
     slug: 'nika-slim-shirt',
     category: 'Shirts',
-    poster:  '/assets/products/p1.jpg',
+    poster: '/assets/products/p1.jpg',
     images: [],
     price: 120,
     countInStock: 5,
@@ -119,7 +119,7 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 3
               }
             ]
           },
@@ -130,13 +130,13 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               },
               {
                 begin: "16:00",
                 end: "17:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               }
             ]
           },
@@ -153,7 +153,7 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               }
             ]
           },
@@ -164,7 +164,7 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               }
             ]
           },
@@ -240,7 +240,7 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               }
             ]
           },
@@ -251,7 +251,7 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               }
             ]
           },
@@ -268,7 +268,7 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               }
             ]
           },
@@ -279,7 +279,7 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               }
             ]
           },
@@ -296,7 +296,7 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               }
             ]
           },
@@ -307,7 +307,7 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 max_clients: 3,
-                current_users: 0
+                current_clients: 0
               }
             ]
           },
@@ -351,6 +351,131 @@ const servicesFaceToFace = [
         required: true,
         description: "Where does your pet shit?",
       }
+    ],
+    bookings: []
+  },
+  {
+    slug: "wow-grooming",
+    userId: 1,
+    title: "Grooming wow!",
+    poster: "https://dogsbestlife.com/wp-content/uploads/2020/05/Groomer-bathes-corgi-scaled.jpeg",
+    category: "animal-groomer",
+    availabilities: [
+      {
+        city: "Bologna",
+        address: "via non lo so 23",
+        shifts: [
+          {
+            day: "Monday",
+            hours: [
+              {
+                begin: "8:00",
+                end: "13:00",
+                max_clients: 3,
+                current_clients: 0
+              }
+            ]
+          },
+          {
+            day: "Wednesday",
+            hours: [
+              {
+                begin: "14:00",
+                end: "19:00",
+                max_clients: 3,
+                current_clients: 0
+              }
+            ]
+          },
+        ]
+      },
+      {
+        city: "Rimini",
+        address: "via non lo so 23",
+        shifts: [
+          {
+            day: "Tuesday",
+            hours: [
+              {
+                begin: "8:00",
+                end: "13:00",
+                max_clients: 3,
+                current_clients: 0
+              }
+            ]
+          },
+          {
+            day: "Thursday",
+            hours: [
+              {
+                begin: "14:00",
+                end: "19:00",
+                max_clients: 3,
+                current_clients: 0
+              }
+            ]
+          },
+        ]
+      },
+      {
+        city: "Naples",
+        address: "via non lo so 23",
+        shifts: [
+          {
+            day: "Saturday",
+            hours: [
+              {
+                begin: "8:00",
+                end: "13:00",
+                max_clients: 3,
+                current_clients: 0
+              }
+            ]
+          },
+          {
+            day: "Friday",
+            hours: [
+              {
+                begin: "14:00",
+                end: "19:00",
+                max_clients: 3,
+                current_clients: 0
+              }
+            ]
+          },
+        ]
+      }
+    ],
+    images: ['https://dogsbestlife.com/wp-content/uploads/2020/05/Groomer-bathes-corgi-scaled.jpeg'],
+    hourlyRate: 15,
+    description: "Something idk this should be an animal groomer",
+    rating: 5,
+    numReviews: 10,
+    opts: [
+      {
+        type: "checkbox",
+        name: "properties",
+        label: "Properties",
+        required: false,
+        labels: ["is aggressive", "shit often"],
+      },
+      {
+        type: "radio",
+        name: "gender",
+        label: "Gender",
+        required: true,
+        labels: [
+          'male',
+          'female',
+        ]
+      },
+      {
+        type: "text",
+        name: "pet_name",
+        label: "Pet name",
+        required: true,
+        description: "So what's your pet name?",
+      },
     ],
     bookings: []
   },

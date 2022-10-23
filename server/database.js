@@ -85,9 +85,9 @@ const orderSchema = new mongoose.Schema({
   isDelivered: { type: Boolean, default: false },
   deliveredAt: { type: Date },
 },
-{
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  });
 
 const productSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
@@ -102,9 +102,32 @@ const productSchema = new mongoose.Schema({
   rating: { type: Number, required: true },
   numReviews: { type: Number, required: true },
 },
-{
-  timestamps: true
-});
+  {
+    timestamps: true
+  });
+
+const bookingSchema = new mongoose.Schema({
+  userId: { type: String, required: true },
+  city: { type: String, required: true },
+  day: { type: String, required: true },
+  hour: { type: String, required: true },
+  opts: { type: String }
+})
+const serviceHourSchema = new mongoose.Schema({
+  begin: { type: String, required: true },
+  end: { type: String, required: true },
+  max_clients: { type: Number, required: true },
+  current_clients: { type: Number, required: true }
+})
+const serviceShiftSchema = new mongoose.Schema({
+  day: { type: String, required: true },
+  hours: { type: [serviceHourSchema], required: true }
+})
+const serviceAvailabilitySchema = new mongoose.Schema({
+  city: { type: String, required: true },
+  address: { type: String, required: true },
+  shifts: { type: [serviceShiftSchema], required: true }
+})
 
 const serviceFaceToFaceSchema = new mongoose.Schema({
   slug: { type: String, required: true, unique: true },
@@ -112,20 +135,20 @@ const serviceFaceToFaceSchema = new mongoose.Schema({
   poster: { type: String, required: true },
   title: { type: String, required: true, },
   category: { type: String, required: true },
-  availabilities: { type: Array, required: true, },
+  availabilities: { type: [serviceAvailabilitySchema], required: true, },
   images: { type: Array, required: true, },
   hourlyRate: { type: Number, required: true },
   description: { type: String, required: true },
   rating: { type: Number, required: true },
   numReviews: { type: Number, required: true },
-  opts: { type: Array, required:true },
+  opts: { type: Array, required: true },
   bookings: {
-    type: Array, required: true
-  },
+    type: [bookingSchema]
+  }
 },
-{
-  timestamps: true
-});
+  {
+    timestamps: true
+  });
 
 
 const Post = mongoose.model('Post', postSchema);
@@ -134,6 +157,9 @@ const Pet = mongoose.model('Pet', petSchema);
 const Score = mongoose.model('Score', scoreSchema);
 const Order = mongoose.model('Order', orderSchema);
 const Product = mongoose.model('Product', productSchema);
+const ServiceHour = mongoose.model('ServiceHour', serviceHourSchema);
+const ServiceShift = mongoose.model('ServiceShift', serviceShiftSchema);
+const ServiceAvailability = mongoose.model('ServiceAvailability', serviceAvailabilitySchema);
 const ServiceFaceToFace = mongoose.model('ServiceFaceToFace', serviceFaceToFaceSchema);
 
-export default { User, Post, Pet, Score, Order, Product, ServiceFaceToFace, connect };
+export default { User, Post, Pet, Score, Order, Product, ServiceHour, ServiceShift, ServiceAvailability, ServiceFaceToFace, connect };

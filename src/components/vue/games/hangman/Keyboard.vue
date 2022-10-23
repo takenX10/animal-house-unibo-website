@@ -1,24 +1,23 @@
 <template>
   <div id="buttons" :set="len = 0">
     <div v-for="row in keys" :key="row">
-      <b-button
+      <MDBBtn color="dark"
         v-for="key in row"
         :key="key"
         :id="'hangman_btn_' + calcOffset(key)"
         size="sm"
-        pill
-        variant="dark"
         :disabled="usedLetters.includes(key)"
         v-on:click="click(key, $event)"
-      >{{ key }}</b-button>
+      >{{ key }}</MDBBtn>
     </div>
     <div id="restart">
-      <b-button variant="dark" v-on:click="restart">Restart</b-button>
+      <MDBBtn color="dark" v-on:click="restart">Restart</MDBBtn>
     </div>
   </div>
 </template>
 
 <script>
+import { MDBBtn} from "mdb-vue-ui-kit";
 
 let keys = ["QWERTYUIOP",
   "ASDFGHJKL",
@@ -39,6 +38,9 @@ export default {
   name: 'Keyboard',
   props: {
     usedLetters: String
+  },
+  components: {
+    MDBBtn
   },
   data() {
     return {

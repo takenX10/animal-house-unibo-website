@@ -19,6 +19,8 @@ const reducer = (state, action) => {
       return { ...state, service: action.payload, loading: false };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
+    case 'BOOKING_SUCCESS':
+      return { ...state, success: true };
     default:
       return state;
   }
@@ -31,25 +33,29 @@ function ProductScreen() {
   const { slug } = params;
   const [cityIndex, setCityIndex] = useState('');
   const [dayIndex, setDayIndex] = useState('');
+  const [hourIndex, setHourIndex] = useState('');
   const [shifts, setShifts] = useState('');
   const [hours, setHours] = useState('');
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const [{ loading, error, service }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, service, success }, dispatch] = useReducer(reducer, {
     service: [],
     loading: true,
     error: '',
+    success: false,
   });
   function handleShiftChange() {
     if (service.availabilities) {
       if (service.availabilities[cityIndex]) {
         setShifts(service.availabilities[cityIndex].shifts);
-        setHours(service.availabilities[cityIndex].shifts[0].hours);
+
+        if (service.availabilities[cityIndex].shifts[dayIndex])
+          setHours(service.availabilities[cityIndex].shifts[dayIndex].hours)
         return;
       }
     }
     setShifts([])
   }
-  function handleHoursChange() {
+  function handleHoursChange(e) {
     if (shifts) {
       if (shifts[dayIndex]) {
         setHours(shifts[dayIndex].hours)
@@ -57,6 +63,8 @@ function ProductScreen() {
       }
     }
     setHours([])
+    if (e)
+      setHourIndex(e.target.value);
   }
   function handleCityChange(e) {
     setCityIndex(e.target.value);
@@ -72,19 +80,50 @@ function ProductScreen() {
         throw new Error((await result.json()).message);
       }
       const item = await result.json();
+      console.log(item);
       dispatch({ type: 'FETCH_SUCCESS', payload: item });
       console.log('Success ma boy fr fr');
-      handleShiftChange();
-      handleHoursChange();
+      setCityIndex(0);
+      setDayIndex(0);
+      setHours([])
+      setShifts([])
     } catch (err) {
       console.log('Yikes ma boy fr fr');
       dispatch({ type: 'FETCH_FAIL', payload: `${err.message} :( totally not my fault i think` });
     }
-
   };
   async function book(data) {
-    console.log(data)
-    return false
+    try {
+      if (data.cityIndex == '')
+        data.cityIndex = '0';
+      if (data.dayIndex == '')
+        data.dayIndex = '0';
+      if (data.hourIndex == '')
+        data.hourIndex = '0';
+      let c = parseInt(data.cityIndex);
+      let d = parseInt(data.dayIndex);
+      let h = parseInt(data.hourIndex);
+      let id = (service.availabilities[c].shifts[d].hours[h]._id);
+      data.id = id;
+      let res = await fetch(`${SERVER_URL}/api/services/facetoface/book/${slug}`, {
+        method: "POST",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(data)
+      })
+      if (res.status != 200)
+        dispatch({ type: 'FETCH_FAIL', payload: `Error while booking !` });
+      else {
+        dispatch({ type: 'BOOKING_SUCCESS' });
+      }
+    } catch (err) {
+      console.log('Yikes ma boy fr fr');
+      dispatch({ type: 'FETCH_FAIL', payload: `${err.message} :( totally not my fault i think` });
+    }
+    return false;
   }
 
   useEffect(() => {
@@ -107,7 +146,7 @@ function ProductScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          <div className='container-fluid'>
+          <div className='container mb-4'>
             <Helmet>
               <title>{service.title}</title>
             </Helmet>
@@ -168,7 +207,7 @@ function ProductScreen() {
                   <hr />
                 </Col>
                 <Col md={4} sm={12} sx={12} className="mx-auto" >
-                  <Form.Select {...register("hours")} aria-label="hours" required>
+                  <Form.Select {...register("hourIndex")} aria-label="hourIndex" onChange={handleHoursChange} required>
                     {
                       hours.map((h, index) => {
                         return <option key={index} value={index} label={`${h.begin} - ${h.end}`}></option>
@@ -178,6 +217,8 @@ function ProductScreen() {
                   <hr />
                 </Col>
               </Row>
+              {success > 0 &&
+                <Row><MessageBox variant="success">Booking successfully done!</MessageBox> </Row>}
               <Row className='mx-auto text-center'>
                 <Col md={3} sm={10} xs={10} className="mx-auto">
                   <Button variant="primary" className='w-100' type="submit">
