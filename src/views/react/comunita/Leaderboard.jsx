@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SERVER_URL } from '@/context/utils';
-import { Container, Row, Col, Table } from 'react-bootstrap';
+import { SERVER_URL, isAdmin } from '@/context/utils';
+import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 
 async function getValidLeaderboards(){
     try{
@@ -15,29 +15,6 @@ async function getValidLeaderboards(){
         alert(e);
     }
     return null;
-}
-
-async function removeLeaderboard(id){
-    try{
-        let res = await fetch(`${SERVER_URL}/backoffice/remove_leaderboard`, {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({id:id})
-        });
-        res = await res.json();
-        if(!res.success){
-            alert(res.message);
-        }else{
-            alert("Position removed");
-            // TODO: update current leaderboard
-        }
-    }catch(e){
-        alert(e);
-    }
 }
 
 async function getLeaderboard(l){
@@ -64,10 +41,13 @@ async function getLeaderboard(l){
 export default function Leaderboard(){
     const [leaderboard, setLeaderboard] = useState({});
     const [validLeaderboards, setValidLeaderboards] = useState([]);
+    const [isadmin, setIsadmin] = useState(false);
     async function init(){
         setValidLeaderboards(await getValidLeaderboards());
+        if (await isAdmin()){
+            setIsadmin(true);
+        }
     }
-
     async function leaderboardSetter(){
         let mylead = {};
         for(let l of validLeaderboards){
@@ -75,12 +55,37 @@ export default function Leaderboard(){
         }
         setLeaderboard(mylead);
     }
+
+    async function removeLeaderboard(id){
+        try{
+            let res = await fetch(`${SERVER_URL}/backoffice/remove_leaderboard`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id:id})
+            });
+            res = await res.json();
+            if(!res.success){
+                alert(res.message);
+            }else{
+                alert("Position removed");
+                setValidLeaderboards(await getValidLeaderboards());
+            }
+        }catch(e){
+            alert(e);
+        }
+    }
+
     useEffect(()=>{
         leaderboardSetter();
     }, [validLeaderboards]);
     useEffect(()=>{
         init();
     }, []);
+    
     return (
         <>
             <Container fluid className='justify-content-center'>
@@ -107,7 +112,12 @@ export default function Leaderboard(){
                                                                 <td className='p-3'>{e.position}</td>
                                                                 <td className='p-3'>{e.author}</td>
                                                                 <td className='p-3'>{e.score}</td>
-                                                                { isadmin? <Button variant="danger" onclick={()=>{removeLeaderboard(e.id)}}>Remove</Button>:<></>}
+                                                                { isadmin? 
+                                                                    <td className='p-3'>
+                                                                        <Button variant="danger" onClick={()=>{removeLeaderboard(e.id)}}>Remove</Button>
+                                                                    </td>:
+                                                                    <></>
+                                                                }
                                                             </tr>
                                                         );
                                                     })

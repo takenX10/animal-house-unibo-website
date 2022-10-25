@@ -19,7 +19,7 @@ async function leaderboardRemove(req, res) {
     res.json({ success: false, message: "missing parameters" });
   }
   await DATABASE.Score.findByIdAndRemove(req.body.id);
-  res.json({ succes: true });
+  res.json({ success: true });
 }
 
 async function leaderboardGetter(req, res) {
