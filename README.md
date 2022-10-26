@@ -73,8 +73,8 @@ So just run this command and start developing
     - [ ] accessoristica #Yonas
     - [ ] OPZIONALE: cuccioli (NON LO FACCIAMO PER NESSUN MOTIVO)
 - [ ] Servizi in presenza #Gian
-  - [ ] Veterinario #Gian
-  - [ ] Dog sitter #Gian
+  - [X] Veterinario #Gian
+  - [X] Dog sitter #Gian
   - [ ] OPZIONALE: Toelettatura #Gian
   - [ ] OPZIONALE: Pensione estiva #Gian
   - [ ] OPZIONALE: psicologo #Gian
