@@ -188,7 +188,7 @@ export default {
     <GameHeader class="mb-3" />
     <div v-if="component">
       <div class="row">
-        <div class="col-1 mx-auto text-start">
+        <div class="col-1 mx-left text-start">
           <i
             style="font-size: x-large; vertical-align: middle"
             @click="goback"
@@ -196,6 +196,8 @@ export default {
             class="fa fa-angle-left pl-5"
           ></i>
         </div>
+        </div>
+      <div class="row">
         <div class="col mx-auto text-center">
           <h1>{{ component }}</h1>
         </div>

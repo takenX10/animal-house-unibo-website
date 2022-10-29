@@ -1,8 +1,8 @@
 import { Form } from 'react-bootstrap';
-function Checkbox({ labels, register, name, ...props }) {
+function Checkbox({ label, labels, register, name, ...props }) {
 
   return (
-    <div className='content'><label htmlFor={name}><b>{name}</b></label>
+    <div className='content'><label htmlFor={name}><b>{label}</b></label>
       <div id={name}>
         {labels.map((l, index) => {
           return <Form.Check

@@ -62,7 +62,7 @@ async function leaderboardInsert(req, res) {
     });
   } else {
     await DATABASE.Score.updateOne(
-      { authorId: user.id, leaderboard: lead },
+      { authorId: user.id, leaderboard: lead, score: { "$lt": score} },
       {
         score: score,
       });

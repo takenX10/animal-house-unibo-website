@@ -15,10 +15,10 @@ function Service(props) {
       </Link>
       <Card.Body>
         <Link className="text-decoration-none text-dark " to={`/services/facetoface/${service.slug}`}>
-          <Card.Title className="fw-bold">{service.slug}</Card.Title>
+          <Card.Title className="fw-bold">{service.title}</Card.Title>
         </Link>
         <Rating rating={service.rating} numReviews={service.numReviews}></Rating>
-        <Card.Text>${service.hourlyRate}</Card.Text>
+        <Card.Text>{service.hourlyRate} $/h</Card.Text>
       </Card.Body>
     </Card>
   );

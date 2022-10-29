@@ -17,6 +17,7 @@ const userSchema = new Schema({
   contact: { type: String, required: true },
   isAdmin: { type: Boolean, default: false, required: true },
   petList: { type: Array, required: false },
+  bookings: {type: Array }
 });
 
 const postSchema = new Schema({
@@ -116,8 +117,8 @@ const bookingSchema = new mongoose.Schema({
 const serviceHourSchema = new mongoose.Schema({
   begin: { type: String, required: true },
   end: { type: String, required: true },
-  max_clients: { type: Number, required: true },
-  current_clients: { type: Number, required: true }
+  maxClients: { type: Number, required: true },
+  currentClients: { type: Number, required: true }
 })
 const serviceShiftSchema = new mongoose.Schema({
   day: { type: String, required: true },
@@ -131,7 +132,6 @@ const serviceAvailabilitySchema = new mongoose.Schema({
 
 const serviceFaceToFaceSchema = new mongoose.Schema({
   slug: { type: String, required: true, unique: true },
-  userId: { type: Number, required: true, },
   poster: { type: String, required: true },
   title: { type: String, required: true, },
   category: { type: String, required: true },

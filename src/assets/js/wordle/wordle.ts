@@ -16,11 +16,10 @@ const allValidWords = [
 ]
 
 // CAMBIA QUESTO PER IL POOL DELLE PAROLE
-const uniqueWords = [...Array.from(new Set(allWords))].map((word) =>
+const uniqueWords = [...Array.from(new Set(allValidWords))].map((word) =>
   word
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .toUpperCase()
 )
 
 function getWord(words: string[]) {
@@ -28,8 +27,16 @@ function getWord(words: string[]) {
   return randomWord
 }
 
+function getValidGuessableWords(length: number) {
+  const filteredWords = allWords.filter((w) => w.length === length)
+  return filteredWords
+}
 function getValidWords(length: number) {
-  const filteredWords = allValidWords.filter((w) => w.length === length)
+  let filteredWords = uniqueWords.filter((w) => w.length === length)
+  let gg = getValidGuessableWords(length);
+  for (let i = 0; i < gg.length; i++) {
+    filteredWords.push(gg[i])
+  }
   return filteredWords
 }
 
@@ -39,7 +46,7 @@ export class Wordle {
 
   constructor(length: number) {
     this._validWords = getValidWords(length)
-    this._word = getWord(this._validWords)
+    this._word = getWord(getValidGuessableWords(length))
   }
 
   public get word() {
@@ -51,7 +58,7 @@ export class Wordle {
   }
 
   public isCorrect(s: string) {
-    return this._word === s
+    return this._word === s.toLowerCase()
   }
 
   public getScore(wordLength: number, guessesMade: number) {
@@ -59,6 +66,7 @@ export class Wordle {
   }
 
   public getEvaluations(inputWord: string): EvaluationState[] {
+    inputWord = inputWord.toLowerCase()
     const inputArray = inputWord.split("")
     const wordArray = this._word.split("")
     const evaluations: EvaluationState[] = []
