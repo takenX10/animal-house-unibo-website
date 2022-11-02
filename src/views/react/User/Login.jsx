@@ -1,7 +1,6 @@
 import { SERVER_URL } from '@/context/utils';
 import { useContext, useEffect, } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import Navbar from '@/components/react/navbar/Navbar';
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Store } from "@/context/store";

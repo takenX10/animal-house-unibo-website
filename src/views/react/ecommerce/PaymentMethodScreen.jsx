@@ -25,7 +25,7 @@ export default function PaymentMethodScreen() {
   const submitHandler = (e) => {
     e.preventDefault();
     ctxDispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethodName });
-    navigate('/placeorder');
+    navigate('/shop/placeorder');
   }
   return <div>
     <Helmet>

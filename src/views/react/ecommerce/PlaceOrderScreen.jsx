@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import LoadingBox from '@/components/react/utils/LoadingBox';
-import { Button, Card, Col, ListGroup, Row, Toast } from 'react-bootstrap';
+import { Button, Card, Col, Container, ListGroup, Row, } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import CheckoutSteps from '@/components/react/ecommerce/CheckoutSteps';
 import { Store } from '@/context/store';
 import { SERVER_URL } from "@/context/utils";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "@/assets/css/ecommerce.css";
 
 
@@ -30,8 +32,6 @@ export default function PlaceOrderScreen() {
   });
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
-  const [show, setShow] = useState(false);
-  const [message, setMessage] = useState('');
 
   const round = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
   cart.itemsPrice = round(
@@ -48,7 +48,6 @@ export default function PlaceOrderScreen() {
       const result = await fetch(`${SERVER_URL}/api/shop/orders`, {
         method: 'POST',
         headers: new Headers({
-          'authorization': `Bearer ${userInfo.token}`,
           'content-type': 'application/json',
         }),
         body: JSON.stringify({
@@ -71,18 +70,17 @@ export default function PlaceOrderScreen() {
 
       ctxDispatch({ type: 'CART_CLEAR' });
       dispatch({ type: 'CREATE_SUCCESS' })
-      navigate(`/order/${data.order._id}`);
+      navigate(`/shop/order/${data.order._id}`);
     } catch (err) {
+      toast(err.message);
       dispatch({ type: 'CREATE_FAIL' });
-      setMessage(err.message);
-      setShow(true);
     }
   };
 
   useEffect(() => {
 
     if (!cart.paymentMethod)
-      navigate('/payment');
+      navigate('/shop/payment');
 
   }, [navigate, cart]);
 
@@ -91,6 +89,7 @@ export default function PlaceOrderScreen() {
     <Helmet>
       <title>Order Preview</title>
     </Helmet>
+    <Container>
     <h1 className='my-3'>Order Preview</h1>
     <Row>
       <Col md={8}>
@@ -105,7 +104,7 @@ export default function PlaceOrderScreen() {
             </Card.Text>
             <Link
               className='text-decoration-none link-primary'
-              to='/shipping'>
+              to='/shop/shipping'>
               Edit
             </Link>
           </Card.Body>
@@ -118,7 +117,7 @@ export default function PlaceOrderScreen() {
             </Card.Text>
             <Link
               className='text-decoration-none link-primary'
-              to='/payment'>
+              to='/shop/payment'>
               Edit
             </Link>
           </Card.Body>
@@ -131,9 +130,8 @@ export default function PlaceOrderScreen() {
                 <ListGroup.Item key={item._id}>
                   <Row className="align-items-center">
                     <Col className=' justify-content-around' md={8}>
-                      <img src={item.image} alt={item.name}
-                        className='img-fluid rounded img-thumbnail'></img>
-                      {' '}
+                      <img src={`${SERVER_URL}/${item.poster}`} alt={item.name}
+                        className='me-2 img-fluid rounded item-thumbnail'></img>
                       <Link
                         className='ms-2 text-decoration-none link-secondary'
                         to={`/product/${item.slug}`}>{item.name}</Link>
@@ -146,7 +144,7 @@ export default function PlaceOrderScreen() {
             </ListGroup>
             <Link
               className='text-decoration-none link-primary'
-              to='/cart'>
+              to='/shop/cart'>
               Edit
             </Link>
           </Card.Body>
@@ -193,6 +191,7 @@ export default function PlaceOrderScreen() {
 
                 </div>
                 {loading && <LoadingBox></LoadingBox>}
+                <ToastContainer/>
               </ListGroup.Item>
             </ListGroup>
           </Card.Body>
@@ -200,12 +199,7 @@ export default function PlaceOrderScreen() {
       </Col>
     </Row>
 
-    <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
-      <Toast.Header>
-        <strong className='me-auto text-dark'>Alert!</strong>
-      </Toast.Header>
-      <Toast.Body>{message}</Toast.Body>
+    </Container>
 
-    </Toast>
   </div>
 }

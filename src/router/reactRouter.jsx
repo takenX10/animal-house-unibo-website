@@ -71,7 +71,7 @@ const ReactRoutes = [
       { path: "/shop/product/:slug", element: <ProductScreen /> },
       { path: "/shop/order/:id", element: <OrderScreen /> },
       { path: "/shop/orderhistory", element: <OrderHistoryScreen /> },
-      { path: "/shop/payment/:id", element: <PaymentMethodScreen /> },
+      { path: "/shop/payment", element: <PaymentMethodScreen /> },
     ]
   }
 ];

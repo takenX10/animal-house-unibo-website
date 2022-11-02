@@ -26,7 +26,7 @@ export default function CartScreen() {
   }
 
   const checkoutHandler = () => {
-    navigate('/backoffice/login?redirect=/shipping')
+    navigate('/backoffice/login?redirect=/shop/shipping')
   }
   return (
     <Container>
@@ -37,7 +37,7 @@ export default function CartScreen() {
       <Row>
         <Col md={8}>
           {cartItems.length === 0 ? (
-            <MessageBox> Cart is empty. <Link className="link-primary text-decoration-none" to='/shop'>Shop so' mo'</Link></MessageBox>
+            <MessageBox> Cart is empty. <Link className="link-primary text-decoration-none" to='/shop'>Shop some more!</Link></MessageBox>
           )
             :
             (
@@ -49,8 +49,8 @@ export default function CartScreen() {
                         <img
                           src={`${SERVER_URL}/${item.poster}`}
                           alt={item.name}
-                          className='img-fluid rounded img-thumbnail'
-                        ></img>{' '}
+                          className='img-fluid rounded item-thumbnail me-2'
+                        ></img>
                         <Link to={`/shop/product/${item.slug}`}
                           className='link-secondary text-decoration-none'>{item.name}</Link>
                       </Col>

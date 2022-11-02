@@ -48,8 +48,8 @@ main{
   background-color: #F07167 !important;
 }
 
-.img-thumbnail{
-  height: 80px;
+.item-thumbnail{
+  height: 80px !important;
 }
 
 .small-container{

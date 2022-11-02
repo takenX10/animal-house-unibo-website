@@ -7,7 +7,7 @@ const ENDPOINTS = [
   { endpoint: "/api/shop/products/:id", method: METHODS.GET, function: productById },
   { endpoint: "/api/shop/products/slug/:slug", method: METHODS.GET, function: productBySlug },
   { endpoint: "/api/shop/orders/:id", opts: isAuth, method: METHODS.GET, function: productOrderId },
-  { endpoint: "/api/shop/orders/mine", opts: isAuth, method: METHODS.GET, function: productOrderMine },
+  { endpoint: "/api/shop/orderhistory", opts: isAuth, method: METHODS.GET, function: productOrderMine },
   { endpoint: "/api/shop/orders", opts: isAuth, method: METHODS.POST, function: productOrderPost },
 ];
 
@@ -22,6 +22,7 @@ async function productOrderId(req, res) {
 }
 
 async function productOrderPost(req, res) {
+  console.log("Order request received");
   const newOrder = new DATABASE.Order({
     orderItems: req.body.orderItems.map((x) => ({ ...x, product: x._id })),
     shippingAddress: req.body.shippingAddress,

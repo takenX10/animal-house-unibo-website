@@ -155,7 +155,7 @@ function ProductScreen() {
             </Row>
             <Row>
               <Col md={6} >
-                <img className='w-100' src={service.poster} alt={service.title}>
+                <img className='w-100' src={`${SERVER_URL}/${item.poster}`} alt={service.title}>
                 </img>
               </Col>
               <Col md={6} >

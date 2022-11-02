@@ -33,7 +33,7 @@ export default function ShippingAddressScreen() {
         country,
       }
     });
-    navigate('/payment');
+    navigate('/shop/payment');
   }
 
 
