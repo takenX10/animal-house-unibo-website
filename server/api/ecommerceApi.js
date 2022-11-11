@@ -1,19 +1,20 @@
 import METHODS from "../methods.js";
-import { isAuth } from "../utils.js";
+import { isAuth,jsonParser} from "../utils.js";
 import DATABASE from '../database.js';
+import AUTH from '../authentication.js';
 
 const ENDPOINTS = [
   { endpoint: "/api/shop/products", method: METHODS.GET, function: productRoutes },
   { endpoint: "/api/shop/products/:id", method: METHODS.GET, function: productById },
   { endpoint: "/api/shop/products/slug/:slug", method: METHODS.GET, function: productBySlug },
-  { endpoint: "/api/shop/orders/:id", opts: isAuth, method: METHODS.GET, function: productOrderId },
-  { endpoint: "/api/shop/orderhistory", opts: isAuth, method: METHODS.GET, function: productOrderMine },
-  { endpoint: "/api/shop/orders", opts: isAuth, method: METHODS.POST, function: productOrderPost },
+  { endpoint: "/api/shop/orders/:id", opts: [jsonParser,isAuth], method: METHODS.GET, function: productOrderId },
+  { endpoint: "/api/shop/orderhistory", opts: [jsonParser,isAuth], method: METHODS.GET, function: productOrderMine },
+  { endpoint: "/api/shop/orders", opts: [jsonParser,isAuth], method: METHODS.POST, function: productOrderPost },
 ];
 
 
 async function productOrderId(req, res) {
-  const order = await DATABASE.Order.findOne({ user: req.user._id, _id: req.params.id });
+  const order = await DATABASE.Order.findOne({ user: (await AUTH.get_user(req))._id, _id: req.params.id });
   if (order) {
     res.json(order);
   } else {
@@ -23,6 +24,8 @@ async function productOrderId(req, res) {
 
 async function productOrderPost(req, res) {
   console.log("Order request received");
+  const usId=(await AUTH.get_user(req))._id;
+  console.log("User ID:",usId);
   const newOrder = new DATABASE.Order({
     orderItems: req.body.orderItems.map((x) => ({ ...x, product: x._id })),
     shippingAddress: req.body.shippingAddress,
@@ -31,15 +34,16 @@ async function productOrderPost(req, res) {
     shippingPrice: req.body.shippingPrice,
     taxPrice: req.body.taxPrice,
     totalPrice: req.body.totalPrice,
-    user: req.user._id,
+    user: usId
 
   });
+  console.log("Bout to save order");
   const order = await newOrder.save();
   res.status(201).json({ message: 'New Order Created', order });
 }
 
 async function productOrderMine(req, res) {
-  const orders = await DATABASE.Order.find({ user: req.user._id });
+  const orders = await DATABASE.Order.find({ user: (await AUTH.get_user(req))._id });
   res.json(orders);
 }
 

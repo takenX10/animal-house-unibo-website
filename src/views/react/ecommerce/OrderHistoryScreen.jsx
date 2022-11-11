@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import LoadingBox from '@/components/react/utils/LoadingBox';
@@ -37,9 +37,13 @@ export default function OrderHistoryScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const request = await fetch(`${SERVER_URL}/api/shop/orders/mine`, {
+        const request = await fetch(`${SERVER_URL}/api/shop/orderhistory`, {
           method: 'GET',
-          headers: new Headers({ authorization: `Bearer ${userInfo.token}` })
+          credentials: "include",
+          headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+          },
         });
         const data = await request.json();
 
@@ -55,7 +59,7 @@ export default function OrderHistoryScreen() {
   }, [userInfo])
 
   return (
-    <div>
+    <Container>
       <Helmet>
         <title>Order History</title>
       </Helmet>
@@ -90,7 +94,7 @@ export default function OrderHistoryScreen() {
                     variant='light'
                     className="mb-0"
                     onClick={() => {
-                      navigate(`/order/${order._id}`)
+                      navigate(`/shop/order/${order._id}`)
                     }}
                   >
                     Details
@@ -102,6 +106,6 @@ export default function OrderHistoryScreen() {
           </tbody>
         </table>
       )}
-    </div>
+    </Container>
   );
 }

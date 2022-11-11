@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer } from "react";
-import { Card, Col, ListGroup, Row } from "react-bootstrap";
+import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -43,7 +43,11 @@ export default function OrderScreen() {
         dispatch({ type: 'FETCH_REQUEST' });
         const response = await fetch(`${SERVER_URL}/api/shop/orders/${orderId}`, {
           method: 'GET',
-          headers: new Headers({ authorization: `Bearer ${userInfo.token}` })
+          credentials: "include",
+          headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+          },
         });
         const data = await response.json();
 
@@ -70,7 +74,7 @@ export default function OrderScreen() {
   ) : error ? (
     <MessageBox variant='danger'>{error}</MessageBox>
   ) : (
-    <div>
+    <Container>
       <Helmet>
         <title>Order {orderId}</title>
       </Helmet>
@@ -126,9 +130,9 @@ export default function OrderScreen() {
                       <Row className='align-items-center'>
                         <Col md={8}>
                           <img
-                            src={item.image}
+                            src={`${SERVER_URL}/${item.poster}`}
                             alt={item.name}
-                            className='img-fluid rounded item-thumbnail' />
+                            className='img-fluid me-2 rounded item-thumbnail' />
                           {' '}
                           <Link to={`/product/${item.slug}`} className='text-decoration-none link-secondary'>
                             {item.name}
@@ -182,7 +186,7 @@ export default function OrderScreen() {
         </Col>
       </Row>
 
-    </div>
+    </Container>
   )
 
 }

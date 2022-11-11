@@ -47,9 +47,11 @@ export default function PlaceOrderScreen() {
       dispatch({ type: 'CREATE_REQUEST' });
       const result = await fetch(`${SERVER_URL}/api/shop/orders`, {
         method: 'POST',
-        headers: new Headers({
-          'content-type': 'application/json',
-        }),
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
           orderItems: cart.cartItems,
           shippingAddress: cart.shippingAddress,

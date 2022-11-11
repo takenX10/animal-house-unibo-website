@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col,Container } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import Product from '@/components/react/ecommerce/Product';
 import MessageBox from '@/components/react/utils/MessageBox';
@@ -47,7 +47,7 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <div>
+    <Container>
       <Helmet>
         <title>Shop</title>
       </Helmet>
@@ -70,6 +70,6 @@ export default function HomeScreen() {
           )
         }
       </div>
-    </div>
+    </Container>
   )
 }
