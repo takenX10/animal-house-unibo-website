@@ -9,6 +9,7 @@ async function connect() {
   return mongoose;
 }
 
+
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   name: { type: String, required: true },
@@ -96,7 +97,7 @@ const productSchema = new mongoose.Schema({
   poster: { type: String, required: true },
   images: { type: Array, required: true },
   brand: { type: String, required: true },
-  category: { type: String, required: true },
+  categories: { type: Array, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
   countInStock: { type: Number, required: true },
@@ -106,6 +107,13 @@ const productSchema = new mongoose.Schema({
   {
     timestamps: true
   });
+
+const productCategorySchema = new Schema({
+  name: {type: String, required: true, unique: true},
+  parent: {type: String, required: true, },
+  category: {type: String, required: true, unique: true },
+
+});
 
 const bookingSchema = new mongoose.Schema({
   userId: { type: String, required: true },
@@ -151,6 +159,7 @@ const serviceFaceToFaceSchema = new mongoose.Schema({
   });
 
 
+const ProductCategory = mongoose.model('ProductCategory',productCategorySchema);
 const Post = mongoose.model('Post', postSchema);
 const User = mongoose.model('User', userSchema);
 const Pet = mongoose.model('Pet', petSchema);
@@ -162,4 +171,4 @@ const ServiceShift = mongoose.model('ServiceShift', serviceShiftSchema);
 const ServiceAvailability = mongoose.model('ServiceAvailability', serviceAvailabilitySchema);
 const ServiceFaceToFace = mongoose.model('ServiceFaceToFace', serviceFaceToFaceSchema);
 
-export default { User, Post, Pet, Score, Order, Product, ServiceHour, ServiceShift, ServiceAvailability, ServiceFaceToFace, connect };
+export default { User, Post, Pet, Score, Order, Product,ProductCategory, ServiceHour, ServiceShift, ServiceAvailability, ServiceFaceToFace, connect };

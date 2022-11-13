@@ -62,7 +62,7 @@ const products = [
   {
     name: 'Nika Slim shirt',
     slug: 'nika-slim-shirt',
-    category: 'Shirts',
+    category: ['/accessories'],
     poster: '/assets/products/p1.jpg',
     images: [],
     price: 120,
@@ -75,7 +75,7 @@ const products = [
   {
     name: 'Nika Slim Pant',
     slug: 'nika-slim-pant',
-    category: 'Pants',
+    category: ['/accessories'],
     poster: '/assets/products/p1.jpg',
     images: [],
     price: 25,
@@ -88,7 +88,7 @@ const products = [
   {
     name: 'Supreme jacket',
     slug: 'supreme-drip',
-    category: 'Jackets',
+    categories: ['/accessories/jackets'],
     poster: '/assets/products/drip.jpg',
     images: [],
     price: 999999,
@@ -99,6 +99,25 @@ const products = [
     description: 'high quality drip'
   },
 ];
+
+const productCategories = [
+  {
+    name:"Accessories",
+    parent:"/",
+    category:"/accessories"
+  },
+  {
+    name:"Jackets",
+    parent:"/accessories",
+    category:"/accessories/jackets`"
+  },
+  {
+    name:"Food",
+    parent:"/",
+    category:"/food",
+  }
+
+]
 
 const servicesFaceToFace = [
   {
@@ -931,6 +950,8 @@ async function init() {
   }
   console.log("Adding products...");
   await DATABASE.Product.insertMany(products);
+  console.log("Adding prod categories...");
+  await DATABASE.ProductCategory.insertMany(productCategories);
   console.log("Adding face to face services...");
   await DATABASE.ServiceFaceToFace.insertMany(servicesFaceToFace);
   console.log("done!");
