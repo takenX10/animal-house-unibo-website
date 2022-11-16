@@ -1,11 +1,13 @@
 import { useEffect, useReducer } from 'react';
-import { Row, Col,Container } from 'react-bootstrap';
+import { Row, Col,Container, Button, Card } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import Product from '@/components/react/ecommerce/Product';
 import MessageBox from '@/components/react/utils/MessageBox';
 import LoadingBox from '@/components/react/utils/LoadingBox';
 import "@/assets/css/ecommerce.css";
 import { SERVER_URL } from "@/context/utils";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBowlFood, faCross, faGlasses } from '@fortawesome/free-solid-svg-icons';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -48,6 +50,38 @@ export default function HomeScreen() {
 
   return (
     <Container>
+      <Row>
+        <Col className='' sm={6} md={4} lg={3} >
+          <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
+            style={{backgroundImage:`url(${SERVER_URL}/assets/ecommerce/accessories2.jpg)`,
+            backgroundSize:'cover',
+            backgroundPosition:'left'}
+          }>
+          <FontAwesomeIcon icon={faGlasses} className="mx-auto" size="2xl"/>
+          <p className='lead mx-auto'>Accessories</p>
+          </Button>
+        </Col> 
+        <Col  sm={6} md={4} lg={3} >
+          <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
+            style={{backgroundImage:`url(${SERVER_URL}/assets/ecommerce/accessories2.jpg)`,
+            backgroundSize:'cover',
+            backgroundPosition:'left'}
+          }>
+          <FontAwesomeIcon icon={faCross} className="mx-auto" size="2xl"/>
+          <p className='lead mx-auto'>Sanitary</p>
+          </Button>
+        </Col> 
+        <Col  sm={6} md={4} lg={3} >
+          <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
+            style={{backgroundImage:`url(${SERVER_URL}/assets/ecommerce/accessories2.jpg)`,
+            backgroundSize:'cover',
+            backgroundPosition:'left'}
+          }>
+          <FontAwesomeIcon icon={faBowlFood} className="mx-auto" size="2xl"/>
+          <p className='lead mx-auto'>Pet Food</p>
+          </Button>
+        </Col> 
+      </Row>
       <Helmet>
         <title>Shop</title>
       </Helmet>

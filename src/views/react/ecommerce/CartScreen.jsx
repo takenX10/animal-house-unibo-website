@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Store } from '@/context/store';
 import "@/assets/css/ecommerce.css";
 import { SERVER_URL } from '@/context/utils';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinusCircle, faPlusCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function CartScreen() {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ export default function CartScreen() {
   const {
     cart: { cartItems },
   } = state;
+
   const updateCartHandler = async (item, quantity) => {
     const data = await (await fetch(`${SERVER_URL}/api/shop/products/${item._id}`)).json();
     if (data.countInStock < quantity) {
@@ -45,7 +48,7 @@ export default function CartScreen() {
                 {cartItems.map((item) => (
                   <ListGroup.Item key={item._id}>
                     <Row className="align-items-center">
-                      <Col md={4}>
+                      <Col md={5}>
                         <img
                           src={`${SERVER_URL}/${item.poster}`}
                           alt={item.name}
@@ -54,21 +57,22 @@ export default function CartScreen() {
                         <Link to={`/shop/product/${item.slug}`}
                           className='link-secondary text-decoration-none'>{item.name}</Link>
                       </Col>
-                      <Col md={3}>
+                      <Col className="d-xl-flex " md={3}>
                         <Button onClick={() => updateCartHandler(item, item.quantity - 1)} variant='light' disabled={item.quantity === 1}>
-                          <i className="fas fa-minus-circle"></i>
+                           <FontAwesomeIcon icon={faMinusCircle} />
                         </Button>{' '}
-                        <span>{item.quantity}</span>{' '}
+                        <span className=" my-auto">{item.quantity}</span>{' '}
                         <Button onClick={() => updateCartHandler(item, item.quantity + 1)} variant='light' disabled={item.quantity === item.countInStock}>
-                          <i className="fas fa-plus-circle"></i>
+                           <FontAwesomeIcon icon={faPlusCircle} />
                         </Button>
                       </Col>
-                      <Col md={3}>
+                      <Col className="align-middle" md={2}>
                         ${item.price}
                       </Col>
                       <Col md={2}>
                         <Button variant="light"
                           onClick={() => removeItemHandler(item)}>
+                           <FontAwesomeIcon icon={faTrash} />
                           <i className="fas fa-trash"></i>
                         </Button>
                       </Col>
