@@ -1,5 +1,5 @@
 import { useContext, useEffect, useReducer } from 'react';
-import { Badge, Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
+import { Badge, Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import Rating from '@/components/react/utils/Rating';
@@ -74,7 +74,7 @@ function ProductScreen() {
       : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <div>
+        <Container>
           <Helmet>
             <title>{product.name}</title>
           </Helmet>
@@ -83,7 +83,7 @@ function ProductScreen() {
           </Row>
           <Row>
             <Col md={6} >
-                <ImgCarousel images={['/assets/products/p1.jpg','/assets/products/drip.jpg']}></ImgCarousel>
+                <ImgCarousel images={product.images}></ImgCarousel>
             </Col>
             <Col md={6} >
               <ListGroup variant='flush'>
@@ -123,7 +123,7 @@ function ProductScreen() {
               </ListGroup>
             </Col>
           </Row>
-        </div>
+        </Container>
       )
   );
 }

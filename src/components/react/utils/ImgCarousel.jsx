@@ -7,7 +7,7 @@ export default function ImgCarousel({images}) {
     <Carousel>
         {
           images.map(image=>(
-            <Carousel.Item>
+            <Carousel.Item key={image}>
               <img
                 className="d-block w-100"
                 src={`${SERVER_URL}/${image}`}

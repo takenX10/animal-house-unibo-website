@@ -5,6 +5,7 @@ import AUTH from '../authentication.js';
 
 const ENDPOINTS = [
   { endpoint: "/api/shop/products", method: METHODS.GET, function: productRoutes },
+  { endpoint: "/api/shop/products/category/:category", method: METHODS.GET, function: productsByCategory },
   { endpoint: "/api/shop/products/:id", method: METHODS.GET, function: productById },
   { endpoint: "/api/shop/products/slug/:slug", method: METHODS.GET, function: productBySlug },
   { endpoint: "/api/shop/orders/:id", opts: [jsonParser,isAuth], method: METHODS.GET, function: productOrderId },
@@ -21,6 +22,7 @@ async function productOrderId(req, res) {
     res.status(404).json({ message: 'Order Not Found' });
   }
 }
+
 
 async function productOrderPost(req, res) {
   console.log("Order request received");
@@ -50,6 +52,21 @@ async function productOrderMine(req, res) {
 async function productRoutes(req, res) {
   const products = await DATABASE.Product.find();
   res.json(products);
+}
+
+async function productsByCategory(req,res){
+  let products = await DATABASE.Product.find();
+  console.log(req.params.category)
+  products = products.filter((prod)=>(
+    prod.categories.reduce((a,c)=>a||c.includes(req.params.category),false)
+    )
+  );
+  console.log(products);
+  if(products)
+    res.json(products);
+  else
+    res.status(404).json({ message: 'Products Not Found' })
+    
 }
 
 async function productById(req, res) {
