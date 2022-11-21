@@ -65,9 +65,9 @@ export default function HomeScreen() {
   }
   return (
     <div>
-      <Row className='bg-light py-2 px-2'>
-        <Col className='' sm={6} md={4} lg={3} >
-          <Button className='bg-light mb-2 fw-bold text-white justify-content-center text-center w-100'
+      <Row className='butstrap bg-light py-2 mx-1'>
+        <Col className='ps-1 pe-1 mb-2' sm={6} md={4} lg={3} >
+          <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
             onClick={() => fetchData('accessories') }
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/accessories2.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
@@ -78,8 +78,8 @@ export default function HomeScreen() {
             <p className='lead mx-auto'>Accessories</p>
           </Button>
         </Col>
-        <Col sm={6} md={4} lg={3} >
-          <Button className='bg-white mb-2 fw-bold text-white justify-content-center text-center w-100'
+        <Col className='mb-2 px-1'sm={6} md={4} lg={3} >
+          <Button className='bg-white fw-bold text-white justify-content-center text-center w-100'
             onClick={() => fetchData('sanitary')}
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/sanitary.jpeg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
@@ -90,8 +90,8 @@ export default function HomeScreen() {
             <p className='lead mx-auto' >Sanitary</p>
           </Button>
         </Col>
-        <Col sm={6} md={4} lg={3} >
-          <Button className='bg-light fw-bold mb-2 text-white justify-content-center text-center w-100'
+        <Col className='px-1 mb-2'sm={6} md={4} lg={3} >
+          <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
             onClick={() => fetchData('food')}
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/petfood.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
@@ -102,8 +102,8 @@ export default function HomeScreen() {
             <p className='lead mx-auto'>Pet Food</p>
           </Button>
         </Col>
-        <Col sm={6} md={4} lg={3} >
-          <Button className='bg-light mb-2 fw-bold text-white justify-content-center text-center w-100'
+        <Col className='mb-2 ps-1 pe-1'sm={6} md={4} lg={3} >
+          <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
             onClick={() => fetchData()}
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/more.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,

@@ -56,12 +56,10 @@ async function productRoutes(req, res) {
 
 async function productsByCategory(req,res){
   let products = await DATABASE.Product.find();
-  console.log(req.params.category)
   products = products.filter((prod)=>(
     prod.categories.reduce((a,c)=>a||c.includes(req.params.category),false)
     )
   );
-  console.log(products);
   if(products)
     res.json(products);
   else

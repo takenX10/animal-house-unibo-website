@@ -8,6 +8,7 @@ import {
 import { HelmetProvider } from 'react-helmet-async';
 import { StoreProvider } from '@/context/store';
 import { isEqualPath } from '@/context/utils';
+import '@/assets/scss/App.scss';
 
 // Homepages
 import HomePage from '@/views/react/homes/HomePage';

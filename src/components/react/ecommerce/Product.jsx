@@ -22,7 +22,7 @@ function Product(props) {
     ctxDispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity }, });
   }
   return (
-    <Card className="h-100" key={product.slug}>
+    <Card className="" key={product.slug}>
       <Link to={`/shop/product/${product.slug}`}>
         <img src={`${SERVER_URL}/${product.poster}`} className="prod-img card-img-top" alt={product.name} />
       </Link>
@@ -31,15 +31,15 @@ function Product(props) {
           <Card.Title className="fw-bold">{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews}></Rating>
-        <Card.Text>${product.price}</Card.Text>
+        <Card.Text className="d-flex justify-content-between pt-2 align-items-center">${product.price}
         {product.countInStock === 0
-          ? (<Button variant='light' disabled>Out of stock</Button>)
+          ? (<Button className="rounded-pill"variant='light' disabled>Out of stock</Button>)
           : (
             <Button
               onClick={() => addToCartHandler(product)}
-              className="align-bottom border-0">Add to cart</Button>
+              className="align-bottom border-0 rounded-pill bg-green">Add to cart</Button>
           )
-        }
+        }</Card.Text>
       </Card.Body>
     </Card>
   );
