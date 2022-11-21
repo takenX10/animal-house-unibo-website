@@ -51,18 +51,18 @@ export default function Login() {
 
     return (
         <>
-            <Container className="small-container">
+            <Container sm={11} lg={6}>
                 <Helmet>
                     <title>Sign In</title>
                 </Helmet>
-                <h1 className="my-3">Sign In</h1>
+                <h1 className="my-3 text-center mt-5 pt-5">Sign In</h1>
                 <Form onSubmit={handleSubmit(submitHandler)}>
 
                     <Form.Group className="mb-3" controlId="email">
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" required {...register("email")} />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="password">
+                    <Form.Group className="mb-5" controlId="password">
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" required {...register("password")} />
                     </Form.Group>

@@ -127,7 +127,7 @@ export default function Navbar() {
   }
 
   return (
-    <Bar className='text-black  our-nav'>
+    <Bar className='text-black  our-nav py-4'>
       <Container>
         <LinkContainer to='/'>
           <Bar.Brand >
