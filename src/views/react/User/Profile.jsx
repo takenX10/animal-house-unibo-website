@@ -149,84 +149,82 @@ export default function Profile() {
   return (
     <>
       <Container fluid>
-        <Row className='my-3'>
-          <Col>
-            <Button variant="danger" onClick={() => { if (confirm("Are you sure you want to delete your account?")) { delete_account() } }}>Delete account</Button>
-            <Button variant="secondary" className='' onClick={showChange}>Change Password</Button>
+        <Row className='px-2 my-5 d-flex justify-content-center'>
+          <Col xs={12}>
+            <h1 className='fw-bold fs-1 text-center'>{user.name} {user.surname}</h1> 
           </Col>
-        </Row>
-        <Row className='mx-auto px-5'>
-          <Col xs={12} md={6} className='mx-auto'>
-            <h1 className='fw-bold fs-1'>Hello, {user.name} {user.surname}</h1>
+          <Col xs={12} className='text-center d-flex align-items-center justify-content-center'>
+            <Button className="m-4" variant="danger" onClick={() => { 
+              if (confirm("Are you sure you want to delete your account?")) { delete_account() } }}>
+                Delete account
+            </Button>
+            <Button variant="secondary" className="m-4" onClick={showChange}>Change Password</Button>
+          </Col>
+          <Col xs={12}></Col>
+          <Col xs={12} md={7} className='mt-5 text-center'>
             <h2>General informations</h2>
-            <Table striped="columns" className='w-70'>
+            <Table striped="columns">
               <thead></thead>
               <tbody>
                 <tr>
                   <td className='fw-bold'>NAME</td>
-                  <td>{user.name}</td>
+                  <td className='text-break'>{user.name}</td>
                 </tr>
                 <tr>
                   <td className='fw-bold'>SURNAME</td>
-                  <td>{user.surname}</td>
+                  <td className='text-break'>{user.surname}</td>
                 </tr>
                 <tr>
                   <td className='fw-bold'>EMAIL</td>
-                  <td>{user.email}</td>
+                  <td className='text-break'>{user.email}</td>
                 </tr>
                 <tr>
                   <td className='fw-bold'>CONTACT</td>
-                  <td>{user.contact}</td>
+                  <td className='text-break'>{user.contact}</td>
                 </tr>
               </tbody>
             </Table>
           </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h2 className='text-center'>Pets</h2>
+          <Col xs={12}>
+            <h1 className='text-center mt-5 pt-5 fw-bold'>Pets of {user.name} {user.surname}</h1>
           </Col>
-        </Row>
-        <Row className='mx-auto'>
           {pets.map((p) => {
             return (
-              <Col xs={12} md={6} key={p._id} className='mx-auto'>
-                <div >
-                  <h3 className='fw-bold'>{p.name}</h3>
-                  <Table striped="columns" className='w-70'>
+              <Col xs={12} md={7} key={p._id} className="mt-5 text-center">
+                  <h3>{p.name}</h3>
+                  <Table striped="columns">
                     <thead></thead>
                     <tbody>
                       <tr>
                         <td className='fw-bold'>NAME</td>
-                        <td>{p.name}</td>
+                        <td className='text-break'>{p.name}</td>
                       </tr>
                       <tr>
                         <td className='fw-bold'>RACE</td>
-                        <td>{p.race}</td>
+                        <td className='text-break'>{p.race}</td>
                       </tr>
                       <tr>
                         <td className='fw-bold'>WEIGHT</td>
-                        <td>{p.weight}</td>
+                        <td className='text-break'>{p.weight}</td>
                       </tr>
                       <tr>
                         <td className='fw-bold'>AGE</td>
-                        <td>{p.age}</td>
+                        <td className='text-break'>{p.age}</td>
                       </tr>
                       <tr>
                         <td className='fw-bold'>SEX</td>
-                        <td>{p.sex}</td>
+                        <td className='text-break'>{p.sex}</td>
                       </tr>
                       <tr>
                         <td className='fw-bold'>DESCRIPTION</td>
-                        <td>{p.description}</td>
+                        <td className='text-break'>{p.description}</td>
                       </tr>
                       <tr>
                         <td className='fw-bold'>id</td>
-                        <td>{p._id}</td>
+                        <td className='text-break'>{p._id}</td>
                       </tr>
                     </tbody>
                   </Table>
-                </div>
               </Col>
             );
           })}
