@@ -7,7 +7,6 @@ import { Store } from "@/context/store";
 import { useForm } from "react-hook-form"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { check_login } from '@/context/utils';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -67,11 +66,11 @@ export default function Login() {
                         <Form.Control type="password" required {...register("password")} />
                     </Form.Group>
                     <div className="mb-3 d-grid">
-                        <Button type="submit">Sign In</Button>
+                        <Button type="submit">Log in</Button>
                     </div>
                     <div className="mb-3">
                         Ya new 'round ere?{' '}
-                        <Link className="text-decoration-none link-primary" to={`/signup?redirect=${redirect}`} type="submit">Create an account</Link>
+                        <Link className="text-decoration-none link-primary" to={`/backoffice/register`} type="submit">Create an account</Link>
                     </div>
                 </Form>
                 <ToastContainer />
