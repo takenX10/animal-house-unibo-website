@@ -37,8 +37,10 @@ export default function HomeScreen() {
     try {
       let result;
       if (category) {
+        setTitle(category);
         result = await fetch(`${SERVER_URL}/api/shop/products/category/${category}`);
       } else {
+        setTitle("Featured Products")
         result = await fetch(`${SERVER_URL}/api/shop/products`);
       }
       const data = await result.json();
@@ -56,18 +58,19 @@ export default function HomeScreen() {
   }, []);
 
   const catButtonStyle = {
+    backgroundBlendMode: 'multiply',
     backgroundSize: 'cover',
-    filter: 'brightness(60%)',
-    backgroundPosition: '50% 25%'
+    backgroundPosition: '50% 25%',
+
   }
   return (
     <div>
       <Row className='bg-light py-2 px-2'>
         <Col className='' sm={6} md={4} lg={3} >
-          <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
-            onClick={() => { fetchData('accessories'); setTitle("Accessories"); }}
+          <Button className='bg-light mb-2 fw-bold text-white justify-content-center text-center w-100'
+            onClick={() => fetchData('accessories') }
             style={{
-              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/accessories2.jpg)`,
+              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/accessories2.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
               ...catButtonStyle
             }
             }>
@@ -76,13 +79,11 @@ export default function HomeScreen() {
           </Button>
         </Col>
         <Col sm={6} md={4} lg={3} >
-          <Button className='bg-white fw-bold text-white justify-content-center text-center w-100'
-            onClick={() => { fetchData('sanitary'); setTitle("Sanitary"); }}
+          <Button className='bg-white mb-2 fw-bold text-white justify-content-center text-center w-100'
+            onClick={() => fetchData('sanitary')}
             style={{
-              backgroundBlendMode: 'multiply',
-              backgroundImage: `
-    url(${SERVER_URL}/assets/ecommerce/sanitary.jpeg),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
-              backgroundSize: 'cover'
+              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/sanitary.jpeg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
+              ...catButtonStyle
             }
             }>
             <FontAwesomeIcon icon={faHandHoldingHeart} className="mx-auto" size="2xl" />
@@ -90,10 +91,10 @@ export default function HomeScreen() {
           </Button>
         </Col>
         <Col sm={6} md={4} lg={3} >
-          <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
-            onClick={() => { fetchData('food'); setTitle("Food"); }}
+          <Button className='bg-light fw-bold mb-2 text-white justify-content-center text-center w-100'
+            onClick={() => fetchData('food')}
             style={{
-              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/petfood.jpg)`,
+              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/petfood.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
               ...catButtonStyle
             }
             }>
@@ -102,10 +103,10 @@ export default function HomeScreen() {
           </Button>
         </Col>
         <Col sm={6} md={4} lg={3} >
-          <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
-            onClick={() => { fetchData(); setTitle("Featured Products"); }}
+          <Button className='bg-light mb-2 fw-bold text-white justify-content-center text-center w-100'
+            onClick={() => fetchData()}
             style={{
-              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/more.jpg)`,
+              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/more.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
               ...catButtonStyle
             }
             }>
@@ -118,7 +119,7 @@ export default function HomeScreen() {
         <Helmet>
           <title>Shop</title>
         </Helmet>
-        <h1> {title} </h1>
+        <h1 className='text-capitalize'> {title} </h1>
         <div className="products">
           {
             loading ? (
