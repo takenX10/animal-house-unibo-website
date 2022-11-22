@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Row, Col, Container, Button, Card, ListGroup } from 'react-bootstrap';
+import { Row, Col, Container, Button, Card, ListGroup, ToastContainer } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import Product from '@/components/react/ecommerce/Product';
 import MessageBox from '@/components/react/utils/MessageBox';
@@ -56,13 +56,13 @@ export default function HomeScreen() {
     }
   };
 
-  const fetchData = async (category) => {
+  const fetchData = async (category,name) => {
     dispatch({ type: 'PRODUCT_REQUEST' });
     try {
       let result;
       if (category) {
-        setTitle(category);
-        result = await fetch(`${SERVER_URL}/api/shop/products/category/${category}`);
+        setTitle(name);
+        result = await fetch(`${SERVER_URL}/api/shop/products/category/${encodeURIComponent(category)}`);
       } else {
         setTitle("Featured Products")
         result = await fetch(`${SERVER_URL}/api/shop/products`);
@@ -95,14 +95,14 @@ export default function HomeScreen() {
         {
         categories.filter((cat)=>cat.parent==props.parent)
           .map( cat => (
-            <div key={cat.category}>
+            <>
               <ListGroup.Item >
-                <a href='#' onClick={()=>fetchData(cat.name)}>
-                  {">".repeat((cat.category.split('/').length -1))+ cat.name}
+                <a href='#' onClick={()=>fetchData(cat.category,cat.name)}>
+                  {">".repeat((cat.category.split('/').length -2 ))+ cat.name}
                 </a>
               </ListGroup.Item>
               <MapCategories parent={cat.category} />
-            </div>
+            </>
           ))
       }
     </>
@@ -118,7 +118,7 @@ export default function HomeScreen() {
       <Row className='butstrap bg-light py-2 mx-1'>
         <Col className='ps-1 pe-1 mb-2' sm={6} md={4} lg={3} >
           <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
-            onClick={() => fetchData('accessories') }
+            onClick={() => fetchData('/accessories','accessories') }
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/accessories2.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
               ...catButtonStyle
@@ -130,7 +130,7 @@ export default function HomeScreen() {
         </Col>
         <Col className='mb-2 px-1'sm={6} md={4} lg={3} >
           <Button className='bg-white fw-bold text-white justify-content-center text-center w-100'
-            onClick={() => fetchData('sanitary')}
+            onClick={() => fetchData('/sanitary','sanitary')}
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/sanitary.jpeg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
               ...catButtonStyle
@@ -142,7 +142,7 @@ export default function HomeScreen() {
         </Col>
         <Col className='px-1 mb-2'sm={6} md={4} lg={3} >
           <Button className='bg-light fw-bold text-white justify-content-center text-center w-100'
-            onClick={() => fetchData('food')}
+            onClick={() => fetchData('/food','food')}
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/petfood.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
               ...catButtonStyle

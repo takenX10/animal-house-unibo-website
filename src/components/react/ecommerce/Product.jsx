@@ -4,6 +4,8 @@ import Rating from '@/components/react/utils/Rating';
 import { Store } from '@/context/store';
 import { SERVER_URL } from '@/context/utils';
 import { useContext } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Product(props) {
   const { product } = props;
@@ -16,13 +18,15 @@ function Product(props) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const data = await (await fetch(`${SERVER_URL}/api/shop/products/${item._id}`)).json();
     if (data.countInStock < quantity) {
-      window.alert('Not enough product in stock :c');
+      toast('Not enough product in stock :(');
       return;
     }
     ctxDispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity }, });
+    toast('Added to cart!');
   }
   return (
     <Card className="" key={product.slug}>
+      <ToastContainer/>
       <Link to={`/shop/product/${product.slug}`}>
         <img src={`${SERVER_URL}/${product.poster}`} className="prod-img card-img-top" alt={product.name} />
       </Link>
