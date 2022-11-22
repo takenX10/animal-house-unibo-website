@@ -28,9 +28,9 @@ async function leaderboardGetter(req, res) {
     return;
   }
   const scores = await DATABASE.Score.find({ leaderboard: req.body.leaderboard });
-  let final = scores.sort((a, b) => a.score > b.score);
+  let final = scores.sort((a, b) => {return a.score == b.score? a.date > b.date: a.score > b.score});
   let p = 0;
-  final = final.map((f) => { p++; return { author: f.author, score: f.score, position: p, id: f.id } })
+  final = final.map((f) => { p++; return { author: f.author, score: f.score, position: p, id: f.id, date: f.date } })
   res.json({ success: true, name: req.body.leaderboard, leaderboard: final });
   return;
 }
@@ -50,23 +50,13 @@ async function leaderboardInsert(req, res) {
   const user = await AUTH.get_user(req);
   console.log(user);
   const name = `${user.name} ${user.surname} (${user.email})`;
-  let exists = await DATABASE.Score.findOne({
-    authorId: user.id, leaderboard: lead
+  await DATABASE.Score.create({
+    leaderboard: lead,
+    author: name,
+    authorId: user.id,
+    date: (new Date()).toISOString(),
+    score: score,
   });
-  if (exists == undefined) {
-    await DATABASE.Score.create({
-      leaderboard: lead,
-      author: name,
-      authorId: user.id,
-      score: score,
-    });
-  } else {
-    await DATABASE.Score.updateOne(
-      { authorId: user.id, leaderboard: lead, score: { "$lt": score} },
-      {
-        score: score,
-      });
-  }
   res.json({ success: true });
 }
 

@@ -55,6 +55,10 @@ export default function Leaderboard(){
         }
         setLeaderboard(mylead);
     }
+    function formatDate(d){
+        d = new Date(d);
+        return `${d.getDate()}/${d.getMonth()}/${d.getFullYear()}, ${d.getHours()}:${d.getMinutes()}`
+    }
 
     async function removeLeaderboard(id){
         try{
@@ -102,6 +106,7 @@ export default function Leaderboard(){
                                                     <th>Position</th>
                                                     <th>Name</th>
                                                     <th>Score</th>
+                                                    <th>Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -112,6 +117,7 @@ export default function Leaderboard(){
                                                                 <td className='p-3'>{e.position}</td>
                                                                 <td className='p-3'>{e.author}</td>
                                                                 <td className='p-3'>{e.score}</td>
+                                                                <td className='p-3'>{formatDate(e.date)}</td>
                                                                 { isadmin? 
                                                                     <td className='p-3'>
                                                                         <Button variant="danger" onClick={()=>{removeLeaderboard(e.id)}}>Remove</Button>
