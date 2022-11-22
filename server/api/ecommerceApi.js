@@ -6,6 +6,7 @@ import AUTH from '../authentication.js';
 const ENDPOINTS = [
   { endpoint: "/api/shop/products", method: METHODS.GET, function: productRoutes },
   { endpoint: "/api/shop/products/category/:category", method: METHODS.GET, function: productsByCategory },
+  { endpoint: "/api/shop/categories", method: METHODS.GET, function: getCategories },
   { endpoint: "/api/shop/products/:id", method: METHODS.GET, function: productById },
   { endpoint: "/api/shop/products/slug/:slug", method: METHODS.GET, function: productBySlug },
   { endpoint: "/api/shop/orders/:id", opts: [jsonParser,isAuth], method: METHODS.GET, function: productOrderId },
@@ -52,6 +53,11 @@ async function productOrderMine(req, res) {
 async function productRoutes(req, res) {
   const products = await DATABASE.Product.find();
   res.json(products);
+}
+
+async function getCategories(req, res){
+  const categories = await DATABASE.ProductCategory.find();
+  res.json(categories);
 }
 
 async function productsByCategory(req,res){

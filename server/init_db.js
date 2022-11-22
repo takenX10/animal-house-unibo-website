@@ -101,7 +101,7 @@ const products = [
   {
     name: 'Pink litter box',
     slug: 'litter-box',
-    categories: ['/sanitary/cats'],
+    categories: ['/sanitary/litter-boxes'],
     poster: '/assets/products/litter.jpg',
     images: ['/assets/products/litter.jpg'],
     price: 30,
@@ -114,12 +114,12 @@ const products = [
   {
     name: 'Scooby Snacks',
     slug: 'scooby-snacks',
-    categories: ['/food/dogs'],
+    categories: ['/food/snacks'],
     poster: '/assets/products/snacks.webp',
     images: ['/assets/products/snacks.webp'],
     price: 12,
     countInStock: 200,
-    brand: 'catsrus',
+    brand: 'bestdoggos',
     rating: 4.9,
     numReviews: 10,
     description: 'high quality food'
@@ -128,19 +128,34 @@ const products = [
 
 const productCategories = [
   {
-    name:"Accessories",
+    name:"accessories",
     parent:"/",
     category:"/accessories"
   },
   {
-    name:"Jackets",
+    name:"jackets",
     parent:"/accessories",
     category:"/accessories/jackets`"
   },
   {
-    name:"Food",
+    name:"food",
     parent:"/",
     category:"/food",
+  },
+  {
+    name:"snacks",
+    parent:"/food",
+    category:"/food/snacks",
+  },
+  {
+    name:"sanitary",
+    parent:"/",
+    category:"/sanitary"
+  },
+  {
+    name:"litter boxes",
+    parent:"/sanitary",
+    category:"/sanitary/litter-boxes"
   }
 
 ]
