@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CreatePostModal from './CreatePostModal';
 import Answer from './Answer';
 import Post from './Post';
+import { check_login } from "../../../../context/utils";
 
 async function getAnswers(id){
     try{
@@ -27,6 +28,7 @@ async function getAnswers(id){
 
 export default function EccoloQua({type}){
     const [posts, setPosts] = useState([]);
+    const [loggedin, setLoggedIn] = useState(false);
     const [admin, setAdmin] = useState(false);
     const [answers, setAnswers] = useState([]);
     const [myStyle, setMyStyle] = useState({display:"none"});
@@ -51,8 +53,6 @@ export default function EccoloQua({type}){
         }
     }
 
-    
-
     async function showAnswers(id){
         setMyStyle({display:"block"});
         setAnswers(await getAnswers(id));
@@ -71,6 +71,7 @@ export default function EccoloQua({type}){
     }, [currentAnswer]);
 
     async function init(){
+        setLoggedIn(await check_login());
         setAdmin(await isAdmin());
         setPosts(await getPosts());
     }
@@ -82,9 +83,9 @@ export default function EccoloQua({type}){
     return (
         <>
             <Container fluid className="post-container">
-                <Row className="justify-content-center">
+                <Row className="justify-content-center mt-5">
                     <Col lg="7">
-                        <Button variant="dark" className="m-3" onClick={showModal}>Crea un post!</Button>
+                        {(loggedin?<Button variant="dark" className="m-3" onClick={showModal}>Crea un post!</Button>:<></>)}
                         {posts.map((thispost)=>{return (
                             <Post 
                                 key={thispost.id} 
@@ -93,8 +94,9 @@ export default function EccoloQua({type}){
                                 id={thispost.id} 
                                 showAnswersHandler={showAnswers} 
                                 answerHandler={setCurrentAnswer}
+                                isLoggedIn={loggedin}
                                 isAdmin={admin}
-                                refresh={async()=>{setPosts(await getPosts()); console.log("wewe ricarica")}}
+                                refresh={async()=>{setPosts(await getPosts())}}
                             />
                         )})}
                     </Col>

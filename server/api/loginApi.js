@@ -9,13 +9,13 @@ import { isAdmin, isAuth, jsonParser } from '../utils.js';
 let ENDPOINTS = [
   { endpoint: "/backoffice/login", method: METHODS.POST, opts: [jsonParser], function: officePostLogin },
   { endpoint: "/backoffice/register", method: METHODS.POST, opts: [jsonParser], function: officePostRegister },
-  { endpoint: "/backoffice/home", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: officeHome },
+  { endpoint: "/backoffice/home", method: METHODS.GET, opts: [jsonParser, isAdmin], function: officeHome },
   { endpoint: "/backoffice/get_user", method: METHODS.GET, opts: [jsonParser, isAuth], function: get_user },
   { endpoint: "/backoffice/get_bookings", method: METHODS.GET, opts: [jsonParser, isAuth], function: get_bookings },
   { endpoint: "/backoffice/delete_booking", method: METHODS.POST, opts: [jsonParser, isAuth], function: delete_booking },
   { endpoint: "/backoffice/change_password", method: METHODS.POST, opts: [jsonParser, isAuth], function: change_password },
   { endpoint: "/backoffice/delete_user", method: METHODS.POST, opts: [jsonParser, isAuth], function: delete_user },
-  { endpoint: "/backoffice/is_admin", method: METHODS.POST, opts: [jsonParser, isAuth, isAdmin], function: is_admin },
+  { endpoint: "/backoffice/is_admin", method: METHODS.POST, opts: [jsonParser, isAdmin], function: is_admin },
 ]
 
 async function officeHome(req, res) {
