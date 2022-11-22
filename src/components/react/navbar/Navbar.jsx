@@ -109,12 +109,13 @@ const NavbarShop = () => {
 
 
 export default function Navbar() {
-  const [loggedin, setLoggedin] = useState(false);
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo, cart } = state;
   const navigate = useNavigate();
   async function verify_login() {
-    setLoggedin(await check_login());
+    if(await check_login()){
+      logout(ctxDispatch);
+    }
   }
 
   useEffect(() => {
@@ -127,7 +128,7 @@ export default function Navbar() {
   }
 
   return (
-    <Bar className='text-black  our-nav'>
+    <Bar className='text-black  our-nav py-4'>
       <Container>
         <LinkContainer to='/'>
           <Bar.Brand >

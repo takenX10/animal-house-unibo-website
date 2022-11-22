@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { SERVER_URL } from "@/context/utils";
 import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Register(){
     const { register, handleSubmit } = useForm();
@@ -33,18 +34,17 @@ export default function Register(){
             if(res.success){
                 navigate("/");
             }else{
-                alert(res.message);
+                toast(res.message);
             }
         }catch(e){
-            alert(e);
+            toast(e);
         }
     }
     return (
-        <>
-            <Container type="fluid">
-            <Row className="justify-content-center m-5 p-5">
-                <Col lg="8">
-                    <h1>Registrati</h1>
+        <Container fluid>
+            <Row className="justify-content-center mt-5">
+                <Col xs={10} lg={6} >
+                    <h1 className="text-center">Register</h1>
                     <Form onSubmit={handleSubmit(submitForm)}>
                         <Form.Group className="mb-3">
                             <Form.Label>Name</Form.Label>
@@ -67,14 +67,16 @@ export default function Register(){
                             <Form.Control {...register('password')} type="password" />
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label>Ripeti password</Form.Label>
+                            <Form.Label>Repeat password</Form.Label>
                             <Form.Control {...register('repeat-password')} type="password" />
                         </Form.Group>
-                        <Button type="submit" variant="primary">Submit</Button>
+                        <div className="my-5 d-grid">
+                            <Button type="submit" variant="primary">Register</Button>
+                        </div>
                     </Form>
                 </Col>
             </Row>
+            <ToastContainer />
         </Container>
-        </>
     );
 }

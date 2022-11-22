@@ -32,6 +32,9 @@ var posts = [
   { author: "aldo@baglio.tk", message: "Non posso ne scendere ne salire, ne scendere ne salire", type: "eccoloqua" },
   { author: "giovanni@storti.tk", message: "- Ci sono solo due cose che possono salvarci: ordine e re-go-le! - Re-go-le! - Eh, ridiamo, ridiamo, ridevano anche i Maya e...si sono estinti!", type: "eccoloqua" },
   { author: "giacomo@poretti.tk", message: "Ma hai visto quel cane lì? Gli hanno montato… le tibie al contrario?", type: "eccoloqua" },
+  { author: "aldo@baglio.tk", message: "Non posso ne scendere ne salire, ne scendere ne salire", type: "eccoloqua" },
+  { author: "giovanni@storti.tk", message: "- Ci sono solo due cose che possono salvarci: ordine e re-go-le! - Re-go-le! - Eh, ridiamo, ridiamo, ridevano anche i Maya e...si sono estinti!", type: "eccoloqua" },
+  { author: "giacomo@poretti.tk", message: "Ma hai visto quel cane lì? Gli hanno montato… le tibie al contrario?", type: "eccoloqua" },
 ]
 var Pets = [
   {

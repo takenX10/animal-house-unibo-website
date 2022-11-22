@@ -15,9 +15,14 @@ export function isEqualPath(path, test) {
 }
 
 async function check_login() {
-    let res = await fetch(`${SERVER_URL}/backoffice/is_logged_in`, { method: "POST", credentials:'include' });
-    res = await res.json();
-    return res.success;
+    try{
+        let res = await fetch(`${SERVER_URL}/backoffice/is_logged_in`, { method: "POST", credentials:'include' });
+        res = await res.json();
+        return res.success;
+    }catch(e){
+        console.log(e);
+        return false;
+    }
 }
 
 async function get_my_id() {
