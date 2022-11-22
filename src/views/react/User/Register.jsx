@@ -34,7 +34,7 @@ export default function Register(){
             if(res.success){
                 navigate("/");
             }else{
-                toast(res.message);
+                toast.error(res.message);
             }
         }catch(e){
             toast(e);

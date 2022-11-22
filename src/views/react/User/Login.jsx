@@ -38,7 +38,7 @@ export default function Login() {
             ctxDispatch({ type: 'USER_SIGNIN', payload: data });
             navigate(redirect);
         } catch (err) {
-            toast(err.message);
+            toast.error(err.message);
         }
     }
 

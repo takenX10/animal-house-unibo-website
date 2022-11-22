@@ -98,7 +98,7 @@ export default function HomeScreen() {
             <>
               <ListGroup.Item >
                 <a href='#' onClick={()=>fetchData(cat.category,cat.name)}>
-                  {">".repeat((cat.category.split('/').length -2 ))+ cat.name}
+                  {">".repeat((cat.category.split('/').length -1 ))+ cat.name}
                 </a>
               </ListGroup.Item>
               <MapCategories parent={cat.category} />

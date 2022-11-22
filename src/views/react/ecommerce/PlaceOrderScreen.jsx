@@ -74,7 +74,7 @@ export default function PlaceOrderScreen() {
       dispatch({ type: 'CREATE_SUCCESS' })
       navigate(`/shop/order/${data.order._id}`);
     } catch (err) {
-      toast(err.message);
+      toast.error(err.message);
       dispatch({ type: 'CREATE_FAIL' });
     }
   };

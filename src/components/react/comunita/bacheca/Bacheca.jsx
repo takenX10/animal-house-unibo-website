@@ -22,7 +22,7 @@ async function getAnswers(id){
         res = await res.json();
         return res.answers;
     }catch(e){
-        toast(e);
+        toast.error(e);
     }
 }
 
@@ -49,7 +49,7 @@ export default function EccoloQua({type}){
             console.log(res.posts);
             return res.posts;
         }catch(e){
-            toast(e);
+            toast.error(e);
         }
     }
 

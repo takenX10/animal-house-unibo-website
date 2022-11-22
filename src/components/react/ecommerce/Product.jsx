@@ -18,11 +18,11 @@ function Product(props) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const data = await (await fetch(`${SERVER_URL}/api/shop/products/${item._id}`)).json();
     if (data.countInStock < quantity) {
-      toast('Not enough product in stock :(');
+      toast.warn('Not enough product in stock :(');
       return;
     }
     ctxDispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity }, });
-    toast('Added to cart!');
+    toast.success('Added to cart!');
   }
   return (
     <Card className="" key={product.slug}>
