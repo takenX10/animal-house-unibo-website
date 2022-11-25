@@ -84,6 +84,12 @@ async function productOrderPost(req, res) {
     totalPrice: req.body.totalPrice,
     user: usId,
   });
+  newOrder.orderItems.forEach(async (item) => {
+    const prod = await DATABASE.Product.findById(item.product);
+    console.log(prod);
+    prod.countInStock -= item.quantity;
+    prod.save();
+  });
   const order = await newOrder.save();
   res.status(201).json({ message: "New Order Created", order });
 }
