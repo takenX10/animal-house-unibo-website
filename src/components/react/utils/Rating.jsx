@@ -46,7 +46,7 @@ function Rating(props) {
           className="mx-auto"
         />
       </span>
-      {numReviews && (
+      {numReviews != null && (
         <span className="text-dark small"> {numReviews} reviews</span>
       )}
     </div>

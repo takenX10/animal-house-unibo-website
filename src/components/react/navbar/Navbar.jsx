@@ -1,17 +1,18 @@
-
-import { useState, useEffect, useContext } from 'react';
-import './Navbar.scss';
+import { useState, useEffect, useContext } from "react";
+import "./Navbar.scss";
 //import Dropdown from './Dropdown';
-import { LinkContainer } from 'react-router-bootstrap';
+import { LinkContainer } from "react-router-bootstrap";
 //import { FaBars } from 'react-icons/fa'
-import { Container, NavDropdown, Nav } from 'react-bootstrap';
-import { Store } from '@/context/store';
-import { check_login, logout } from '@/context/utils';
-import { Routes, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { Navbar as Bar } from 'react-bootstrap';
-import { Route } from 'react-router-dom';
-import ShopNav from '@/components/react/ecommerce/ShopNav';
+import { Container, NavDropdown, Nav } from "react-bootstrap";
+import { Store } from "@/context/store";
+import { check_login, logout } from "@/context/utils";
+import { Routes, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Navbar as Bar } from "react-bootstrap";
+import { Route } from "react-router-dom";
+import ShopNav from "@/components/react/ecommerce/ShopNav";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 /*const NavbarServizi = () => {
   return (
@@ -107,41 +108,40 @@ const NavbarShop = () => {
 }
 */
 
-
 export default function Navbar() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo, cart } = state;
   const navigate = useNavigate();
   async function verify_login() {
-    if(await check_login()){
+    if (!(await check_login())) {
       logout(ctxDispatch);
     }
   }
 
   useEffect(() => {
     verify_login();
-  }, [])
+  }, []);
 
   const signoutHandler = () => {
-    logout(ctxDispatch)
-    navigate('/backoffice/login');
-  }
+    logout(ctxDispatch);
+    navigate("/backoffice/login");
+  };
 
   return (
-    <Bar className='text-black  our-nav py-4'>
-      <Container>
-        <LinkContainer to='/'>
-          <Bar.Brand >
-            AnimalHouse
-          </Bar.Brand>
+    <Bar className=" text-black our-nav py-4" expand="md">
+      <Container className="flex justify-content-between">
+        <LinkContainer to="/">
+          <Bar.Brand>AnimalHouse</Bar.Brand>
         </LinkContainer>
         <Routes>
-          <Route path='/shop' element={<ShopNav cart={cart} />} />
+          <Route path="/shop" element={<ShopNav cart={cart} />} />
         </Routes>
-        <Bar.Toggle aria-controls='basic-navbar-nav' />
-        <Bar.Collapse id='basic-navbar-nav' className='text-black'>
-          <Nav className='me-auto w-100 justify-content-end '>
-            <NavDropdown title='Services'>
+        <Bar.Toggle className="p-2 px-3" aria-controls="basic-navbar-nav">
+          <FontAwesomeIcon icon={faBars} />
+        </Bar.Toggle>
+        <Bar.Collapse id="basic-navbar-nav" className="text-black">
+          <Nav className="me-auto w-100 justify-content-end ">
+            <NavDropdown title="Services">
               <LinkContainer to="/comunita">
                 <NavDropdown.Item>Community</NavDropdown.Item>
               </LinkContainer>
@@ -152,33 +152,31 @@ export default function Navbar() {
                 <NavDropdown.Item>Online</NavDropdown.Item>
               </LinkContainer>
             </NavDropdown>
-            <Link to='/shop' className='nav-link'>
+            <Link to="/shop" className="nav-link">
               Shop
             </Link>
-            <Nav.Link href='/games'>
-              Games
-            </Nav.Link>
-            {
-              userInfo ?
-                (
-                  <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                    <LinkContainer to="/profile">
-                      <NavDropdown.Item>Your Profile</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/shop/orderhistory">
-                      <NavDropdown.Item>Order History</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Divider />
-                    <Link className='dropdown-item' to='#signout' onClick={signoutHandler}>
-                      Logout
-                    </Link>
-                  </NavDropdown>
-                ) : (
-                  <Link className='nav-link' to='/backoffice/login'>
-                    Login
-                  </Link>
-                )
-            }
+            <Nav.Link href="/games">Games</Nav.Link>
+            {userInfo ? (
+              <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                <LinkContainer to="/profile">
+                  <NavDropdown.Item>Your Profile</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/shop/orderhistory">
+                  <NavDropdown.Item>Order History</NavDropdown.Item>
+                </LinkContainer>
+                <NavDropdown.Divider />
+                <Link className="dropdown-item" to="#" onClick={signoutHandler}>
+                  Logout
+                </Link>
+              </NavDropdown>
+            ) : (
+              <Link
+                className="nav-link"
+                to={`/backoffice/login?redirect=${window.location.pathname}`}
+              >
+                Login
+              </Link>
+            )}
           </Nav>
         </Bar.Collapse>
       </Container>

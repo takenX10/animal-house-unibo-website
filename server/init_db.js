@@ -174,7 +174,7 @@ const productCategories = [
   {
     name: "jackets",
     parent: "/accessories",
-    category: "/accessories/jackets`",
+    category: "/accessories/jackets",
   },
   {
     name: "food",

@@ -121,13 +121,11 @@ async function saveReview(req, res) {
     (product.rating * (product.numReviews - 1) + newReview.rating) /
     product.numReviews;
   await product.save();
-  console.log("Review saved");
   res.status(201).json({ message: "Review Posted" });
 }
 
 async function reviewsBySlug(req, res) {
   const reviews = await DATABASE.Review.find({ slug: req.params.slug });
-  console.log(reviews);
   if (reviews) {
     res.json(reviews);
   } else {

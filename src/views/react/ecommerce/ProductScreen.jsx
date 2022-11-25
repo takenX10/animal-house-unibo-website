@@ -15,7 +15,7 @@ import Rating from "@/components/react/utils/Rating";
 import LoadingBox from "@/components/react/utils/LoadingBox";
 import MessageBox from "@/components/react/utils/MessageBox";
 import { Store } from "@/context/store";
-import { SERVER_URL } from "@/context/utils";
+import { SERVER_URL, check_login } from "@/context/utils";
 import "@/assets/css/ecommerce.css";
 import ImgCarousel from "@/components/react/utils/ImgCarousel";
 import { toast, ToastContainer } from "react-toastify";
@@ -42,11 +42,12 @@ const reducer = (state, action) => {
 };
 
 function ProductScreen() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
   const params = useParams();
   const { slug } = params;
   const [rating, setRating] = useState(5);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleRating = (rate) => {
     setRating(rate);
@@ -64,50 +65,58 @@ function ProductScreen() {
     revError: "",
   });
 
+  const verifyLogin = async () => {
+    setLoggedIn(await check_login());
+  };
+  const fetchData = async () => {
+    dispatch({ type: "REVIEW_REQUEST" });
+    try {
+      const result = await fetch(
+        `${SERVER_URL}/api/shop/products/slug/${slug}`
+      );
+      if (!result.ok) {
+        throw new Error((await result.json()).message);
+      }
+      const item = await result.json();
+      dispatch({ type: "PRODUCT_SUCCESS", payload: item });
+    } catch (err) {
+      dispatch({
+        type: "PRODUCT_FAIL",
+        payload: `${err.message} :( totally not my fault i think`,
+      });
+    }
+  };
+
+  const fetchReviews = async () => {
+    dispatch({ type: "REVIEW_REQUEST" });
+    try {
+      const result = await fetch(
+        `${SERVER_URL}/api/shop/products/reviews/${slug}`
+      );
+
+      const item = await result.json();
+      if (!result.ok) {
+        throw new Error(item.message);
+      }
+      dispatch({ type: "REVIEW_SUCCESS", payload: item });
+    } catch (err) {
+      dispatch({
+        type: "REVIEW_FAIL",
+        payload: `${err.message} :( totally not my fault i think`,
+      });
+    }
+  };
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { cart, userInfo } = state;
+
   useEffect(() => {
-    const fetchData = async () => {
-      dispatch({ type: "REVIEW_REQUEST" });
-      try {
-        const result = await fetch(
-          `${SERVER_URL}/api/shop/products/slug/${slug}`
-        );
-        if (!result.ok) {
-          throw new Error((await result.json()).message);
-        }
-        const item = await result.json();
-        dispatch({ type: "PRODUCT_SUCCESS", payload: item });
-      } catch (err) {
-        dispatch({
-          type: "PRODUCT_FAIL",
-          payload: `${err.message} :( totally not my fault i think`,
-        });
-      }
-    };
+    verifyLogin();
+  }, [userInfo]);
 
-    const fetchReviews = async () => {
-      dispatch({ type: "REVIEW_REQUEST" });
-      try {
-        const result = await fetch(
-          `${SERVER_URL}/api/shop/products/reviews/${slug}`
-        );
-
-        const item = await result.json();
-        if (!result.ok) {
-          throw new Error(item.message);
-        }
-        dispatch({ type: "REVIEW_SUCCESS", payload: item });
-      } catch (err) {
-        dispatch({
-          type: "REVIEW_FAIL",
-          payload: `${err.message} :( totally not my fault i think`,
-        });
-      }
-    };
+  useEffect(() => {
     fetchData();
     fetchReviews();
   }, [slug]);
-  const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { cart } = state;
 
   const submitHandler = async (input) => {
     try {
@@ -126,10 +135,14 @@ function ProductScreen() {
       });
 
       if (!res.ok) throw new Error((await res.json()).message);
+
+      toast("Review Posted!");
+      reset();
+      fetchData();
+      fetchReviews();
     } catch (err) {
       toast.error(err.message);
     }
-    console.log(input);
   };
 
   const addToCartHandler = async () => {
@@ -207,7 +220,7 @@ function ProductScreen() {
           </ListGroup>
         </Col>
       </Row>
-      <Row className="">
+      <Row className=" mb-2">
         <h1>Reviews</h1>
         {loadingRevs ? (
           <LoadingBox />
@@ -228,27 +241,29 @@ function ProductScreen() {
           ))
         )}
       </Row>
-      <Row>
-        <Col md={6}>
-          <h1>Share your review!</h1>
-          <Form onSubmit={handleSubmit(submitHandler)}>
-            <Form.Group className="mb-3" controlId="text">
-              <Form.Label>What did you think?</Form.Label>
-              <StarInput
-                className="mb-2 ms-2 "
-                initialValue={5}
-                onClick={handleRating}
-                allowFraction={true}
-                fillColor={"#00afb9"}
-              />
-              <Form.Control as="textarea" rows={3} {...register("text")} />
-            </Form.Group>
-            <div className="mb-3 d-grid ">
-              <Button type="submit">Send</Button>
-            </div>
-          </Form>
-        </Col>
-      </Row>
+      {loggedIn && (
+        <Row>
+          <Col md={6}>
+            <h1>Share your review!</h1>
+            <Form id="review-form" onSubmit={handleSubmit(submitHandler)}>
+              <Form.Group className="mb-3" controlId="text">
+                <Form.Label>What did you think?</Form.Label>
+                <StarInput
+                  className="mb-2 ms-2 "
+                  initialValue={rating}
+                  onClick={handleRating}
+                  allowFraction={true}
+                  fillColor={"#00afb9"}
+                />
+                <Form.Control as="textarea" rows={3} {...register("text")} />
+              </Form.Group>
+              <div className="mb-3 d-grid ">
+                <Button type="submit">Send</Button>
+              </div>
+            </Form>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 }

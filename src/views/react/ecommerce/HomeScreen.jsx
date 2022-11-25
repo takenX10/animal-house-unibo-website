@@ -178,7 +178,7 @@ export default function HomeScreen() {
             }}
           >
             <FontAwesomeIcon icon={faPlus} className="mx-auto" size="2xl" />
-            <p className="lead mx-auto">More</p>
+            <p className="lead mx-auto">Featured</p>
           </Button>
         </Col>
       </Row>
