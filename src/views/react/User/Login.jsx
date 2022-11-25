@@ -7,6 +7,7 @@ import { Store } from "@/context/store";
 import { useForm } from "react-hook-form"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Rating from 'react-simple-star-rating';
 
 export default function Login() {
     const navigate = useNavigate();

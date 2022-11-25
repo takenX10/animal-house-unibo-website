@@ -1,173 +1,209 @@
-import DATABASE from './database.js';
-import bcrypt, { genSaltSync } from 'bcrypt';
+import DATABASE from "./database.js";
+import bcrypt, { genSaltSync } from "bcrypt";
 
 // s3cr3t_aldo
-var fakeUsers = [{
-  name: "Aldo",
-  surname: "Baglio",
-  email: "aldo@baglio.tk",
-  contact: "+39 111 111 1111",
-  password: bcrypt.hashSync("aldobaglio", genSaltSync()),
-  petList: [],
-},
-{
-  name: "Giovanni",
-  surname: "Storti",
-  email: "giovanni@storti.tk",
-  contact: "+39 444 444 4444",
-  password: bcrypt.hashSync("giovannistorti", genSaltSync()),
-  petList: [],
-},
-{
-  name: "Giacomo",
-  surname: "Poretti",
-  email: "giacomo@poretti.tk",
-  contact: "+39 555 555 5555",
-  password: bcrypt.hashSync("giacomoporetti", genSaltSync()),
-  isAdmin: true,
-  petList: [],
-},];
+var fakeUsers = [
+  {
+    name: "Aldo",
+    surname: "Baglio",
+    email: "aldo@baglio.tk",
+    contact: "+39 111 111 1111",
+    password: bcrypt.hashSync("aldobaglio", genSaltSync()),
+    petList: [],
+  },
+  {
+    name: "Giovanni",
+    surname: "Storti",
+    email: "giovanni@storti.tk",
+    contact: "+39 444 444 4444",
+    password: bcrypt.hashSync("giovannistorti", genSaltSync()),
+    petList: [],
+  },
+  {
+    name: "Giacomo",
+    surname: "Poretti",
+    email: "giacomo@poretti.tk",
+    contact: "+39 555 555 5555",
+    password: bcrypt.hashSync("giacomoporetti", genSaltSync()),
+    isAdmin: true,
+    petList: [],
+  },
+];
 
 var posts = [
-  { author: "aldo@baglio.tk", message: "Non posso ne scendere ne salire, ne scendere ne salire", type: "eccoloqua" },
-  { author: "giovanni@storti.tk", message: "- Ci sono solo due cose che possono salvarci: ordine e re-go-le! - Re-go-le! - Eh, ridiamo, ridiamo, ridevano anche i Maya e...si sono estinti!", type: "eccoloqua" },
-  { author: "giacomo@poretti.tk", message: "Ma hai visto quel cane lì? Gli hanno montato… le tibie al contrario?", type: "eccoloqua" },
-  { author: "aldo@baglio.tk", message: "Non posso ne scendere ne salire, ne scendere ne salire", type: "eccoloqua" },
-  { author: "giovanni@storti.tk", message: "- Ci sono solo due cose che possono salvarci: ordine e re-go-le! - Re-go-le! - Eh, ridiamo, ridiamo, ridevano anche i Maya e...si sono estinti!", type: "eccoloqua" },
-  { author: "giacomo@poretti.tk", message: "Ma hai visto quel cane lì? Gli hanno montato… le tibie al contrario?", type: "eccoloqua" },
-]
+  {
+    author: "aldo@baglio.tk",
+    message: "Non posso ne scendere ne salire, ne scendere ne salire",
+    type: "eccoloqua",
+  },
+  {
+    author: "giovanni@storti.tk",
+    message:
+      "- Ci sono solo due cose che possono salvarci: ordine e re-go-le! - Re-go-le! - Eh, ridiamo, ridiamo, ridevano anche i Maya e...si sono estinti!",
+    type: "eccoloqua",
+  },
+  {
+    author: "giacomo@poretti.tk",
+    message:
+      "Ma hai visto quel cane lì? Gli hanno montato… le tibie al contrario?",
+    type: "eccoloqua",
+  },
+  {
+    author: "aldo@baglio.tk",
+    message: "Non posso ne scendere ne salire, ne scendere ne salire",
+    type: "eccoloqua",
+  },
+  {
+    author: "giovanni@storti.tk",
+    message:
+      "- Ci sono solo due cose che possono salvarci: ordine e re-go-le! - Re-go-le! - Eh, ridiamo, ridiamo, ridevano anche i Maya e...si sono estinti!",
+    type: "eccoloqua",
+  },
+  {
+    author: "giacomo@poretti.tk",
+    message:
+      "Ma hai visto quel cane lì? Gli hanno montato… le tibie al contrario?",
+    type: "eccoloqua",
+  },
+];
 var Pets = [
   {
     name: "Baloo",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi distinctio adipisci esse possimus, earum odio amet? Blanditiis magni ratione quas assumenda eum corporis quod dolores facilis, enim nam voluptatum porro?",
+    description:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi distinctio adipisci esse possimus, earum odio amet? Blanditiis magni ratione quas assumenda eum corporis quod dolores facilis, enim nam voluptatum porro?",
     weight: 5,
     race: "Dog",
     sex: "Male",
     age: 11,
     likedBy: [],
     matchedBy: [],
-    imgList: ["https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg"]
+    imgList: [
+      "https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg",
+    ],
   },
   {
     name: "Arturo",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi distinctio adipisci esse possimus, earum odio amet? Blanditiis magni ratione quas assumenda eum corporis quod dolores facilis, enim nam voluptatum porro?",
+    description:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi distinctio adipisci esse possimus, earum odio amet? Blanditiis magni ratione quas assumenda eum corporis quod dolores facilis, enim nam voluptatum porro?",
     weight: 3,
     race: "Dog",
     sex: "Male",
     age: 13,
     likedBy: [],
     matchedBy: [],
-    imgList: ["https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg"]
-  }
+    imgList: [
+      "https://www.cedarcityutah.com/wp-content/uploads/2019/06/cropped-maltese-puppies-STGNews.jpg",
+    ],
+  },
 ];
 
 const products = [
   {
-    name: 'Nika Slim shirt',
-    slug: 'nika-slim-shirt',
-    categories: ['/accessories'],
-    poster: '/assets/products/p1.jpg',
-    images: ['/assets/products/p1.jpg'],
+    name: "Nika Slim shirt",
+    slug: "nika-slim-shirt",
+    categories: ["/accessories"],
+    poster: "/assets/products/p1.jpg",
+    images: [],
     price: 120,
     countInStock: 5,
-    brand: 'Subemelaradjio',
+    brand: "Subemelaradjio",
     rating: 4.5,
     numReviews: 10,
-    description: 'high quality raccoon'
+    description: "high quality raccoon",
   },
   {
-    name: 'Nika Slim Pant',
-    slug: 'nika-slim-pant',
-    categories: ['/accessories/pants'],
-    poster: '/assets/products/p1.jpg',
-    images: [ '/assets/products/p1.jpg'],
+    name: "Nika Slim Pant",
+    slug: "nika-slim-pant",
+    categories: ["/accessories/pants"],
+    poster: "/assets/products/p1.jpg",
+    images: [],
     price: 25,
     countInStock: 0,
-    brand: 'Subemelaradjio',
+    brand: "Subemelaradjio",
     rating: 3.5,
     numReviews: 42,
-    description: 'high quality raccoon'
+    description: "high quality raccoon",
   },
   {
-    name: 'Supreme jacket',
-    slug: 'supreme-drip',
-    categories: ['/accessories/jackets'],
-    poster: '/assets/products/drip.jpg',
-    images: ['/assets/products/drip.jpg'],
+    name: "Supreme jacket",
+    slug: "supreme-drip",
+    categories: ["/accessories/jackets"],
+    poster: "/assets/products/drip.jpg",
+    images: [],
     price: 999999,
     countInStock: 1,
-    brand: 'drippythangs',
+    brand: "drippythangs",
     rating: 5.0,
     numReviews: 0,
-    description: 'high quality drip'
+    description: "high quality drip",
   },
   {
-    name: 'Pink litter box',
-    slug: 'litter-box',
-    categories: ['/sanitary/litter-boxes'],
-    poster: '/assets/products/litter.jpg',
-    images: ['/assets/products/litter.jpg'],
+    name: "Pink litter box",
+    slug: "litter-box",
+    categories: ["/sanitary/litter-boxes"],
+    poster: "/assets/products/litter.jpg",
+    images: [],
     price: 30,
     countInStock: 2,
-    brand: 'catsrus',
+    brand: "catsrus",
     rating: 2.9,
     numReviews: 2,
-    description: 'high quality cat litter box'
+    description: "high quality cat litter box",
   },
   {
-    name: 'Scooby Snacks',
-    slug: 'scooby-snacks',
-    categories: ['/food/snacks'],
-    poster: '/assets/products/snacks.webp',
-    images: ['/assets/products/snacks.webp'],
+    name: "Scooby Snacks",
+    slug: "scooby-snacks",
+    categories: ["/food/snacks"],
+    poster: "/assets/products/snacks.webp",
+    images: [],
     price: 12,
     countInStock: 200,
-    brand: 'bestdoggos',
+    brand: "bestdoggos",
     rating: 4.9,
     numReviews: 10,
-    description: 'high quality food'
+    description: "high quality food",
   },
 ];
 
 const productCategories = [
   {
-    name:"accessories",
-    parent:"/",
-    category:"/accessories"
+    name: "accessories",
+    parent: "/",
+    category: "/accessories",
   },
   {
-    name:"jackets",
-    parent:"/accessories",
-    category:"/accessories/jackets`"
+    name: "jackets",
+    parent: "/accessories",
+    category: "/accessories/jackets`",
   },
   {
-    name:"food",
-    parent:"/",
-    category:"/food",
+    name: "food",
+    parent: "/",
+    category: "/food",
   },
   {
-    name:"snacks",
-    parent:"/food",
-    category:"/food/snacks",
+    name: "snacks",
+    parent: "/food",
+    category: "/food/snacks",
   },
   {
-    name:"sanitary",
-    parent:"/",
-    category:"/sanitary"
+    name: "sanitary",
+    parent: "/",
+    category: "/sanitary",
   },
   {
-    name:"litter boxes",
-    parent:"/sanitary",
-    category:"/sanitary/litter-boxes"
-  }
-
-]
+    name: "litter boxes",
+    parent: "/sanitary",
+    category: "/sanitary/litter-boxes",
+  },
+];
 
 const servicesFaceToFace = [
   {
     slug: "wow-vet",
     title: "Vet wow!",
-    poster: "https://img.freepik.com/free-photo/close-up-veterinarian-taking-care-cat_23-2149100168.jpg?w=2000",
+    poster:
+      "https://img.freepik.com/free-photo/close-up-veterinarian-taking-care-cat_23-2149100168.jpg?w=2000",
     category: "vet",
     availabilities: [
       {
@@ -181,9 +217,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 3
-              }
-            ]
+                currentClients: 3,
+              },
+            ],
           },
           {
             day: "Wednesday",
@@ -192,17 +228,17 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
+                currentClients: 0,
               },
               {
                 begin: "16:00",
                 end: "17:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "Rimini",
@@ -215,9 +251,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Thursday",
@@ -226,14 +262,16 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
-      }
+        ],
+      },
     ],
-    images: ['https://img.freepik.com/free-photo/close-up-veterinarian-taking-care-cat_23-2149100168.jpg?w=2000'],
+    images: [
+      "https://img.freepik.com/free-photo/close-up-veterinarian-taking-care-cat_23-2149100168.jpg?w=2000",
+    ],
     hourlyRate: 10,
     description: "Something idk this should be vet",
     rating: 5,
@@ -244,12 +282,7 @@ const servicesFaceToFace = [
         name: "animal",
         label: "animal",
         required: false,
-        fields: [
-          "cat",
-          "dog",
-          "airplane",
-          "frog"
-        ],
+        fields: ["cat", "dog", "airplane", "frog"],
       },
       {
         type: "checkbox",
@@ -263,10 +296,7 @@ const servicesFaceToFace = [
         name: "gender",
         label: "Gender",
         required: false,
-        labels: [
-          'male',
-          'female',
-        ]
+        labels: ["male", "female"],
       },
       {
         type: "text",
@@ -281,13 +311,14 @@ const servicesFaceToFace = [
         label: "Pet best friend",
         required: false,
         description: "So what's your pet's best friend name?",
-      }
-    ]
+      },
+    ],
   },
   {
     slug: "wow-sitter",
     title: "Dog sitter wow!",
-    poster: "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
+    poster:
+      "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
     category: "animal-sitter",
     availabilities: [
       {
@@ -301,9 +332,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Wednesday",
@@ -312,11 +343,11 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "Rimini",
@@ -329,9 +360,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Thursday",
@@ -340,11 +371,11 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "Naples",
@@ -357,9 +388,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Friday",
@@ -368,14 +399,16 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
-      }
+        ],
+      },
     ],
-    images: ['https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg'],
+    images: [
+      "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
+    ],
     hourlyRate: 15,
     description: "Something idk this should be dog sitter",
     rating: 5,
@@ -393,10 +426,7 @@ const servicesFaceToFace = [
         name: "gender",
         label: "Gender",
         required: true,
-        labels: [
-          'male',
-          'female',
-        ]
+        labels: ["male", "female"],
       },
       {
         type: "text",
@@ -411,14 +441,15 @@ const servicesFaceToFace = [
         label: "Pet best place to shit",
         required: true,
         description: "Where does your pet shit?",
-      }
+      },
     ],
-    bookings: []
+    bookings: [],
   },
   {
     slug: "wow-grooming",
     title: "Grooming wow!",
-    poster: "https://dogsbestlife.com/wp-content/uploads/2020/05/Groomer-bathes-corgi-scaled.jpeg",
+    poster:
+      "https://dogsbestlife.com/wp-content/uploads/2020/05/Groomer-bathes-corgi-scaled.jpeg",
     category: "animal-groomer",
     availabilities: [
       {
@@ -432,9 +463,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Wednesday",
@@ -443,11 +474,11 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "Rimini",
@@ -460,9 +491,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Thursday",
@@ -471,11 +502,11 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "Naples",
@@ -488,9 +519,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Friday",
@@ -499,14 +530,16 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
-      }
+        ],
+      },
     ],
-    images: ['https://dogsbestlife.com/wp-content/uploads/2020/05/Groomer-bathes-corgi-scaled.jpeg'],
+    images: [
+      "https://dogsbestlife.com/wp-content/uploads/2020/05/Groomer-bathes-corgi-scaled.jpeg",
+    ],
     hourlyRate: 15,
     description: "Something idk this should be an animal groomer",
     rating: 5,
@@ -524,10 +557,7 @@ const servicesFaceToFace = [
         name: "gender",
         label: "Gender",
         required: true,
-        labels: [
-          'male',
-          'female',
-        ]
+        labels: ["male", "female"],
       },
       {
         type: "text",
@@ -537,12 +567,13 @@ const servicesFaceToFace = [
         description: "So what's your pet name?",
       },
     ],
-    bookings: []
+    bookings: [],
   },
   {
     slug: "wow-summer-pension",
     title: "Summer pension wow!",
-    poster: "https://images.unsplash.com/photo-1516222338250-863216ce01ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3VtbWVyJTIwZG9nfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+    poster:
+      "https://images.unsplash.com/photo-1516222338250-863216ce01ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3VtbWVyJTIwZG9nfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
     category: "animal-summer-pension",
     availabilities: [
       {
@@ -556,9 +587,9 @@ const servicesFaceToFace = [
                 begin: "01",
                 end: "31",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "July",
@@ -567,9 +598,9 @@ const servicesFaceToFace = [
                 begin: "01",
                 end: "31",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "August",
@@ -578,11 +609,11 @@ const servicesFaceToFace = [
                 begin: "01",
                 end: "31",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "San Benedetto",
@@ -595,9 +626,9 @@ const servicesFaceToFace = [
                 begin: "01",
                 end: "31",
                 maxClients: 4,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "July",
@@ -606,9 +637,9 @@ const servicesFaceToFace = [
                 begin: "01",
                 end: "31",
                 maxClients: 8,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "August",
@@ -617,9 +648,9 @@ const servicesFaceToFace = [
                 begin: "01",
                 end: "31",
                 maxClients: 9,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "September",
@@ -628,14 +659,16 @@ const servicesFaceToFace = [
                 begin: "01",
                 end: "31",
                 maxClients: 9,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
     ],
-    images: ['https://images.unsplash.com/photo-1516222338250-863216ce01ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3VtbWVyJTIwZG9nfGVufDB8fDB8fA%3D%3D&w=1000&q=80'],
+    images: [
+      "https://images.unsplash.com/photo-1516222338250-863216ce01ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3VtbWVyJTIwZG9nfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+    ],
     hourlyRate: 15,
     description: "Something idk this should be an animal summer pension",
     rating: 5,
@@ -653,23 +686,14 @@ const servicesFaceToFace = [
         name: "animal",
         label: "Animal",
         required: true,
-        labels: [
-          'dog',
-          'cat',
-          'bird',
-          'fish',
-          'racoon',
-        ]
+        labels: ["dog", "cat", "bird", "fish", "racoon"],
       },
       {
         type: "radio",
         name: "gender",
         label: "Gender",
         required: true,
-        labels: [
-          'male',
-          'female',
-        ]
+        labels: ["male", "female"],
       },
       {
         type: "text",
@@ -679,7 +703,7 @@ const servicesFaceToFace = [
         description: "So what's your pet name?",
       },
     ],
-    bookings: []
+    bookings: [],
   },
   {
     slug: "wow-psychologist",
@@ -698,9 +722,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Wednesday",
@@ -709,11 +733,11 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "Rimini",
@@ -726,9 +750,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Thursday",
@@ -737,11 +761,11 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "Naples",
@@ -754,9 +778,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Friday",
@@ -765,14 +789,16 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
-      }
+        ],
+      },
     ],
-    images: ['https://i.kym-cdn.com/photos/images/original/000/932/928/bcc.jpg'],
+    images: [
+      "https://i.kym-cdn.com/photos/images/original/000/932/928/bcc.jpg",
+    ],
     hourlyRate: 15,
     description: "Something idk this should be an animal psychologist",
     rating: 5,
@@ -790,33 +816,21 @@ const servicesFaceToFace = [
         name: "animal",
         label: "Animal",
         required: true,
-        labels: [
-          'dog',
-          'cat',
-          'bird',
-          'fish',
-          'racoon',
-        ]
+        labels: ["dog", "cat", "bird", "fish", "racoon"],
       },
       {
         type: "radio",
         name: "first_time",
         label: "Is it the first time?",
         required: true,
-        labels: [
-          'yes',
-          'no',
-        ]
+        labels: ["yes", "no"],
       },
       {
         type: "radio",
         name: "gender",
         label: "Gender",
         required: true,
-        labels: [
-          'male',
-          'female',
-        ]
+        labels: ["male", "female"],
       },
       {
         type: "text",
@@ -826,12 +840,13 @@ const servicesFaceToFace = [
         description: "So what's your pet name?",
       },
     ],
-    bookings: []
+    bookings: [],
   },
   {
     slug: "wow-home-visit",
     title: "Home visit for lonely animals wow!",
-    poster: "https://cdn-prd.content.metamorphosis.com/wp-content/uploads/sites/2/2020/06/shutterstock_180058235-1.jpg",
+    poster:
+      "https://cdn-prd.content.metamorphosis.com/wp-content/uploads/sites/2/2020/06/shutterstock_180058235-1.jpg",
     category: "animal-home-visit",
     availabilities: [
       {
@@ -845,9 +860,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Wednesday",
@@ -856,11 +871,11 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "Rimini",
@@ -873,9 +888,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Thursday",
@@ -884,11 +899,11 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
+        ],
       },
       {
         city: "Naples",
@@ -901,9 +916,9 @@ const servicesFaceToFace = [
                 begin: "8:00",
                 end: "13:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: "Friday",
@@ -912,16 +927,19 @@ const servicesFaceToFace = [
                 begin: "14:00",
                 end: "19:00",
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
-        ]
-      }
+        ],
+      },
     ],
-    images: ['https://cdn-prd.content.metamorphosis.com/wp-content/uploads/sites/2/2020/06/shutterstock_180058235-1.jpg'],
+    images: [
+      "https://cdn-prd.content.metamorphosis.com/wp-content/uploads/sites/2/2020/06/shutterstock_180058235-1.jpg",
+    ],
     hourlyRate: 35,
-    description: "Something idk this should be an animal home visit when they're lonely",
+    description:
+      "Something idk this should be an animal home visit when they're lonely",
     rating: 5,
     numReviews: 10,
     opts: [
@@ -930,30 +948,26 @@ const servicesFaceToFace = [
         name: "properties",
         label: "Properties",
         required: false,
-        labels: ["like watching movies", "like biscuits", "like cuddles", "sometimes cries"],
+        labels: [
+          "like watching movies",
+          "like biscuits",
+          "like cuddles",
+          "sometimes cries",
+        ],
       },
       {
         type: "radio",
         name: "animal",
         label: "Animal",
         required: true,
-        labels: [
-          'dog',
-          'cat',
-          'bird',
-          'fish',
-          'racoon',
-        ]
+        labels: ["dog", "cat", "bird", "fish", "racoon"],
       },
       {
         type: "radio",
         name: "gender",
         label: "Gender",
         required: true,
-        labels: [
-          'male',
-          'female',
-        ]
+        labels: ["male", "female"],
       },
       {
         type: "text",
@@ -963,14 +977,16 @@ const servicesFaceToFace = [
         description: "So what's your pet name?",
       },
     ],
-    bookings: []
+    bookings: [],
   },
-]
+];
 
 async function init() {
   let mongoose = await DATABASE.connect();
   console.log("Clearing database...");
-  await mongoose.connection.db.dropDatabase(console.log(`${mongoose.connection.db.databaseName}-db has been cleared`));
+  await mongoose.connection.db.dropDatabase(
+    console.log(`${mongoose.connection.db.databaseName}-db has been cleared`)
+  );
   console.log("Adding starting elements to database...");
   await DATABASE.User.insertMany(fakeUsers);
   console.log("Adding posts to database");
@@ -978,7 +994,7 @@ async function init() {
   console.log("Adding pets to database...");
   for (let i in Pets) {
     const user = await DATABASE.User.findOne({ email: fakeUsers[i].email });
-    Pets[i].ownerid = user.id
+    Pets[i].ownerid = user.id;
     let matchPet = null;
     if (i % 2) {
       matchPet = await DATABASE.Pet.findOne({ name: Pets[i - 1].name });
@@ -986,10 +1002,12 @@ async function init() {
     }
     const pet = await DATABASE.Pet.create(Pets[i]);
     if (i % 2) {
-      await DATABASE.Pet.findByIdAndUpdate(matchPet.id, { matchedBy: [pet.id] });
+      await DATABASE.Pet.findByIdAndUpdate(matchPet.id, {
+        matchedBy: [pet.id],
+      });
     }
     await DATABASE.User.findByIdAndUpdate(user.id, {
-      petList: [...user.petList, pet.id]
+      petList: [...user.petList, pet.id],
     });
   }
   console.log("Adding products...");
@@ -1001,6 +1019,5 @@ async function init() {
   console.log("done!");
   process.exit();
 }
-
 
 init();
