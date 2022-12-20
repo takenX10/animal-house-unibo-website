@@ -103,13 +103,15 @@ export default {
     },
     updateScoreboard: async function (g) {
       if (!g) return;
+      console.log("heeeeeeeeeeeeeeeee", g);
       let res = await fetch(
         `${this.BACKEND_SERVER}/api/scoreboard/${String(g).toLowerCase()}`
       );
       let data = await res.json();
-      if (data.success == true && data.data.length > 0) {
+      console.log(data);
+      if (data.success == true) {
         this.scoreboards = data.data;
-        this.refreshPage();
+        this.$mount();
       }
     },
     showRandomFact: async function () {
@@ -179,6 +181,7 @@ export default {
   created() {
     let game = location.hash.slice(1);
     this.changeGame(game);
+    this.updateScoreboard(game);
   },
 };
 </script>
@@ -377,7 +380,7 @@ export default {
           <div>
             <!-- <h4>{{ game.title }}</h4> -->
             <!-- <ui-icon-button>videogame_asset</ui-icon-button> -->
-            <MDBBtn raised @click="changeGame(game.component)">{{
+            <MDBBtn raised @click="changeGame(game.component);console.log('ciao');updateScoreboard(game.component);">{{
               game.title
             }}</MDBBtn>
           </div>

@@ -66,25 +66,25 @@ So just run this command and start developing
   - [x] bacheca eccolo qua #Ale
   - [x] OPZIONALE: bacheca cerco partner #Ale
   - [x] OPZIONALE: bacheca aiutatemi #Ale
-- [ ] e-commerce #Yonas
-  - [ ] catalogo di prodotti #Yonas
-    - [ ] cibo #Yonas
-    - [ ] prodotti sanitari #Yonas
-    - [ ] accessoristica #Yonas
+- [x] e-commerce #Yonas
+  - [x] catalogo di prodotti #Yonas
+    - [x] cibo #Yonas
+    - [x] prodotti sanitari #Yonas
+    - [x] accessoristica #Yonas
     - [ ] OPZIONALE: cuccioli (NON LO FACCIAMO PER NESSUN MOTIVO)
-- [ ] Servizi in presenza #Gian
+- [x] Servizi in presenza #Gian
   - [X] Veterinario #Gian
   - [X] Dog sitter #Gian
-  - [ ] OPZIONALE: Toelettatura #Gian
-  - [ ] OPZIONALE: Pensione estiva #Gian
-  - [ ] OPZIONALE: psicologo #Gian
-  - [ ] OPZIONALE: visita a domicilio per animali soli #Gian
+  - [x] OPZIONALE: Toelettatura #Gian
+  - [x] OPZIONALE: Pensione estiva #Gian
+  - [x] OPZIONALE: psicologo #Gian
+  - [x] OPZIONALE: visita a domicilio per animali soli #Gian
 - [ ] OPZIONALE: Servizi online
   - [ ] OPZIONALE: Videoconferenza con l'esperto
   - [ ] OPZIONALE: Videoconferenza con il veterinario
   - [ ] OPZIONALE: Videoconferenza con l'animale in ospedale o pensione
 - [ ] Back office
-  - [ ] Gestione clienti #Ale
+  - [x] Gestione clienti #Ale
     - [x] Anagrafica Clienti #Ale
     - [x] Profilo #Ale
     - [x] Registrazione #Ale
@@ -105,3 +105,17 @@ So just run this command and start developing
     - [ ] Calendari separati dei servizi. #Gian
     - [ ] OPZIONALE: Servizi online #Gian
     - [ ] OPZIONALE: Prenotare servizi, modificare o cancellare prenotazioni, visualizzare disponibilita'. #Gian
+
+
+- I giochi non hanno la navbar
+- Lo scorrimento della lista di giochi nella homepage non e' responsive (si accavallano le scritte)
+- Scoreboard mostra solo quella di hangman, a prescindere dal gioco
+- Slider input per numeri cubi non responsive
+- Wordle mi da sempre "not a valid word", non capisco perche', comunque e' responsive quindi top se si risolve il bug
+- Manca homepage per fare routing tra le varie cose, rimuoverei le varie homepage e farei tutto in uno, tipo che nella home puoi spostarti tra giochi, servizi vari e backoffice che non ho ancora capito se volete fare o no visto che a me non serve
+- Bacheca cerco partner non responsive e da testare
+- Gli endpoint in generale hanno dei path un po' strani, andrebbero uniformati
+- Mi e' sembrato di vedere un mischione tra italiano e inglese, va tradotto tutto in inglese
+- Offline nella navbar ha un "?", non so perche' quindi se non c'e' motivo lo togliamo
+- Order history sfora un po' a destra in visuale da telefono
+- Order details sfora un po' a destra in visuale da telefono
