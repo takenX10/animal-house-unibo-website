@@ -109,9 +109,7 @@ So just run this command and start developing
 
 - I giochi non hanno la navbar
 - Lo scorrimento della lista di giochi nella homepage non e' responsive (si accavallano le scritte)
-- Scoreboard mostra solo quella di hangman, a prescindere dal gioco
 - Slider input per numeri cubi non responsive
-- Wordle mi da sempre "not a valid word", non capisco perche', comunque e' responsive quindi top se si risolve il bug
 - Manca homepage per fare routing tra le varie cose, rimuoverei le varie homepage e farei tutto in uno, tipo che nella home puoi spostarti tra giochi, servizi vari e backoffice che non ho ancora capito se volete fare o no visto che a me non serve
 - Bacheca cerco partner non responsive e da testare
 - Gli endpoint in generale hanno dei path un po' strani, andrebbero uniformati

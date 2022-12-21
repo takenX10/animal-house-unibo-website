@@ -54,7 +54,7 @@ export class Wordle {
   }
 
   public isValid(s: string) {
-    return this._validWords.includes(s)
+    return this._validWords.includes(s.toLowerCase())
   }
 
   public isCorrect(s: string) {
