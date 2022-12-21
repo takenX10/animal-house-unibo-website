@@ -82,6 +82,7 @@ export default {
       cat_breed_loading: false,
       cat_breed_guesses: [],
       files: [],
+      scoreboards: [],
     };
   },
   methods: {
@@ -111,7 +112,6 @@ export default {
       console.log(data);
       if (data.success == true) {
         this.scoreboards = data.data;
-        this.$mount();
       }
     },
     showRandomFact: async function () {
