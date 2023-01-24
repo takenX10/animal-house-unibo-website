@@ -125,24 +125,28 @@ export default function HomeServiceOnline() {
             ) : (
               <>
                 <Row className='mx-auto'>
-                  <div className='content'><label htmlFor="platformFilters"><b>Platform filter</b></label>
-                    <Form.Select id="platformFilter" aria-label="Platform filter" value={platform} onChange={(e) => setPlatform(e.target.value)}>
-                      {
-                        platformFilters.map((f, index) => {
-                          return <option key={index} value={f} label={f}></option>
-                        })
-                      }
-                    </Form.Select></div>
+                  <Col md={6} sm={6} className='mx-auto'>
+                    <div className='content'><label htmlFor="platformFilters"><b>Platform filter</b></label>
+                      <Form.Select id="platformFilter" aria-label="Platform filter" value={platform} onChange={(e) => setPlatform(e.target.value)}>
+                        {
+                          platformFilters.map((f, index) => {
+                            return <option key={index} value={f} label={f}></option>
+                          })
+                        }
+                      </Form.Select></div>
+                    </Col>
                 </Row>
                 <Row className='mx-auto'>
-                  <div className='content'><label htmlFor="dayFilters"><b>Day filter</b></label>
-                    <Form.Select id="dayFilter" aria-label="Day filter" value={day} onChange={(e) => setDay(e.target.value)}>
-                      {
-                        dayFilters.map((f, index) => {
-                          return <option key={index} value={f} label={f == "None" ? "None" : getDayLabel(f)}></option>
-                        })
-                      }
-                    </Form.Select></div>
+                  <Col md={6} sm={6} className='mx-auto'>
+                    <div className='content'><label htmlFor="dayFilters"><b>Day filter</b></label>
+                      <Form.Select id="dayFilter" aria-label="Day filter" value={day} onChange={(e) => setDay(e.target.value)}>
+                        {
+                          dayFilters.map((f, index) => {
+                            return <option key={index} value={f} label={f == "None" ? "None" : getDayLabel(f)}></option>
+                          })
+                        }
+                      </Form.Select></div>
+                  </Col>
                 </Row>
                 <Row className='mx-auto mt-4'>
                   {

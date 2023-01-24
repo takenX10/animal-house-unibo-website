@@ -104,7 +104,7 @@ export default function Profile() {
   async function deleteBooking(booking) {
     try {
       let b = await (await fetch(`${SERVER_URL}/backoffice/delete_booking`, {
-        method: "POST",
+        method: "DELETE",
         credentials: "include",
         headers: {
           'Accept': '*/*',
@@ -151,12 +151,13 @@ export default function Profile() {
       <Container fluid>
         <Row className='px-2 my-5 d-flex justify-content-center'>
           <Col xs={12}>
-            <h1 className='fw-bold fs-1 text-center'>{user.name} {user.surname}</h1> 
+            <h1 className='fw-bold fs-1 text-center'>{user.name} {user.surname}</h1>
           </Col>
           <Col xs={12} className='text-center d-flex align-items-center justify-content-center'>
-            <Button className="m-4" variant="danger" onClick={() => { 
-              if (confirm("Are you sure you want to delete your account?")) { delete_account() } }}>
-                Delete account
+            <Button className="m-4" variant="danger" onClick={() => {
+              if (confirm("Are you sure you want to delete your account?")) { delete_account() }
+            }}>
+              Delete account
             </Button>
             <Button variant="secondary" className="m-4" onClick={showChange}>Change Password</Button>
           </Col>
@@ -191,40 +192,40 @@ export default function Profile() {
           {pets.map((p) => {
             return (
               <Col xs={12} md={7} key={p._id} className="mt-5 text-center">
-                  <h3>{p.name}</h3>
-                  <Table striped="columns">
-                    <thead></thead>
-                    <tbody>
-                      <tr>
-                        <td className='fw-bold'>NAME</td>
-                        <td className='text-break'>{p.name}</td>
-                      </tr>
-                      <tr>
-                        <td className='fw-bold'>RACE</td>
-                        <td className='text-break'>{p.race}</td>
-                      </tr>
-                      <tr>
-                        <td className='fw-bold'>WEIGHT</td>
-                        <td className='text-break'>{p.weight}</td>
-                      </tr>
-                      <tr>
-                        <td className='fw-bold'>AGE</td>
-                        <td className='text-break'>{p.age}</td>
-                      </tr>
-                      <tr>
-                        <td className='fw-bold'>SEX</td>
-                        <td className='text-break'>{p.sex}</td>
-                      </tr>
-                      <tr>
-                        <td className='fw-bold'>DESCRIPTION</td>
-                        <td className='text-break'>{p.description}</td>
-                      </tr>
-                      <tr>
-                        <td className='fw-bold'>id</td>
-                        <td className='text-break'>{p._id}</td>
-                      </tr>
-                    </tbody>
-                  </Table>
+                <h3>{p.name}</h3>
+                <Table striped="columns">
+                  <thead></thead>
+                  <tbody>
+                    <tr>
+                      <td className='fw-bold'>NAME</td>
+                      <td className='text-break'>{p.name}</td>
+                    </tr>
+                    <tr>
+                      <td className='fw-bold'>RACE</td>
+                      <td className='text-break'>{p.race}</td>
+                    </tr>
+                    <tr>
+                      <td className='fw-bold'>WEIGHT</td>
+                      <td className='text-break'>{p.weight}</td>
+                    </tr>
+                    <tr>
+                      <td className='fw-bold'>AGE</td>
+                      <td className='text-break'>{p.age}</td>
+                    </tr>
+                    <tr>
+                      <td className='fw-bold'>SEX</td>
+                      <td className='text-break'>{p.sex}</td>
+                    </tr>
+                    <tr>
+                      <td className='fw-bold'>DESCRIPTION</td>
+                      <td className='text-break'>{p.description}</td>
+                    </tr>
+                    <tr>
+                      <td className='fw-bold'>id</td>
+                      <td className='text-break'>{p._id}</td>
+                    </tr>
+                  </tbody>
+                </Table>
               </Col>
             );
           })}

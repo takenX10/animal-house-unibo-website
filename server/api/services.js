@@ -108,7 +108,7 @@ async function serviceBook(req, res, isOnline) {
     await DATABASE.Service.findByIdAndUpdate(service._id, { availabilities: service.availabilities });
     let booking = { userId: user._id, avaId, shiftId, hourId };
     await DATABASE.Service.updateOne({ _id: service._id }, { $push: { bookings: booking } });
-    let userBooking = { slug: req.params.slug, serviceId: service._id, avaId, shiftId, hourId };
+    let userBooking = { slug: req.params.slug, serviceId: service._id, avaId, shiftId, hourId, isOnline };
     await DATABASE.User.updateOne({ _id: user._id }, { $push: { bookings: userBooking } });
     res.status(200).json({ message: 'Booking completed' })
   } catch (e) {

@@ -7,8 +7,12 @@ const SERVER_URL = process.env.NODE_ENV === "development" ? "http://localhost:80
 
 export function isEqualPath(path, test) {
   if (test.includes(":")) {
-    let subtest = test.replace(test.substring(test.lastIndexOf("/")), "")
-    let subpath = path.replace(path.substring(path.lastIndexOf("/")), "")
+    // remove first / 
+    test = test.substring(1);
+    path = path.substring(1);
+    // check if first part is equal
+    let subtest = test.replace(test.substring(test.indexOf("/")), "")
+    let subpath = path.replace(path.substring(path.indexOf("/")), "")
     return subpath == subtest
   }
   return path == test
@@ -41,7 +45,7 @@ async function save_score(score, scoreboard) {
     console.log(data);
     if (await check_login()) {
       let res = await fetch(`${SERVER_URL}/backoffice/insert_leaderboard`, {
-        method: "POST",
+        method: "PUT",
         credentials: "include",
         headers: {
           'Accept': 'application/json',
@@ -53,7 +57,7 @@ async function save_score(score, scoreboard) {
       if (!res.success) {
         alert(res.message);
       } else {
-        alert("Scoreboard updated");
+        // alert("Scoreboard updated");
       }
     } else {
       alert("Not logged in, so the score can't be saved!");
@@ -89,7 +93,8 @@ async function isAdmin() {
     res = await res.json();
     return res.success;
   } catch (e) {
-    alert(e);
+    // alert(e);
+    console.log(e);
     return false;
   }
 }
@@ -97,11 +102,11 @@ async function isAdmin() {
 
 function getDayLabel(epoch) {
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  let d = new Date(epoch * 1000);
+  let d = new Date(epoch);
   return `${days[d.getDay()]} ${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`
 }
 function getHourLabel(epoch) {
-  let d = new Date(epoch * 1000);
+  let d = new Date(epoch);
   return `${d.getHours()}:${d.getSeconds()}`
 }
 

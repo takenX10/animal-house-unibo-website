@@ -7,7 +7,7 @@ function shuffle(array) {
 
 async function getQuiz(req, res) {
   try {
-    let resf = await fetch("https://the-trivia-api.com/api/questions?limit=5&difficulty=easy&tags=animals");
+    let resf = await fetch("https://the-trivia-api.com/api/questions?tags=animals");
     let data = await resf.json();
     let correct = data[0].correctAnswer;
     let answers = data[0].incorrectAnswers;

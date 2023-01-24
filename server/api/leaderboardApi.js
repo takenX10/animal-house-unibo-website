@@ -3,14 +3,14 @@ import DATABASE from '../database.js';
 import AUTH from '../authentication.js';
 import { isAuth, jsonParser, isAdmin } from '../utils.js';
 
-const validLeaderboards = ["wordle", "slider", "memory", "hangman"];
+const validLeaderboards = ["quiz", "wordle", "slider", "memory", "hangman"];
 
 
 let ENDPOINTS = [
   { endpoint: "/backoffice/get_leaderboard", method: METHODS.POST, opts: [jsonParser], function: leaderboardGetter },
-  { endpoint: "/backoffice/insert_leaderboard", method: METHODS.POST, opts: [jsonParser, isAuth], function: leaderboardInsert },
+  { endpoint: "/backoffice/insert_leaderboard", method: METHODS.PUT, opts: [jsonParser, isAuth], function: leaderboardInsert },
   { endpoint: "/backoffice/get_valid_leaderboards", method: METHODS.POST, function: validLeaderboardsGetter },
-  { endpoint: "/backoffice/remove_leaderboard", method: METHODS.POST, opts: [jsonParser, isAuth, isAdmin], function: leaderboardRemove },
+  { endpoint: "/backoffice/remove_leaderboard", method: METHODS.DELETE, opts: [jsonParser, isAuth, isAdmin], function: leaderboardRemove },
 ];
 
 
@@ -28,7 +28,7 @@ async function leaderboardGetter(req, res) {
     return;
   }
   const scores = await DATABASE.Score.find({ leaderboard: req.body.leaderboard });
-  let final = scores.sort((a, b) => {return a.score == b.score? a.date > b.date: a.score > b.score});
+  let final = scores.sort((a, b) => { return a.score == b.score ? a.date > b.date : a.score > b.score });
   let p = 0;
   final = final.map((f) => { p++; return { author: f.author, score: f.score, position: p, id: f.id, date: f.date } })
   res.json({ success: true, name: req.body.leaderboard, leaderboard: final });
@@ -50,13 +50,15 @@ async function leaderboardInsert(req, res) {
   const user = await AUTH.get_user(req);
   console.log(user);
   const name = `${user.name} ${user.surname} (${user.email})`;
-  await DATABASE.Score.create({
+  let scoredb = await DATABASE.Score.findOne({ authorId: user.id }).exec();
+  console.log(scoredb);
+  await DATABASE.Score.update({ authorId: user.id }, {
     leaderboard: lead,
     author: name,
     authorId: user.id,
     date: (new Date()).toISOString(),
-    score: score,
-  });
+    score: scoredb && score < scoredb.score ? scoredb.score : score,
+  }, { upsert: true });
   res.json({ success: true });
 }
 

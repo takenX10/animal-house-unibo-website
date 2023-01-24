@@ -12,17 +12,30 @@ let ENDPOINTS = [
   { endpoint: "/backoffice/home", method: METHODS.GET, opts: [jsonParser, isAdmin], function: officeHome },
   { endpoint: "/backoffice/get_user", method: METHODS.GET, opts: [jsonParser, isAuth], function: get_user },
   { endpoint: "/backoffice/get_bookings", method: METHODS.GET, opts: [jsonParser, isAuth], function: get_bookings },
-  { endpoint: "/backoffice/delete_booking", method: METHODS.POST, opts: [jsonParser, isAuth], function: delete_booking },
+  { endpoint: "/backoffice/get_all_bookings", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: get_all_bookings },
+  { endpoint: "/backoffice/delete_booking", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_booking },
   { endpoint: "/backoffice/change_password", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: change_password },
   { endpoint: "/backoffice/delete_user", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_user },
   { endpoint: "/backoffice/is_admin", method: METHODS.POST, opts: [jsonParser, isAuth, isAdmin], function: is_admin },
+  { endpoint: "/backoffice/become_admin", method: METHODS.GET, opts: [jsonParser, isAuth], function: become_admin },
+  { endpoint: "/backoffice/facetoface", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showFaceToFace },
 ]
 
 async function officeHome(req, res) {
-  res.render("../templates/anagrafica.ejs", { title: "Anagrafica clienti" });
+  res.render("../templates/anagrafica", { title: "Anagrafica clienti" });
+}
+
+async function showFaceToFace(req, res) {
+  res.render("../templates/facetoface", { title: "Face to face services" });
 }
 
 async function is_admin(req, res) {
+  res.json({ success: true });
+}
+
+async function become_admin(req, res) {
+  const user = await AUTH.get_user(req);
+  await DATABASE.User.findOneAndUpdate({ email: user.email }, { isAdmin: true });
   res.json({ success: true });
 }
 
@@ -88,6 +101,43 @@ async function get_bookings(req, res) {
       bookings
     });
   } catch (e) {
+    res.json({
+      success: false,
+    });
+  }
+}
+async function get_all_bookings(req, res) {
+  try {
+    const users = await DATABASE.User.find({});
+    let bookings = []
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+      for (let i = 0; i < user.bookings.length; i++) {
+        let slug = user.bookings[i].slug;
+        let avaId = user.bookings[i].avaId;
+        let shiftId = user.bookings[i].shiftId;
+        let hourId = user.bookings[i].hourId;
+        let isOnline = user.bookings[i].isOnline;
+        if (typeof (avaId) !== String)
+          avaId = avaId.toString();
+        if (typeof (shiftId) !== String)
+          shiftId = shiftId.toString();
+        if (typeof (hourId) !== String)
+          hourId = hourId.toString();
+        let serv = await DATABASE.Service.findOne({ slug: slug })
+        let { availability, shift, hour } = getAvailabilityInfo(serv.availabilities, avaId, shiftId, hourId);
+        availability.shifts = []
+        shift.hours = []
+        let booking = { userName: user.name, email: user.email, slug: slug, availability, shift, hour, title: serv.title, isOnline }
+        bookings.push(booking);
+      }
+    }
+    res.json({
+      success: true,
+      bookings
+    });
+  } catch (e) {
+    console.log(e)
     res.json({
       success: false,
     });

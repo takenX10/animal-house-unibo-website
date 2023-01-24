@@ -112,12 +112,13 @@ function isInRouter(path) {
 app.post("/upload", upload.single("file"), function(req, res) {
   console.log("post");
   const file = req.file;
-  console.log(file);
   res.json({});
 });
 
 app.get("*", function(req, res, next) {
-  if (isInRouter(req.url)) return next();
+  if (isInRouter(req.url)) {
+    return next();
+  }
   res.sendFile("index.html", { root: __dirname + "/static/dist" });
 });
 

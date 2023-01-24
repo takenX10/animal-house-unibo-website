@@ -212,34 +212,34 @@ const services = [
         address: "via non lo so 23",
         shifts: [
           {
-            day: 1667821508,
+            day: 1667821508000,
             hours: [
               {
-                begin: 1667808000,
-                end: 1667811600,
+                begin: 1667808000000,
+                end: 1667811600000,
                 maxClients: 3,
                 currentClients: 0,
               },
               {
-                begin: 1667811600,
-                end: 1667815200,
+                begin: 1667811600000,
+                end: 1667815200000,
                 maxClients: 3,
                 currentClients: 0
               }
             ]
           },
           {
-            day: 1667907908,
+            day: 1667907908000,
             hours: [
               {
-                begin: 1667808000,
-                end: 1667811600,
+                begin: 1667808000000,
+                end: 1667811600000,
                 maxClients: 3,
                 currentClients: 0
               },
               {
-                begin: 1667811600,
-                end: 1667815200,
+                begin: 1667811600000,
+                end: 1667815200000,
                 maxClients: 3,
                 currentClients: 0,
               },
@@ -308,34 +308,34 @@ const services = [
         address: "via non lo so 23",
         shifts: [
           {
-            day: 1667821508,
+            day: 1667821508000,
             hours: [
               {
-                begin: 1667808000,
-                end: 1667811600,
+                begin: 1667808000000,
+                end: 1667811600000,
                 maxClients: 3,
                 currentClients: 0
               },
               {
-                begin: 1667811600,
-                end: 1667815200,
+                begin: 1667811600000,
+                end: 1667815200000,
                 maxClients: 3,
                 currentClients: 0,
               },
             ],
           },
           {
-            day: 1668420000,
+            day: 1668420000000,
             hours: [
               {
-                begin: 1668420000,
-                end: 1668423600,
+                begin: 16684200000000,
+                end: 1668423600000,
                 maxClients: 3,
                 currentClients: 0
               },
               {
-                begin: 1668438000,
-                end: 1668441600,
+                begin: 16684380000000,
+                end: 1668441600000,
                 maxClients: 3,
                 currentClients: 0,
               },
@@ -353,7 +353,7 @@ const services = [
         type: "checkbox",
         name: "properties",
         label: "Properties",
-        required: true,
+        required: false,
         labels: ["is aggressive", "shit often"],
       },
       {
@@ -392,34 +392,34 @@ const services = [
         address: "https://teams/sample.link",
         shifts: [
           {
-            day: 1667821508,
+            day: 16678215080000,
             hours: [
               {
-                begin: 1667808000,
-                end: 1667811600,
+                begin: 1667808000000,
+                end: 1667811600000,
                 maxClients: 3,
                 currentClients: 0
               },
               {
-                begin: 1667811600,
-                end: 1667815200,
+                begin: 1667811600000,
+                end: 1667815200000,
                 maxClients: 3,
                 currentClients: 0,
               },
             ],
           },
           {
-            day: 1668420000,
+            day: 1668420000000,
             hours: [
               {
-                begin: 1668420000,
-                end: 1668423600,
+                begin: 1668420000000,
+                end: 1668423600000,
                 maxClients: 3,
                 currentClients: 0
               },
               {
-                begin: 1668438000,
-                end: 1668441600,
+                begin: 1668438000000,
+                end: 1668441600000,
                 maxClients: 3,
                 currentClients: 0,
               },
@@ -457,563 +457,6 @@ const services = [
     ],
     bookings: [],
   },
-  // {
-  //   slug: "wow-grooming",
-  //   title: "Grooming wow!",
-  //   poster: "https://dogsbestlife.com/wp-content/uploads/2020/05/Groomer-bathes-corgi-scaled.jpeg",
-  //   category: "animal-groomer",
-  //   availabilities: [
-  //     {
-  //       city: "Bologna",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "Monday",
-  //           hours: [
-  //             {
-  //               begin: "8:00",
-  //               end: "13:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "Wednesday",
-  //           hours: [
-  //             {
-  //               begin: "14:00",
-  //               end: "19:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       city: "Rimini",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "Tuesday",
-  //           hours: [
-  //             {
-  //               begin: "8:00",
-  //               end: "13:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "Thursday",
-  //           hours: [
-  //             {
-  //               begin: "14:00",
-  //               end: "19:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       city: "Naples",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "Saturday",
-  //           hours: [
-  //             {
-  //               begin: "8:00",
-  //               end: "13:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "Friday",
-  //           hours: [
-  //             {
-  //               begin: "14:00",
-  //               end: "19:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     }
-  //   ],
-  //   images: ['https://dogsbestlife.com/wp-content/uploads/2020/05/Groomer-bathes-corgi-scaled.jpeg'],
-  //   hourlyRate: 15,
-  //   description: "Something idk this should be an animal groomer",
-  //   rating: 5,
-  //   numReviews: 10,
-  //   opts: [
-  //     {
-  //       type: "checkbox",
-  //       name: "properties",
-  //       label: "Properties",
-  //       required: false,
-  //       labels: ["is aggressive"],
-  //     },
-  //     {
-  //       type: "radio",
-  //       name: "gender",
-  //       label: "Gender",
-  //       required: true,
-  //       labels: [
-  //         'male',
-  //         'female',
-  //       ]
-  //     },
-  //     {
-  //       type: "text",
-  //       name: "pet_name",
-  //       label: "Pet name",
-  //       required: true,
-  //       description: "So what's your pet name?",
-  //     },
-  //   ],
-  //   bookings: []
-  // },
-  // {
-  //   slug: "wow-summer-pension",
-  //   title: "Summer pension wow!",
-  //   poster: "https://images.unsplash.com/photo-1516222338250-863216ce01ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3VtbWVyJTIwZG9nfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-  //   category: "animal-summer-pension",
-  //   availabilities: [
-  //     {
-  //       city: "Bologna",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "June",
-  //           hours: [
-  //             {
-  //               begin: "01",
-  //               end: "31",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "July",
-  //           hours: [
-  //             {
-  //               begin: "01",
-  //               end: "31",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "August",
-  //           hours: [
-  //             {
-  //               begin: "01",
-  //               end: "31",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       city: "San Benedetto",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "June",
-  //           hours: [
-  //             {
-  //               begin: "01",
-  //               end: "31",
-  //               maxClients: 4,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "July",
-  //           hours: [
-  //             {
-  //               begin: "01",
-  //               end: "31",
-  //               maxClients: 8,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "August",
-  //           hours: [
-  //             {
-  //               begin: "01",
-  //               end: "31",
-  //               maxClients: 9,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "September",
-  //           hours: [
-  //             {
-  //               begin: "01",
-  //               end: "31",
-  //               maxClients: 9,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     },
-  //   ],
-  //   images: ['https://images.unsplash.com/photo-1516222338250-863216ce01ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3VtbWVyJTIwZG9nfGVufDB8fDB8fA%3D%3D&w=1000&q=80'],
-  //   hourlyRate: 15,
-  //   description: "Something idk this should be an animal summer pension",
-  //   rating: 5,
-  //   numReviews: 10,
-  //   opts: [
-  //     {
-  //       type: "checkbox",
-  //       name: "properties",
-  //       label: "Properties",
-  //       required: false,
-  //       labels: ["is aggressive"],
-  //     },
-  //     {
-  //       type: "radio",
-  //       name: "animal",
-  //       label: "Animal",
-  //       required: true,
-  //       labels: [
-  //         'dog',
-  //         'cat',
-  //         'bird',
-  //         'fish',
-  //         'racoon',
-  //       ]
-  //     },
-  //     {
-  //       type: "radio",
-  //       name: "gender",
-  //       label: "Gender",
-  //       required: true,
-  //       labels: [
-  //         'male',
-  //         'female',
-  //       ]
-  //     },
-  //     {
-  //       type: "text",
-  //       name: "pet_name",
-  //       label: "Pet name",
-  //       required: true,
-  //       description: "So what's your pet name?",
-  //     },
-  //   ],
-  //   bookings: []
-  // },
-  // {
-  //   slug: "wow-psychologist",
-  //   title: "Psychologist wow!",
-  //   poster: "https://i.kym-cdn.com/photos/images/original/000/932/928/bcc.jpg",
-  //   category: "animal-psychologist",
-  //   availabilities: [
-  //     {
-  //       city: "Bologna",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "Monday",
-  //           hours: [
-  //             {
-  //               begin: "8:00",
-  //               end: "13:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "Wednesday",
-  //           hours: [
-  //             {
-  //               begin: "14:00",
-  //               end: "19:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       city: "Rimini",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "Tuesday",
-  //           hours: [
-  //             {
-  //               begin: "8:00",
-  //               end: "13:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "Thursday",
-  //           hours: [
-  //             {
-  //               begin: "14:00",
-  //               end: "19:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       city: "Naples",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "Saturday",
-  //           hours: [
-  //             {
-  //               begin: "8:00",
-  //               end: "13:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "Friday",
-  //           hours: [
-  //             {
-  //               begin: "14:00",
-  //               end: "19:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     }
-  //   ],
-  //   images: ['https://i.kym-cdn.com/photos/images/original/000/932/928/bcc.jpg'],
-  //   hourlyRate: 15,
-  //   description: "Something idk this should be an animal psychologist",
-  //   rating: 5,
-  //   numReviews: 10,
-  //   opts: [
-  //     {
-  //       type: "checkbox",
-  //       name: "properties",
-  //       label: "Properties",
-  //       required: false,
-  //       labels: ["is aggressive", "is depressed"],
-  //     },
-  //     {
-  //       type: "radio",
-  //       name: "animal",
-  //       label: "Animal",
-  //       required: true,
-  //       labels: [
-  //         'dog',
-  //         'cat',
-  //         'bird',
-  //         'fish',
-  //         'racoon',
-  //       ]
-  //     },
-  //     {
-  //       type: "radio",
-  //       name: "first_time",
-  //       label: "Is it the first time?",
-  //       required: true,
-  //       labels: [
-  //         'yes',
-  //         'no',
-  //       ]
-  //     },
-  //     {
-  //       type: "radio",
-  //       name: "gender",
-  //       label: "Gender",
-  //       required: true,
-  //       labels: [
-  //         'male',
-  //         'female',
-  //       ]
-  //     },
-  //     {
-  //       type: "text",
-  //       name: "pet_name",
-  //       label: "Pet name",
-  //       required: true,
-  //       description: "So what's your pet name?",
-  //     },
-  //   ],
-  //   bookings: []
-  // },
-  // {
-  //   slug: "wow-home-visit",
-  //   title: "Home visit for lonely animals wow!",
-  //   poster: "https://cdn-prd.content.metamorphosis.com/wp-content/uploads/sites/2/2020/06/shutterstock_180058235-1.jpg",
-  //   category: "animal-home-visit",
-  //   availabilities: [
-  //     {
-  //       city: "Bologna",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "Monday",
-  //           hours: [
-  //             {
-  //               begin: "8:00",
-  //               end: "13:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "Wednesday",
-  //           hours: [
-  //             {
-  //               begin: "14:00",
-  //               end: "19:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       city: "Rimini",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "Tuesday",
-  //           hours: [
-  //             {
-  //               begin: "8:00",
-  //               end: "13:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "Thursday",
-  //           hours: [
-  //             {
-  //               begin: "14:00",
-  //               end: "19:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       city: "Naples",
-  //       address: "via non lo so 23",
-  //       shifts: [
-  //         {
-  //           day: "Saturday",
-  //           hours: [
-  //             {
-  //               begin: "8:00",
-  //               end: "13:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           day: "Friday",
-  //           hours: [
-  //             {
-  //               begin: "14:00",
-  //               end: "19:00",
-  //               maxClients: 3,
-  //               currentClients: 0
-  //             }
-  //           ]
-  //         },
-  //       ]
-  //     }
-  //   ],
-  //   images: ['https://cdn-prd.content.metamorphosis.com/wp-content/uploads/sites/2/2020/06/shutterstock_180058235-1.jpg'],
-  //   hourlyRate: 35,
-  //   description: "Something idk this should be an animal home visit when they're lonely",
-  //   rating: 5,
-  //   numReviews: 10,
-  //   opts: [
-  //     {
-  //       type: "checkbox",
-  //       name: "properties",
-  //       label: "Properties",
-  //       required: false,
-  //       labels: ["like watching movies", "like biscuits", "like cuddles", "sometimes cries"],
-  //     },
-  //     {
-  //       type: "radio",
-  //       name: "animal",
-  //       label: "Animal",
-  //       required: true,
-  //       labels: [
-  //         'dog',
-  //         'cat',
-  //         'bird',
-  //         'fish',
-  //         'racoon',
-  //       ]
-  //     },
-  //     {
-  //       type: "radio",
-  //       name: "gender",
-  //       label: "Gender",
-  //       required: true,
-  //       labels: [
-  //         'male',
-  //         'female',
-  //       ]
-  //     },
-  //     {
-  //       type: "text",
-  //       name: "pet_name",
-  //       label: "Pet name",
-  //       required: true,
-  //       description: "So what's your pet name?",
-  //     },
-  //     {
-  //       type: "text",
-  //       name: "address",
-  //       label: "Address",
-  //       required: true,
-  //       description: "What's your address",
-  //     },
-  //   ],
-  //   bookings: []
-  // },
 ]
 
 async function init() {

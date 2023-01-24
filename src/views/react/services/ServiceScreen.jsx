@@ -144,12 +144,13 @@ function ServiceScreen() {
   // const { state, dispatch: ctxDispatch } = useContext(Store);
 
   return (
-    loading ? (<LoadingBox />)
-      : error ? (
-        <MessageBox variant="danger">{error}</MessageBox>
-      ) : (
-        <>
-          <div className='container mb-4'>
+    <>
+      <div className='container mb-4 mx-auto'>
+        {loading && <Row className='mx-auto mt-3 text-center'><Col md={12}><LoadingBox /></Col> </Row>}
+
+        {error && <MessageBox variant="danger">{error}</MessageBox>}
+        {!loading && !error &&
+          <>
             <Helmet>
               <title>{service.title}</title>
             </Helmet>
@@ -230,9 +231,11 @@ function ServiceScreen() {
                 </Col>
               </Row>
             </Form>
-          </div>
-        </>
-      )
+          </>
+        }
+
+      </div>
+    </>
   );
 }
 

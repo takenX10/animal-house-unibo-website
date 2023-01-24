@@ -1,62 +1,81 @@
 
 
+<script>
+  import {
+    MDBBtn,
+    MDBNavbar,
+    MDBNavbarToggler,
+    MDBNavbarBrand,
+    MDBNavbarNav,
+    MDBNavbarItem,
+    MDBCollapse,
+    MDBDropdown,
+    MDBDropdownToggle,
+    MDBDropdownMenu,
+    MDBDropdownItem
+  } from 'mdb-vue-ui-kit';
+  import { ref } from 'vue';
+
+  export default {
+    components: {
+      MDBBtn,
+      MDBNavbar,
+      MDBNavbarToggler,
+      MDBNavbarBrand,
+      MDBNavbarNav,
+      MDBNavbarItem,
+      MDBCollapse,
+      MDBDropdown,
+      MDBDropdownToggle,
+      MDBDropdownMenu,
+      MDBDropdownItem
+    },
+    setup() {
+      const collapse1 = ref(false);
+      const dropdown1 = ref(false);
+      return {
+        collapse1,
+        dropdown1
+      }
+    }
+  };
+</script>
 
 <template>
-  <nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >Dropdown</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <a class="dropdown-item" href="#">Action</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another action</a>
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
+<MDBNavbar expand="lg" light bg="light" container>
+    <MDBNavbarBrand href="/games">AnimalHouse - Games</MDBNavbarBrand>
+    <MDBNavbarToggler
+      @click="collapse1 = !collapse1"
+      target="#navbarSupportedContent"
+    ></MDBNavbarToggler>
+    <MDBCollapse v-model="collapse1" id="navbarSupportedContent" >
+      <MDBNavbarNav class="w-100 mb-2 mb-lg-0 justify-content-end" >
+        <MDBNavbarItem>
+          <!-- Navbar dropdown -->
+          <MDBDropdown class="nav-item" v-model="dropdown1">
+            <MDBDropdownToggle
+              tag="a"
+              class="nav-link"
+              @click="dropdown1 = !dropdown1"
+              >Services</MDBDropdownToggle
+            >
+            <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
+              <MDBDropdownItem href="/comunita">Community</MDBDropdownItem>
+              <MDBDropdownItem href="/services/facetoface">Offline</MDBDropdownItem>
+              <MDBDropdownItem href="/services/online">Online</MDBDropdownItem>
+            </MDBDropdownMenu>
+          </MDBDropdown>
+        </MDBNavbarItem>
+        <MDBNavbarItem href="/shop" >
+        Shop
+        </MDBNavbarItem>
+        <MDBNavbarItem to="/games">
+          Games 
+        </MDBNavbarItem>
+        <MDBNavbarItem href="/backoffice/login" >
+          Login 
+        </MDBNavbarItem>
+      </MDBNavbarNav>
+    </MDBCollapse>
+  </MDBNavbar>
 </template>
