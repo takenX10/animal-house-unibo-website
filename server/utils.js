@@ -31,4 +31,9 @@ async function isAdmin(req, res, next) {
   }
 }
 
-export { isAuth, CLIENT_URL, __dirname, jsonParser, isAdmin };
+function showError(res) {
+  res.status(500);
+  res.redirect("/errore");
+}
+
+export { isAuth, CLIENT_URL, __dirname, jsonParser, isAdmin, showError };

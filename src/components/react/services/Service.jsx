@@ -8,13 +8,14 @@ import { useContext } from "react";
 function Service(props) {
   const { service } = props;
   const { state, dispatch: ctxDispatch } = useContext(Store);
+  const serviceType = service.isOnline ? "online" : "facetoface";
   return (
     <Card className="h-100" key={service.slug}>
-      <Link to={`/services/facetoface/${service.slug}`}>
+      <Link to={`/services/${serviceType}/${service.slug}`}>
         <img src={service.images[0]} className="prod-img card-img-top" alt={service.title} />
       </Link>
       <Card.Body>
-        <Link className="text-decoration-none text-dark " to={`/services/facetoface/${service.slug}`}>
+        <Link className="text-decoration-none text-dark " to={`/services/${serviceType}/${service.slug}`}>
           <Card.Title className="fw-bold">{service.title}</Card.Title>
         </Link>
         <Rating rating={service.rating} numReviews={service.numReviews}></Rating>

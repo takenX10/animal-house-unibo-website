@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useContext } from 'react';
 import { Store } from "@/context/store";
 import Navbar from '@/components/react/navbar/Navbar';
 import { Modal, Form, Container, Row, Col, Table, Button } from 'react-bootstrap';
-import { SERVER_URL, check_login, logout } from '@/context/utils';
+import { SERVER_URL, check_login, logout, getDayLabel, getHourLabel } from '@/context/utils';
 import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
@@ -229,54 +229,54 @@ export default function Profile() {
             );
           })}
         </Row>
-          {bookings.length > 0 && 
+        {bookings.length > 0 &&
           <>
-        <Row>
-          <Col>
-            <h2 className='text-center'>Bookings</h2>
-          </Col>
-        </Row>
-        <Row className='mx-auto'>
-            { bookings.map((b, index) => {
-            return (
-              <Col xs={12} md={6} key={b.availability._id + "-" + index} className='mx-auto'>
-                <div >
-                  <Row className='mx-auto'>
-                    <Col xs={10}>
-                      <h3 className='fw-bold'>{b.title}</h3>
-                    </Col>
-                    <Col xs={2} className='mx-auto' >
-                      <Button onClick={() => deleteBooking(b)} className='fw-bold btn-danger text-end'>X</Button>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <Table striped="columns" className='w-70'>
-                        <thead></thead>
-                        <tbody>
-                          <tr>
-                            <td className='fw-bold'>WHERE</td>
-                            <td>{b.availability.city} - {b.availability.address}</td>
-                          </tr>
-                          <tr>
-                            <td className='fw-bold'>SHIFT/MONTH</td>
-                            <td>{b.shift.day}</td>
-                          </tr>
-                          <tr>
-                            <td className='fw-bold'>HOUR/PERIOD</td>
-                            <td>{b.hour.begin} - {b.hour.end}</td>
-                          </tr>
-                        </tbody>
-                      </Table>
-                    </Col>
-                  </Row>
-                </div>
+            <Row>
+              <Col>
+                <h2 className='text-center'>Bookings</h2>
               </Col>
-            )
-          })}
-          </Row>
+            </Row>
+            <Row className='mx-4'>
+              {bookings.map((b, index) => {
+                return (
+                  <Col xs={12} md={7} key={b.availability._id + "-" + index} className='mx-auto'>
+                    <div >
+                      <Row className='mx-auto'>
+                        <Col xs={11}>
+                          <h3 className='fw-bold'>{b.title}</h3>
+                        </Col>
+                        <Col xs={1} className='mx-auto' >
+                          <Button onClick={() => deleteBooking(b)} className='fw-bold btn-danger text-end'>X</Button>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Table striped="columns" className='w-70'>
+                            <thead></thead>
+                            <tbody>
+                              <tr>
+                                <td className='fw-bold'>WHERE</td>
+                                <td>{b.availability.city} - {b.availability.address}</td>
+                              </tr>
+                              <tr>
+                                <td className='fw-bold'>SHIFT/MONTH</td>
+                                <td>{getDayLabel(b.shift.day)}</td>
+                              </tr>
+                              <tr>
+                                <td className='fw-bold'>HOUR/PERIOD</td>
+                                <td>{getHourLabel(b.hour.begin)} - {getHourLabel(b.hour.end)}</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        </Col>
+                      </Row>
+                    </div>
+                  </Col>
+                )
+              })}
+            </Row>
           </>
-          }
+        }
       </Container>
       <Modal show={showValue} onHide={hideChange} backdrop="static" keyboard={false} centered>
         <Modal.Header closeButton>

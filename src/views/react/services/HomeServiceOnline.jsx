@@ -10,8 +10,8 @@ import "@/assets/css/ecommerce.css";
 import { SERVER_URL } from "@/context/utils";
 
 const reducer = (state, action) => {
-  let servicesFaceToFaceFiltered = []
-  let servicesFaceToFace = [];
+  let servicesOnlineFiltered = []
+  let servicesOnline = [];
   switch (action.type) {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
@@ -29,37 +29,37 @@ const reducer = (state, action) => {
           }
         }
       }
-      return { ...state, servicesFaceToFace: action.payload, servicesFaceToFaceFiltered: action.payload, placeFilters: pf, dayFilters: df, loading: false };
+      return { ...state, servicesOnline: action.payload, servicesOnlineFiltered: action.payload, platformFilters: pf, dayFilters: df, loading: false };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     case 'FILTER':
-      servicesFaceToFace = action.servicesFaceToFace;
-      let place = action.place || "None";
+      servicesOnline = action.servicesOnline;
+      let platform = action.platform || "None";
       let day = action.day || "None";
-      if (place == "None" && day == "None")
-        servicesFaceToFaceFiltered = servicesFaceToFace
+      if (platform == "None" && day == "None")
+        servicesOnlineFiltered = servicesOnline
       else {
-        for (let i = 0; i < servicesFaceToFace.length; i++) {
-          let s = servicesFaceToFace[i];
+        for (let i = 0; i < servicesOnline.length; i++) {
+          let s = servicesOnline[i];
           for (let a = 0; a < s.availabilities.length; a++) {
-            if (place != "None" && s.availabilities[a].city == place) {
+            if (platform != "None" && s.availabilities[a].city == platform) {
               if (day == "None") {
-                servicesFaceToFaceFiltered.push(s);
+                servicesOnlineFiltered.push(s);
                 break;
               }
               else {
                 for (let j = 0; j < s.availabilities[a].shifts.length; j++) {
                   if (day != "None" && s.availabilities[a].shifts[j].day == day) {
-                    servicesFaceToFaceFiltered.push(s);
+                    servicesOnlineFiltered.push(s);
                     break;
                   }
                 }
               }
             } else {
-              if (place == "None") {
+              if (platform == "None") {
                 for (let j = 0; j < s.availabilities[a].shifts.length; j++) {
                   if (day != "None" && s.availabilities[a].shifts[j].day == day) {
-                    servicesFaceToFaceFiltered.push(s);
+                    servicesOnlineFiltered.push(s);
                     break;
                   }
                 }
@@ -68,30 +68,30 @@ const reducer = (state, action) => {
           }
         }
       }
-      return { ...state, servicesFaceToFaceFiltered: servicesFaceToFaceFiltered, loading: false };
+      return { ...state, servicesOnlineFiltered: servicesOnlineFiltered, loading: false };
     default:
       return state;
   }
 }
 
 
-export default function HomeServiceFaceToFace() {
-  const [{ loading, error, servicesFaceToFace, placeFilters, dayFilters, servicesFaceToFaceFiltered }, dispatch] = useReducer(reducer, {
-    servicesFaceToFace: [],
-    placeFilters: [],
+export default function HomeServiceOnline() {
+  const [{ loading, error, servicesOnline, platformFilters, dayFilters, servicesOnlineFiltered }, dispatch] = useReducer(reducer, {
+    servicesOnline: [],
+    platformFilters: [],
     dayFilters: [],
     loading: true,
     error: '',
-    servicesFaceToFaceFiltered: []
+    servicesOnlineFiltered: []
   });
-  const [place, setPlace] = useState('');
+  const [platform, setPlatform] = useState('');
   const [day, setDay] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await fetch(`${SERVER_URL}/api/services/facetoface`);
+        const result = await fetch(`${SERVER_URL}/api/services/online`);
         const data = await result.json();
         if (!result.ok)
           throw new Error(data.message);
@@ -105,8 +105,8 @@ export default function HomeServiceFaceToFace() {
   }, []);
 
   useEffect(() => {
-    dispatch({ type: 'FILTER', servicesFaceToFace: servicesFaceToFace, place: place, day: day })
-  }, [place, day]);
+    dispatch({ type: 'FILTER', servicesOnline: servicesOnline, platform: platform, day: day })
+  }, [platform, day]);
 
 
   return (
@@ -115,7 +115,7 @@ export default function HomeServiceFaceToFace() {
         <Helmet>
           <title>Animal house</title>
         </Helmet>
-        <h1>Services Face To Face</h1>
+        <h1>Services Online</h1>
         <div className="services mx-auto">
           {
             loading ? (
@@ -125,10 +125,10 @@ export default function HomeServiceFaceToFace() {
             ) : (
               <>
                 <Row className='mx-auto'>
-                  <div className='content'><label htmlFor="placeFilters"><b>Place filter</b></label>
-                    <Form.Select id="placeFilter" aria-label="Place filter" value={place} onChange={(e) => setPlace(e.target.value)}>
+                  <div className='content'><label htmlFor="platformFilters"><b>Platform filter</b></label>
+                    <Form.Select id="platformFilter" aria-label="Platform filter" value={platform} onChange={(e) => setPlatform(e.target.value)}>
                       {
-                        placeFilters.map((f, index) => {
+                        platformFilters.map((f, index) => {
                           return <option key={index} value={f} label={f}></option>
                         })
                       }
@@ -146,7 +146,7 @@ export default function HomeServiceFaceToFace() {
                 </Row>
                 <Row className='mx-auto mt-4'>
                   {
-                    servicesFaceToFaceFiltered.map(service => (
+                    servicesOnlineFiltered.map(service => (
                       <Col key={service.slug} sm={6} md={4} lg={3} className="mb-3">
                         <Service service={service}></Service>
                       </Col>

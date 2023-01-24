@@ -8,7 +8,7 @@ import LoadingBox from '@/components/react/utils/LoadingBox';
 import MessageBox from '@/components/react/utils/MessageBox';
 import CustomForm from '@/components/react/utils/input/CustomForm';
 import Navbar from "@/components/react/navbar/Navbar";
-import { SERVER_URL } from "@/context/utils";
+import { SERVER_URL, getDayLabel, getHourLabel } from "@/context/utils";
 import "@/assets/css/services/services.css";
 
 const reducer = (state, action) => {
@@ -27,10 +27,11 @@ const reducer = (state, action) => {
 }
 
 
-function ProductScreen() {
+function ServiceScreen() {
   const navigate = useNavigate();
   const params = useParams();
-  const { slug } = params;
+  console.log("he")
+  const { slug, serviceType } = params;
   const [cityIndex, setCityIndex] = useState('');
   const [dayIndex, setDayIndex] = useState('');
   const [hourIndex, setHourIndex] = useState('');
@@ -75,7 +76,7 @@ function ProductScreen() {
   async function fetchData() {
     dispatch({ type: 'FETCH_REQUEST' });
     try {
-      const result = await fetch(`${SERVER_URL}/api/services/facetoface/slug/${slug}`);
+      const result = await fetch(`${SERVER_URL}/api/services/${serviceType}/slug/${slug}`);
       if (!result.ok) {
         throw new Error((await result.json()).message);
       }
@@ -105,7 +106,7 @@ function ProductScreen() {
       let h = parseInt(data.hourIndex);
       let id = (service.availabilities[c].shifts[d].hours[h]._id);
       data.id = id;
-      let res = await fetch(`${SERVER_URL}/api/services/facetoface/book/${slug}`, {
+      let res = await fetch(`${SERVER_URL}/api/services/${serviceType}/book/${slug}`, {
         method: "POST",
         headers: {
           'Accept': '*/*',
@@ -118,6 +119,7 @@ function ProductScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: `Error while booking !` });
       else {
         dispatch({ type: 'BOOKING_SUCCESS' });
+        fetchData()
       }
     } catch (err) {
       console.log('Yikes ma boy fr fr');
@@ -125,6 +127,7 @@ function ProductScreen() {
     }
     return false;
   }
+
 
   useEffect(() => {
     // called twice becasue in React.strict mode, will not happend in prod
@@ -155,7 +158,7 @@ function ProductScreen() {
             </Row>
             <Row>
               <Col md={6} >
-                <img className='w-100' src={`${SERVER_URL}/${item.poster}`} alt={service.title}>
+                <img className='w-100' src={service.poster} alt={service.title}>
                 </img>
               </Col>
               <Col md={6} >
@@ -190,7 +193,7 @@ function ProductScreen() {
                     <option key={-1} value={"none"} label={"none"} ></option>
                     {
                       service.availabilities.map((ava, index) => {
-                        return <option key={index} value={index} label={ava.city} ></option>
+                        return <option key={index} value={index} label={`${ava.city} - ${ava.address}`} ></option>
                       })
                     }
                   </Form.Select>
@@ -200,7 +203,7 @@ function ProductScreen() {
                   <Form.Select {...register("dayIndex")} aria-label="dayIndex" onChange={handleDayChange} required>
                     {
                       shifts.map((ava, index) => {
-                        return <option key={index} value={index} label={`${ava.day}`}></option>
+                        return <option key={index} value={index} label={`${getDayLabel(ava.day)}`}></option>
                       })
                     }
                   </Form.Select>
@@ -210,7 +213,7 @@ function ProductScreen() {
                   <Form.Select {...register("hourIndex")} aria-label="hourIndex" onChange={handleHoursChange} required>
                     {
                       hours.map((h, index) => {
-                        return <option key={index} value={index} label={`${h.begin} - ${h.end}`}></option>
+                        return <option key={index} value={index} label={`${getHourLabel(h.begin)} - ${getHourLabel(h.end)}  (${h.currentClients}/${h.maxClients})`}></option>
                       })
                     }
                   </Form.Select>
@@ -233,4 +236,4 @@ function ProductScreen() {
   );
 }
 
-export default ProductScreen;
+export default ServiceScreen;

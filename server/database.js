@@ -17,7 +17,7 @@ const userSchema = new Schema({
   contact: { type: String, required: true },
   isAdmin: { type: Boolean, default: false, required: true },
   petList: { type: Array, required: false },
-  bookings: { type: Array },
+  bookings: { type: Array }
 });
 
 const postSchema = new Schema({
@@ -143,77 +143,56 @@ const bookingSchema = new mongoose.Schema({
   opts: { type: String },
 });
 const serviceHourSchema = new mongoose.Schema({
-  begin: { type: String, required: true },
-  end: { type: String, required: true },
+  begin: { type: Number, required: true },
+  end: { type: Number, required: true },
   maxClients: { type: Number, required: true },
   currentClients: { type: Number, required: true },
 });
 const serviceShiftSchema = new mongoose.Schema({
-  day: { type: String, required: true },
-  hours: { type: [serviceHourSchema], required: true },
-});
+  day: { type: Number, required: true },
+  hours: { type: [serviceHourSchema], required: true }
+})
 const serviceAvailabilitySchema = new mongoose.Schema({
+  // in case of online service city will be Teams for example
   city: { type: String, required: true },
+  // in case of online service address will be Teams room for example
   address: { type: String, required: true },
   shifts: { type: [serviceShiftSchema], required: true },
 });
 
-const serviceFaceToFaceSchema = new mongoose.Schema(
-  {
-    slug: { type: String, required: true, unique: true },
-    poster: { type: String, required: true },
-    title: { type: String, required: true },
-    category: { type: String, required: true },
-    availabilities: { type: [serviceAvailabilitySchema], required: true },
-    images: { type: Array, required: true },
-    hourlyRate: { type: Number, required: true },
-    description: { type: String, required: true },
-    rating: { type: Number, required: true },
-    numReviews: { type: Number, required: true },
-    opts: { type: Array, required: true },
-    bookings: {
-      type: [bookingSchema],
-    },
-  },
-  {
-    timestamps: true,
+const serviceSchema = new mongoose.Schema({
+  slug: { type: String, required: true, unique: true },
+  isOnline: { type: Boolean, required: true },
+  poster: { type: String, required: true },
+  title: { type: String, required: true, },
+  category: { type: String, required: true },
+  availabilities: { type: [serviceAvailabilitySchema], required: true, },
+  images: { type: Array, required: true, },
+  hourlyRate: { type: Number, required: true },
+  description: { type: String, required: true },
+  rating: { type: Number, required: true },
+  numReviews: { type: Number, required: true },
+  opts: { type: Array, required: true },
+  bookings: {
+    type: [bookingSchema]
   }
+},
 );
 
+const Post = mongoose.model('Post', postSchema);
+const User = mongoose.model('User', userSchema);
+const Pet = mongoose.model('Pet', petSchema);
+const Score = mongoose.model('Score', scoreSchema);
+const Order = mongoose.model('Order', orderSchema);
+const Product = mongoose.model('Product', productSchema);
 const ProductCategory = mongoose.model(
   "ProductCategory",
   productCategorySchema
 );
-const Post = mongoose.model("Post", postSchema);
-const User = mongoose.model("User", userSchema);
-const Pet = mongoose.model("Pet", petSchema);
-const Score = mongoose.model("Score", scoreSchema);
-const Order = mongoose.model("Order", orderSchema);
-const Product = mongoose.model("Product", productSchema);
-const ServiceHour = mongoose.model("ServiceHour", serviceHourSchema);
-const ServiceShift = mongoose.model("ServiceShift", serviceShiftSchema);
-const ServiceAvailability = mongoose.model(
-  "ServiceAvailability",
-  serviceAvailabilitySchema
-);
-const ServiceFaceToFace = mongoose.model(
-  "ServiceFaceToFace",
-  serviceFaceToFaceSchema
-);
 const Review = mongoose.model("Review", reviewSchema);
+const ServiceHour = mongoose.model('ServiceHour', serviceHourSchema);
+const ServiceShift = mongoose.model('ServiceShift', serviceShiftSchema);
+const ServiceAvailability = mongoose.model('ServiceAvailability', serviceAvailabilitySchema);
+const Service = mongoose.model('Service', serviceSchema);
 
-export default {
-  User,
-  Post,
-  Pet,
-  Score,
-  Order,
-  Product,
-  Review,
-  ProductCategory,
-  ServiceHour,
-  ServiceShift,
-  ServiceAvailability,
-  ServiceFaceToFace,
-  connect,
-};
+export default { User, Post, Pet, Score, Order, Product, ProductCategory, Review, ServiceHour, ServiceShift, ServiceAvailability, Service, connect };

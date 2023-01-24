@@ -93,6 +93,9 @@ function initAPI() {
       let params = [ENDPOINTS[i].endpoint, opts, func];
       if (ENDPOINTS[i].method == METHODS.GET) app.get(...params);
       else if (ENDPOINTS[i].method == METHODS.POST) app.post(...params);
+      else if (ENDPOINTS[i].method == METHODS.PUT) app.put(...params);
+      else if (ENDPOINTS[i].method == METHODS.PATCH) app.patch(...params);
+      else if (ENDPOINTS[i].method == METHODS.DELETE) app.delete(...params);
     }
   }
 }

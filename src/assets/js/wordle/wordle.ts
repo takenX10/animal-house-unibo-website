@@ -58,7 +58,7 @@ export class Wordle {
   }
 
   public isCorrect(s: string) {
-    return this._word === s.toLowerCase()
+    return this._word.toLowerCase() === s.toLowerCase()
   }
 
   public getScore(wordLength: number, guessesMade: number) {

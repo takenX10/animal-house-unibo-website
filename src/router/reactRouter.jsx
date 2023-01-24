@@ -32,6 +32,7 @@ import OrderScreen from '@/views/react/ecommerce/OrderScreen';
 import OrderHistoryScreen from '@/views/react/ecommerce/OrderHistoryScreen';
 import PaymentMethodScreen from '@/views/react/ecommerce/PaymentMethodScreen';
 import HomeServiceFaceToFace from '@/views/react/services/HomeServiceFaceToFace';
+import HomeServiceOnline from '@/views/react/services/HomeServiceOnline';
 import ServiceScreen from '@/views/react/services/ServiceScreen';
 
 // Login
@@ -54,16 +55,17 @@ const ReactRoutes = [
       { path: "/comunita/cerco-partner", element: <CercoPartner /> },
       { path: "/comunita/eccolo-qua", element: <EccoloQua /> },
       { path: "/comunita/aiutatemi", element: <Aiutatemi /> },
-      { path: "/comunita/leaderboard", element: <Leaderboard />},
+      { path: "/comunita/leaderboard", element: <Leaderboard /> },
     ]
   },
-  { 
+  {
     path: "/services/facetoface", element: <HomeServiceFaceToFace />,
-    children:[ 
-      { path: "/services/facetoface/:slug", element: <ServiceScreen /> }, 
-    ]
   },
-  { 
+  {
+    path: "/services/online", element: <HomeServiceOnline />,
+  },
+  { path: "/services/:serviceType/:slug", element: <ServiceScreen /> },
+  {
     path: "/shop", element: <HomeScreen />,
     children: [
       { path: "/shop/cart", element: <CartScreen /> },
@@ -116,14 +118,14 @@ export const CreateReactApp = () => {
         <HelmetProvider>
           <BrowserRouter>
             <header>
-              <Navbar/>
+              <Navbar />
             </header>
-            <main className=''>
-                <Routes>
-                  {ReactRoutes.map((route) => {
-                    return createRoute(route)
-                  })}
-                </Routes>
+            <main className='pt-3'>
+              <Routes>
+                {ReactRoutes.map((route) => {
+                  return createRoute(route)
+                })}
+              </Routes>
             </main>
           </BrowserRouter>
         </HelmetProvider>

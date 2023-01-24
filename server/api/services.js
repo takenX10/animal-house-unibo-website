@@ -8,6 +8,9 @@ const ENDPOINTS = [
   { endpoint: "/api/services/facetoface/slug/:slug", method: METHODS.GET, function: serviceFaceToFaceBySlug },
   { endpoint: "/api/services/facetoface", method: METHODS.GET, function: serviceFaceToFaceRoutes },
   { endpoint: "/api/services/facetoface/book/:slug", method: METHODS.POST, opts: [jsonParser, isAuth], function: serviceFaceToFaceBook },
+  { endpoint: "/api/services/online/slug/:slug", method: METHODS.GET, function: serviceOnlineBySlug },
+  { endpoint: "/api/services/online", method: METHODS.GET, function: serviceOnlineRoutes },
+  { endpoint: "/api/services/online/book/:slug", method: METHODS.POST, opts: [jsonParser, isAuth], function: serviceOnlineBook },
 ];
 
 function removeBusyHours(service) {
@@ -62,10 +65,10 @@ function decrementHourById(service, id) {
   return service;
 }
 
-async function serviceFaceToFaceBySlug(req, res) {
-  let service = await DATABASE.ServiceFaceToFace.findOne({ slug: req.params.slug });
-  service = removeBusyHours(service)
+async function serviceBySlug(req, res, isOnline) {
+  let service = await DATABASE.Service.findOne({ slug: req.params.slug, isOnline: isOnline });
   if (service) {
+    service = removeBusyHours(service)
     res.json(service);
   } else {
     notfound(res);
@@ -73,15 +76,20 @@ async function serviceFaceToFaceBySlug(req, res) {
 }
 
 
-async function serviceFaceToFaceRoutes(req, res) {
-  const services = await DATABASE.ServiceFaceToFace.find();
+async function serviceRoutes(req, res, isOnline) {
+  const services = await DATABASE.Service.find({ isOnline: isOnline });
+  if (services == undefined) {
+    notfound(res)
+    return;
+  }
+  services.bookings = [];
   res.json(services);
 }
 
-async function serviceFaceToFaceBook(req, res) {
+async function serviceBook(req, res, isOnline) {
   try {
     const user = await AUTH.get_user(req);
-    let service = await DATABASE.ServiceFaceToFace.findOne({ slug: req.params.slug });
+    let service = await DATABASE.Service.findOne({ slug: req.params.slug, isOnline: isOnline });
     let hourId = new mongoose.Types.ObjectId(req.body.id);
     if (service == undefined) {
       notfound(res)
@@ -97,9 +105,9 @@ async function serviceFaceToFaceBook(req, res) {
       return;
     }
     service = incrementHourById(service, hourId.toString());
-    await DATABASE.ServiceFaceToFace.findByIdAndUpdate(service._id, { availabilities: service.availabilities });
+    await DATABASE.Service.findByIdAndUpdate(service._id, { availabilities: service.availabilities });
     let booking = { userId: user._id, avaId, shiftId, hourId };
-    await DATABASE.ServiceFaceToFace.updateOne({ _id: service._id }, { $push: { bookings: booking } });
+    await DATABASE.Service.updateOne({ _id: service._id }, { $push: { bookings: booking } });
     let userBooking = { slug: req.params.slug, serviceId: service._id, avaId, shiftId, hourId };
     await DATABASE.User.updateOne({ _id: user._id }, { $push: { bookings: userBooking } });
     res.status(200).json({ message: 'Booking completed' })
@@ -107,6 +115,31 @@ async function serviceFaceToFaceBook(req, res) {
     console.log("not found");
     notfound(res)
   }
+}
+
+async function serviceFaceToFaceBySlug(req, res) {
+  return serviceBySlug(req, res, false);
+}
+
+
+async function serviceFaceToFaceRoutes(req, res) {
+  return serviceRoutes(req, res, false);
+}
+
+async function serviceFaceToFaceBook(req, res) {
+  return serviceBook(req, res, false);
+}
+
+async function serviceOnlineBySlug(req, res) {
+  return serviceBySlug(req, res, true);
+}
+
+async function serviceOnlineRoutes(req, res) {
+  return serviceRoutes(req, res, true);
+}
+
+async function serviceOnlineBook(req, res) {
+  return serviceBook(req, res, true);
 }
 
 function notfound(res) {

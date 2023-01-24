@@ -13,10 +13,13 @@ import { MDBBtn,MDBRow,MDBCol,MDBContainer,MDBListGroup,MDBListGroupItem,MDBFile
 <script >
 import { defineAsyncComponent, ref } from "vue";
 
-// import Memory from '@/views/vue/games/Memory.vue'
-const Memory = defineAsyncComponent(() =>
-  import("@/views/vue/games/Memory.vue")
+const Quiz = defineAsyncComponent(() =>
+  import("@/views/vue/games/Quiz.vue")
 );
+// import Memory from '@/views/vue/games/Memory.vue'
+//const Memory = defineAsyncComponent(() =>
+//  import("@/views/vue/games/Memory.vue")
+//);
 // import Hangman from '@/views/vue/games/Hangman.vue'
 const Hangman = defineAsyncComponent(() =>
   import("@/views/vue/games/Hangman.vue")
@@ -37,11 +40,11 @@ import GameHeader from "./GameHeader.vue";
 
 let game = "";
 let games = [
- // {
-   // title: "Memory",
-    //component: "Memory",
-    //color: "",
- // },
+  {
+    title: "Quiz",
+    component: "Quiz",
+    color: "",
+  },
   {
     title: "Hangman",
     component: "Hangman",
@@ -61,9 +64,9 @@ let games = [
 
 export default {
   components: {
+    Quiz,
     Wordle,
     Hangman,
-    Memory,
     Slider,
     Carousel,
     Slide,
@@ -77,6 +80,7 @@ export default {
       games: games,
       funnyvideo: "",
       random_fact: "",
+      random_fact_loading: false,
       dog_breed_loading: false,
       dog_breed_guesses: [],
       cat_breed_loading: false,
@@ -104,19 +108,19 @@ export default {
     },
     updateScoreboard: async function (g) {
       if (!g) return;
-      console.log("heeeeeeeeeeeeeeeee", g);
       let res = await fetch(
         `${this.BACKEND_SERVER}/api/scoreboard/${String(g).toLowerCase()}`
       );
       let data = await res.json();
-      console.log(data);
       if (data.success == true) {
         this.scoreboards = data.data;
       }
     },
     showRandomFact: async function () {
+      this.random_fact_loading = true;
       let res = await fetch(`${this.BACKEND_SERVER}/api/randomfact`);
       let data = await res.json();
+      this.random_fact_loading = false;
       if (data.success == true) {
         // $toast({ message: "Random fact : " + data.text, timeoutMs: 3500 })
         this.random_fact = data.text;
@@ -362,7 +366,15 @@ export default {
             <div class="fw-bold section_header">🧠 Did you know that ...</div>
           </MDBRow>
           <MDBRow >
+          <MDBCol class="col-sm-8 col-md-8 mx-auto text-center">
             <div class="fw-bold">{{ random_fact }}</div>
+            <MDBSpinner v-if="random_fact_loading"/>
+            </MDBCol>
+          </MDBRow>
+          <MDBRow >
+          <MDBCol class="col-sm-12 col-md-12 mx-auto text-center">
+            <MDBBtn raised @click="showRandomFact()">Tell me more!</MDBBtn>
+            </MDBCol>
           </MDBRow>
       </MDBContainer>
     </div>
@@ -380,7 +392,7 @@ export default {
           <div>
             <!-- <h4>{{ game.title }}</h4> -->
             <!-- <ui-icon-button>videogame_asset</ui-icon-button> -->
-            <MDBBtn raised @click="changeGame(game.component);console.log('ciao');updateScoreboard(game.component);">{{
+            <MDBBtn raised @click="changeGame(game.component);updateScoreboard(game.component);">{{
               game.title
             }}</MDBBtn>
           </div>

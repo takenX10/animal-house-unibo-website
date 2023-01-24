@@ -5,13 +5,15 @@ import jsdom from "jsdom";
 import os from "os";
 import multer from "multer";
 import { FormData } from "formdata-node"; // You can use `File` from fetch-blob >= 3.x
-import METHODS from "../methods.js";
+import METHODS from "../../methods.js";
 import { fileFromSync } from "fetch-blob/from.js";
 const { JSDOM } = jsdom;
 const upload = multer({ dest: os.tmpdir() });
-import DATABASE from '../database.js';
+import DATABASE from '../../database.js';
+import { showError } from '../../utils.js';
 
 import CatBreedAI from "./catBreedAI.js";
+import Quiz from "./quiz.js";
 
 const IMAGE_DOG_API = "https://dog.ceo/api/breeds/image/random";
 const IMAGE_CAT_API = "https://api.thecatapi.com/v1/images/search";
@@ -62,6 +64,11 @@ const ENDPOINTS = [
     method: METHODS.POST,
     opts: upload.single("cat"),
     function: getCatBreedAIAPI,
+  },
+  {
+    endpoint: "/api/quiz",
+    method: METHODS.GET,
+    function: Quiz.getQuiz
   },
 ];
 
@@ -274,10 +281,6 @@ async function getFunnyVideoAPI(req, res) {
   }
 }
 
-function showError(res) {
-  res.status(500);
-  res.redirect("/errore");
-}
 
 function generateRandomInteger(max) {
   return Math.floor(Math.random() * max);

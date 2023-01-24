@@ -13,9 +13,9 @@ let ENDPOINTS = [
   { endpoint: "/backoffice/get_user", method: METHODS.GET, opts: [jsonParser, isAuth], function: get_user },
   { endpoint: "/backoffice/get_bookings", method: METHODS.GET, opts: [jsonParser, isAuth], function: get_bookings },
   { endpoint: "/backoffice/delete_booking", method: METHODS.POST, opts: [jsonParser, isAuth], function: delete_booking },
-  { endpoint: "/backoffice/change_password", method: METHODS.POST, opts: [jsonParser, isAuth], function: change_password },
-  { endpoint: "/backoffice/delete_user", method: METHODS.POST, opts: [jsonParser, isAuth], function: delete_user },
-  { endpoint: "/backoffice/is_admin", method: METHODS.POST, opts: [jsonParser, isAdmin], function: is_admin },
+  { endpoint: "/backoffice/change_password", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: change_password },
+  { endpoint: "/backoffice/delete_user", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_user },
+  { endpoint: "/backoffice/is_admin", method: METHODS.POST, opts: [jsonParser, isAuth, isAdmin], function: is_admin },
 ]
 
 async function officeHome(req, res) {
@@ -76,7 +76,7 @@ async function get_bookings(req, res) {
         shiftId = shiftId.toString();
       if (typeof (hourId) !== String)
         hourId = hourId.toString();
-      let serv = await DATABASE.ServiceFaceToFace.findOne({ slug: slug })
+      let serv = await DATABASE.Service.findOne({ slug: slug })
       let { availability, shift, hour } = getAvailabilityInfo(serv.availabilities, avaId, shiftId, hourId);
       availability.shifts = []
       shift.hours = []
@@ -105,19 +105,16 @@ async function delete_booking(req, res) {
     shiftId = shiftId.toString();
   if (typeof (hourId) !== String)
     hourId = hourId.toString();
-  console.log(avaId, shiftId, hourId);
   for (let i = 0; i < user.bookings.length; i++) {
     if (user.bookings[i].avaId.toString() == avaId && user.bookings[i].shiftId.toString() == shiftId && user.bookings[i].hourId.toString() == hourId) {
       user.bookings.splice(i, 1);
       break;
     }
   }
-  console.log(user.bookings);
-  let service = await DATABASE.ServiceFaceToFace.findOne({ slug: slug });
+  let service = await DATABASE.Service.findOne({ slug: slug });
   service = SERVICES.decrementHourById(service, hourId);
-  await DATABASE.ServiceFaceToFace.findByIdAndUpdate(service._id, { availabilities: service.availabilities });
-  await DATABASE.User.updateOne({ _id: user._id },  { bookings: user.bookings } );
-  console.log("deleted") 
+  await DATABASE.Service.findByIdAndUpdate(service._id, { availabilities: service.availabilities });
+  await DATABASE.User.updateOne({ _id: user._id }, { bookings: user.bookings });
   res.json({
     success: true,
   });
