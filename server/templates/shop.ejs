@@ -1,0 +1,466 @@
+<%- include('./head.ejs', {headTitle:title}); %>
+<div class="container-fluid w-100 ">
+<div class="alert alert-danger collapse mt-2" id="error-alert" role="alert">
+  <strong>Oh no!</strong> Something went wrong.
+</div>
+<div class="alert alert-success fade collapse mt-2" id="succ-alert" role="alert">
+  <strong>Well done!</strong> 
+</div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+     <h1><b><%= title %></b></h1>
+    
+    </div>
+  </div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+     <h2><b> Products </b></h2>
+    </div>
+  </div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+        <button style="background-color: #0000FF" class="btn text-white" type="button" data-toggle="modal" data-target="#addModal">
+          Add product
+        </button>
+    </div>
+  </div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+    <div id="products-loading" class="spinner-border collapse" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+      <div class="products-container">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  let bookingdataalert = {};
+  let type = "<%= type %>";
+
+
+  async function getProducts() {
+    try {
+       $("#products-loading").removeClass("collapse");
+       let res = await fetch(`/api/shop/products`);
+       $("#products-loading").addClass("collapse");
+       let products = await res.json();
+
+        $('.products-container').html('');
+        let c = 0;
+        for(let prod of products){
+            c++;
+            const newProd = $("#product-template").clone()[0].content;
+            $("#name",newProd).text(prod.name);
+            $("#description",newProd).text(prod.description);
+            $("#price",newProd).text(`${prod.price} $`);
+            $("#count",newProd).text(prod.countInStock);
+            $("#cat",newProd).text(prod.categories);
+            $("#brand",newProd).text(prod.brand);
+            $("#product-edit",newProd).click(()=>{showEditProduct(prod)});
+            $("#product-delete",newProd).click(()=>{deleteProduct(prod)});
+            /* $("#",newProd).text(prod.description); */
+            /* let begin = new Date(book.hour.begin); */
+            /* begin = begin.toString() */
+            /* begin = begin.replace(begin.substring(begin.indexOf("GMT")), "") */
+            /* let end= new Date(book.hour.end); */
+            /* end = end.toString() */
+            /* end = end.replace(end.substring(end.indexOf("GMT")), "") */
+            /* $("#begin",newProd).text("Begin: " + begin); */
+            /* $("#end",newProd).text("End: " + end); */
+            /* $("#who",newProd).text("User: " + book.userName); */
+            /* $("#email",newProd).text("Email: " + book.email); */
+            $('.products-container').append(newProd);
+        }
+        if (c == 0) {
+          $('.products-container').html('<div>No product found</div>');
+          return;
+        }
+        
+    } catch(e) {
+        showError();
+    }
+  }
+  async function deleteProduct(product) {
+    try {
+      let b = await (await fetch(`/api/backoffice/delete_product`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ slug: product.slug })
+      })).json();
+      if (b.success === false)
+        alert("Can't delete booking !");
+      else
+        getProducts();
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+
+  function showEditProduct(prod) {
+      $("#namemodal").val(prod.name);
+      $("#descmodal").val(prod.description);
+      $("#pricemodal").val(prod.price);
+      $("#countmodal").val(prod.countInStock);
+      productdataalert = prod;
+  }
+  async function editProduct() {
+    let name = $("#namemodal").val();
+    let desc = $("#descmodal").val();
+    let price = $("#pricemodal").val();
+    let count= $("#countmodal").val();
+    try {
+      let b = await fetch(`/api/backoffice/edit_product`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          slug: productdataalert.slug, 
+          name,
+          desc,
+          price,
+          count
+        })
+      });
+      b = await b.json();
+      if (b.success === false)
+        showError();
+      else {
+        showSucc();
+        getProducts();
+      }
+    } catch (e) {
+      showError();
+    }
+  }
+  async function addProduct() {
+    let name = $("#nameaddmodal").val();
+    let slug = $("#slugaddmodal").val();
+    let poster = $("#posteraddmodal").val();
+    let images = $("#imagesaddmodal").val().split(",");
+    let brand = $("#brandaddmodal").val();
+    let cat = $("#cataddmodal").val().split(",");
+    let desc = $("#descaddmodal").val();
+    let price = $("#priceaddmodal").val();
+    let count = $("#countaddmodal").val();
+    try {
+      let b = await fetch(`/api/backoffice/add_product`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          name,
+          slug, 
+          poster,
+          images,
+          brand,
+          cat,
+          desc,
+          price,
+          count
+        })
+      });
+      b = await b.json();
+      if (b.success === false)
+        showError();
+      else {
+        showSucc();
+        getProducts();
+      }
+    } catch (e) {
+      showError();
+    }
+  }
+
+
+ function showError() {
+      $("#error-alert").addClass("show").removeClass("collapse");
+      $("#error-alert").focus();
+    window.scrollTo(0, 0);
+  }
+  function showSucc() {
+      $("#succ-alert").addClass("show").removeClass("collapse");
+      $("#succ-alert").focus();
+    window.scrollTo(0, 0);
+  }
+  function isodate(d) {
+    d = new Date(d.getTime() + 60 * 60000);
+    let ii = d.toISOString();
+    ii = ii.slice(0, 16); 
+    return ii;
+  }
+
+
+  $(document).ready(() => {
+    /* getBookings(); */
+    /* getServices(); */
+    getProducts();
+  })
+</script>
+<%- include('./foot.ejs', {}); %>
+
+<template id="booking-template">
+    <div class="row mb-2  p-3 rounded">
+        <div class="col-xs-12 col-sm-8 ml-auto text-left">
+            <h3 id="title" name="title">Title</h3>
+            <div id="where" name="where">Where</div>
+            <div id="begin" name="begin">begin</div>
+            <div id="end" name="end">end</div>
+            <div id="who" name="username">Who</div>
+            <div id="email" name="useremail">Email</div>
+        </div>
+        <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
+            <button type="button" class="btn btn-secondary m-2" id="booking-edit" data-toggle="modal" data-target="#editModal">Edit</button>
+            <button type="button" class="btn btn-danger m-2" id="booking-delete">Delete</button>
+        </div>
+    </div>
+    <hr>
+</template>
+
+<template id="product-template">
+    <div class="row mb-2  p-3 rounded">
+        <div class="col-xs-12 col-sm-8 ml-auto text-left">
+            <h3 id="name" name="name">Name</h3>
+            <div id="description" name="description">Description</div>
+            <div> Price: <span id="price" name="price">Price</span></div>
+            <div> In stock: <span id="count" name="count">Count</span></div>
+            <div> Categories: <span id="cat" name="cat">Categories</span></div>
+            <div> Brand: <span id="brand" name="brand">Brand</span></div>
+        </div>
+        <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
+            <button type="button" class="btn btn-secondary m-2" id="product-edit" data-toggle="modal" data-target="#editModal">Edit</button>
+            <button type="button" class="btn btn-danger m-2" id="product-delete">Delete</button>
+        </div>
+    </div>
+    <hr>
+</template>
+
+<template id="tr-template">
+  <tr>
+    <td class="begin"></td>
+    <td class="end"></td>
+    <td class="capacity"></td>
+  </tr>
+</template>
+<template id="ava-template">
+  <div class="mb-2 border border-gray p-3 rounded">
+    <div class="row ">
+        <div class="col-xs-12 col-sm-12 ml-auto text-left">
+            <h4 id="title" name="title">Title</h4>
+            <div id="where" name="where">Where</div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-12 col-sm-12 ml-auto text-left">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Begin</th>
+                <th scope="col">End</th>
+                <th scope="col">Capacity</th>
+              </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<template id="service-template">
+    <div class="row mb-2 p-3 rounded">
+        <div class="col-xs-12 col-sm-12 ml-auto mb-3 text-center">
+            <h3 id="title">Title</h3>
+            <div id="slug">Slug</div>
+        </div>
+        <div class="col-xs-12 col-sm-12 mb-3 d-flex justify-content-center align-items-center">
+            <button style="background-color: #0000FF" class="btn collapse-btn text-white" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
+              Show
+            </button>
+        </div>
+        <div class="collapse collapse-table col to-collapse mt-3">
+        </div>
+        <div class="col-xs-12 col-sm-12 d-flex justify-content-center align-items-center">
+            <button style="background-color: #0000FF" class="btn collapse-add-btn text-white" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
+             Add 
+            </button>
+        </div>
+        <div class="collapse collapse-add col to-collapse mt-3">
+           <form class="form-group">
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="citylabel" id="citylabel">City</span>
+              </div>
+              <input type="text" class="form-control cityinput" aria-label="City" aria-describedby="addresslabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend"> <span class="input-group-text" class="addresslabel" id="addresslabel">Address</span>
+              </div>
+              <input type="text" class="form-control addressinput" aria-label="Address" aria-describedby="addresslabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="beginlabel" id="beginlabel">Begin</span>
+              </div>
+              <input type="datetime-local" class="form-control begininput" aria-label="Begin"  aria-describedby="beginlabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="endlabel" id="endlabel">End</span>
+              </div>
+              <input type="datetime-local" class="form-control endinput" aria-label="End" aria-describedby="endlabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="maxlabel" id="maxlabel">Max clients</span>
+              </div>
+              <input type="number" class="form-control maxinput" aria-label="Max clients" aria-describedby="maxlabel" required>
+              </div>
+              <button style="background-color: #0000FF" type="submit" onclick="add(this,event)" class="btn text-white mb-3">Confirm</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+</template>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           <form class="form-group">
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <label class="input-group-text" for="namemodal" class="namemodallabel" id="namemodallabel">Name</label>
+              </div>
+              <input role="input" type="text" id="namemodal" class="form-control nameinput" aria-label="Name" aria-describedby="addressmodallabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+               <label class="input-group-text" for="descmodal" class="descmodallabel" id="descmodallabel">Description</label>
+              </div>
+              <input role="input" type="text" id="descmodal" class="form-control descinput" aria-label="Description" aria-describedby="descmodallabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="pricelabel" id="pricelabel">Price</span>
+              </div>
+              <input type="number" id="pricemodal" class="form-control priceinput" aria-label="Price" aria-describedby="pricelabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+               <label class="input-group-text" for="countmodal" class="countmodallabel" id="countmodallabel">In Stock</label>
+              </div>
+              <input role="number" type="text" id="countmodal" class="form-control countinput" aria-label="In Stock" aria-countribedby="countmodallabel" required>
+              </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeeditmodal" data-dismiss="modal">Close</button>
+        <button type="button" style="background-color: #0000FF" onclick="editProduct()" data-dismiss="modal" class="btn text-white">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           <form class="form-group">
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <label class="input-group-text" for="nameaddmodal" class="nameaddmodallabel" id="nameaddmodallabel">Name</label>
+              </div>
+              <input role="input" type="text" id="nameaddmodal" class="form-control nameaddinput" aria-label="Name" aria-describedby="addressmodallabel" required>
+              </div>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <label class="input-group-text" for="slugaddmodal" class="slugaddmodallabel" id="slugaddmodallabel">Slug</label>
+                </div>
+                <input role="input" type="text" id="slugaddmodal" class="form-control slugaddinput" aria-label="Slug" aria-slugaddribedby="slugaddmodallabel" required>
+            </div>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <label class="input-group-text" for="posteraddmodal" class="posteraddmodallabel" id="posteraddmodallabel">Poster url</label>
+                </div>
+                <input role="input" type="text" id="posteraddmodal" class="form-control posteraddinput" aria-label="Poster url" aria-posteraddribedby="posteraddmodallabel" required>
+            </div>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <label class="input-group-text" for="imagesaddmodal" class="imagesaddmodallabel" id="imagesaddmodallabel">Images urls (, separated)</label>
+                </div>
+                <input role="input" type="text" id="imagesaddmodal" class="form-control imagesaddinput" aria-label="Images urls (, separated)" aria-imagesaddribedby="imagesaddmodallabel" required>
+            </div>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <label class="input-group-text" for="brandaddmodal" class="brandaddmodallabel" id="brandaddmodallabel">Brand</label>
+                </div>
+                <input role="input" type="text" id="brandaddmodal" class="form-control brandaddinput" aria-label="Brand" aria-brandaddribedby="brandaddmodallabel" required>
+            </div>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <label class="input-group-text" for="cataddmodal" class="cataddmodallabel" id="cataddmodallabel">Categories (, separated)</label>
+                </div>
+                <input role="input" type="text" id="cataddmodal" class="form-control cataddinput" aria-label="Categories (, separated)" aria-cataddribedby="cataddmodallabel" required>
+            </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+               <label class="input-group-text" for="descaddmodal" class="descaddmodallabel" id="descaddmodallabel">Description</label>
+              </div>
+              <input role="input" type="text" id="descaddmodal" class="form-control descaddinput" aria-label="Description" aria-descaddribedby="descaddmodallabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="priceaddlabel" id="priceaddlabel">Price</span>
+              </div>
+              <input type="number" id="priceaddmodal" class="form-control priceaddinput" aria-label="Price" aria-describedby="priceaddlabel" required>
+              </div>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <label class="input-group-text" for="countaddmodal" class="countaddmodallabel" id="countaddmodallabel">In Stock</label>
+                </div>
+                <input role="input" type="number" id="countaddmodal" class="form-control countaddinput" aria-label="In Stock" aria-countaddribedby="countaddmodallabel" required>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeaddmodal" data-dismiss="modal">Close</button>
+        <button type="button" style="background-color: #0000FF" onclick="addProduct()" data-dismiss="modal" class="btn text-white">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

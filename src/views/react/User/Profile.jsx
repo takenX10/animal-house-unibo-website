@@ -4,6 +4,7 @@ import Navbar from '@/components/react/navbar/Navbar';
 import { Modal, Form, Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { SERVER_URL, check_login, logout, getDayLabel, getHourLabel } from '@/context/utils';
 import { useNavigate } from 'react-router-dom';
+import "@/assets/css/colors.scss";
 
 export default function Profile() {
   const { dispatch: ctxDispatch } = useContext(Store);
@@ -32,7 +33,7 @@ export default function Profile() {
         alert("Password and repeat password are different!");
         return;
       }
-      let res = await fetch(`${SERVER_URL}/backoffice/change_password`, {
+      let res = await fetch(`${SERVER_URL}/api/backoffice/change_password`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -54,7 +55,7 @@ export default function Profile() {
     let newpets = [];
     for (let p of petList) {
       try {
-        let res = await fetch(`${SERVER_URL}/backoffice/get_a_puppy`, {
+        let res = await fetch(`${SERVER_URL}/api/backoffice/get_a_puppy`, {
           method: "POST",
           credentials: "include",
           headers: {
@@ -74,7 +75,7 @@ export default function Profile() {
 
   async function get_user() {
     try {
-      let res = await fetch(`${SERVER_URL}/backoffice/get_user`, {
+      let res = await fetch(`${SERVER_URL}/api/backoffice/get_user`, {
         method: "GET",
         credentials: "include"
       });
@@ -88,7 +89,7 @@ export default function Profile() {
 
   async function getBookings() {
     try {
-      let b = await (await fetch(`${SERVER_URL}/backoffice/get_bookings`, {
+      let b = await (await fetch(`${SERVER_URL}/api/backoffice/get_bookings`, {
         method: "GET",
         credentials: "include"
       })).json();
@@ -103,7 +104,7 @@ export default function Profile() {
 
   async function deleteBooking(booking) {
     try {
-      let b = await (await fetch(`${SERVER_URL}/backoffice/delete_booking`, {
+      let b = await (await fetch(`${SERVER_URL}/api/backoffice/delete_booking`, {
         method: "DELETE",
         credentials: "include",
         headers: {
@@ -123,7 +124,7 @@ export default function Profile() {
 
   async function delete_account() {
     try {
-      let res = await fetch(`${SERVER_URL}/backoffice/delete_user`, {
+      let res = await fetch(`${SERVER_URL}/api/backoffice/delete_user`, {
         method: "POST",
         credentials: "include"
       });
@@ -154,7 +155,7 @@ export default function Profile() {
             <h1 className='fw-bold fs-1 text-center'>{user.name} {user.surname}</h1>
           </Col>
           <Col xs={12} className='text-center d-flex align-items-center justify-content-center'>
-            <Button className="m-4" variant="danger" onClick={() => {
+            <Button className="m-4 red-back text-black" onClick={() => {
               if (confirm("Are you sure you want to delete your account?")) { delete_account() }
             }}>
               Delete account
@@ -247,7 +248,7 @@ export default function Profile() {
                           <h3 className='fw-bold'>{b.title}</h3>
                         </Col>
                         <Col xs={1} className='mx-auto' >
-                          <Button onClick={() => deleteBooking(b)} className='fw-bold btn-danger text-end'>X</Button>
+                          <Button onClick={() => deleteBooking(b)} className='fw-bold red-back text-black text-end'>X</Button>
                         </Col>
                       </Row>
                       <Row>

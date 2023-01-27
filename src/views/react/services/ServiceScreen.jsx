@@ -1,14 +1,16 @@
 import { useContext, useEffect, useState, useReducer } from 'react';
 import { useForm } from "react-hook-form";
-import { Button, Col, ListGroup, Row, Form, FormLabel } from 'react-bootstrap';
+import { Button, Badge, Card, Col, ListGroup, Row, Form, FormLabel } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
-import Rating from '@/components/react/utils/Rating';
+import { toast, ToastContainer } from "react-toastify";
+import { Rating as StarInput } from "react-simple-star-rating";
+import Rating from "@/components/react/utils/Rating";
 import LoadingBox from '@/components/react/utils/LoadingBox';
 import MessageBox from '@/components/react/utils/MessageBox';
 import CustomForm from '@/components/react/utils/input/CustomForm';
 import Navbar from "@/components/react/navbar/Navbar";
-import { SERVER_URL, getDayLabel, getHourLabel } from "@/context/utils";
+import { SERVER_URL, getDayLabel, getHourLabel, check_login } from "@/context/utils";
 import "@/assets/css/services/services.css";
 
 const reducer = (state, action) => {
@@ -17,10 +19,13 @@ const reducer = (state, action) => {
       return { ...state, loading: true };
     case 'FETCH_SUCCESS':
       return { ...state, service: action.payload, loading: false };
-    case 'FETCH_FAIL':
-      return { ...state, loading: false, error: action.payload };
-    case 'BOOKING_SUCCESS':
-      return { ...state, success: true };
+    case 'FETCH_FAIL': return { ...state, loading: false, error: action.payload }; case 'BOOKING_SUCCESS': return { ...state, success: true };
+    case "REVIEW_REQUEST":
+      return { ...state, loadingRevs: true };
+    case "REVIEW_SUCCESS":
+      return { ...state, reviews: action.payload, loadingRevs: false };
+    case "REVIEW_FAIL":
+      return { ...state, loadingRevs: false, revError: action.payload };
     default:
       return state;
   }
@@ -30,6 +35,8 @@ const reducer = (state, action) => {
 function ServiceScreen() {
   const navigate = useNavigate();
   const params = useParams();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [rating, setRating] = useState(5);
   const { slug, serviceType } = params;
   const [cityIndex, setCityIndex] = useState('');
   const [dayIndex, setDayIndex] = useState('');
@@ -37,12 +44,68 @@ function ServiceScreen() {
   const [shifts, setShifts] = useState('');
   const [hours, setHours] = useState('');
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const [{ loading, error, service, success }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, service, success, reviews, loadingRevs, revError }, dispatch] = useReducer(reducer, {
     service: [],
     loading: true,
     error: '',
     success: false,
+    reviews: [],
+    loadingRevs: true,
+    revError: "",
   });
+  const verifyLogin = async () => {
+    setLoggedIn(await check_login());
+  };
+  const handleRating = (rate) => {
+    setRating(rate);
+  };
+
+  const fetchReviews = async () => {
+    dispatch({ type: "REVIEW_REQUEST" });
+    try {
+      const result = await fetch(
+        `${SERVER_URL}/api/services/${slug}/reviews`
+      );
+
+      const item = await result.json();
+      if (!result.ok) {
+        throw new Error(item.message);
+      }
+      dispatch({ type: "REVIEW_SUCCESS", payload: item });
+    } catch (err) {
+      dispatch({
+        type: "REVIEW_FAIL",
+        payload: `${err.message} :( totally not my fault i think`,
+      });
+    }
+  };
+
+  const reviewHandler = async (input) => {
+    try {
+      let res = await fetch(`${SERVER_URL}/api/services/${slug}/reviews`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: input.text,
+          rating,
+          service: service._id,
+        }),
+      });
+
+      if (!res.ok) throw new Error((await res.json()).message);
+
+      toast("Review Posted!");
+      fetchData();
+      fetchReviews();
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
   function handleShiftChange() {
     if (service.availabilities) {
       if (service.availabilities[cityIndex]) {
@@ -80,7 +143,6 @@ function ServiceScreen() {
         throw new Error((await result.json()).message);
       }
       const item = await result.json();
-      console.log(item);
       dispatch({ type: 'FETCH_SUCCESS', payload: item });
       console.log('Success ma boy fr fr');
       setCityIndex(0);
@@ -131,6 +193,8 @@ function ServiceScreen() {
   useEffect(() => {
     // called twice becasue in React.strict mode, will not happend in prod
     fetchData();
+    fetchReviews();
+    verifyLogin();
   }, [slug]);
   useEffect(() => {
     // called twice becasue in React.strict mode, will not happend in prod
@@ -150,6 +214,7 @@ function ServiceScreen() {
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         {!loading && !error &&
           <>
+            <ToastContainer />
             <Helmet>
               <title>{service.title}</title>
             </Helmet>
@@ -180,57 +245,104 @@ function ServiceScreen() {
                 </ListGroup>
               </Col>
             </Row>
-            <Row className='mx-auto mt-3 text-center'>
-              <h3 className='fw-bold mx-auto'>Booking</h3>
+
+            {loggedIn && (
+              <>
+                <Row className='mx-auto mt-3 text-center'>
+                  <h2 className='fw-bold mx-auto'>Booking</h2>
+                </Row>
+                <Form key={'form'} onSubmit={handleSubmit(book)}>
+                  <CustomForm register={register} opts={service.opts} />
+                  <Row className='mb-4 text-center mx-auto'>
+                    <Col md={4} sm={12} sx={12} className="mx-auto" >
+                      <FormLabel htmlFor="cityIndex">City</FormLabel>
+                      <Form.Select id="cityIndex" {...register("cityIndex")} aria-label="cityIndex" onChange={handleCityChange} required>
+                        <option key={-1} value={"none"} label={"none"} ></option>
+                        {
+                          service.availabilities.map((ava, index) => {
+                            return <option key={index} value={index} label={`${ava.city} - ${ava.address}`} ></option>
+                          })
+                        }
+                      </Form.Select>
+                      <hr />
+                    </Col>
+                    <Col md={4} sm={12} sx={12} className="mx-auto" >
+                      <FormLabel htmlFor="dayIndex">Day</FormLabel>
+                      <Form.Select id="dayIndex" {...register("dayIndex")} aria-label="dayIndex" onChange={handleDayChange} required>
+                        {
+                          shifts.map((ava, index) => {
+                            return <option key={index} value={index} label={`${getDayLabel(ava.day)}`}></option>
+                          })
+                        }
+                      </Form.Select>
+                      <hr />
+                    </Col>
+                    <Col md={4} sm={12} sx={12} className="mx-auto" >
+                      <FormLabel htmlFor="hourIndex">Period</FormLabel>
+                      <Form.Select id="hourIndex" {...register("hourIndex")} aria-label="hourIndex" onChange={handleHoursChange} required>
+                        {
+                          hours.map((h, index) => {
+                            return <option key={index} value={index} label={`${getHourLabel(h.begin)} - ${getHourLabel(h.end)}  (${h.currentClients}/${h.maxClients})`}></option>
+                          })
+                        }
+                      </Form.Select>
+                      <hr />
+                    </Col>
+                  </Row>
+                  {success > 0 &&
+                    <Row><MessageBox variant="success">Booking successfully done!</MessageBox> </Row>}
+                  <Row className='mx-auto text-center'>
+                    <Col md={3} sm={10} xs={10} className="mx-auto">
+                      <Button variant="primary" className='w-100' type="submit">
+                        Book
+                      </Button>
+                    </Col>
+                  </Row>
+                </Form>
+                <Row className="mx-auto text-center mt-4">
+                  <Col md={6} className="mx-auto">
+                    <h2>Share your review!</h2>
+                    <Form id="review-form" onSubmit={handleSubmit(reviewHandler)}>
+                      <Form.Group className="mb-3" controlId="text">
+                        <Form.Label>What did you think?</Form.Label>
+                        <StarInput
+                          className="mb-2 ms-2 "
+                          initialValue={rating}
+                          onClick={handleRating}
+                          allowFraction={true}
+                          fillColor={"#00afb9"}
+                        />
+                        <Form.Control as="textarea" rows={3} {...register("text")} />
+                      </Form.Group>
+                      <div className="mb-3 d-grid ">
+                        <Button type="submit">Send</Button>
+                      </div>
+                    </Form>
+                  </Col>
+                </Row>
+              </>
+            )}
+            <Row className="mx-auto text-center mb-2">
+              <h2>Reviews</h2>
+              {loadingRevs ? (
+                <LoadingBox />
+              ) : revError ? (
+                <MessageBox variant="danger">{revError}</MessageBox>
+              ) : (
+                reviews.map((review) => (
+                  <Card className="my-1" key={review._id}>
+                    <Card.Body>
+                      <Card.Title>{review.reviewer}</Card.Title>
+                      <Card.Subtitle>
+                        {review.createdAt.substring(0, 10)}
+                      </Card.Subtitle>
+                      <Rating rating={review.rating}></Rating>
+                      <Card.Text>{review.text}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                ))
+              )}
             </Row>
-            <Form key={'form'} onSubmit={handleSubmit(book)}>
-              <CustomForm register={register} opts={service.opts} />
-              <Row className='mb-4 text-center mx-auto'>
-                <Col md={4} sm={12} sx={12} className="mx-auto" >
-                  <FormLabel for="cityIndex">City</FormLabel>
-                  <Form.Select id="cityIndex" {...register("cityIndex")} aria-label="cityIndex" onChange={handleCityChange} required>
-                    <option key={-1} value={"none"} label={"none"} ></option>
-                    {
-                      service.availabilities.map((ava, index) => {
-                        return <option key={index} value={index} label={`${ava.city} - ${ava.address}`} ></option>
-                      })
-                    }
-                  </Form.Select>
-                  <hr />
-                </Col>
-                <Col md={4} sm={12} sx={12} className="mx-auto" >
-                  <FormLabel for="dayIndex">Day</FormLabel>
-                  <Form.Select id="dayIndex" {...register("dayIndex")} aria-label="dayIndex" onChange={handleDayChange} required>
-                    {
-                      shifts.map((ava, index) => {
-                        return <option key={index} value={index} label={`${getDayLabel(ava.day)}`}></option>
-                      })
-                    }
-                  </Form.Select>
-                  <hr />
-                </Col>
-                <Col md={4} sm={12} sx={12} className="mx-auto" >
-                  <FormLabel for="hourIndex">Period</FormLabel>
-                  <Form.Select id="hourIndex" {...register("hourIndex")} aria-label="hourIndex" onChange={handleHoursChange} required>
-                    {
-                      hours.map((h, index) => {
-                        return <option key={index} value={index} label={`${getHourLabel(h.begin)} - ${getHourLabel(h.end)}  (${h.currentClients}/${h.maxClients})`}></option>
-                      })
-                    }
-                  </Form.Select>
-                  <hr />
-                </Col>
-              </Row>
-              {success > 0 &&
-                <Row><MessageBox variant="success">Booking successfully done!</MessageBox> </Row>}
-              <Row className='mx-auto text-center'>
-                <Col md={3} sm={10} xs={10} className="mx-auto">
-                  <Button variant="primary" className='w-100' type="submit">
-                    Book
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
           </>
         }
 

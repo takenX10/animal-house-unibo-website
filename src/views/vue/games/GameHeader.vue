@@ -54,7 +54,7 @@ import { check_login, raw_logout } from "@/context/utils.jsx";
             <a @click="dropdown1 = !dropdown1" tabindex="0" href="#" role="button" type="button" class="dropdown-toggle nav-link">Services</a>
             <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
               <MDBDropdownItem href="/comunita" tabindex="0">Community</MDBDropdownItem>
-              <MDBDropdownItem href="/services/facetoface">Offline</MDBDropdownItem>
+              <MDBDropdownItem href="/services/facetoface">Face to Face</MDBDropdownItem>
               <MDBDropdownItem href="/services/online">Online</MDBDropdownItem>
             </MDBDropdownMenu>
           </MDBDropdown>

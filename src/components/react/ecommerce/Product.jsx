@@ -26,9 +26,10 @@ function Product(props) {
   }
   return (
     <Card className="" key={product.slug}>
-      <ToastContainer/>
+      <ToastContainer />
       <Link to={`/shop/product/${product.slug}`}>
-        <img src={`${SERVER_URL}/${product.poster}`} className="prod-img card-img-top" alt={product.name} />
+
+        <img src={product.poster.startsWith("http") ? product.poster : `${SERVER_URL}/${product.poster}`} className="prod-img card-img-top" alt={product.name} />
       </Link>
       <Card.Body>
         <Link className="text-decoration-none text-dark " to={`/shop/product/${product.slug}`}>
@@ -36,14 +37,14 @@ function Product(props) {
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews}></Rating>
         <Card.Text className="d-flex justify-content-between pt-2 align-items-center">${product.price}
-        {product.countInStock === 0
-          ? (<Button className="rounded-pill"variant='light' disabled>Out of stock</Button>)
-          : (
-            <Button
-              onClick={() => addToCartHandler(product)}
-              className="align-bottom border-0 rounded-pill bg-green">Add to cart</Button>
-          )
-        }</Card.Text>
+          {product.countInStock === 0
+            ? (<Button className="rounded-pill" variant='light' disabled>Out of stock</Button>)
+            : (
+              <Button
+                onClick={() => addToCartHandler(product)}
+                className="align-bottom border-0 rounded-pill bg-green">Add to cart</Button>
+            )
+          }</Card.Text>
       </Card.Body>
     </Card>
   );

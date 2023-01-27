@@ -12,6 +12,8 @@ const ENDPOINTS = [
   { endpoint: "/api/services/online/slug/:slug", method: METHODS.GET, function: serviceOnlineBySlug },
   { endpoint: "/api/services/online", method: METHODS.GET, function: serviceOnlineRoutes },
   { endpoint: "/api/services/online/book/:slug", method: METHODS.POST, opts: [jsonParser, isAuth], function: serviceOnlineBook },
+  { endpoint: "/api/services/:slug/reviews", method: METHODS.PUT, opts: [jsonParser, isAuth], function: saveReviewService },
+  { endpoint: "/api/services/:slug/reviews", method: METHODS.GET, opts: [jsonParser], function: reviewsBySlug },
 ];
 
 function removeBusyHours(service) {
@@ -234,6 +236,34 @@ async function serviceAddAvaBySlug(req, res, isOnline) {
 
 async function serviceFaceToFaceAddAvaBySlug(req, res) {
   return serviceAddAvaBySlug(req, res, false);
+}
+
+async function saveReviewService(req, res) {
+  const usName = (await AUTH.get_user(req)).name;
+  const service = await DATABASE.Service.findOne({ slug: req.params.slug });
+  const newReview = new DATABASE.ReviewService({
+    text: req.body.text,
+    rating: req.body.rating,
+    reviewer: usName,
+  });
+  await newReview.save();
+  service.numReviews++;
+  service.rating =
+    (service.rating * (service.numReviews - 1) + newReview.rating) /
+    service.numReviews;
+  service.reviews.push(newReview);
+  await service.save();
+  res.status(201).json({ message: "Review Posted" });
+}
+
+async function reviewsBySlug(req, res) {
+  const service = await DATABASE.Service.findOne({ slug: req.params.slug });
+  if (service.reviews) {
+    console.log(service.reviews);
+    res.json(service.reviews);
+  } else {
+    res.status(404).json({ message: "Reviews not found" });
+  }
 }
 
 function notfound(res) {

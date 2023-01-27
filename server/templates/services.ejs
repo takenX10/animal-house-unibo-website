@@ -8,13 +8,13 @@
 </div>
   <div class="row mx-auto w-100">
     <div class="col mx-auto text-center">
-     <h1><%= title %></h1>
+     <h1><b><%= title %></b></h1>
     
     </div>
   </div>
   <div class="row mx-auto w-100">
     <div class="col mx-auto text-center">
-     <h2> Services</h2>
+     <h2><b> Services </b></h2>
     </div>
   </div>
   <div class="row mx-auto w-100">
@@ -28,7 +28,7 @@
   </div>
   <div class="row mx-auto w-100">
     <div class="col mx-auto text-center">
-     <h2> Bookings </h2>
+     <h2><b> Bookings </b></h2>
     </div>
   </div>
   <div class="row mx-auto w-100">
@@ -52,7 +52,7 @@
   async function getBookings() {
     try {
     $("#bookings-loading").removeClass("collapse");
-    let res = await fetch("/backoffice/get_all_bookings", {credentials: "include"});
+    let res = await fetch("/api/backoffice/get_all_bookings", {credentials: "include"});
     $("#bookings-loading").addClass("collapse");
     let data = await res.json();
     let bookings = data.bookings;
@@ -89,7 +89,7 @@
   }
   async function deleteBooking(booking) {
     try {
-      let b = await (await fetch(`/backoffice/delete_booking`, {
+      let b = await (await fetch(`/api/backoffice/delete_booking`, {
         method: "DELETE",
         credentials: "include",
         headers: {
@@ -121,7 +121,7 @@
       let begin = (new Date($("#beginmodal").val())).getTime();
       let end = (new Date($("#endmodal").val())).getTime();
     try {
-      let b = await fetch(`/backoffice/edit_booking`, {
+      let b = await fetch(`/api/backoffice/edit_booking`, {
         method: "PATCH",
         credentials: "include",
         headers: {
@@ -187,6 +187,7 @@
               const newH= $("#tr-template").clone()[0].content;
               $(".begin",newH).text(getDatetime(hour.begin));
               $(".end",newH).text(getDatetime(hour.end));
+              $(".current",newH).text(hour.currentClients);
               $(".capacity",newH).text(hour.maxClients);
               $('.tbody',newAva).append(newH);
             }
@@ -263,7 +264,7 @@
 <%- include('./foot.ejs', {}); %>
 
 <template id="booking-template">
-    <div class="row mb-2 border border-dark p-3 rounded">
+    <div class="row mb-2  p-3 rounded">
         <div class="col-xs-12 col-sm-8 ml-auto text-left">
             <h3 id="title" name="title">Title</h3>
             <div id="where" name="where">Where</div>
@@ -277,12 +278,14 @@
             <button type="button" class="btn btn-danger m-2" id="booking-delete">Delete</button>
         </div>
     </div>
+    <hr>
 </template>
 
 <template id="tr-template">
   <tr>
     <td class="begin"></td>
     <td class="end"></td>
+    <td class="current"></td>
     <td class="capacity"></td>
   </tr>
 </template>
@@ -301,6 +304,7 @@
               <tr>
                 <th scope="col">Begin</th>
                 <th scope="col">End</th>
+                <th scope="col">Current</th>
                 <th scope="col">Capacity</th>
               </tr>
             </thead>
@@ -315,12 +319,12 @@
 
 
 <template id="service-template">
-    <div class="row mb-2 border border-dark p-3 rounded">
-        <div class="col-xs-12 col-sm-8 ml-auto text-left">
+    <div class="row mb-2 p-3 rounded">
+        <div class="col-xs-12 col-sm-12 ml-auto mb-3 text-center">
             <h3 id="title">Title</h3>
             <div id="slug">Slug</div>
         </div>
-        <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
+        <div class="col-xs-12 col-sm-12 mb-3 d-flex justify-content-center align-items-center">
             <button style="background-color: #0000FF" class="btn collapse-btn text-white" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
               Show
             </button>
@@ -367,6 +371,7 @@
             </form>
         </div>
     </div>
+    <hr>
 </template>
 
 
@@ -375,7 +380,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="editModalLabel">Edit booking</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

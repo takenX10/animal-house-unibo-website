@@ -59,16 +59,24 @@ async function loadUsers(data){
     }
 }
 
-$(document).ready(function() {
-    console.log("ready");
-    $.ajax({
-        type:"POST",
-        url:"/backoffice/get_all_users",
-        withCredentials: true,
-        success: loadUsers
+async function getUsers() {
+  try {
+    let res = await fetch(`/api/backoffice/get_all_users`,{
+        method:"POST",
+        credentials:'include',
+        headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+        },
     });
-    //let user = $("#user-template").cloneNode();
-});
+    let user = await res.json();
+    loadUsers(user);
+  }catch(e) {
+      
+  }
+}
+
+getUsers();
 </script>
 
 

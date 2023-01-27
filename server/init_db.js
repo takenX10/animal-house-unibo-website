@@ -116,8 +116,8 @@ const products = [
     price: 120,
     countInStock: 5,
     brand: "Subemelaradjio",
-    rating: 4.5,
-    numReviews: 10,
+    rating: 0,
+    numReviews: 0,
     description: "high quality raccoon",
   },
   {
@@ -129,8 +129,8 @@ const products = [
     price: 25,
     countInStock: 0,
     brand: "Subemelaradjio",
-    rating: 3.5,
-    numReviews: 42,
+    rating: 0,
+    numReviews: 0,
     description: "high quality raccoon",
   },
   {
@@ -142,7 +142,7 @@ const products = [
     price: 999999,
     countInStock: 1,
     brand: "drippythangs",
-    rating: 5.0,
+    rating: 0,
     numReviews: 0,
     description: "high quality drip",
   },
@@ -155,8 +155,8 @@ const products = [
     price: 30,
     countInStock: 2,
     brand: "catsrus",
-    rating: 2.9,
-    numReviews: 2,
+    rating: 0,
+    numReviews: 0,
     description: "high quality cat litter box",
   },
   {
@@ -168,8 +168,8 @@ const products = [
     price: 12,
     countInStock: 200,
     brand: "bestdoggos",
-    rating: 4.9,
-    numReviews: 10,
+    rating: 0,
+    numReviews: 0,
     description: "high quality food",
   },
 ];
@@ -259,8 +259,8 @@ const services = [
     ],
     hourlyRate: 10,
     description: "Something idk this should be vet",
-    rating: 5,
-    numReviews: 10,
+    rating: 0,
+    numReviews: 0,
     opts: [
       {
         type: "select",
@@ -355,8 +355,8 @@ const services = [
     ],
     hourlyRate: 15,
     description: "Something idk this should be dog sitter",
-    rating: 5,
-    numReviews: 10,
+    rating: 0,
+    numReviews: 0,
     opts: [
       {
         type: "checkbox",
@@ -440,8 +440,8 @@ const services = [
     images: ['https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg'],
     hourlyRate: 10,
     description: "Something idk this should be videoconf with vet",
-    rating: 5,
-    numReviews: 10,
+    rating: 0,
+    numReviews: 0,
     opts: [
       {
         type: "radio",

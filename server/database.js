@@ -129,6 +129,17 @@ const reviewSchema = new Schema(
   }
 );
 
+const reviewServiceSchema = new Schema(
+  {
+    text: { type: String, required: false },
+    rating: { type: Number, required: true },
+    reviewer: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const productCategorySchema = new Schema({
   name: { type: String, required: true, unique: true },
   parent: { type: String, required: true },
@@ -137,9 +148,9 @@ const productCategorySchema = new Schema({
 
 const bookingSchema = new mongoose.Schema({
   userId: { type: String, required: true },
-  city: { type: String, required: true },
-  day: { type: String, required: true },
-  hour: { type: String, required: true },
+  city: { type: String },
+  day: { type: String },
+  hour: { type: String },
   opts: { type: String },
 });
 const serviceHourSchema = new mongoose.Schema({
@@ -175,7 +186,8 @@ const serviceSchema = new mongoose.Schema({
   opts: { type: Array, required: true },
   bookings: {
     type: [bookingSchema]
-  }
+  },
+  reviews: [reviewServiceSchema]
 },
 );
 
@@ -190,9 +202,10 @@ const ProductCategory = mongoose.model(
   productCategorySchema
 );
 const Review = mongoose.model("Review", reviewSchema);
+const ReviewService = mongoose.model("ReviewService", reviewServiceSchema);
 const ServiceHour = mongoose.model('ServiceHour', serviceHourSchema);
 const ServiceShift = mongoose.model('ServiceShift', serviceShiftSchema);
 const ServiceAvailability = mongoose.model('ServiceAvailability', serviceAvailabilitySchema);
 const Service = mongoose.model('Service', serviceSchema);
 
-export default { User, Post, Pet, Score, Order, Product, ProductCategory, Review, ServiceHour, ServiceShift, ServiceAvailability, Service, connect };
+export default { User, Post, Pet, Score, Order, Product, ProductCategory, Review, ReviewService, ServiceHour, ServiceShift, ServiceAvailability, Service, connect };
