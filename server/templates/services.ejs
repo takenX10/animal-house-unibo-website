@@ -1,0 +1,419 @@
+<%- include('./head.ejs', {headTitle:title}); %>
+<div class="container-fluid w-100 ">
+<div class="alert alert-danger collapse mt-2" id="error-alert" role="alert">
+  <strong>Oh no!</strong> Something went wrong.
+</div>
+<div class="alert alert-success fade collapse mt-2" id="succ-alert" role="alert">
+  <strong>Well done!</strong> 
+</div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+     <h1><%= title %></h1>
+    
+    </div>
+  </div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+     <h2> Services</h2>
+    </div>
+  </div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+    <div id="services-loading" class="spinner-border collapse" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+      <div class="services-container">
+      </div>
+    </div>
+  </div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+     <h2> Bookings </h2>
+    </div>
+  </div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+    <div id="bookings-loading" class="spinner-border collapse" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+      <div class="bookings-container">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  let bookingdataalert = {};
+  let type = "<%= type %>";
+  let isOnline = <%= isOnline %>;
+
+
+  async function getBookings() {
+    try {
+    $("#bookings-loading").removeClass("collapse");
+    let res = await fetch("/backoffice/get_all_bookings", {credentials: "include"});
+    $("#bookings-loading").addClass("collapse");
+    let data = await res.json();
+    let bookings = data.bookings;
+    $('.bookings-container').html('');
+    let c = 0;
+    for(let book of bookings){
+        if (book.isOnline != isOnline)
+          continue;
+        c++;
+        const newUser = $("#booking-template").clone()[0].content;
+        $("#title",newUser).text(book.title);
+        $("#where",newUser).text(`${book.availability.address}, ${book.availability.city}`);
+        let begin = new Date(book.hour.begin);
+        begin = begin.toString()
+        begin = begin.replace(begin.substring(begin.indexOf("GMT")), "")
+        let end= new Date(book.hour.end);
+        end = end.toString()
+        end = end.replace(end.substring(end.indexOf("GMT")), "")
+        $("#begin",newUser).text("Begin: " + begin);
+        $("#end",newUser).text("End: " + end);
+        $("#who",newUser).text("User: " + book.userName);
+        $("#email",newUser).text("Email: " + book.email);
+        $("#booking-edit",newUser).click(()=>{showEditBooking(book, {city: book.availability.city, address: book.availability.address, begin: book.hour.begin, end: book.hour.end})});
+        $("#booking-delete",newUser).click(()=>{deleteBooking(book)});
+        $('.bookings-container').append(newUser);
+    }
+    if (c == 0) {
+      $('.bookings-container').html('<div>No bookings found</div>');
+      return;
+    }
+   } catch(e) {
+      showError(); 
+   }
+  }
+  async function deleteBooking(booking) {
+    try {
+      let b = await (await fetch(`/backoffice/delete_booking`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ slug: booking.slug, avaId: booking.availability._id, shiftId: booking.shift._id, hourId: booking.hour._id })
+      })).json();
+      if (b.success === false)
+        alert("Can't delete booking !");
+      else
+        getBookings();
+    } catch (e) {
+      alert(e);
+      showError();
+    }
+  }
+
+  function showEditBooking(book, {city, address, begin ,end}) {
+      $("#citymodal").val(city);
+      $("#addressmodal").val(address);
+      $("#beginmodal").val(isodate(new Date(begin)));
+      $("#endmodal").val(isodate(new Date(end)));
+      bookingdataalert = book;
+  }
+  async function editBooking() {
+      let city = $("#citymodal").val();
+      let address = $("#addressmodal").val();
+      let begin = (new Date($("#beginmodal").val())).getTime();
+      let end = (new Date($("#endmodal").val())).getTime();
+    try {
+      let b = await fetch(`/backoffice/edit_booking`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ slug: bookingdataalert.slug, avaId: bookingdataalert.availability._id, shiftId: bookingdataalert.shift._id, hourId: bookingdataalert.hour._id,
+            day: begin,
+            begin: begin,
+            end: end,
+            city: city,
+            address: address
+        })
+      });
+      b = await b.json();
+      if (b.success === false)
+        showError();
+      else {
+        showSucc();
+        getBookings();
+        getServices();
+      }
+    } catch (e) {
+      showError();
+    }
+  }
+
+  async function getServices() {
+    try {
+    $("#services-loading").removeClass("collapse");
+    let res = await fetch("/api/services/"+type, {credentials: "include"});
+    $("#services-loading").addClass("collapse");
+    let services = await res.json();
+    $('.services-container').html('');
+    for(let service of services){
+        const newService = $("#service-template").clone()[0].content;
+        $("#title",newService).text(service.title);
+        $("#slug",newService).text(service.slug);
+        let id = `collapse-${service.slug}`;
+        let idBtn = `collapse-add-${service.slug}`;
+        $(".collapse-btn",newService).attr("id", `btn-${id}`);
+        $( `#btn-${id}`,newService).attr("data-target", `#${id}`);
+        $(`#btn-${id}`,newService).attr("aria-controls", `${id}`);
+        $(".collapse-table",newService).attr("id", `${id}`);
+        $(".collapse-add-btn",newService).attr("id", `btn-${idBtn}`);
+        $( `#btn-${idBtn}`,newService).attr("data-target", `#${idBtn}`);
+        $(`#btn-${idBtn}`,newService).attr("aria-controls", `${idBtn}`);
+        $(".collapse-add",newService).attr("id", `${idBtn}`);
+
+        let today = new Date();
+        $(".begininput",newService).val(isodate(today));
+        $(".endinput",newService).val(isodate(today));
+        $(".begininput",newService).attr("min",isodate(today));
+        $(".endinput",newService).attr("min",isodate(today));
+
+        for (let ava of service.availabilities) {
+          for (let shift of ava.shifts) {
+            const newAva= $("#ava-template").clone()[0].content;
+            $("#where",newAva).text(`${ava.address}, ${ava.city}`);
+            let day= new Date(shift.day);
+            $("#title",newAva).text(day.toDateString());
+            for (let hour of shift.hours) {
+              const newH= $("#tr-template").clone()[0].content;
+              $(".begin",newH).text(getDatetime(hour.begin));
+              $(".end",newH).text(getDatetime(hour.end));
+              $(".capacity",newH).text(hour.maxClients);
+              $('.tbody',newAva).append(newH);
+            }
+            $('.collapse-table',newService).append(newAva);
+          }
+        }
+        $('.services-container').append(newService);
+    }
+   } catch(e) {
+      showError(); 
+   }
+  }
+  function getDatetime(d) {
+        let dd= new Date(d);
+        dd= dd.toString()
+        dd = dd.replace(dd.substring(dd.indexOf("GMT")), "")
+        return dd;
+  }
+  async function add(e,ee) {
+   ee.preventDefault();
+   let par = $(e).parent();
+   let old = par.parent().parent();
+   let slug = ($("#slug", old)[0].innerHTML);
+   let begininput = ($(".begininput", par)[0].value)
+   let endinput = ($(".endinput", par)[0].value)
+   let maxinput = ($(".maxinput", par)[0].value)
+   let cityinput = ($(".cityinput", par)[0].value)
+   let addressinput = ($(".addressinput", par)[0].value)
+   try {
+   let res = await fetch(`/api/services/back/${type}/slug/${slug}/add`, 
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ city: cityinput, address: addressinput, begin: (new Date(begininput)).getTime(), end: (new Date(endinput)).getTime(), maxClients: maxinput})
+        }
+
+   )
+   let data = await res.json();
+   showSucc();
+   getServices();
+   } catch(e) {
+      showError(); 
+   }
+   return true;
+  }
+
+ function showError() {
+      $("#error-alert").addClass("show").removeClass("collapse");
+      $("#error-alert").focus();
+    window.scrollTo(0, 0);
+  }
+  function showSucc() {
+      $("#succ-alert").addClass("show").removeClass("collapse");
+      $("#succ-alert").focus();
+    window.scrollTo(0, 0);
+  }
+  function isodate(d) {
+    d = new Date(d.getTime() + 60 * 60000);
+    let ii = d.toISOString();
+    ii = ii.slice(0, 16); 
+    return ii;
+  }
+
+
+  $(document).ready(() => {
+    getBookings();
+    getServices();
+  })
+</script>
+<%- include('./foot.ejs', {}); %>
+
+<template id="booking-template">
+    <div class="row mb-2 border border-dark p-3 rounded">
+        <div class="col-xs-12 col-sm-8 ml-auto text-left">
+            <h3 id="title" name="title">Title</h3>
+            <div id="where" name="where">Where</div>
+            <div id="begin" name="begin">begin</div>
+            <div id="end" name="end">end</div>
+            <div id="who" name="username">Who</div>
+            <div id="email" name="useremail">Email</div>
+        </div>
+        <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
+            <button type="button" class="btn btn-secondary m-2" id="booking-edit" data-toggle="modal" data-target="#editModal">Edit</button>
+            <button type="button" class="btn btn-danger m-2" id="booking-delete">Delete</button>
+        </div>
+    </div>
+</template>
+
+<template id="tr-template">
+  <tr>
+    <td class="begin"></td>
+    <td class="end"></td>
+    <td class="capacity"></td>
+  </tr>
+</template>
+<template id="ava-template">
+  <div class="mb-2 border border-gray p-3 rounded">
+    <div class="row ">
+        <div class="col-xs-12 col-sm-12 ml-auto text-left">
+            <h4 id="title" name="title">Title</h4>
+            <div id="where" name="where">Where</div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xs-12 col-sm-12 ml-auto text-left">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Begin</th>
+                <th scope="col">End</th>
+                <th scope="col">Capacity</th>
+              </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<template id="service-template">
+    <div class="row mb-2 border border-dark p-3 rounded">
+        <div class="col-xs-12 col-sm-8 ml-auto text-left">
+            <h3 id="title">Title</h3>
+            <div id="slug">Slug</div>
+        </div>
+        <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
+            <button style="background-color: #0000FF" class="btn collapse-btn text-white" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
+              Show
+            </button>
+        </div>
+        <div class="collapse collapse-table col to-collapse mt-3">
+        </div>
+        <div class="col-xs-12 col-sm-12 d-flex justify-content-center align-items-center">
+            <button style="background-color: #0000FF" class="btn collapse-add-btn text-white" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
+             Add 
+            </button>
+        </div>
+        <div class="collapse collapse-add col to-collapse mt-3">
+           <form class="form-group">
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="citylabel" id="citylabel">City</span>
+              </div>
+              <input type="text" class="form-control cityinput" aria-label="City" aria-describedby="addresslabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend"> <span class="input-group-text" class="addresslabel" id="addresslabel">Address</span>
+              </div>
+              <input type="text" class="form-control addressinput" aria-label="Address" aria-describedby="addresslabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="beginlabel" id="beginlabel">Begin</span>
+              </div>
+              <input type="datetime-local" class="form-control begininput" aria-label="Begin"  aria-describedby="beginlabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="endlabel" id="endlabel">End</span>
+              </div>
+              <input type="datetime-local" class="form-control endinput" aria-label="End" aria-describedby="endlabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <span class="input-group-text" class="maxlabel" id="maxlabel">Max clients</span>
+              </div>
+              <input type="number" class="form-control maxinput" aria-label="Max clients" aria-describedby="maxlabel" required>
+              </div>
+              <button style="background-color: #0000FF" type="submit" onclick="add(this,event)" class="btn text-white mb-3">Confirm</button>
+            </form>
+        </div>
+    </div>
+</template>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           <form class="form-group">
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <label class="input-group-text" for="citymodal" class="citymodallabel" id="citymodallabel">City</label>
+              </div>
+              <input role="input" type="text" id="citymodal" class="form-control cityinput" aria-label="City" aria-describedby="addressmodallabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+               <label class="input-group-text" for="addressmodal" class="addressmodallabel" id="addressmodallabel">Address</label>
+              </div>
+              <input role="input" type="text" id="addressmodal" class="form-control addressinput" aria-label="Address" aria-describedby="addressmodallabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <label class="input-group-text" class="beginmodallabel" for="beginmodal" id="beginmodallabel">Begin</label>
+              </div>
+              <input role="input" type="datetime-local" id="beginmodal" class="form-control begininput" aria-label="Begin"  aria-describedby="beginmodallabel" required>
+              </div>
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <label class="input-group-text" class="endmodallabel" for="endmodal"  id="endmodallabel">End</label>
+              </div>
+              <input role="input" type="datetime-local" id="endmodal" class="form-control endinput" aria-label="End" aria-describedby="endmodallabel" required>
+              </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeeditmodal" data-dismiss="modal">Close</button>
+        <button type="button" style="background-color: #0000FF" onclick="editBooking()" data-dismiss="modal" class="btn text-white">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

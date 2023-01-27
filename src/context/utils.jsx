@@ -30,8 +30,11 @@ async function get_my_id() {
   return res.id;
 }
 
-function logout(ctxDispatch) {
+function raw_logout() {
   document.cookie = "AUTHSESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+function logout(ctxDispatch) {
+  raw_logout();
   ctxDispatch({ type: 'USER_SIGNOUT' });
   console.log("logging out...");
 }
@@ -110,4 +113,4 @@ function getHourLabel(epoch) {
   return `${d.getHours()}:${d.getSeconds()}`
 }
 
-export { SERVER_URL, getDayLabel, getHourLabel, check_login, get_my_id, logout, deletePost, save_score, isAdmin };
+export { SERVER_URL, getDayLabel, getHourLabel, check_login, get_my_id, raw_logout, logout, deletePost, save_score, isAdmin };

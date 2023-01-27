@@ -7,11 +7,13 @@
         :id="'hangman_btn_' + calcOffset(key)"
         size="sm"
         :disabled="usedLetters.includes(key)"
+        aria-controls="badge"
         v-on:click="click(key, $event)"
       >{{ key }}</MDBBtn>
     </div>
     <div id="restart">
-      <MDBBtn color="dark" v-on:click="restart">Restart</MDBBtn>
+      <MDBBtn color="dark" id="restart" v-on:click="restart">Restart</MDBBtn><br>
+       <label for="restart">Press Space to restart</label>
     </div>
   </div>
 </template>

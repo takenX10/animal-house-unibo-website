@@ -3,7 +3,7 @@ import DATABASE from '../database.js';
 import AUTH from '../authentication.js';
 import { isAuth, jsonParser, isAdmin } from '../utils.js';
 
-const validLeaderboards = ["quiz", "wordle", "slider", "memory", "hangman"];
+const validLeaderboards = ["quiz", "memory", "wordle", "slider", "memory", "hangman"];
 
 
 let ENDPOINTS = [

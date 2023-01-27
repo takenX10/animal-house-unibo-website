@@ -1,101 +1,162 @@
-<script>
-import * as code from '@/assets/js/memory/script'
+<style>
+@import "https://pro.fontawesome.com/releases/v5.9.0/css/all.css";
+@import "@/assets/css/game_selection/style.css";
+@import 'mdb-vue-ui-kit/css/mdb.min.css';
 
+
+.hide-cell {
+ opacity: 0;
+}
+</style>
+
+<script setup>
+import { MDBBtn,MDBRow,MDBCol,MDBContainer,MDBListGroup,MDBListGroupItem,MDBFile, MDBSpinner } from "mdb-vue-ui-kit";
+</script>
+
+<template>
+  <main :id="name" >
+      <MDBContainer class="text-center">
+        <MDBRow>
+          <div aria-live="polite" class="fw-bold">Score: {{ score }}</div>
+        </MDBRow>
+        <div v-if="!loading">
+          <MDBRow aria-live="polite" aria-atomic="true">
+            <MDBCol v-for="(image,i) in cells" class="col-3" style="height:100px !important">
+              <div class="border border-gray rounded" style="width: 100%; height: 100%">
+                <img role="button" tabindex="1" :src="image" :id="i" class="hide-cell" :alt="i+'-image'" @click="cellClicked(i)" style="width: 100%; height: 100%"/>
+              </div>
+            </MDBCol>
+          </MDBRow>
+        </div>
+        <MDBRow class="mt-2" v-if="winStatus">
+          <div  class="alert alert-success" role="alert">
+            You won! 
+          </div>
+          <MDBBtn raised @click="generate()">Play again</MDBBtn>
+        </MDBRow>
+        <div v-if="loading">
+          <MDBSpinner />
+        </div>
+      </MDBContainer>
+
+  </main>
+</template>
+
+<script>
+import { save_score } from '@/context/utils.jsx';
+
+let name = "Memory"
 
 export default {
+  name: name,
+  components: {
+  },
+
   data() {
     return {
-      cards: code.cards
+      loading: false,
+      errors: 0,
+      score: 100,
+      winStatus: false,
+      images: [],
+      cells: [],
+      guessed: [],
+      first: -1,
+      second: -1,
+      interval: null
     }
   },
-  mounted() {
-    code.setJqueryBind()
-    code.deck.on('click', ':not(".match, .open")', function (event) {
-      event.stopPropagation()
-      if ($('.show').length > 1) { return true; }
-
-      var $this = $(this), card = this.outerHTML;
-      $this.addClass('open show');
-      //code.opened.push(card);
-      code.pushOpened(card);
-
-      // Compare with opened card
-      if (code.opened.length > 1) {
-        if (card === code.opened[0]) {
-          code.deck.find('.open').addClass('match animated infinite rubberBand');
-          setTimeout(function () {
-            code.deck.find('.match').removeClass('open show animated infinite rubberBand');
-          }, code.delay);
-          //code.match++;
-          code.incMatch();
-        } else {
-          console.log("WRONG")
-          console.log(code.deck.find('.open'))
-          code.deck.find('.open').addClass('notmatch animated infinite wobble');
-          setTimeout(function () {
-            code.deck.find('.open').removeClass('animated infinite wobble');
-          }, code.delay / 1.5);
-          setTimeout(function () {
-            code.deck.find('.open').removeClass('open show notmatch animated infinite wobble');
-          }, code.delay);
+  methods: {
+    shuffle: function (array) {
+      array.sort(() => Math.random() - 0.5);
+    },
+    resetCell: function() {
+        $(`#${this.first}`).addClass("hide-cell"); 
+        $(`#${this.second}`).addClass("hide-cell"); 
+        this.first = -1;
+        this.second = -1;
+    },
+    guessedCell: function() {
+        this.guessed.push(this.first,this.second)
+        this.first = -1;
+        this.second = -1;
+        if (this.guessed.length == this.cells.length){
+          this.win();
         }
-        //code.opened = [];
-        code.resetOpened();
-        //code.moves++;
-        code.incMoves();
-        code.setRating(code.moves);
-        code.$moveNum.html(code.moves);
+    },
+    win: function() {
+      this.winStatus = true;
+      save_score(this.score, "memory");
+    },
+    cellClicked: function(i) {
+      clearInterval(this.interval);
+      if (this.guessed.includes(i))
+        return;
+      if (this.first == -1)
+        this.first = i;
+      else if (this.second == -1 )
+      {
+        if (this.first == i)
+          return;
+        this.second = i;
+        if ($(`#${this.first}`).attr("src") == $(`#${this.second}`).attr("src"))
+        {
+          this.guessedCell();
+        }
+        else {
+          this.errors++;
+          this.score--;
+          this.interval = setInterval(() => {
+            this.resetCell();
+          }, 750)
+        }
       }
-
-      // End Game if match all cards
-      // TODO: handle win
-      if (code.gameCardsQTY === code.match) {
-        code.setRating(code.moves);
-        var score = code.setRating(code.moves).score;
-        setTimeout(function () {
-          code.endGame(code.moves, score);
-        }, 500);
+      else 
+      {
+        // close all
+        this.resetCell();
+        this.first = i;
       }
-    });
+      $(`#${i}`).removeClass("hide-cell"); 
+    },
+    generate: async function() {
+        this.errors = 0;   
+        this.score = 100;
+        this.loading = true;
+        this.winStatus = false;
+        this.guessed = [];
+        try {
+          let c = 0;
+          for (let i = 0; i < 8; i++) {
+            let res = await (await fetch(`${this.BACKEND_SERVER}/api/randomimage`)).json();
+            this.images[i] = res.data.image;
+            this.cells[c] = this.images[i];
+            c++;
+            this.cells[c] = this.images[i];
+            c++;
+          }
+          this.shuffle(this.cells);
+          console.log(this.cells);
+          this.loading = false;
+        }catch(e) {
+          this.loading = false;
+        }
+    },
+    answerClicked: function (answer) {
+      if (answer == this.correct)
+      {
+        this.streak++;
+        save_score(this.streak,"memory");
+      }
+      else 
+        this.streak = 0;
+    }
+  },
+  created() {
+    this.generate();
   }
 }
 </script>
 
-<style scoped>
-@import "https://fonts.googleapis.com/css?family=Coda";
-@import "https://cdn.jsdelivr.net/sweetalert2/3.0.3/sweetalert2.min.css";
-@import "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css";
-@import "@/assets/css/memory/style.css";
+<style lang="scss">
 </style>
-
-
-<template>
-  <div class="container">
-    <div id="score-panel">
-      <ul class="stars">
-        <li>
-          <i class="fa fa-star"></i>
-        </li>
-        <li>
-          <i class="fa fa-star"></i>
-        </li>
-        <li>
-          <i class="fa fa-star"></i>
-        </li>
-      </ul>
-      <span class="moves">0</span> Moves
-      <div class="restart">
-        <i class="fa fa-repeat"></i>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-8 col-lg-6 col-xl-8 mx-auto">
-        <ul class="deck row justify-content-center">
-          <li class="col-sm-3 col-md-3 col-lg-3 col-xl-3 mx-auto" v-for="c in this.cards">
-            <i :class="['card mx-auto', 'fa', 'fa-' + c]"></i>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</template>

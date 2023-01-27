@@ -3,13 +3,13 @@
     <canvas ref="mycanvas" width="100" height="190" 
             v-bind:class="{'zoom' : fails == 7}"/>
     <div id="progress">
-    <b-progress :value="7-fails" :max="7" animated></b-progress>
+    <b-progress :value="7-fails" :max="7" animated ></b-progress>
     </div>
     <div v-if="fails >=0 && fails <7">
     Attempts left
-        <span class="badge bg-success" v-if="fails < 3" variant="success">{{7-fails}}</span>
-        <span class="badge bg-warning" v-else-if="fails < 5" variant="warning">{{7-fails}}</span>
-        <span class="badge bg-danger" v-else variant="danger">{{7-fails}}</span>
+        <span class="badge bg-success" aria-live="assertive" id="badge" v-if="fails < 3" variant="success">{{7-fails}}</span>
+        <span class="badge bg-warning" aria-live="assertive" id="badge" v-else-if="fails < 5" variant="warning">{{7-fails}}</span>
+        <span class="badge bg-danger"  aria-live="assertive" id="badge" v-else variant="danger">{{7-fails}}</span>
      </div>
     <div v-else-if="fails == 7">
     Game over! 

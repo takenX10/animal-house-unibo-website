@@ -28,6 +28,15 @@ var fakeUsers = [
     isAdmin: true,
     petList: [],
   },
+  {
+    name: "a",
+    surname: "a",
+    email: "a@a.a",
+    contact: "+39 555 555 5555",
+    password: bcrypt.hashSync("a", genSaltSync()),
+    isAdmin: true,
+    petList: [],
+  },
 ];
 
 var posts = [
@@ -392,7 +401,7 @@ const services = [
         address: "https://teams/sample.link",
         shifts: [
           {
-            day: 16678215080000,
+            day: 1667821508000,
             hours: [
               {
                 begin: 1667808000000,

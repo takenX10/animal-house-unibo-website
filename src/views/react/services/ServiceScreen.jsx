@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useReducer } from 'react';
 import { useForm } from "react-hook-form";
-import { Button, Col, ListGroup, Row, Form } from 'react-bootstrap';
+import { Button, Col, ListGroup, Row, Form, FormLabel } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import Rating from '@/components/react/utils/Rating';
@@ -30,7 +30,6 @@ const reducer = (state, action) => {
 function ServiceScreen() {
   const navigate = useNavigate();
   const params = useParams();
-  console.log("he")
   const { slug, serviceType } = params;
   const [cityIndex, setCityIndex] = useState('');
   const [dayIndex, setDayIndex] = useState('');
@@ -164,21 +163,19 @@ function ServiceScreen() {
               </Col>
               <Col md={6} >
                 <ListGroup variant='flush'>
-                  <ListGroup.Item>
+                  <ListGroup.Item tabIndex={0} role="listitem">
                     <b>Category:</b>
                     <p>{service.category}</p>
                   </ListGroup.Item>
-                  <ListGroup.Item>
+                  <ListGroup.Item tabIndex={0} role="listitem">
                     <Rating rating={service.rating} numReviews={service.numReviews}>
                     </Rating>
                   </ListGroup.Item>
-                  <ListGroup.Item>
+                  <ListGroup.Item tabIndex={0} role="listitem">
                     <b>Price: </b>
                     {service.hourlyRate} $/h
                   </ListGroup.Item>
-                  <ListGroup.Item>
-                    <b>Description:</b>
-                    <p>{service.description}</p>
+                  <ListGroup.Item tabIndex={0} role="listitem"> <b>Description:</b> <p>{service.description}</p>
                   </ListGroup.Item>
                 </ListGroup>
               </Col>
@@ -190,7 +187,8 @@ function ServiceScreen() {
               <CustomForm register={register} opts={service.opts} />
               <Row className='mb-4 text-center mx-auto'>
                 <Col md={4} sm={12} sx={12} className="mx-auto" >
-                  <Form.Select {...register("cityIndex")} aria-label="cityIndex" onChange={handleCityChange} required>
+                  <FormLabel for="cityIndex">City</FormLabel>
+                  <Form.Select id="cityIndex" {...register("cityIndex")} aria-label="cityIndex" onChange={handleCityChange} required>
                     <option key={-1} value={"none"} label={"none"} ></option>
                     {
                       service.availabilities.map((ava, index) => {
@@ -201,7 +199,8 @@ function ServiceScreen() {
                   <hr />
                 </Col>
                 <Col md={4} sm={12} sx={12} className="mx-auto" >
-                  <Form.Select {...register("dayIndex")} aria-label="dayIndex" onChange={handleDayChange} required>
+                  <FormLabel for="dayIndex">Day</FormLabel>
+                  <Form.Select id="dayIndex" {...register("dayIndex")} aria-label="dayIndex" onChange={handleDayChange} required>
                     {
                       shifts.map((ava, index) => {
                         return <option key={index} value={index} label={`${getDayLabel(ava.day)}`}></option>
@@ -211,7 +210,8 @@ function ServiceScreen() {
                   <hr />
                 </Col>
                 <Col md={4} sm={12} sx={12} className="mx-auto" >
-                  <Form.Select {...register("hourIndex")} aria-label="hourIndex" onChange={handleHoursChange} required>
+                  <FormLabel for="hourIndex">Period</FormLabel>
+                  <Form.Select id="hourIndex" {...register("hourIndex")} aria-label="hourIndex" onChange={handleHoursChange} required>
                     {
                       hours.map((h, index) => {
                         return <option key={index} value={index} label={`${getHourLabel(h.begin)} - ${getHourLabel(h.end)}  (${h.currentClients}/${h.maxClients})`}></option>

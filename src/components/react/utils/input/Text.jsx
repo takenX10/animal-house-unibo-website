@@ -6,10 +6,10 @@ function Text({ register, label, description, name, ...props }) {
     <div className='content'>
       <Form.Label htmlFor={id}><b>{label}</b></Form.Label>
       <Form.Control
-        id={id}
         aria-describedby={idDesc}
         {...props}
         {...register(name)}
+        id={id}
       />
       <Form.Text id={idDesc} name={name}>
         {description}

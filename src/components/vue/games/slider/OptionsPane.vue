@@ -1,7 +1,9 @@
 <template>
   <form id="optionsForm" @submit.prevent="start">
     <img class="preview" :src="image" v-if="image" />
-    <ui-spinner v-if="!image" active></ui-spinner>
+        <div v-if="!image">
+          <MDBSpinner />
+        </div>
     <div >
       <MDBContainer>
         <MDBRow columns="12">
@@ -13,9 +15,9 @@
           ></ui-file>
         </MDBRow>
       </MDBContainer>
-      <MDBContainer >
-        <MDBRow >
-        <MDBCol class="col-3 mx-auto">
+      <MDBContainer class="mt-2">
+        <MDBRow class="justify-content-center">
+        <MDBCol class="col-3">
           <MDBInput
             type="number"
             name="width"
@@ -26,10 +28,7 @@
             outlined
           />
           </MDBCol>
-        <MDBCol class="col-1 text-center">
-          ×
-          </MDBCol>
-        <MDBCol class="col-3 mx-auto">
+        <MDBCol class="col-3">
           <MDBInput
             type="number"
             name="height"
@@ -42,14 +41,17 @@
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-      <MDBBtn raised v-if="image" @click="start">Start</MDBBtn>
+      <MDBBtn raised v-if="image && !loading" @click="start">Start</MDBBtn>
     </div>
   </form>
 </template>
 
+<script setup>
+import { MDBBtn,MDBRow,MDBCol,MDBInput,MDBContainer,MDBFile, MDBSpinner } from "mdb-vue-ui-kit";
+</script>
+
 <script>
 import loadImage from 'blueimp-load-image'
-import { MDBBtn,MDBRow,MDBCol,MDBInput,MDBContainer,MDBFile, MDBSpinner } from "mdb-vue-ui-kit";
 
 
 const imageUrlToBase64 = async url => {
@@ -71,6 +73,7 @@ export default {
   data() {
     return {
       image: null,
+      loadingimage: true,
       size: {
         horizontal: 3,
         vertical: 3
@@ -82,11 +85,17 @@ export default {
   },
   methods: {
     fetchNewImage() {
+      this.loadingimage = true;
+      try {
       fetch(`${this.BACKEND_SERVER}/api/randomimagebase64`)
         .then((data) => data.json())
         .then((json) => {
           this.image = json.image;
         })
+      this.loadingimage = false;
+      }catch(e) {
+      this.loadingimage = false;
+      }
     },
     fileChanged(e) {
       if (!e.target.files.length) {

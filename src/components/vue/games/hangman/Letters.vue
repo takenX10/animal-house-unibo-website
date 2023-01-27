@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="letters" aria-live="polite" aria-atomic="true" >
     <button variant="primary" size="sm" class="letters btn" v-for="item in letters" v-bind:key="item.index">{{item}}</button>
   </div> 
 

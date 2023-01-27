@@ -1,6 +1,6 @@
 // Author : Gianmaria Rovelli
 
-const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
+import fetch from "node-fetch";
 import jsdom from "jsdom";
 import os from "os";
 import multer from "multer";
@@ -21,6 +21,7 @@ const RANDOM_FACT = "https://fungenerators.com/random/facts/animal/";
 const RANDOM_ANIMAL = "https://zoo-animal-api.herokuapp.com/animals/rand";
 
 const ENDPOINTS = [
+  { endpoint: "/api/randomimage", method: METHODS.GET, function: getRandomImageAPI },
   { endpoint: "/api/dogimage", method: METHODS.GET, function: getDogImageAPI },
   { endpoint: "/api/catimage", method: METHODS.GET, function: getCatImageAPI },
   {
@@ -37,6 +38,26 @@ const ENDPOINTS = [
     endpoint: "/api/catfact",
     method: METHODS.GET,
     function: getRandomCatFactAPI,
+  },
+  {
+    endpoint: "/api/dogfact",
+    method: METHODS.GET,
+    function: getRandomDogFactAPI,
+  },
+  {
+    endpoint: "/api/birdfact",
+    method: METHODS.GET,
+    function: getRandomBirdFactAPI,
+  },
+  {
+    endpoint: "/api/foxfact",
+    method: METHODS.GET,
+    function: getRandomFoxFactAPI,
+  },
+  {
+    endpoint: "/api/racoonfact",
+    method: METHODS.GET,
+    function: getRandomRacoonFactAPI,
   },
   {
     endpoint: "/api/randomimagebase64",
@@ -71,6 +92,25 @@ const ENDPOINTS = [
     function: Quiz.getQuiz
   },
 ];
+
+let animtypes = ["cat", "bird", "dog", "fox", "koala", "panda"];
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+}
+async function getRandomImageAPI(req, res) {
+  try {
+    let r = getRandomIntInclusive(0, animtypes.length - 1);
+    let link = `https://some-random-api.ml/animal/${animtypes[r]}`;
+    console.log(link)
+    let data = await (await fetch(link)).json();
+    res.json({ success: true, data });
+  } catch (e) {
+    console.log(e);
+    showError(res);
+  }
+}
 
 async function getDogBreedAIAPI(req, res) {
   try {
@@ -171,13 +211,18 @@ async function getRandomImageBase64API(req, res) {
   }
 }
 
-async function getRandomCatFactAPI(req, res) {
-  let facts = getLocalCatFact();
+async function getRandomFactByAnimal(req, res, animal) {
 
-  let fact = facts[Math.floor(Math.random() * facts.length)];
+  let link = `https://some-random-api.ml/animal/${animal}`;
+  let data = await (await fetch(link)).json();
 
-  res.json({ success: true, text: fact });
+  res.json({ success: true, text: data.fact, image: data.image });
 }
+
+async function getRandomCatFactAPI(req, res) {
+  return getRandomFactByAnimal(req, res, "cat")
+}
+
 
 async function getRandomAnimalAPI(req, res) {
   try {
@@ -186,6 +231,22 @@ async function getRandomAnimalAPI(req, res) {
   } catch (e) {
     showError(res);
   }
+}
+
+async function getRandomDogFactAPI(req, res) {
+  return getRandomFactByAnimal(req, res, "dog")
+}
+
+async function getRandomBirdFactAPI(req, res) {
+  return getRandomFactByAnimal(req, res, "bird")
+}
+
+async function getRandomFoxFactAPI(req, res) {
+  return getRandomFactByAnimal(req, res, "fox")
+}
+
+async function getRandomRacoonFactAPI(req, res) {
+  return getRandomFactByAnimal(req, res, "racoon")
 }
 
 async function getRandomAnimal() {
@@ -288,8 +349,9 @@ function generateRandomInteger(max) {
 
 function getFunnyVideoList() {
   return [
-    "https://www.youtube.com/embed/O-qqRaHVHiE",
     "https://www.youtube.com/embed/NOhyduxTOGo",
+    "https://www.youtube.com/embed/UJKUI07w9Yc",
+    "https://www.youtube.com/embed/JxS5E-kZc2s",
   ];
 }
 

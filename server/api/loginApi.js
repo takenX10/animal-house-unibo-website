@@ -14,11 +14,13 @@ let ENDPOINTS = [
   { endpoint: "/backoffice/get_bookings", method: METHODS.GET, opts: [jsonParser, isAuth], function: get_bookings },
   { endpoint: "/backoffice/get_all_bookings", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: get_all_bookings },
   { endpoint: "/backoffice/delete_booking", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_booking },
+  { endpoint: "/backoffice/edit_booking", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: edit_booking },
   { endpoint: "/backoffice/change_password", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: change_password },
   { endpoint: "/backoffice/delete_user", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_user },
   { endpoint: "/backoffice/is_admin", method: METHODS.POST, opts: [jsonParser, isAuth, isAdmin], function: is_admin },
   { endpoint: "/backoffice/become_admin", method: METHODS.GET, opts: [jsonParser, isAuth], function: become_admin },
   { endpoint: "/backoffice/facetoface", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showFaceToFace },
+  { endpoint: "/backoffice/online", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showOnline },
 ]
 
 async function officeHome(req, res) {
@@ -26,7 +28,11 @@ async function officeHome(req, res) {
 }
 
 async function showFaceToFace(req, res) {
-  res.render("../templates/facetoface", { title: "Face to face services" });
+  // res.render("../templates/facetoface", { title: "Face to face services" });
+  res.render("../templates/services", { title: "Face to face", type: "facetoface", isOnline: false });
+}
+async function showOnline(req, res) {
+  res.render("../templates/services", { title: "Online", type: "online", isOnline: true });
 }
 
 async function is_admin(req, res) {
@@ -169,6 +175,35 @@ async function delete_booking(req, res) {
     success: true,
   });
 }
+
+async function edit_booking(req, res) {
+  const user = await AUTH.get_user(req);
+  let slug = req?.body?.slug;
+  let avaId = req?.body?.avaId;
+  let shiftId = req?.body?.shiftId;
+  let hourId = req?.body?.hourId;
+  let day = req?.body?.day;
+  let begin = req?.body?.begin;
+  let end = req?.body?.end;
+  let city = req?.body?.city;
+  let address = req?.body?.address;
+  if (typeof (avaId) !== String)
+    avaId = avaId.toString();
+  if (typeof (shiftId) !== String)
+    shiftId = shiftId.toString();
+  if (typeof (hourId) !== String)
+    hourId = hourId.toString();
+  let service = await DATABASE.Service.findOne({ slug: slug });
+  service = SERVICES.editHourById(service, hourId, begin, end);
+  service = SERVICES.editShiftById(service, shiftId, day);
+  service = SERVICES.editCityAddressById(service, avaId, city, address);
+  await DATABASE.Service.findByIdAndUpdate(service._id, { availabilities: service.availabilities });
+  await DATABASE.User.updateOne({ _id: user._id }, { bookings: user.bookings });
+  res.json({
+    success: true,
+  });
+}
+
 
 // TODO: check every update for a direct body value inclusion
 async function change_password(req, res) {

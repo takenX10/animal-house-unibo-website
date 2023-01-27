@@ -16,7 +16,7 @@ const allValidWords = [
 ]
 
 // CAMBIA QUESTO PER IL POOL DELLE PAROLE
-const uniqueWords = [...Array.from(new Set(allValidWords))].map((word) =>
+const uniqueWords = [...Array.from(new Set(allValidWords)), ...Array.from(new Set(allWords))].map((word) =>
   word
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")

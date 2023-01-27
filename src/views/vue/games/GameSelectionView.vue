@@ -16,6 +16,9 @@ import { defineAsyncComponent, ref } from "vue";
 const Quiz = defineAsyncComponent(() =>
   import("@/views/vue/games/Quiz.vue")
 );
+const Memory = defineAsyncComponent(() =>
+  import("@/views/vue/games/Memory.vue")
+);
 // import Memory from '@/views/vue/games/Memory.vue'
 //const Memory = defineAsyncComponent(() =>
 //  import("@/views/vue/games/Memory.vue")
@@ -43,28 +46,29 @@ let games = [
   {
     title: "Quiz",
     component: "Quiz",
-    color: "",
+  },
+  {
+    title: "Memory",
+    component: "Memory",
   },
   {
     title: "Hangman",
     component: "Hangman",
-    color: "",
   },
   {
     title: "Wordle",
     component: "Wordle",
-    color: "",
   },
   {
     title: "Slider",
     component: "Slider",
-    color: "",
   },
 ];
 
 export default {
   components: {
     Quiz,
+    Memory,
     Wordle,
     Hangman,
     Slider,
@@ -200,6 +204,8 @@ export default {
             style="font-size: x-large; vertical-align: middle"
             @click="goback"
             id="go-back"
+            aria-label="go back"
+            role="button"
             class="fa fa-angle-left pl-5"
           ></i>
         </div>
@@ -260,48 +266,51 @@ export default {
         </MDBRow>
       </MDBContainer>
 
-      <MDBContainer class="text-center mt-4" id="dogbreedai_container">
-        <MDBRow columns="12"> 
-        <div class="text-center fw-bold section_header">
-            Do you want to find out what breed your dog is? 🧪👨🏼‍💻
-          </div>
-        </MDBRow>
-
-        <MDBRow v-if="dog_breed_loading" class="mx-auto text-center">
-        <MDBCol>
-          <MDBSpinner />
-          </MDBCol>
-        </MDBRow>
-
-        <MDBRow
-          v-if="dog_breed_guesses.length > 0"
-          class="mx-auto"
-        >
-          <div class="text-center fw-bold section_header_small">
-            My guesses are :
-          </div>
-          <MDBListGroup>
-            <MDBListGroupItem v-for="breed in dog_breed_guesses" :key="breed">
-              <div class="mx-auto">
-                <div class="dog_breed_guesses">{{
-                  breed.name
-                }}</div >
-                <div>{{ breed.perc }} %</div>
-              </div>
-            </MDBListGroupItem>
-          </MDBListGroup>
-        </MDBRow>
-
-        <MDBRow class="mx-auto text-center"> 
-        <MDBCol col="4" class="mx-auto" >
-          <MDBFile
-            text="ABSOLUTELY"
-            accept="image/*"
-            @change=uploadImageDogBreedRecognition
-          ></MDBFile>
-        </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+      <!-- <MDBContainer class="text-center mt-4" id="dogbreedai_container"> -->
+      <!--   <MDBRow columns="12">  -->
+      <!--   <div class="text-center fw-bold section_header"> -->
+      <!--       Do you want to find out what breed your dog is? 🧪👨🏼‍💻 -->
+      <!--     </div> -->
+      <!--   </MDBRow> -->
+      <!---->
+      <!--   <MDBRow v-if="dog_breed_loading" class="mx-auto text-center"> -->
+      <!--   <MDBCol> -->
+      <!--     <MDBSpinner /> -->
+      <!--     </MDBCol> -->
+      <!--   </MDBRow> -->
+      <!---->
+      <!--   <MDBRow -->
+      <!--     v-if="dog_breed_guesses.length > 0" -->
+      <!--     class="mx-auto" -->
+      <!--   > -->
+      <!--     <div class="text-center fw-bold section_header_small"> -->
+      <!--       My guesses are : -->
+      <!--     </div> -->
+      <!--     <MDBListGroup> -->
+      <!--       <MDBListGroupItem v-for="breed in dog_breed_guesses" :key="breed"> -->
+      <!--         <div class="mx-auto"> -->
+      <!--           <div class="dog_breed_guesses">{{ -->
+      <!--             breed.name -->
+      <!--           }}</div > -->
+      <!--           <div>{{ breed.perc }} %</div> -->
+      <!--         </div> -->
+      <!--       </MDBListGroupItem> -->
+      <!--     </MDBListGroup> -->
+      <!--   </MDBRow> -->
+      <!---->
+      <!--   <MDBRow class="mx-auto text-center">  -->
+      <!--   <MDBCol col="4" class="mx-auto" > -->
+      <!--     <MDBFile -->
+      <!--       label="Upload your dog image" -->
+      <!--       role="button" -->
+      <!--       tabindex="0" -->
+      <!--       text="ABSOLUTELY" -->
+      <!--       accept="image/*" -->
+      <!--       @change=uploadImageDogBreedRecognition -->
+      <!--     ></MDBFile> -->
+      <!--   </MDBCol> -->
+      <!--   </MDBRow> -->
+      <!-- </MDBContainer> -->
 
       <MDBContainer class="text-center mt-4" id="catbreedai_container">
         <MDBRow columns="12">
@@ -330,7 +339,7 @@ export default {
           <div class="text-center mx-auto fw-bold section_header_small">
             My guesses are :
           </div>
-          <MDBListGroup :type="2">
+          <MDBListGroup :type="2" aria-live="polite" aria-atomic="true">
             <MDBListGroupItem v-for="breed in cat_breed_guesses" :key="breed">
               <div class="mx-auto">
                 <div class="cat_breed_guesses">{{
@@ -342,7 +351,7 @@ export default {
           </MDBListGroup>
           </MDBCol>
 
-         <MDBCol sm="12" md="12" class="mx-auto text-center"  >
+         <MDBCol sm="12" md="12" class="mx-auto text-center" aria-live="polite" >
           <img :src=img_cat_breed columns="2" class="mx-auto text-center" width="100" height="100" />
           </MDBCol>
           </MDBRow>
@@ -352,6 +361,9 @@ export default {
         <MDBRow class="mx-auto text-center"> 
         <MDBCol col="4" class="mx-auto" >
           <MDBFile
+            label="Upload your cat image"
+            role="button"
+            tabindex="0"
             text="ABSOLUTELY"
             accept="image/*"
             @change=uploadImageCatBreedRecognition
@@ -367,7 +379,7 @@ export default {
           </MDBRow>
           <MDBRow >
           <MDBCol class="col-sm-8 col-md-8 mx-auto text-center">
-            <div class="fw-bold">{{ random_fact }}</div>
+            <div class="fw-bold" aria-live="polite">{{ random_fact }}</div>
             <MDBSpinner v-if="random_fact_loading"/>
             </MDBCol>
           </MDBRow>
@@ -387,19 +399,15 @@ export default {
           </MDBRow >
           <MDBRow class="mx-auto text-center" >
           <MDBCol class="col-sm-12 col-md-8 mx-auto">
-      <carousel :items-to-show="3" style="margin: 0 10px 0 10px">
-        <slide class="item" v-for="game in games" :key="game">
-          <div>
-            <!-- <h4>{{ game.title }}</h4> -->
-            <!-- <ui-icon-button>videogame_asset</ui-icon-button> -->
-            <MDBBtn raised @click="changeGame(game.component);updateScoreboard(game.component);">{{
+      <carousel tabindex="0" role="region" :items-to-show="3" style="margin: 0 10px 0 10px">
+        <slide tabindex="0" role="region" class="item" v-for="game in games" :key="game">
+            <MDBBtn role="button" raised @click="changeGame(game.component);updateScoreboard(game.component);">{{
               game.title
             }}</MDBBtn>
-          </div>
         </slide>
 
         <template #addons>
-          <navigation />
+          <navigation role="navigation"/>
           <!-- <pagination class="margin-left: -20px !important" /> -->
         </template>
       </carousel>

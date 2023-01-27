@@ -2,10 +2,11 @@ import mongoose from 'mongoose';
 import METHODS from "../methods.js";
 import DATABASE from '../database.js';
 import AUTH from "../authentication.js";
-import { isAuth, jsonParser } from "../utils.js";
+import { isAdmin, isAuth, jsonParser } from '../utils.js';
 
 const ENDPOINTS = [
   { endpoint: "/api/services/facetoface/slug/:slug", method: METHODS.GET, function: serviceFaceToFaceBySlug },
+  { endpoint: "/api/services/back/facetoface/slug/:slug/add", method: METHODS.PUT, opts: [jsonParser, isAuth, isAdmin], function: serviceFaceToFaceAddAvaBySlug },
   { endpoint: "/api/services/facetoface", method: METHODS.GET, function: serviceFaceToFaceRoutes },
   { endpoint: "/api/services/facetoface/book/:slug", method: METHODS.POST, opts: [jsonParser, isAuth], function: serviceFaceToFaceBook },
   { endpoint: "/api/services/online/slug/:slug", method: METHODS.GET, function: serviceOnlineBySlug },
@@ -60,6 +61,41 @@ function decrementHourById(service, id) {
           service.availabilities[i].shifts[j].hours[k].currentClients = service.availabilities[i].shifts[j].hours[k].currentClients - 1;
         }
       }
+    }
+  }
+  return service;
+}
+
+function editHourById(service, id, begin, end) {
+  for (let i = 0; i < service.availabilities.length; i++) {
+    for (let j = service.availabilities[i].shifts.length - 1; j > -1; j--) {
+      for (let k = service.availabilities[i].shifts[j].hours.length - 1; k > -1; k--) {
+        if (service.availabilities[i].shifts[j].hours[k]._id == id) {
+          service.availabilities[i].shifts[j].hours[k].begin = begin;
+          service.availabilities[i].shifts[j].hours[k].end = end;
+        }
+      }
+    }
+  }
+  return service;
+}
+
+function editShiftById(service, id, day) {
+  for (let i = 0; i < service.availabilities.length; i++) {
+    for (let j = service.availabilities[i].shifts.length - 1; j > -1; j--) {
+      if (service.availabilities[i].shifts[j]._id == id) {
+        service.availabilities[i].shifts[j].day = day;
+      }
+    }
+  }
+  return service;
+}
+
+function editCityAddressById(service, id, city, address) {
+  for (let i = 0; i < service.availabilities.length; i++) {
+    if (service.availabilities[i]._id == id) {
+      service.availabilities[i].city = city;
+      service.availabilities[i].address = address;
     }
   }
   return service;
@@ -142,9 +178,67 @@ async function serviceOnlineBook(req, res) {
   return serviceBook(req, res, true);
 }
 
+async function serviceAddAvaBySlug(req, res, isOnline) {
+  let city = req.body.city;
+  let address = req.body.address;
+  let maxClients = req.body.maxClients;
+  let begin = req.body.begin;
+  let end = req.body.end;
+  let day = (new Date(begin)).toDateString();
+  let service = await DATABASE.Service.findOne({ slug: req.params.slug, isOnline: isOnline });
+  let toAdd = { begin, end, maxClients, currentClients: 0 }
+  let found = false;
+  for (let a = 0; a < service.availabilities.length; a++) {
+    let ava = service.availabilities[a];
+    if (city == ava.city && address == ava.address) {
+      found = true;
+      let sfound = false;
+      for (let si = 0; si < ava.shifts.length; si++) {
+        let s = ava.shifts[si];
+        let ss = (new Date(s.day).toDateString())
+        if (ss == day) {
+          sfound = true;
+          service.availabilities[a].shifts[si].hours.push(toAdd)
+        }
+      }
+
+      if (!sfound) {
+        service.availabilities[a].shifts.push({
+          day: begin,
+          hours: [
+            toAdd
+          ]
+        });
+      }
+    }
+  }
+  if (!found) {
+    service.availabilities.push(
+      {
+        city: city,
+        address: address,
+        shifts:
+          [
+            {
+              day: begin,
+              hours: [toAdd]
+            }
+          ]
+      }
+    );
+  }
+  await DATABASE.Service.updateOne({ slug: req.params.slug }, { availabilities: service.availabilities });
+  res.status(201).json({ success: true })
+}
+
+
+async function serviceFaceToFaceAddAvaBySlug(req, res) {
+  return serviceAddAvaBySlug(req, res, false);
+}
+
 function notfound(res) {
   res.status(404).json({ message: 'Service not found' })
 }
 
-export default { ENDPOINTS, decrementHourById };
+export default { ENDPOINTS, decrementHourById, editHourById, editShiftById, editCityAddressById };
 

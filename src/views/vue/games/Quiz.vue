@@ -12,15 +12,15 @@ import { MDBBtn,MDBRow,MDBCol,MDBContainer,MDBListGroup,MDBListGroupItem,MDBFile
   <main :id="name" >
       <MDBContainer class="text-center">
         <MDBRow>
-          <div class="fw-bold">Correct : {{ streak }}</div>
+          <div id="streak" aria-live="polite" class="fw-bold">Correct : {{ streak }}</div>
         </MDBRow>
         <div v-if="!loading">
         <MDBRow>
-          <div class="fw-bold">{{ question }}</div>
+          <div id="question" class="fw-bold">{{ question }}</div>
         </MDBRow>
-        <MDBRow v-for="answer in answers">
+        <MDBRow id="answers" v-for="answer in answers" aria-live="polite">
           <MDBCol class="mx-auto col-sm-12 col-md-8 ">
-            <MDBBtn raised @click="answerClicked(answer)">{{ answer }}</MDBBtn>
+            <MDBBtn aria-controls="streak" raised @click="answerClicked(answer)">{{ answer }}</MDBBtn>
           </MDBCol>
         </MDBRow>
         </div>

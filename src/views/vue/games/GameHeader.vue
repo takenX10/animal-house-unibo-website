@@ -1,6 +1,5 @@
 
-
-<script>
+<script setup>
   import {
     MDBBtn,
     MDBNavbar,
@@ -12,30 +11,29 @@
     MDBDropdown,
     MDBDropdownToggle,
     MDBDropdownMenu,
-    MDBDropdownItem
+    MDBDropdownItem,
   } from 'mdb-vue-ui-kit';
-  import { ref } from 'vue';
+</script>
+
+<script>
+import { check_login, raw_logout } from "@/context/utils.jsx";
 
   export default {
     components: {
-      MDBBtn,
-      MDBNavbar,
-      MDBNavbarToggler,
-      MDBNavbarBrand,
-      MDBNavbarNav,
-      MDBNavbarItem,
-      MDBCollapse,
-      MDBDropdown,
-      MDBDropdownToggle,
-      MDBDropdownMenu,
-      MDBDropdownItem
     },
-    setup() {
-      const collapse1 = ref(false);
-      const dropdown1 = ref(false);
-      return {
-        collapse1,
-        dropdown1
+    data() {
+       return { 
+         logged: false,
+         collapse1: false,
+         dropdown1: false
+       }
+    },
+    created(){
+        this.verify_login();
+    },
+    methods: {
+      verify_login: async function () {
+        this.logged = await check_login()
       }
     }
   };
@@ -50,17 +48,12 @@
     ></MDBNavbarToggler>
     <MDBCollapse v-model="collapse1" id="navbarSupportedContent" >
       <MDBNavbarNav class="w-100 mb-2 mb-lg-0 justify-content-end" >
-        <MDBNavbarItem>
+        <MDBNavbarItem >
           <!-- Navbar dropdown -->
           <MDBDropdown class="nav-item" v-model="dropdown1">
-            <MDBDropdownToggle
-              tag="a"
-              class="nav-link"
-              @click="dropdown1 = !dropdown1"
-              >Services</MDBDropdownToggle
-            >
+            <a @click="dropdown1 = !dropdown1" tabindex="0" href="#" role="button" type="button" class="dropdown-toggle nav-link">Services</a>
             <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
-              <MDBDropdownItem href="/comunita">Community</MDBDropdownItem>
+              <MDBDropdownItem href="/comunita" tabindex="0">Community</MDBDropdownItem>
               <MDBDropdownItem href="/services/facetoface">Offline</MDBDropdownItem>
               <MDBDropdownItem href="/services/online">Online</MDBDropdownItem>
             </MDBDropdownMenu>
@@ -72,8 +65,11 @@
         <MDBNavbarItem to="/games">
           Games 
         </MDBNavbarItem>
-        <MDBNavbarItem href="/backoffice/login" >
+        <MDBNavbarItem v-if="!logged" href="/backoffice/login" >
           Login 
+        </MDBNavbarItem>
+        <MDBNavbarItem v-if="logged" href="#" role="button" @onclick="raw_logout()" >
+          Logout 
         </MDBNavbarItem>
       </MDBNavbarNav>
     </MDBCollapse>

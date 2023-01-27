@@ -127,7 +127,7 @@ export default function HomeServiceFaceToFace() {
                 <Row className='mx-auto'>
                   <Col md={6} sm={6} className='mx-auto'>
                     <div className='content'><label htmlFor="placeFilters"><b>Place filter</b></label>
-                      <Form.Select id="placeFilter" aria-label="Place filter" value={place} onChange={(e) => setPlace(e.target.value)}>
+                      <Form.Select id="placeFilters" aria-label="Place filter" value={place} onChange={(e) => setPlace(e.target.value)}>
                         {
                           placeFilters.map((f, index) => {
                             return <option key={index} value={f} label={f}></option>
@@ -139,7 +139,7 @@ export default function HomeServiceFaceToFace() {
                 <Row className='mx-auto'>
                   <Col md={6} sm={6} className='mx-auto'>
                     <div className='content'><label htmlFor="dayFilters"><b>Day filter</b></label>
-                      <Form.Select id="dayFilter" aria-label="Day filter" value={day} onChange={(e) => setDay(e.target.value)}>
+                      <Form.Select id="dayFilters" aria-label="Day filter" value={day} onChange={(e) => setDay(e.target.value)}>
                         {
                           dayFilters.map((f, index) => {
                             return <option key={index} value={f} label={f == "None" ? "None" : getDayLabel(f)}></option>
@@ -151,7 +151,7 @@ export default function HomeServiceFaceToFace() {
                 <Row className='mx-auto mt-4'>
                   {
                     servicesFaceToFaceFiltered.map(service => (
-                      <Col key={service.slug} sm={6} md={4} lg={3} className="mb-3">
+                      <Col key={service.slug} sm={6} md={4} lg={3} className="mb-3 mx-auto">
                         <Service service={service}></Service>
                       </Col>
                     ))

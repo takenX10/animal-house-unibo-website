@@ -146,7 +146,7 @@ export default function Navbar() {
                 <NavDropdown.Item>Community</NavDropdown.Item>
               </LinkContainer>
               <LinkContainer to="/services/facetoface">
-                <NavDropdown.Item>Offline (?)</NavDropdown.Item>
+                <NavDropdown.Item>Face to Face</NavDropdown.Item>
               </LinkContainer>
               <LinkContainer to="/services/online">
                 <NavDropdown.Item>Online</NavDropdown.Item>
