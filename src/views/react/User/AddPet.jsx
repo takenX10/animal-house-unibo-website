@@ -26,7 +26,6 @@ export default function AddPet() {
 
     function onChange(e) {
         listSet[e.target.id](e.target.value)
-        console.log(e.target.id, e.target.value);
     }
 
     const handleSubmit = async (event) => {
@@ -52,7 +51,6 @@ export default function AddPet() {
             });
             
             const data = await res.json();
-            console.log(res);
             if (!res.ok){
                 throw new Error(data.message);
             }else{

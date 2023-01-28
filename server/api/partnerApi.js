@@ -10,10 +10,12 @@ let ENDPOINTS = [
   { endpoint: "/backoffice/get_matches", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_matches },
   { endpoint: "/api/backoffice/get_my_puppies", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_my_puppies },
   { endpoint: "/backoffice/unmatch", method: METHODS.POST, opts: [jsonParser, isAuth], function: unmatch },
-  { endpoint: "/backoffice/petadd", method: METHODS.POST, opts: [jsonParser, isAuth], function: addPet },
+  { endpoint: "/backoffice/petadd", method: METHODS.POST, opts: [jsonParser, isAuth], function: addpet },
+  { endpoint: "/backoffice/removepet", method: METHODS.POST, opts: [jsonParser, isAuth], function: removepet },
+  { endpoint: "/backoffice/getpets", method: METHODS.POST, opts: [jsonParser, isAuth], function: getpets },
 ]
 
-async function addPet(req, res){
+async function addpet(req, res){
   const user = await AUTH.get_user(req);
   if(!req?.body?.name || !req.body?.race || !req.body?.description || !req.body?.age || !req.body?.weight || !req.body?.sex){
     res.status(404).json({success: false, message: "Some fields are missing"});
@@ -32,6 +34,31 @@ async function addPet(req, res){
     console.log(user.petList);
     res.status(200).json({success:true});
   }
+}
+
+async function removepet(req, res){
+  const user = await AUTH.get_user(req);
+  if(!req.body?.id){
+    res.status(404).json({success:false, message:"Missing id on request"});
+  }else{
+    user.petList.splice(user.petList.indexOf(req.body.id), 1);
+    await DATABASE.User.updateOne({_id: user._id}, {petList: user.petList})
+    let p = await DATABASE.Pet.findByIdAndDelete(req.body.id);
+    console.log(p);
+    res.json({success:true});
+  }
+}
+
+async function getpets(req, res){
+  const user = await AUTH.get_user(req);
+  let petlist = [];
+  console.log(user.petList);
+  for(let p of user.petList){
+    let newpet = await DATABASE.Pet.findById(p);
+    // TODO: remove matchlist and other useless data from json
+    petlist.push(newpet);
+  }
+  res.json({success:true, petlist: petlist});
 }
 
 async function unmatch(req, res) {

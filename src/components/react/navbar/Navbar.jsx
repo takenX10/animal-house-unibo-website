@@ -161,6 +161,9 @@ export default function Navbar() {
                 <LinkContainer to="/profile">
                   <NavDropdown.Item>Your Profile</NavDropdown.Item>
                 </LinkContainer>
+                <LinkContainer to="/add_pet">
+                  <NavDropdown.Item>Add a pet</NavDropdown.Item>
+                </LinkContainer>
                 <LinkContainer to="/shop/orderhistory">
                   <NavDropdown.Item>Order History</NavDropdown.Item>
                 </LinkContainer>

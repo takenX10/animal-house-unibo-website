@@ -49,7 +49,7 @@ const ReactRoutes = [
   { path: "/office", element: <HomeFrontOffice /> },
   { path: "/backoffice/login", element: <Login /> },
   { path: "/backoffice/register", element: <Register /> },
-  { path: "/backoffice/add_pet", element: <AddPet /> },
+  { path: "/add_pet", element: <AddPet /> },
   {
     path: "/comunita", element: <HomeComunita />,
     children: [
