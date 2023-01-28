@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef, useContext } from 'react';
 import { Store } from "@/context/store";
-import Navbar from '@/components/react/navbar/Navbar';
+import { ToastContainer, toast } from "react-toastify";
 import { Modal, Form, Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { SERVER_URL, check_login, logout, getDayLabel, getHourLabel } from '@/context/utils';
 import { useNavigate } from 'react-router-dom';
 import "@/assets/css/colors.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Profile() {
   const { dispatch: ctxDispatch } = useContext(Store);
@@ -25,6 +26,32 @@ export default function Profile() {
 
   const hideChange = () => { setShowChange(false) };
   const showChange = () => { setShowChange(true) };
+  
+  async function getConfirmation(id){
+    let retval = confirm("Are you sure you want to delete this pet?");
+    if(retval){
+      try {
+        let res = await fetch(`${SERVER_URL}/backoffice/removepet`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                Accept: "*/*",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({id:id}),
+        });
+        
+        const data = await res.json();
+        if (!res.ok){
+            throw new Error(data.message);
+        }else{
+            find_pets();
+        }
+    } catch (err) {
+        toast.error(err.message);
+    }
+    }
+  }
 
   async function change_password(e) {
     e.preventDefault();
@@ -47,30 +74,29 @@ export default function Profile() {
         logout(ctxDispatch);
       }
     } catch (err) {
-      alert(err);
+      toast.error(err);
     }
   }
 
-  async function find_pets(petList) {
-    let newpets = [];
-    for (let p of petList) {
-      try {
-        let res = await fetch(`${SERVER_URL}/api/backoffice/get_a_puppy`, {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            'Accept': '*/*',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ id: p })
-        });
-        res = await res.json();
-        newpets = [...newpets, res];
-      } catch (e) {
-        alert(e);
+  async function find_pets() {
+    try {
+      let res = await fetch(`${SERVER_URL}/backoffice/getpets`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+      });
+      res = await res.json();
+      if (res.success) {
+        setPets(res.petlist);
+      }else{
+        throw new Error(res.message);
       }
+    } catch (e) {
+      toast.error(e);
     }
-    setPets(newpets);
   }
 
   async function get_user() {
@@ -81,9 +107,9 @@ export default function Profile() {
       });
       res = await res.json();
       setUser(res);
-      find_pets(res.petList);
+      await find_pets();
     } catch (e) {
-      alert(e);
+      toast.error(e);
     }
   }
 
@@ -97,7 +123,7 @@ export default function Profile() {
         setBookings(b.bookings);
       }
     } catch (e) {
-      alert(e);
+      toast.error(e);
     }
   }
 
@@ -118,7 +144,7 @@ export default function Profile() {
       else
         getBookings();
     } catch (e) {
-      alert(e);
+      toast.error(e);
     }
   }
 
@@ -133,7 +159,7 @@ export default function Profile() {
         logout(ctxDispatch);
       }
     } catch (e) {
-      alert(e);
+      toast.error(e);
     }
   }
 
@@ -227,6 +253,7 @@ export default function Profile() {
                     </tr>
                   </tbody>
                 </Table>
+                <Button variant="danger" onClick={()=>{getConfirmation(p._id)}}>Delete</Button>
               </Col>
             );
           })}
@@ -303,6 +330,7 @@ export default function Profile() {
           </Form>
         </Modal.Body>
       </Modal>
+      <ToastContainer />
     </>
   );
 }
