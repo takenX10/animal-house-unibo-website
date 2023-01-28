@@ -1,7 +1,14 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+// Mongodb username: site212246 - Mongodb password: giep8Eit
+// You can connect your mongodb from your site web using hostname mongo_site212246
+const DBUSER = "site212246";
+const DBPASS = "giep8Eit";
+const HOSTNAME = "mongo_site212246";
 const DBNAME = "animalhouse";
 const DBURL = `mongodb://127.0.0.1:27017/${DBNAME}`;
+// questo per docker
+// const DBURL = `mongodb://${DBUSER}:${DBPASS}@${HOSTNAME}:27017`;
 
 async function connect() {
   await mongoose.connect(DBURL);

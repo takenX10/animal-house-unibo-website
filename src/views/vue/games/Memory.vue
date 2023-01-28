@@ -19,11 +19,14 @@ import { MDBBtn,MDBRow,MDBCol,MDBContainer,MDBListGroup,MDBListGroupItem,MDBFile
         <MDBRow>
           <div aria-live="polite" class="fw-bold">Score: {{ score }}</div>
         </MDBRow>
+        <MDBRow>
+          <div aria-live="polite" class="fw-bold" aria-label="status">{{ status }}</div>
+        </MDBRow>
         <div v-if="!loading">
           <MDBRow aria-live="polite" aria-atomic="true">
             <MDBCol v-for="(image,i) in cells" class="col-3" style="height:100px !important">
-              <div class="border border-gray rounded" style="width: 100%; height: 100%">
-                <img role="button" tabindex="1" :src="image" :id="i" class="hide-cell" :alt="i+'-image'" @click="cellClicked(i)" style="width: 100%; height: 100%"/>
+              <div class="border border-gray rounded bg-white" style="width: 100%; height: 100%">
+                <input type="image"  @click="cellClicked(i)"  :src="image" :id="i" tabindex="0" class="hide-cell" :alt="i+'-image'" style="width: 100%; height: 100%"/>
               </div>
             </MDBCol>
           </MDBRow>
@@ -57,6 +60,7 @@ export default {
       loading: false,
       errors: 0,
       score: 100,
+      status: "Choose a cell",
       winStatus: false,
       images: [],
       cells: [],
@@ -75,8 +79,10 @@ export default {
         $(`#${this.second}`).addClass("hide-cell"); 
         this.first = -1;
         this.second = -1;
+        this.status = "Choose a cell";
     },
     guessedCell: function() {
+        this.status = "Correct";
         this.guessed.push(this.first,this.second)
         this.first = -1;
         this.second = -1;
@@ -104,6 +110,7 @@ export default {
           this.guessedCell();
         }
         else {
+          this.status = "Wrong";
           this.errors++;
           this.score--;
           this.interval = setInterval(() => {

@@ -39,8 +39,12 @@ import { check_login, raw_logout } from "@/context/utils.jsx";
   };
 </script>
 
+<style>
+@import "@/assets/css/game_selection/style.css";
+</style>
+
 <template>
-<MDBNavbar expand="lg" light bg="light" container>
+<MDBNavbar expand="lg" class="game-nav" bg="#642afb" container>
     <MDBNavbarBrand href="/games">AnimalHouse - Games</MDBNavbarBrand>
     <MDBNavbarToggler
       @click="collapse1 = !collapse1"
@@ -68,7 +72,7 @@ import { check_login, raw_logout } from "@/context/utils.jsx";
         <MDBNavbarItem v-if="!logged" href="/backoffice/login" >
           Login 
         </MDBNavbarItem>
-        <MDBNavbarItem v-if="logged" href="#" role="button" @onclick="raw_logout()" >
+        <MDBNavbarItem v-if="logged" href="#" role="button" @click="raw_logout()" >
           Logout 
         </MDBNavbarItem>
       </MDBNavbarNav>

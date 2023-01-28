@@ -4,6 +4,7 @@
 import fs from "fs";
 import os from "os";
 import DATABASE from './database.js';
+import initDB from "./init_db.js";
 import multer from "multer";
 import express from "express";
 import path from "path";
@@ -125,6 +126,7 @@ app.get("*", function(req, res, next) {
 app.listen(port, async () => {
   console.log(`Animalhouse Backend listening on port ${port}`);
   await DATABASE.connect();
+  await initDB();
   await importAPI()
   initAPI();
 });
