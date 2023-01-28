@@ -39,7 +39,8 @@ import ServiceScreen from '@/views/react/services/ServiceScreen';
 import Login from '@/views/react/User/Login';
 import Register from '@/views/react/User/Register';
 import Profile from '@/views/react/User/Profile';
-import Navbar from '../components/react/navbar/Navbar';
+import Navbar from '@/components/react/navbar/Navbar';
+import AddPet from '@/views/react/User/AddPet';
 
 
 const ReactRoutes = [
@@ -48,6 +49,7 @@ const ReactRoutes = [
   { path: "/office", element: <HomeFrontOffice /> },
   { path: "/backoffice/login", element: <Login /> },
   { path: "/backoffice/register", element: <Register /> },
+  { path: "/backoffice/add_pet", element: <AddPet /> },
   {
     path: "/comunita", element: <HomeComunita />,
     children: [

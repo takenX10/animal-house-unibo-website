@@ -10,9 +10,29 @@ let ENDPOINTS = [
   { endpoint: "/backoffice/get_matches", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_matches },
   { endpoint: "/api/backoffice/get_my_puppies", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_my_puppies },
   { endpoint: "/backoffice/unmatch", method: METHODS.POST, opts: [jsonParser, isAuth], function: unmatch },
-
-
+  { endpoint: "/backoffice/petadd", method: METHODS.POST, opts: [jsonParser, isAuth], function: addPet },
 ]
+
+async function addPet(req, res){
+  const user = await AUTH.get_user(req);
+  if(!req?.body?.name || !req.body?.race || !req.body?.description || !req.body?.age || !req.body?.weight || !req.body?.sex){
+    res.status(404).json({success: false, message: "Some fields are missing"});
+  }else{
+    const p = await DATABASE.Pet.create({
+      "name" : req.body.name,
+      "race" : req.body.race,
+      "description" : req.body.description,
+      "age" : req.body.age,
+      "weight" : req.body.weight,
+      "sex" : req.body.sex,
+      "ownerid": user.id,
+    });
+    console.log(p);
+    await DATABASE.User.updateOne({_id: user.id}, {petList: [p.id, ...user.petList]});
+    console.log(user.petList);
+    res.status(200).json({success:true});
+  }
+}
 
 async function unmatch(req, res) {
   const user = await AUTH.get_user(req);
