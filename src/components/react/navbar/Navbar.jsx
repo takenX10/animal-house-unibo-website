@@ -128,7 +128,7 @@ export default function Navbar() {
   };
 
   return (
-    <Bar className=" text-black our-nav py-4" expand="md">
+    <Bar className=" text-black our-nav py-4" expand="lg">
       <Container className="flex justify-content-between">
         <LinkContainer to="/">
           <Bar.Brand>AnimalHouse</Bar.Brand>

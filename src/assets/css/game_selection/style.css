@@ -157,6 +157,7 @@ body {
 }
 .game-nav * {
  color: white !important;
+ background-color: #642afb !important;
 }
 .my-bg {
  background-color: #642afb !important;
