@@ -7,7 +7,7 @@
 </style>
 
 <script setup>
-import { MDBBtn,MDBRow,MDBCol,MDBContainer,MDBListGroup,MDBListGroupItem,MDBFile, MDBSpinner } from "mdb-vue-ui-kit";
+import { MDBBtn,MDBRow,MDBCol,MDBContainer,MDBListGroup,MDBListGroupItem,MDBFile, MDBSpinner, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImg} from "mdb-vue-ui-kit";
 </script>
 
 <script >
@@ -85,6 +85,8 @@ export default {
       funnyvideo: "",
       random_fact: "",
       random_fact_loading: false,
+      shop_loading: false,
+      products: [],
       dog_breed_loading: false,
       dog_breed_guesses: [],
       cat_breed_loading: false,
@@ -105,10 +107,34 @@ export default {
       if (!g) {
         this.getFunnyVideos();
       }
+      this.showProducts();
     },
     goback: function () {
       this.component = "";
       location.hash = "#";
+      this.showProducts();
+    },
+    shuffle: function (arr) {
+      var currentIndex = arr.length, temporaryValue, randomIndex;
+
+      while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = arr[currentIndex];
+        arr[currentIndex] = arr[randomIndex];
+        arr[randomIndex] = temporaryValue;
+      }
+
+      return arr;
+    },
+    showProducts: async function () {
+      this.shop_loading = true;
+      let res = await fetch(`${this.BACKEND_SERVER}/api/shop/products`);
+      let data = await res.json();
+      this.shop_loading = false;
+      data = this.shuffle(data);
+      this.products = data.slice(0,4);
+      this.refreshPage();
     },
     updateScoreboard: async function (g) {
       if (!g) return;
@@ -178,13 +204,16 @@ export default {
         console.log(data.data.results[0])
         this.cat_breed_guesses = data.data.results;
         this.cat_breed_loading = false;
-        this.img_cat_breed = `${this.BACKEND_SERVER}/${data.data.results[0].img_name}`
+        this.img_cat_breed = `${this.BACKEND_SERVER}${data.data.results[0].img_name}`
         this.refreshPage();
       }
     },
     getCurr: function () {
       return this.component;
     },
+    productClicked: function(slug) {
+      window.location.href = `/shop/product/${slug}`;
+    }
   },
   created() {
     let game = location.hash.slice(1);
@@ -223,12 +252,11 @@ export default {
       </vueper-slides>-->
       <div v-if="scoreboards" class="row mb-5 mt-4 mx-5">
         <b-button
-          class="col col-lg-8 col-md-8 col-sm-8 mx-auto"
+          class="col col-lg-8 col-md-8 col-sm-8 mx-auto my-bg mb-2"
           v-b-toggle.collapse-1
-          variant="primary"
           >Scoreboard</b-button
         >
-        <b-collapse id="collapse-1" style="width:100% !important; margin:0px auto !important;" class="mt-2 mx-auto text-center">
+        <b-collapse id="collapse-1" style="width:50% !important; margin:0px auto !important;" class="mt-2 mx-auto text-center">
           <MDBListGroup single-selection>
             <MDBListGroupItem v-for="(user, i) in scoreboards" style="width:100% !important;" class="text-center mx-auto" :key="i">
             <span style="width: 100% !important;" >
@@ -414,5 +442,34 @@ export default {
       </MDBCol>
           </MDBRow >
   </MDBContainer>
+  <MDBContainer class="text-center mt-4" id="shop_container">
+      <MDBRow class="mb-2">
+        <div class="fw-bold section_header">Take a look at our products !</div>
+      </MDBRow>
+      <MDBRow >
+      <MDBCol class="col-sm-12 col-md-12 col-lg-8 col-xs-12 mx-auto text-center">
+        <MDBSpinner v-if="shop_loading"/>
+          <MDBRow v-if="!shop_loading && products && products.length > 0">
+              <MDBCol class="col-6 mx-auto text-center mb-2" height="100" v-for="(prod, i) in products">
+                <MDBCard style="height:350px">
+                  <MDBCardImg
+                    :src="'http://localhost:8000/' + prod.poster"
+                    style="height: 100%; max-height: 150px"
+                    top
+                    :alt="'poster' + prod.poster"
+                  />
+                  <MDBCardBody>
+                    <MDBCardTitle> {{ prod.name }} </MDBCardTitle>
+                    <MDBCardText>
+                     {{ prod.description }} 
+                    </MDBCardText>
+                    <MDBBtn class="my-bg" @click="productClicked(prod.slug)">{{prod.price }}$</MDBBtn>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+          </MDBRow>
+        </MDBCol>
+      </MDBRow>
+ </MDBContainer>
   </main>
 </template>

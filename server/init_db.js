@@ -12,9 +12,7 @@ var fakeUsers = [
     petList: [],
   },
   {
-    name: "Giovanni",
-    surname: "Storti",
-    email: "giovanni@storti.tk",
+    name: "Giovanni", surname: "Storti", email: "giovanni@storti.tk",
     contact: "+39 444 444 4444",
     password: bcrypt.hashSync("giovannistorti", genSaltSync()),
     petList: [],
@@ -468,7 +466,7 @@ const services = [
   },
 ]
 
-async function init() {
+async function initDB() {
   let mongoose = await DATABASE.connect();
   console.log("Clearing database...");
   await mongoose.connection.db.dropDatabase(
@@ -504,7 +502,7 @@ async function init() {
   console.log("Adding face to face services...");
   await DATABASE.Service.insertMany(services);
   console.log("done!");
-  process.exit();
 }
 
-init();
+// init_db();
+export default initDB;

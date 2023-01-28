@@ -28,9 +28,7 @@
 
 .carousel__slide {
   padding: 10px;
-}
-
-.carousel__prev,
+} .carousel__prev,
 .carousel__next {
   box-sizing: content-box;
   border: 5px solid white;
@@ -151,4 +149,16 @@ body {
 
 .dog_breed_guesses {
   font-size: medium !important;
+}
+
+.game-nav {
+ background-color: #642afb !important;
+ color: white !important;
+}
+.game-nav * {
+ color: white !important;
+}
+.my-bg {
+ background-color: #642afb !important;
+color: white !important;
 }
