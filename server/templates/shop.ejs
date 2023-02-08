@@ -7,17 +7,17 @@
   <strong>Well done!</strong> 
 </div>
   <div class="row mx-auto w-100">
-    <div class="col mx-auto text-center">
+    <div class="col mx-auto mt-5 text-center">
      <h1><b><%= title %></b></h1>
     
     </div>
   </div>
   <div class="row mx-auto w-100">
-    <div class="col mx-auto text-center">
+    <div class="col mx-auto text-center my-3">
      <h2><b> Products </b></h2>
     </div>
   </div>
-  <div class="row mx-auto w-100">
+  <div class="row mx-auto w-100 mb-3">
     <div class="col mx-auto text-center">
         <button style="background-color: #0000FF" class="btn text-white" type="button" data-toggle="modal" data-target="#addModal">
           Add product
@@ -213,7 +213,7 @@
 <%- include('./foot.ejs', {}); %>
 
 <template id="booking-template">
-    <div class="row mb-2  p-3 rounded">
+    <div class="row mb-4  p-3 rounded border border-dark">
         <div class="col-xs-12 col-sm-8 ml-auto text-left">
             <h3 id="title" name="title">Title</h3>
             <div id="where" name="where">Where</div>
@@ -227,11 +227,10 @@
             <button type="button" class="btn btn-danger m-2" id="booking-delete">Delete</button>
         </div>
     </div>
-    <hr>
 </template>
 
 <template id="product-template">
-    <div class="row mb-2  p-3 rounded">
+    <div class="row mb-4  p-3 rounded border border-dark">
         <div class="col-xs-12 col-sm-8 ml-auto text-left">
             <h3 id="name" name="name">Name</h3>
             <div id="description" name="description">Description</div>
@@ -245,7 +244,6 @@
             <button type="button" class="btn btn-danger m-2" id="product-delete">Delete</button>
         </div>
     </div>
-    <hr>
 </template>
 
 <template id="tr-template">
