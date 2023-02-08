@@ -19,13 +19,120 @@
             </div>
             <div class="col d-flex justify-content-end align-items-center">
                 <button type="button" class="btn btn-secondary m-2"
-                    id="account-edit">Modifica account</button>
+                    id="account-edit"
+                    data-toggle="modal"
+                    data-target="#editModal">Edit account</button>
                 <button type="button" id="delete-button" class="btn btn-danger
-                    m-2">Elimina account</button>
+                    m-2">Delete account</button>
             </div>
         </div>
     </template>
-    <script>
+
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+        aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="namemodal"
+                                    class="namemodallabel" id="namemodallabel">Name</label>
+                            </div>
+                            <input role="input" type="text" id="namemodal"
+                                class="form-control cityinput" aria-label="Name"
+                                aria-describedby="namemodallabel" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                    for="surnamemodal" class="surnamemodallabel"
+                                    id="surnamemodallabel">Surname</label>
+                            </div>
+                            <input role="input" type="text" id="surnamemodal"
+                                class="form-control surnameinput"
+                                aria-label="surname"
+                                aria-describedby="surnamemodallabel" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                    class="passwordmodallabel"
+                                    for="passwordmodal"
+                                    id="passwordmodallabel">Password</label>
+                            </div>
+                            <input role="input" type="password"
+                                id="passwordmodal" class="form-control
+                                passwordinput"
+                                aria-label="password"
+                                aria-describedby="passwordmodallabel" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                    class="contactmodallabel" for="contactmodal"
+                                    id="contactmodallabel">Contact</label>
+                            </div>
+                            <input role="input" type="text"
+                                id="contactmodal" class="form-control
+                                contactinput"
+                                aria-label="contact"
+                                aria-describedby="contactmodallabel" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            id="closeeditmodal" data-dismiss="modal">Close</button>
+                        <button type="button" style="background-color: #0000FF"
+                            onclick="editUser()" data-dismiss="modal"
+                            class="btn text-white">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+let currentUserEdited;
+let passwordValue;
+async function editUser() {
+    let name = $("#namemodal").val();
+    let surname = $("#surnamemodal").val();
+    let password = $("#passwordmodal").val();
+    let contact = $("#contactmodal").val();
+    if (password == ""){
+        password = passwordValue;
+    }
+    try {
+        let b = await fetch(`/api/backoffice/edit_user_by_id`, {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: currentUserEdited,
+                name: name,
+                surname: surname,
+                password: password,
+                contact: contact 
+            })
+        });
+        b = await b.json();
+        if (b.success){
+            getUsers();
+        }
+    } catch (e) {
+        alert("Can't modify user: ", e);
+    }
+}
 
 function redirect(id){
     window.location = `/backoffice/pet?id=${id}`;
@@ -51,6 +158,16 @@ async function delete_user_by_id(id){
     }
 }
 
+function edit_values(name, surname, password, contact, id){
+    console.log("ciao");
+    currentUserEdited = id;
+    $("#namemodal").val(name);
+    $("#surnamemodal").val(surname);
+    $("#passwordmodal").val("");
+    passwordValue = password;
+    $("#contactmodal").val(contact);
+}
+
 async function loadUsers(data){
     data = data.users;
     for(let usr of data){
@@ -59,6 +176,7 @@ async function loadUsers(data){
         $("#email",newUser).text(usr.email);
         $("#contact",newUser).text(usr.contact);
         $("#id",newUser).text(usr._id);
+        $("#account-edit",newUser).click(()=>{edit_values(usr.name, usr.surname, usr.password, usr.contact, usr._id)});
         $("#delete-button", newUser).click(()=>{delete_user_by_id(usr._id)});
         $('.user-container').append(newUser);
     }
@@ -85,5 +203,4 @@ async function getUsers() {
 getUsers();
 </script>
 
-
-    <%- include('./foot.ejs'); %>
+<%- include('./foot.ejs'); %>

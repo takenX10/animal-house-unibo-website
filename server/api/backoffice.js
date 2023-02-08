@@ -15,6 +15,7 @@ let ENDPOINTS = [
   { endpoint: "/api/backoffice/change_password", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: change_password },
   { endpoint: "/api/backoffice/delete_user", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_user },
   { endpoint: "/api/backoffice/delete_user_by_id", method: METHODS.DELETE, opts: [jsonParser, isAuth, isAdmin], function: delete_user_by_id },
+  { endpoint: "/api/backoffice/edit_user_by_id", method: METHODS.PATCH, opts: [jsonParser, isAuth, isAdmin], function: update_user_by_id },
   { endpoint: "/api/backoffice/is_admin", method: METHODS.POST, opts: [jsonParser, isAuth, isAdmin], function: is_admin },
   { endpoint: "/api/backoffice/become_admin", method: METHODS.GET, opts: [jsonParser, isAuth], function: become_admin },
   { endpoint: "/backoffice/facetoface", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showFaceToFace },
@@ -59,12 +60,34 @@ async function delete_user(req, res) {
   res.json({ success: true });
 }
 async function delete_user_by_id(req, res) {
-  console.log(req.body);
-  if(!req?.body?.id == null){
-    res.status(400).json({success:false, message:"missing id field"});
+  if (!req?.body?.id == null) {
+    res.status(400).json({ success: false, message: "missing id field" });
   }
   const user = await DATABASE.User.findByIdAndDelete(req.body.id);
   await DATABASE.User.findByIdAndDelete(user.id);
+  res.json({ success: true });
+}
+
+async function update_user_by_id(req, res) {
+  if (!req?.body?.id == null ||
+    !req.body?.name ||
+    !req.body?.surname ||
+    !req.body?.password ||
+    !req.body?.contact
+  ) {
+    res.status(400).json({ success: false, message: "missing fields" });
+    return;
+  }
+  console.log("password: " , req.body.password);
+  const thisuser = await DATABASE.User.findById(req.body.id);
+  const user = await DATABASE.User.findByIdAndUpdate(req.body.id, {
+    $set: {
+      name: req.body.name,
+      surname: req.body.surname,
+      password: req.body.password == thisuser.password ? thisuser.password : bcrypt.hashSync(req.body.password, genSaltSync()),
+      contact: req.body.contact,
+    }
+  });
   res.json({ success: true });
 }
 async function get_user(req, res) {
