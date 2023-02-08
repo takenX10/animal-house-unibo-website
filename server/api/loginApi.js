@@ -10,13 +10,16 @@ let ENDPOINTS = [
   { endpoint: "/backoffice/login", method: METHODS.POST, opts: [jsonParser], function: officePostLogin },
   { endpoint: "/backoffice/register", method: METHODS.POST, opts: [jsonParser], function: officePostRegister },
   { endpoint: "/backoffice/home", method: METHODS.GET, opts: [jsonParser, isAdmin], function: officeHome },
+  { endpoint: "/backoffice/anagraphic", method: METHODS.GET, opts: [jsonParser, isAdmin], function: officeAnagraphic },
 ]
 
 async function officeHome(req, res) {
-  res.render("../templates/anagrafica", { title: "Anagrafica clienti" });
+  res.render("../templates/home", { title: "Anagrafica clienti" });
 }
 
-
+async function officeAnagraphic(req, res) {
+  res.render("../templates/anagrafica", { title: "Client anagraphics" });
+}
 
 async function officePostLogin(req, res) {
   const user = await DATABASE.User.findOne({ email: req?.body?.email });
