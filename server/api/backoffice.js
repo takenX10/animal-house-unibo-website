@@ -90,6 +90,7 @@ async function update_user_by_id(req, res) {
   });
   res.json({ success: true });
 }
+
 async function get_user(req, res) {
   const user = await AUTH.get_user(req);
   res.json({

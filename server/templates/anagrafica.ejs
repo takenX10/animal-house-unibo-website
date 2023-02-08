@@ -134,10 +134,6 @@ async function editUser() {
     }
 }
 
-function redirect(id){
-    window.location = `/backoffice/pet?id=${id}`;
-}
-
 async function delete_user_by_id(id){
     try {
         let res = await fetch(`/api/backoffice/delete_user_by_id`, {

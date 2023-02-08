@@ -1,0 +1,245 @@
+<%- include('./head.ejs', {headTitle:title}); %>
+    <style>
+    .btn {
+        width: fit-content !important;
+        height: fit-content !important;
+    }
+</style>
+    <h1 class="text-center mt-5 m-3 p-2 font-weight-bold font-size-2">Pet list</h1>
+    <div class="container-fluid w-100 pet-container">
+
+    </div>
+    <template class="pet-template">
+        <div class="row m-5 border border-dark p-3">
+            <div class="col">
+                <h2 id="name">Loading</h2>
+                <h4 id="race">Dog</h4>
+                <p id="age">9</p>
+                <p id="sex">Male</p>
+                <p id="weight">12</p>
+                <p id="description">Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit. Sapiente iste quibusdam error laborum
+                    velit laboriosam minus quasi, rerum quisquam labore fugit
+                    iure? Explicabo debitis dolorem iusto optio, libero ullam
+                    fugit!</p>
+                <p>Owner id:  <code id="ownerid">7AEU92394598027402090893EEAB949</code></p>
+                <p>Pet id:  <code id="id">198374F5980274F9KERS55TSU</code></p>
+            </div>
+            <div class="col d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-secondary m-2"
+                    id="account-edit"
+                    data-toggle="modal"
+                    data-target="#editModal">Edit account</button>
+                <button type="button" id="delete-button" class="btn btn-danger
+                    m-2">Delete account</button>
+            </div>
+        </div>
+    </template>
+
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+        aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Pet</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="namemodal"
+                                    class="namemodallabel" id="namemodallabel">Name</label>
+                            </div>
+                            <input role="input" type="text" id="namemodal"
+                                class="form-control cityinput" aria-label="Name"
+                                aria-describedby="namemodallabel" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                    for="racemodal" class="racemodallabel"
+                                    id="racemodallabel">Race</label>
+                            </div>
+                            <input role="input" type="text" id="racemodal"
+                                class="form-control raceinput"
+                                aria-label="race"
+                                aria-describedby="racemodallabel" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                    class="agemodallabel"
+                                    for="agemodal"
+                                    id="agemodallabel">Age</label>
+                            </div>
+                            <input role="input" type="text"
+                                id="agemodal" class="form-control
+                                ageinput"
+                                aria-label="age"
+                                aria-describedby="agemodallabel" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                    class="sexmodallabel"
+                                    for="sexmodal"
+                                    id="sexmodallabel">Sex</label>
+                            </div>
+                            <input role="input" type="text"
+                                id="sexmodal" class="form-control
+                                sexinput"
+                                aria-label="sex"
+                                aria-describedby="sexmodallabel" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                    class="weightmodallabel"
+                                    for="weightmodal"
+                                    id="weightmodallabel">Weight</label>
+                            </div>
+                            <input role="input" type="number"
+                                id="weightmodal" class="form-control
+                                weightinput"
+                                aria-label="weight"
+                                aria-describedby="weightmodallabel" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text"
+                                    class="descriptionmodallabel"
+                                    for="descriptionmodal"
+                                    id="descriptionmodallabel">Description</label>
+                            </div>
+                            <input role="input" type="textarea"
+                                id="descriptionmodal" class="form-control
+                                descriptioninput"
+                                aria-label="description"
+                                aria-describedby="descriptionmodallabel"
+                                required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            id="closeeditmodal" data-dismiss="modal">Close</button>
+                        <button type="button" style="background-color: #0000FF"
+                            onclick="editPet()" data-dismiss="modal"
+                            class="btn text-white">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+let currentPetEdited;
+async function editPet() {
+    let name = $("#namemodal").val();
+    let race = $("#racemodal").val();
+    let age = $("#agemodal").val();
+    let sex = $("#sexmodal").val();
+    let weight = $("#weightmodal").val();
+    let description = $("#descriptionmodal").val();
+
+    try {
+        let b = await fetch(`/backoffice/update_pet_by_id`, {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: currentPetEdited,
+                name : name,
+                race : race,
+                age : age,
+                sex : sex,
+                weight : weight,
+                description : description
+            })
+        });
+        b = await b.json();
+        if (b.success){
+            getPets();
+        }
+    } catch (e) {
+        alert("Can't modify pet: ", e);
+    }
+}
+
+async function delete_pet_by_id(id){
+    try {
+        let res = await fetch(`/backoffice/removepetadmin`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id:id})
+        });
+        res = await res.json();
+        if (res.success) {
+          getPets();
+        }
+    } catch (e) {
+        alert("Unable to delete pet: ", e);
+    }
+}
+
+function edit_values(id, name, race, age, sex, weight, description){
+    currentPetEdited = id;
+    $("#namemodal").val(name);
+    $("#racemodal").val(race);
+    $("#agemodal").val(age);
+    $("#sexmodal").val(sex);
+    $("#weightmodal").val(weight);
+    $("#descriptionmodal").val(description);    
+}
+
+function loadPets(petList){
+    for(let p of petList){
+        const newPet = $(".pet-template").clone()[0].content;
+        $("#id", newPet).text(p._id);
+        $("#ownerid", newPet).text(p.ownerid);
+        $("#name", newPet).text(p.name);
+        $("#race", newPet).text(p.race);
+        $("#age", newPet).text(p.age);
+        $("#sex", newPet).text(p.sex);
+        $("#weight", newPet).text(p.weight);
+        $("#description", newPet).text(p.description);
+        $("#account-edit",newPet).click(()=>{edit_values(p._id, p.name, p.race, p.age, p.sex, p.weight, p.description)});
+        $("#delete-button", newPet).click(()=>{delete_pet_by_id(p._id)});
+        $('.pet-container').append(newPet);
+    }
+}
+async function getPets() {
+    $('.pet-container').empty();
+    try {
+        let res = await fetch(`/backoffice/getallpets`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+        });
+        res = await res.json();
+        if (res.success) {
+            loadPets(res.petList);
+        } else {
+            throw new Error(res.message);
+        }
+    } catch (e) {
+        alert("Error when fetching pets: ", e);
+    }
+}
+
+getPets();
+</script>
+
+        <%- include('./foot.ejs'); %>
