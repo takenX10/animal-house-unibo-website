@@ -14,6 +14,7 @@ let ENDPOINTS = [
   { endpoint: "/api/backoffice/edit_booking", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: edit_booking },
   { endpoint: "/api/backoffice/change_password", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: change_password },
   { endpoint: "/api/backoffice/delete_user", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_user },
+  { endpoint: "/api/backoffice/delete_user_by_id", method: METHODS.DELETE, opts: [jsonParser, isAuth, isAdmin], function: delete_user_by_id },
   { endpoint: "/api/backoffice/is_admin", method: METHODS.POST, opts: [jsonParser, isAuth, isAdmin], function: is_admin },
   { endpoint: "/api/backoffice/become_admin", method: METHODS.GET, opts: [jsonParser, isAuth], function: become_admin },
   { endpoint: "/backoffice/facetoface", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showFaceToFace },
@@ -51,7 +52,15 @@ async function delete_user(req, res) {
   await DATABASE.User.findByIdAndDelete(user.id);
   res.json({ success: true });
 }
-
+async function delete_user_by_id(req, res) {
+  console.log(req.body);
+  if(!req?.body?.id == null){
+    res.status(400).json({success:false, message:"missing id field"});
+  }
+  const user = await DATABASE.User.findByIdAndDelete(req.body.id);
+  await DATABASE.User.findByIdAndDelete(user.id);
+  res.json({ success: true });
+}
 async function get_user(req, res) {
   const user = await AUTH.get_user(req);
   res.json({
