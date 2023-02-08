@@ -1,0 +1,145 @@
+<%- include('./head.ejs', {headTitle:title}); %>
+<style>
+  .vm {
+    vertical-align: middle !important;
+  }
+</style>
+
+<div class="container-fluid w-100 ">
+<div class="alert alert-danger collapse mt-2" id="error-alert" role="alert">
+  <strong>Oh no!</strong> Something went wrong.
+</div>
+<div class="alert alert-success fade collapse mt-2" id="succ-alert" role="alert">
+  <strong>Well done!</strong> 
+</div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+     <h1><b><%= title %></b></h1>
+    
+    </div>
+  </div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+     <h2><b> Scoreboards </b></h2>
+    </div>
+  </div>
+  <div class="row mx-auto w-100">
+    <div class="col mx-auto text-center">
+    <div id="scoreboards-loading" class="spinner-border collapse" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+      <div class="scoreboards-container row" aria-live="polite">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  let scoreboarddataalert = {};
+
+  async function deleteScore(id) {
+    try {
+      let b = await (await fetch(`/api/backoffice/games/delete_score`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+      })).json();
+      if (b.success === false)
+        alert("Can't delete score!");
+      else {
+        showSucc();
+        getScoreboards();
+      }
+    } catch (e) {
+      alert(e);
+      showError();
+    }
+  }
+
+
+  async function getScoreboards() {
+    try {
+    $("#scoreboards-loading").removeClass("collapse");
+    let res = await fetch("/api/scoreboard/all", {credentials: "include"});
+    $("#scoreboards-loading").addClass("collapse");
+    let scoreboards = (await res.json()).data;
+    $('.scoreboards-container').html('');
+    for(let scoreboard of scoreboards){
+        console.log(scoreboard)
+        const newScoreboard= $("#scoreboard-template").clone()[0].content;
+        $("#title",newScoreboard).text(scoreboard.title.toUpperCase());
+        for (let ss of scoreboard.scoreboard) {
+            const newScore= $("#score-template").clone()[0].content;
+            $(".pos",newScore).text(ss.position);
+            $(".name",newScore).text(ss.author);
+            $(".score",newScore).text(ss.score);
+            $("#score-delete",newScore).click(()=>{deleteScore(ss.id)});
+            $('.tbody',newScoreboard).append(newScore);
+        }
+        $('.scoreboards-container').append(newScoreboard);
+    }
+   } catch(e) {
+      showError(); 
+   }
+  }
+
+ function showError() {
+      $("#error-alert").addClass("show").removeClass("collapse");
+      $("#error-alert").focus();
+    window.scrollTo(0, 0);
+  }
+  function showSucc() {
+      $("#succ-alert").addClass("show").removeClass("collapse");
+      $("#succ-alert").focus();
+    window.scrollTo(0, 0);
+  }
+
+  $(document).ready(() => {
+    getScoreboards();
+  })
+</script>
+<%- include('./foot.ejs', {}); %>
+
+<template id="score-template">
+  <tr class="text-center" >
+    <td class="pos vm"></td>
+    <td class="name vm"></td>
+    <td class="score vm"></td>
+    <td class="delete vm">
+      <button type="button" class="btn btn-danger m-2" id="score-delete">X</button>
+    </td>
+  </tr>
+</template>
+<template id="scoreboard-template">
+  <div class="col-md-4 col-sm-6 col-xs-12 mt-3">
+    <div class="row">
+        <div class="col text-center">
+            <h4 id="title" name="title">Title</h4>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col text-left">
+          <table class="table table-sm">
+            <thead>
+              <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Score</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+

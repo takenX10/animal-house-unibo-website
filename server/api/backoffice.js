@@ -20,9 +20,11 @@ let ENDPOINTS = [
   { endpoint: "/backoffice/facetoface", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showFaceToFace },
   { endpoint: "/backoffice/online", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showOnline },
   { endpoint: "/backoffice/shop", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showShop },
+  { endpoint: "/backoffice/games", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showGames },
   { endpoint: "/api/backoffice/add_product", method: METHODS.PUT, opts: [jsonParser, isAuth], function: add_product },
   { endpoint: "/api/backoffice/edit_product", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: edit_product },
   { endpoint: "/api/backoffice/delete_product", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_product },
+  { endpoint: "/api/backoffice/games/delete_score", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_score },
 ]
 
 
@@ -35,6 +37,10 @@ async function showOnline(req, res) {
 
 async function showShop(req, res) {
   res.render("../templates/shop", { title: "Shop", type: "online", });
+}
+
+async function showGames(req, res) {
+  res.render("../templates/games", { title: "Games" });
 }
 
 async function is_admin(req, res) {
@@ -264,6 +270,14 @@ async function edit_product(req, res) {
 async function delete_product(req, res) {
   let slug = req?.body?.slug;
   await DATABASE.Product.deleteOne({ slug: slug });
+  res.json({
+    success: true,
+  });
+}
+
+async function delete_score(req, res) {
+  let id = req?.body?.id;
+  await DATABASE.Score.deleteOne({ _id: id });
   res.json({
     success: true,
   });

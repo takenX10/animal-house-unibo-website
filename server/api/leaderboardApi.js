@@ -65,4 +65,4 @@ async function leaderboardInsert(req, res) {
 function validLeaderboardsGetter(req, res) {
   res.json({ success: true, valids: validLeaderboards });
 }
-export default { ENDPOINTS };
+export default { ENDPOINTS, validLeaderboards };

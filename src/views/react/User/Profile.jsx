@@ -26,30 +26,30 @@ export default function Profile() {
 
   const hideChange = () => { setShowChange(false) };
   const showChange = () => { setShowChange(true) };
-  
-  async function getConfirmation(id){
+
+  async function getConfirmation(id) {
     let retval = confirm("Are you sure you want to delete this pet?");
-    if(retval){
+    if (retval) {
       try {
         let res = await fetch(`${SERVER_URL}/backoffice/removepet`, {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                Accept: "*/*",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({id:id}),
+          method: "POST",
+          credentials: "include",
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: id }),
         });
-        
+
         const data = await res.json();
-        if (!res.ok){
-            throw new Error(data.message);
-        }else{
-            find_pets();
+        if (!res.ok) {
+          throw new Error(data.message);
+        } else {
+          find_pets();
         }
-    } catch (err) {
+      } catch (err) {
         toast.error(err.message);
-    }
+      }
     }
   }
 
@@ -91,7 +91,7 @@ export default function Profile() {
       res = await res.json();
       if (res.success) {
         setPets(res.petlist);
-      }else{
+      } else {
         throw new Error(res.message);
       }
     } catch (e) {
@@ -181,7 +181,7 @@ export default function Profile() {
             <h1 className='fw-bold fs-1 text-center'>{user.name} {user.surname}</h1>
           </Col>
           <Col xs={12} className='text-center d-flex align-items-center justify-content-center'>
-            <Button className="m-4 red-back text-black" onClick={() => {
+            <Button className="m-4 red-back text-white" onClick={() => {
               if (confirm("Are you sure you want to delete your account?")) { delete_account() }
             }}>
               Delete account
@@ -213,9 +213,19 @@ export default function Profile() {
               </tbody>
             </Table>
           </Col>
-          <Col xs={12}>
-            <h1 className='text-center mt-5 pt-5 fw-bold'>Pets of {user.name} {user.surname}</h1>
+          <Col xs={12} className='text-center d-flex align-items-center justify-content-center'>
+            <Button className="m-4 red-back text-white" onClick={() => {
+              if (confirm("Are you sure you want to delete your account?")) { delete_account() }
+            }}>
+              Delete account
+            </Button>
+            <Button variant="secondary" className="m-4" onClick={() => { navigate("/add_pet"); }}>Add a pet</Button>
           </Col>
+          {pets?.length > 0 &&
+            <Col xs={12}>
+              <h1 className='text-center mt-5 pt-5 fw-bold'>Pets of {user.name} {user.surname}</h1>
+            </Col>
+          }
           {pets.map((p) => {
             return (
               <Col xs={12} md={7} key={p._id} className="mt-5 text-center">
@@ -253,7 +263,7 @@ export default function Profile() {
                     </tr>
                   </tbody>
                 </Table>
-                <Button variant="danger" onClick={()=>{getConfirmation(p._id)}}>Delete</Button>
+                <Button variant="danger" onClick={() => { getConfirmation(p._id) }}>Delete</Button>
               </Col>
             );
           })}

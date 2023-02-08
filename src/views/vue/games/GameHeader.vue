@@ -52,16 +52,14 @@ import { check_login, raw_logout } from "@/context/utils.jsx";
     ></MDBNavbarToggler>
     <MDBCollapse v-model="collapse1" id="navbarSupportedContent" >
       <MDBNavbarNav class="w-100 mb-2 mb-lg-0 justify-content-end" >
-        <MDBNavbarItem >
-          <!-- Navbar dropdown -->
-          <MDBDropdown class="nav-item" v-model="dropdown1">
-            <a @click="dropdown1 = !dropdown1" tabindex="0" href="#" role="button" type="button" class="dropdown-toggle nav-link">Services</a>
-            <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
-              <MDBDropdownItem href="/comunita" tabindex="0">Community</MDBDropdownItem>
-              <MDBDropdownItem href="/services/facetoface">Face to Face</MDBDropdownItem>
-              <MDBDropdownItem href="/services/online">Online</MDBDropdownItem>
-            </MDBDropdownMenu>
-          </MDBDropdown>
+        <MDBNavbarItem href="/communita" >
+         Community 
+        </MDBNavbarItem>
+        <MDBNavbarItem href="/services/facetoface" >
+          FaceToFace 
+        </MDBNavbarItem>
+        <MDBNavbarItem href="/services/online" >
+          Online 
         </MDBNavbarItem>
         <MDBNavbarItem href="/shop" >
         Shop

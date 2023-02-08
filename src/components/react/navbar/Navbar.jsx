@@ -141,37 +141,31 @@ export default function Navbar() {
         </Bar.Toggle>
         <Bar.Collapse id="basic-navbar-nav" className="text-black">
           <Nav className="me-auto w-100 justify-content-end ">
-            <NavDropdown title="Services">
-              <LinkContainer to="/comunita">
-                <NavDropdown.Item>Community</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to="/services/facetoface">
-                <NavDropdown.Item>Face to Face</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to="/services/online">
-                <NavDropdown.Item>Online</NavDropdown.Item>
-              </LinkContainer>
-            </NavDropdown>
+            <Link to="/comunita" className="nav-link">
+              Community
+            </Link>
+            <Link to="/services/facetoface" className="nav-link">
+              FaceToFace
+            </Link>
+            <Link to="/services/online" className="nav-link">
+              Online
+            </Link>
             <Link to="/shop" className="nav-link">
               Shop
             </Link>
             <Nav.Link href="/games">Games</Nav.Link>
             {userInfo ? (
-              <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                <LinkContainer to="/profile">
-                  <NavDropdown.Item>Your Profile</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/add_pet">
-                  <NavDropdown.Item>Add a pet</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/shop/orderhistory">
-                  <NavDropdown.Item>Order History</NavDropdown.Item>
-                </LinkContainer>
-                <NavDropdown.Divider />
-                <Link className="dropdown-item" to="#" onClick={signoutHandler}>
+              <>
+                <Link to="/profile" className="nav-link">
+                  Profile 
+                </Link>
+                <Link to="/shop/orderhistory" className="nav-link">
+                   Order History
+                </Link>
+                <Link to="#" class="nav-link" onClick={signoutHandler}>
                   Logout
                 </Link>
-              </NavDropdown>
+              </>
             ) : (
               <Link
                 className="nav-link"

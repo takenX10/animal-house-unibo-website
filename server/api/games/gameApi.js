@@ -11,9 +11,10 @@ const { JSDOM } = jsdom;
 const upload = multer({ dest: os.tmpdir() });
 import DATABASE from '../../database.js';
 import { showError } from '../../utils.js';
-
+import leaderboards from '../leaderboardApi.js';
 import CatBreedAI from "./catBreedAI.js";
 import Quiz from "./quiz.js";
+const validLeaderboards = leaderboards.validLeaderboards
 
 const IMAGE_DOG_API = "https://dog.ceo/api/breeds/image/random";
 const IMAGE_CAT_API = "https://api.thecatapi.com/v1/images/search";
@@ -68,6 +69,11 @@ const ENDPOINTS = [
     endpoint: "/api/funnyvideo",
     method: METHODS.GET,
     function: getFunnyVideoAPI,
+  },
+  {
+    endpoint: "/api/scoreboard/all",
+    method: METHODS.GET,
+    function: getScoreboardAllAPI,
   },
   {
     endpoint: "/api/scoreboard/:game",
@@ -181,6 +187,15 @@ async function getScoreboardAPI(req, res) {
   }
 }
 
+async function getScoreboardAllAPI(req, res) {
+  try {
+    let board = await getScoreboardAll();
+    res.json(board);
+  } catch (e) {
+    showError(res);
+  }
+}
+
 async function getScoreboard(game) {
   if (!game) {
     return ({ success: false, message: "missing leaderboard" });
@@ -188,10 +203,23 @@ async function getScoreboard(game) {
   const scores = await DATABASE.Score.find({ leaderboard: game });
   let final = scores.sort((a, b) => a.score > b.score);
   let p = 0;
-  final = final.map((f) => { p++; return { author: f.author, score: f.score, position: p, id: f.id } })
+  final = final.map((f) => { p++; return { author: f.author, score: f.score, position: p, authorId: f.authorId, id: f.id } })
   let board = {
     success: true,
     data: final
+  };
+  return board;
+}
+async function getScoreboardAll() {
+  let all = []
+  for (let s of validLeaderboards) {
+    let l = await getScoreboard(s);
+    all.push({ title: s, scoreboard: l.data });
+  }
+  console.log(all)
+  let board = {
+    success: true,
+    data: all
   };
   return board;
 }

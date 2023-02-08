@@ -224,8 +224,8 @@ export default {
 </script>
 
 <template>
-  <main class="container-fluid">
     <GameHeader class="mb-3" />
+  <main class="container-fluid">
     <div v-if="component">
       <div class="row">
         <div class="col-1 mx-left text-start">
