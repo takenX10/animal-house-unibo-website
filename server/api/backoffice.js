@@ -3,6 +3,7 @@ import DATABASE from '../database.js';
 import AUTH from '../authentication.js';
 import SERVICES from './services.js'
 import bcrypt, { genSaltSync } from 'bcrypt';
+import { CLIENT_URL } from '../utils.js';
 
 import { isAdmin, isAuth, jsonParser } from '../utils.js';
 
@@ -30,18 +31,18 @@ let ENDPOINTS = [
 
 
 async function showFaceToFace(req, res) {
-  res.render("../templates/services", { title: "Face to face", type: "facetoface", isOnline: false });
+  res.render("../templates/services", { clientUrl: CLIENT_URL, title: "Face to face", type: "facetoface", isOnline: false });
 }
 async function showOnline(req, res) {
-  res.render("../templates/services", { title: "Online", type: "online", isOnline: true });
+  res.render("../templates/services", { clientUrl: CLIENT_URL, title: "Online", type: "online", isOnline: true });
 }
 
 async function showShop(req, res) {
-  res.render("../templates/shop", { title: "Shop", type: "online", });
+  res.render("../templates/shop", { title: "Shop", type: "online", clientUrl: CLIENT_URL});
 }
 
 async function showGames(req, res) {
-  res.render("../templates/games", { title: "Games" });
+  res.render("../templates/games", { title: "Games", clientUrl: CLIENT_URL, });
 }
 
 async function is_admin(req, res) {

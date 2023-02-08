@@ -1,6 +1,7 @@
 import METHODS from "../methods.js";
 import DATABASE from '../database.js';
 import AUTH from "../authentication.js";
+import { CLIENT_URL } from '../utils.js';
 import { isAuth, isAdmin, jsonParser } from "../utils.js";
 
 let ENDPOINTS = [
@@ -20,7 +21,7 @@ let ENDPOINTS = [
 ]
 
 async function officePets(req, res) {
-  res.render("../templates/pets", { title: "Pets" });
+  res.render("../templates/pets", { title: "Pets", clientUrl: CLIENT_URL });
 }
 
 async function get_all_pets(req, res) {

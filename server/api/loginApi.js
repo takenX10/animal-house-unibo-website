@@ -1,7 +1,8 @@
 import METHODS from "../methods.js";
 import DATABASE from '../database.js';
 import AUTH from '../authentication.js';
-import SERVICES from './services.js'
+import SERVICES from './services.js';
+import { CLIENT_URL } from '../utils.js';
 import bcrypt, { genSaltSync } from 'bcrypt';
 
 import { isAdmin, isAuth, jsonParser } from '../utils.js';
@@ -14,11 +15,11 @@ let ENDPOINTS = [
 ]
 
 async function officeHome(req, res) {
-  res.render("../templates/home", { title: "Backoffice Home" });
+  res.render("../templates/home", { clientUrl: CLIENT_URL, title: "Backoffice Home" });
 }
 
 async function officeAnagraphic(req, res) {
-  res.render("../templates/anagrafica", { title: "Client anagraphics" });
+  res.render("../templates/anagrafica", { clientUrl: CLIENT_URL,  title: "Client anagraphics" });
 }
 
 async function officePostLogin(req, res) {

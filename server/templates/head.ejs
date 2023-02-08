@@ -40,7 +40,7 @@
 
   <nav class="navbar  our-nav navbar-expand-lg navbar-light bg-light py-4">
     <div class="container">
-      <a class="navbar-brand" href="#"><b>AnimalHouse - Back office</b></a>
+      <a class="navbar-brand" href="/backoffice/home"><b>AnimalHouse - Back office</b></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -69,9 +69,15 @@
           <li class="nav-item">
             <a class="nav-link" href="/backoffice/pets">Pets</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+          <li class="nav-item mx-3">
+            <button class=" btn btn-danger nav-link" onclick="logout()">Logout</button>
           </li>
         </ul>
       </div>
   </nav>
+  <script>
+    function logout(){
+      document.cookie = "AUTHSESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location="<%= clientUrl %>";
+    }
+  </script>
