@@ -120,7 +120,7 @@ export default function HomeScreen() {
         <title>Shop</title>
       </Helmet>
       <Row className="butstrap bg-light py-2 mx-1">
-        <Col className="ps-1 pe-1 mb-2" sm={6} md={4} lg={3}>
+        <Col className="ps-1 pe-1 mb-2" sm={6} md={6} lg={3}>
           <Button
             className="bg-light fw-bold text-white justify-content-center text-center w-100"
             onClick={() => fetchData("/accessories", "accessories")}
@@ -138,7 +138,7 @@ export default function HomeScreen() {
             <p className="lead mx-auto">Accessories</p>
           </Button>
         </Col>
-        <Col className="mb-2 px-1" sm={6} md={4} lg={3}>
+        <Col className="mb-2 px-1" sm={6} md={6} lg={3}>
           <Button
             className="bg-white fw-bold text-white justify-content-center text-center w-100"
             onClick={() => fetchData("/sanitary", "sanitary")}
@@ -155,7 +155,7 @@ export default function HomeScreen() {
             <p className="lead mx-auto">Sanitary</p>
           </Button>
         </Col>
-        <Col className="px-1 mb-2" sm={6} md={4} lg={3}>
+        <Col className="px-1 mb-2" sm={6} md={6} lg={3}>
           <Button
             className="bg-light fw-bold text-white justify-content-center text-center w-100"
             onClick={() => fetchData("/food", "food")}
@@ -168,7 +168,7 @@ export default function HomeScreen() {
             <p className="lead mx-auto">Pet Food</p>
           </Button>
         </Col>
-        <Col className="mb-2 ps-1 pe-1" sm={6} md={4} lg={3}>
+        <Col className="mb-2 ps-1 pe-1" sm={6} md={6} lg={3}>
           <Button
             className="bg-light fw-bold text-white justify-content-center text-center w-100"
             onClick={() => fetchData()}

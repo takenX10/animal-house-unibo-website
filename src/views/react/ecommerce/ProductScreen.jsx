@@ -216,7 +216,7 @@ function ProductScreen() {
                     className="border-0"
                     variant="primary"
                   >
-                    Add 2 Cart
+                    Add to Cart
                   </Button>
                 </div>
               </ListGroup.Item>
