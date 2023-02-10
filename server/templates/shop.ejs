@@ -23,6 +23,11 @@
           Add product
         </button>
     </div>
+    <div class="col mx-auto text-center">
+        <button style="background-color: #0000FF" class="btn text-white" type="button" data-toggle="modal" data-target="#categoryModal">
+          Add category
+        </button>
+    </div>
   </div>
   <div class="row mx-auto w-100">
     <div class="col mx-auto text-center">
@@ -79,6 +84,16 @@
           return;
         }
         
+      $('#cataddmodal option:not(:first)').remove();
+      $('#catparentmodal option:not(:first)').remove();
+      $('#cateditmodal option').remove();
+      let res_cat = await fetch(`/api/shop/categories`)
+      let categories = await res_cat.json();
+      for(let cat of categories){
+          $("#cataddmodal").append(`<option value="${cat.category}">${cat.name} (${cat.category})`)
+          $("#cateditmodal").append(`<option value="${cat.category}">${cat.name} (${cat.category})`)
+          $("#catparentmodal").append(`<option value="${cat.category}">${cat.name} (${cat.category})`)
+        }
     } catch(e) {
         showError();
     }
@@ -109,6 +124,7 @@
       $("#descmodal").val(prod.description);
       $("#pricemodal").val(prod.price);
       $("#countmodal").val(prod.countInStock);
+      $("#cateditmodal").val(prod.categories[0]);
       productdataalert = prod;
   }
   async function editProduct() {
@@ -116,6 +132,7 @@
     let desc = $("#descmodal").val();
     let price = $("#pricemodal").val();
     let count= $("#countmodal").val();
+    let cat= [$("#cateditmodal").val()];
     try {
       let b = await fetch(`/api/backoffice/edit_product`, {
         method: "PATCH",
@@ -126,6 +143,7 @@
         },
         body: JSON.stringify({ 
           slug: productdataalert.slug, 
+          categories:cat,
           name,
           desc,
           price,
@@ -143,13 +161,40 @@
       showError();
     }
   }
+  async function addCategory(){
+      let name=$("#categorynamemodal").val();
+      let parentCategory=$("#catparentmodal").val();
+    try {
+      let b = await fetch(`/api/backoffice/add_category`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          name,
+          parentCategory
+        })
+      });
+      b = await b.json();
+      if (b.success === false)
+        showError();
+      else {
+        showSucc();
+        getProducts();
+      }
+    } catch (e) {
+      showError();
+    }
+    }
   async function addProduct() {
     let name = $("#nameaddmodal").val();
     let slug = $("#slugaddmodal").val();
     let poster = $("#posteraddmodal").val();
     let images = $("#imagesaddmodal").val().split(",");
     let brand = $("#brandaddmodal").val();
-    let cat = $("#cataddmodal").val().split(",");
+    let cat = [$("#cataddmodal").val()];
     let desc = $("#descaddmodal").val();
     let price = $("#priceaddmodal").val();
     let count = $("#countaddmodal").val();
@@ -236,7 +281,7 @@
             <div id="description" name="description">Description</div>
             <div> Price: <span id="price" name="price">Price</span></div>
             <div> In stock: <span id="count" name="count">Count</span></div>
-            <div> Categories: <span id="cat" name="cat">Categories</span></div>
+            <div> Category: <span id="cat" name="cat">Category</span></div>
             <div> Brand: <span id="brand" name="brand">Brand</span></div>
         </div>
         <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
@@ -372,8 +417,15 @@
                <div class="input-group-prepend">
                <label class="input-group-text" for="countmodal" class="countmodallabel" id="countmodallabel">In Stock</label>
               </div>
-              <input role="number" type="text" id="countmodal" class="form-control countinput" aria-label="In Stock" aria-countribedby="countmodallabel" required>
+              <input role="number" type="text" id="countmodal" class="form-control countinput" aria-label="In Stock" aria-describedby="countmodallabel" required>
               </div>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <label class="input-group-text" for="cateditmodal" class="cateditmodallabel" id="cateditmodallabel">Category</label>
+                </div>
+                <select id="cateditmodal" class="form-control cateditinput" aria-label="Category" aria-describedby="cateditmodallabel" required>
+                </select>
+            </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="closeeditmodal" data-dismiss="modal">Close</button>
@@ -427,9 +479,11 @@
             </div>
             <div class="input-group mb-3">
                <div class="input-group-prepend">
-                 <label class="input-group-text" for="cataddmodal" class="cataddmodallabel" id="cataddmodallabel">Categories (, separated)</label>
+                 <label class="input-group-text" for="cataddmodal" class="cataddmodallabel" id="cataddmodallabel">Category</label>
                 </div>
-                <input role="input" type="text" id="cataddmodal" class="form-control cataddinput" aria-label="Categories (, separated)" aria-cataddribedby="cataddmodallabel" required>
+                <select id="cataddmodal" class="form-control cataddinput" aria-label="Category" aria-cataddribedby="cataddmodallabel" required>
+                <option value="">Select a category</option>
+                </select>
             </div>
              <div class="input-group mb-3">
                <div class="input-group-prepend">
@@ -461,4 +515,38 @@
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCategoryLabel">Add category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           <form class="form-group">
+             <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                <label class="input-group-text" for="categorynamemodal" class="categorynamemodal" id="categorynamelabel">Name</label>
+              </div>
+              <input role="input" type="text" id="categorynamemodal" class="form-control categorynamemodal" aria-label="Name" aria-describedby="categorynamelabel" required>
+              </div>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                 <label class="input-group-text" for="catparentmodal" class="catparentlabel" id="catparentlabel">Parent Category</label>
+                </div>
+                <select id="catparentmodal" class="form-control catparentmodal" aria-label="Parent Category" aria-cataddribedby="catparentlabel" required>
+                  <option value="">None</option>
+                </select>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closecategorymodal" data-dismiss="modal">Close</button>
+        <button type="button" style="background-color: #0000FF" onclick="addCategory()" data-dismiss="modal" class="btn text-white">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
 

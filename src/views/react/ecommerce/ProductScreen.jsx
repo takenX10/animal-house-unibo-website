@@ -201,6 +201,10 @@ function ProductScreen() {
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
+              <b>Category:</b>
+              <p>{product.categories.join(",")}</p>
+            </ListGroup.Item>
+            <ListGroup.Item>
               <b>Description:</b>
               <p>{product.description}</p>
             </ListGroup.Item>
@@ -220,12 +224,14 @@ function ProductScreen() {
           </ListGroup>
         </Col>
       </Row>
-      <Row className=" mb-2">
+      <Row className=" my-2">
         <h1>Reviews</h1>
         {loadingRevs ? (
           <LoadingBox />
         ) : revError ? (
           <MessageBox variant="danger">{revError}</MessageBox>
+        ) : reviews.length == 0 ? (
+          <MessageBox>No reviews yet, wanna be first?</MessageBox>
         ) : (
           reviews.map((review) => (
             <Card className="my-1" key={review._id}>
