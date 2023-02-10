@@ -1,48 +1,162 @@
 import METHODS from "../methods.js";
-import DATABASE from '../database.js';
-import AUTH from '../authentication.js';
-import SERVICES from './services.js'
-import bcrypt, { genSaltSync } from 'bcrypt';
-import { CLIENT_URL } from '../utils.js';
+import DATABASE from "../database.js";
+import AUTH from "../authentication.js";
+import SERVICES from "./services.js";
+import bcrypt, { genSaltSync } from "bcrypt";
+import { CLIENT_URL } from "../utils.js";
 
-import { isAdmin, isAuth, jsonParser } from '../utils.js';
+import { isAdmin, isAuth, jsonParser } from "../utils.js";
 
 let ENDPOINTS = [
-  { endpoint: "/api/backoffice/get_user", method: METHODS.GET, opts: [jsonParser, isAuth], function: get_user },
-  { endpoint: "/api/backoffice/get_bookings", method: METHODS.GET, opts: [jsonParser, isAuth], function: get_bookings },
-  { endpoint: "/api/backoffice/get_all_bookings", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: get_all_bookings },
-  { endpoint: "/api/backoffice/delete_booking", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_booking },
-  { endpoint: "/api/backoffice/edit_booking", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: edit_booking },
-  { endpoint: "/api/backoffice/change_password", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: change_password },
-  { endpoint: "/api/backoffice/delete_user", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_user },
-  { endpoint: "/api/backoffice/delete_user_by_id", method: METHODS.DELETE, opts: [jsonParser, isAuth, isAdmin], function: delete_user_by_id },
-  { endpoint: "/api/backoffice/edit_user_by_id", method: METHODS.PATCH, opts: [jsonParser, isAuth, isAdmin], function: update_user_by_id },
-  { endpoint: "/api/backoffice/is_admin", method: METHODS.POST, opts: [jsonParser, isAuth, isAdmin], function: is_admin },
-  { endpoint: "/api/backoffice/become_admin", method: METHODS.GET, opts: [jsonParser, isAuth], function: become_admin },
-  { endpoint: "/backoffice/facetoface", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showFaceToFace },
-  { endpoint: "/backoffice/online", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showOnline },
-  { endpoint: "/backoffice/shop", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showShop },
-  { endpoint: "/backoffice/games", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: showGames },
-  { endpoint: "/api/backoffice/add_product", method: METHODS.PUT, opts: [jsonParser, isAuth], function: add_product },
-  { endpoint: "/api/backoffice/edit_product", method: METHODS.PATCH, opts: [jsonParser, isAuth], function: edit_product },
-  { endpoint: "/api/backoffice/delete_product", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_product },
-  { endpoint: "/api/backoffice/games/delete_score", method: METHODS.DELETE, opts: [jsonParser, isAuth], function: delete_score },
-]
-
+  {
+    endpoint: "/api/backoffice/get_user",
+    method: METHODS.GET,
+    opts: [jsonParser, isAuth],
+    function: get_user,
+  },
+  {
+    endpoint: "/api/backoffice/get_bookings",
+    method: METHODS.GET,
+    opts: [jsonParser, isAuth],
+    function: get_bookings,
+  },
+  {
+    endpoint: "/api/backoffice/get_all_bookings",
+    method: METHODS.GET,
+    opts: [jsonParser, isAuth, isAdmin],
+    function: get_all_bookings,
+  },
+  {
+    endpoint: "/api/backoffice/delete_booking",
+    method: METHODS.DELETE,
+    opts: [jsonParser, isAuth],
+    function: delete_booking,
+  },
+  {
+    endpoint: "/api/backoffice/edit_booking",
+    method: METHODS.PATCH,
+    opts: [jsonParser, isAuth],
+    function: edit_booking,
+  },
+  {
+    endpoint: "/api/backoffice/change_password",
+    method: METHODS.PATCH,
+    opts: [jsonParser, isAuth],
+    function: change_password,
+  },
+  {
+    endpoint: "/api/backoffice/delete_user",
+    method: METHODS.DELETE,
+    opts: [jsonParser, isAuth],
+    function: delete_user,
+  },
+  {
+    endpoint: "/api/backoffice/delete_user_by_id",
+    method: METHODS.DELETE,
+    opts: [jsonParser, isAuth, isAdmin],
+    function: delete_user_by_id,
+  },
+  {
+    endpoint: "/api/backoffice/edit_user_by_id",
+    method: METHODS.PATCH,
+    opts: [jsonParser, isAuth, isAdmin],
+    function: update_user_by_id,
+  },
+  {
+    endpoint: "/api/backoffice/is_admin",
+    method: METHODS.POST,
+    opts: [jsonParser, isAuth, isAdmin],
+    function: is_admin,
+  },
+  {
+    endpoint: "/api/backoffice/become_admin",
+    method: METHODS.GET,
+    opts: [jsonParser, isAuth],
+    function: become_admin,
+  },
+  {
+    endpoint: "/backoffice/facetoface",
+    method: METHODS.GET,
+    opts: [jsonParser, isAuth, isAdmin],
+    function: showFaceToFace,
+  },
+  {
+    endpoint: "/backoffice/online",
+    method: METHODS.GET,
+    opts: [jsonParser, isAuth, isAdmin],
+    function: showOnline,
+  },
+  {
+    endpoint: "/backoffice/shop",
+    method: METHODS.GET,
+    opts: [jsonParser, isAuth, isAdmin],
+    function: showShop,
+  },
+  {
+    endpoint: "/backoffice/games",
+    method: METHODS.GET,
+    opts: [jsonParser, isAuth, isAdmin],
+    function: showGames,
+  },
+  {
+    endpoint: "/api/backoffice/add_category",
+    method: METHODS.PUT,
+    opts: [jsonParser, isAuth],
+    function: add_category,
+  },
+  {
+    endpoint: "/api/backoffice/add_product",
+    method: METHODS.PUT,
+    opts: [jsonParser, isAuth],
+    function: add_product,
+  },
+  {
+    endpoint: "/api/backoffice/edit_product",
+    method: METHODS.PATCH,
+    opts: [jsonParser, isAuth],
+    function: edit_product,
+  },
+  {
+    endpoint: "/api/backoffice/delete_product",
+    method: METHODS.DELETE,
+    opts: [jsonParser, isAuth],
+    function: delete_product,
+  },
+  {
+    endpoint: "/api/backoffice/games/delete_score",
+    method: METHODS.DELETE,
+    opts: [jsonParser, isAuth],
+    function: delete_score,
+  },
+];
 
 async function showFaceToFace(req, res) {
-  res.render("../templates/services", { clientUrl: CLIENT_URL, title: "Face to face", type: "facetoface", isOnline: false });
+  res.render("../templates/services", {
+    clientUrl: CLIENT_URL,
+    title: "Face to face",
+    type: "facetoface",
+    isOnline: false,
+  });
 }
 async function showOnline(req, res) {
-  res.render("../templates/services", { clientUrl: CLIENT_URL, title: "Online", type: "online", isOnline: true });
+  res.render("../templates/services", {
+    clientUrl: CLIENT_URL,
+    title: "Online",
+    type: "online",
+    isOnline: true,
+  });
 }
 
 async function showShop(req, res) {
-  res.render("../templates/shop", { title: "Shop", type: "online", clientUrl: CLIENT_URL});
+  res.render("../templates/shop", {
+    title: "Shop",
+    type: "online",
+    clientUrl: CLIENT_URL,
+  });
 }
 
 async function showGames(req, res) {
-  res.render("../templates/games", { title: "Games", clientUrl: CLIENT_URL, });
+  res.render("../templates/games", { title: "Games", clientUrl: CLIENT_URL });
 }
 
 async function is_admin(req, res) {
@@ -51,7 +165,10 @@ async function is_admin(req, res) {
 
 async function become_admin(req, res) {
   const user = await AUTH.get_user(req);
-  await DATABASE.User.findOneAndUpdate({ email: user.email }, { isAdmin: true });
+  await DATABASE.User.findOneAndUpdate(
+    { email: user.email },
+    { isAdmin: true }
+  );
   res.json({ success: true });
 }
 
@@ -70,7 +187,8 @@ async function delete_user_by_id(req, res) {
 }
 
 async function update_user_by_id(req, res) {
-  if (!req?.body?.id == null ||
+  if (
+    !req?.body?.id == null ||
     !req.body?.name ||
     !req.body?.surname ||
     !req.body?.password ||
@@ -79,15 +197,18 @@ async function update_user_by_id(req, res) {
     res.status(400).json({ success: false, message: "missing fields" });
     return;
   }
-  console.log("password: " , req.body.password);
+  console.log("password: ", req.body.password);
   const thisuser = await DATABASE.User.findById(req.body.id);
   const user = await DATABASE.User.findByIdAndUpdate(req.body.id, {
     $set: {
       name: req.body.name,
       surname: req.body.surname,
-      password: req.body.password == thisuser.password ? thisuser.password : bcrypt.hashSync(req.body.password, genSaltSync()),
+      password:
+        req.body.password == thisuser.password
+          ? thisuser.password
+          : bcrypt.hashSync(req.body.password, genSaltSync()),
       contact: req.body.contact,
-    }
+    },
   });
   res.json({ success: true });
 }
@@ -99,7 +220,7 @@ async function get_user(req, res) {
     surname: user.surname,
     email: user.email,
     contact: user.contact,
-    petList: user.petList
+    petList: user.petList,
   });
 }
 
@@ -110,7 +231,11 @@ function getAvailabilityInfo(avails, avaId, shiftId, hourId) {
         if (avails[i].shifts[j]._id.toString() == shiftId) {
           for (let k = 0; k < avails[i].shifts[j].hours.length; k++) {
             if (avails[i].shifts[j].hours[k]._id.toString() == hourId) {
-              return { "availability": avails[i], "shift": avails[i].shifts[j], "hour": avails[i].shifts[j].hours[k] }
+              return {
+                availability: avails[i],
+                shift: avails[i].shifts[j],
+                hour: avails[i].shifts[j].hours[k],
+              };
             }
           }
           break;
@@ -124,28 +249,36 @@ function getAvailabilityInfo(avails, avaId, shiftId, hourId) {
 async function get_bookings(req, res) {
   try {
     const user = await AUTH.get_user(req);
-    let bookings = []
+    let bookings = [];
     for (let i = 0; i < user.bookings.length; i++) {
       let slug = user.bookings[i].slug;
       let avaId = user.bookings[i].avaId;
       let shiftId = user.bookings[i].shiftId;
       let hourId = user.bookings[i].hourId;
-      if (typeof (avaId) !== String)
-        avaId = avaId.toString();
-      if (typeof (shiftId) !== String)
-        shiftId = shiftId.toString();
-      if (typeof (hourId) !== String)
-        hourId = hourId.toString();
-      let serv = await DATABASE.Service.findOne({ slug: slug })
-      let { availability, shift, hour } = getAvailabilityInfo(serv.availabilities, avaId, shiftId, hourId);
-      availability.shifts = []
-      shift.hours = []
-      let booking = { slug: slug, availability, shift, hour, title: serv.title, }
+      if (typeof avaId !== String) avaId = avaId.toString();
+      if (typeof shiftId !== String) shiftId = shiftId.toString();
+      if (typeof hourId !== String) hourId = hourId.toString();
+      let serv = await DATABASE.Service.findOne({ slug: slug });
+      let { availability, shift, hour } = getAvailabilityInfo(
+        serv.availabilities,
+        avaId,
+        shiftId,
+        hourId
+      );
+      availability.shifts = [];
+      shift.hours = [];
+      let booking = {
+        slug: slug,
+        availability,
+        shift,
+        hour,
+        title: serv.title,
+      };
       bookings.push(booking);
     }
     res.json({
       success: true,
-      bookings
+      bookings,
     });
   } catch (e) {
     res.json({
@@ -156,7 +289,7 @@ async function get_bookings(req, res) {
 async function get_all_bookings(req, res) {
   try {
     const users = await DATABASE.User.find({});
-    let bookings = []
+    let bookings = [];
     for (let i = 0; i < users.length; i++) {
       let user = users[i];
       for (let i = 0; i < user.bookings.length; i++) {
@@ -165,26 +298,37 @@ async function get_all_bookings(req, res) {
         let shiftId = user.bookings[i].shiftId;
         let hourId = user.bookings[i].hourId;
         let isOnline = user.bookings[i].isOnline;
-        if (typeof (avaId) !== String)
-          avaId = avaId.toString();
-        if (typeof (shiftId) !== String)
-          shiftId = shiftId.toString();
-        if (typeof (hourId) !== String)
-          hourId = hourId.toString();
-        let serv = await DATABASE.Service.findOne({ slug: slug })
-        let { availability, shift, hour } = getAvailabilityInfo(serv.availabilities, avaId, shiftId, hourId);
-        availability.shifts = []
-        shift.hours = []
-        let booking = { userName: user.name, email: user.email, slug: slug, availability, shift, hour, title: serv.title, isOnline }
+        if (typeof avaId !== String) avaId = avaId.toString();
+        if (typeof shiftId !== String) shiftId = shiftId.toString();
+        if (typeof hourId !== String) hourId = hourId.toString();
+        let serv = await DATABASE.Service.findOne({ slug: slug });
+        let { availability, shift, hour } = getAvailabilityInfo(
+          serv.availabilities,
+          avaId,
+          shiftId,
+          hourId
+        );
+        availability.shifts = [];
+        shift.hours = [];
+        let booking = {
+          userName: user.name,
+          email: user.email,
+          slug: slug,
+          availability,
+          shift,
+          hour,
+          title: serv.title,
+          isOnline,
+        };
         bookings.push(booking);
       }
     }
     res.json({
       success: true,
-      bookings
+      bookings,
     });
   } catch (e) {
-    console.log(e)
+    console.log(e);
     res.json({
       success: false,
     });
@@ -196,21 +340,24 @@ async function delete_booking(req, res) {
   let avaId = req?.body?.avaId;
   let shiftId = req?.body?.shiftId;
   let hourId = req?.body?.hourId;
-  if (typeof (avaId) !== String)
-    avaId = avaId.toString();
-  if (typeof (shiftId) !== String)
-    shiftId = shiftId.toString();
-  if (typeof (hourId) !== String)
-    hourId = hourId.toString();
+  if (typeof avaId !== String) avaId = avaId.toString();
+  if (typeof shiftId !== String) shiftId = shiftId.toString();
+  if (typeof hourId !== String) hourId = hourId.toString();
   for (let i = 0; i < user.bookings.length; i++) {
-    if (user.bookings[i].avaId.toString() == avaId && user.bookings[i].shiftId.toString() == shiftId && user.bookings[i].hourId.toString() == hourId) {
+    if (
+      user.bookings[i].avaId.toString() == avaId &&
+      user.bookings[i].shiftId.toString() == shiftId &&
+      user.bookings[i].hourId.toString() == hourId
+    ) {
       user.bookings.splice(i, 1);
       break;
     }
   }
   let service = await DATABASE.Service.findOne({ slug: slug });
   service = SERVICES.decrementHourById(service, hourId);
-  await DATABASE.Service.findByIdAndUpdate(service._id, { availabilities: service.availabilities });
+  await DATABASE.Service.findByIdAndUpdate(service._id, {
+    availabilities: service.availabilities,
+  });
   await DATABASE.User.updateOne({ _id: user._id }, { bookings: user.bookings });
   res.json({
     success: true,
@@ -228,18 +375,32 @@ async function edit_booking(req, res) {
   let end = req?.body?.end;
   let city = req?.body?.city;
   let address = req?.body?.address;
-  if (typeof (avaId) !== String)
-    avaId = avaId.toString();
-  if (typeof (shiftId) !== String)
-    shiftId = shiftId.toString();
-  if (typeof (hourId) !== String)
-    hourId = hourId.toString();
+  if (typeof avaId !== String) avaId = avaId.toString();
+  if (typeof shiftId !== String) shiftId = shiftId.toString();
+  if (typeof hourId !== String) hourId = hourId.toString();
   let service = await DATABASE.Service.findOne({ slug: slug });
   service = SERVICES.editHourById(service, hourId, begin, end);
   service = SERVICES.editShiftById(service, shiftId, day);
   service = SERVICES.editCityAddressById(service, avaId, city, address);
-  await DATABASE.Service.findByIdAndUpdate(service._id, { availabilities: service.availabilities });
+  await DATABASE.Service.findByIdAndUpdate(service._id, {
+    availabilities: service.availabilities,
+  });
   await DATABASE.User.updateOne({ _id: user._id }, { bookings: user.bookings });
+  res.json({
+    success: true,
+  });
+}
+async function add_category(req, res) {
+  let name = req?.body?.name;
+  let parent = req?.body?.parentCategory;
+  let category = `${parent}/${name.replace(/\s+/g, "-").toLowerCase()}`;
+  parent ||= "/";
+  const newCat = new DATABASE.ProductCategory({
+    name,
+    parent,
+    category,
+  });
+  await newCat.save();
   res.json({
     success: true,
   });
@@ -274,18 +435,19 @@ async function add_product(req, res) {
   });
 }
 
-
 async function edit_product(req, res) {
   let slug = req?.body?.slug;
   let name = req?.body?.name;
   let desc = req?.body?.desc;
   let price = req?.body?.price;
   let count = req?.body?.count;
+  let categories = req?.body?.categories;
   let prod = await DATABASE.Product.findOne({ slug: slug });
   prod.name = name;
   prod.desc = desc;
   prod.price = price;
   prod.countInStock = count;
+  prod.categories = categories;
   await prod.save();
   res.json({
     success: true,
@@ -308,18 +470,18 @@ async function delete_score(req, res) {
   });
 }
 
-
 // TODO: check every update for a direct body value inclusion
 async function change_password(req, res) {
   const user = await AUTH.get_user(req);
   if (!bcrypt.compareSync(req?.body?.oldpsw, user.password)) {
     res.json({ success: false });
-    return
+    return;
   }
   // unsafe:
-  await DATABASE.User.findByIdAndUpdate(user.id, { password: bcrypt.hashSync(req.body.newpsw, genSaltSync()) });
+  await DATABASE.User.findByIdAndUpdate(user.id, {
+    password: bcrypt.hashSync(req.body.newpsw, genSaltSync()),
+  });
   res.json({ success: true });
 }
-
 
 export default { ENDPOINTS };
