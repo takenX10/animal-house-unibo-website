@@ -172,14 +172,14 @@ export default {
 
       let form = new FormData();
       form.append("dog", file);
-      let res = await fetch(`${this.BACKEND_SERVER}/api/dogbreedrec`, {
+      let res = await fetch(`https://animal.xgampx.tk/dogrec`, {
         body: form,
         method: "POST",
       });
       let data = await res.json();
       if (data.success == true) {
         console.log(data);
-        this.dog_breed_guesses = data.data;
+        this.dog_breed_guesses = data.data.results;
         this.dog_breed_loading = false;
         this.refreshPage();
       }
@@ -195,13 +195,13 @@ export default {
       binaryData.push(file); //My blob
       this.img_your_cat = URL.createObjectURL(new Blob(binaryData, {type:"image/*"}));
       form.append("cat", file);
-      let res = await fetch(`${this.BACKEND_SERVER}/api/catbreedrec`, {
+      let res = await fetch(`https://animal.xgampx.tk/catrec`, {
         body: form,
         method: "POST",
       });
       let data = await res.json();
       if (data.success == true) {
-        console.log(data.data.results[0])
+        console.log(data.data.results)
         this.cat_breed_guesses = data.data.results;
         this.cat_breed_loading = false;
         this.img_cat_breed = `${this.BACKEND_SERVER}${data.data.results[0].img_name}`
@@ -225,8 +225,8 @@ export default {
 
 <template>
     <GameHeader class="mb-3" />
-  <main class="container-fluid">
-    <div v-if="component">
+  <main class="container-fluid" >
+    <div v-if="component" aria-live="polite"  >
       <div class="row">
         <div class="col-1 mx-left text-start">
           <i
@@ -274,7 +274,7 @@ export default {
         </b-collapse>
       </div>
     </div>
-    <div v-else>
+    <div aria-live="polite"  v-else>
       <MDBContainer class="text-center" id="funnyvideo_container" v-if="funnyvideo">
         <MDBRow>
           <div class="fw-bold section_header">In case you're a bit sad 🤣</div>
@@ -282,8 +282,8 @@ export default {
         <MDBRow>
         <MDBCol class="mx-auto col-sm-12 col-md-8 ">
           <iframe
-            width="100%"
-            height
+            class="w-100"
+            height="300"
             :src="funnyvideo"
             title="YouTube video player"
             frameborder="0"
@@ -294,51 +294,51 @@ export default {
         </MDBRow>
       </MDBContainer>
 
-      <!-- <MDBContainer class="text-center mt-4" id="dogbreedai_container"> -->
-      <!--   <MDBRow columns="12">  -->
-      <!--   <div class="text-center fw-bold section_header"> -->
-      <!--       Do you want to find out what breed your dog is? 🧪👨🏼‍💻 -->
-      <!--     </div> -->
-      <!--   </MDBRow> -->
-      <!---->
-      <!--   <MDBRow v-if="dog_breed_loading" class="mx-auto text-center"> -->
-      <!--   <MDBCol> -->
-      <!--     <MDBSpinner /> -->
-      <!--     </MDBCol> -->
-      <!--   </MDBRow> -->
-      <!---->
-      <!--   <MDBRow -->
-      <!--     v-if="dog_breed_guesses.length > 0" -->
-      <!--     class="mx-auto" -->
-      <!--   > -->
-      <!--     <div class="text-center fw-bold section_header_small"> -->
-      <!--       My guesses are : -->
-      <!--     </div> -->
-      <!--     <MDBListGroup> -->
-      <!--       <MDBListGroupItem v-for="breed in dog_breed_guesses" :key="breed"> -->
-      <!--         <div class="mx-auto"> -->
-      <!--           <div class="dog_breed_guesses">{{ -->
-      <!--             breed.name -->
-      <!--           }}</div > -->
-      <!--           <div>{{ breed.perc }} %</div> -->
-      <!--         </div> -->
-      <!--       </MDBListGroupItem> -->
-      <!--     </MDBListGroup> -->
-      <!--   </MDBRow> -->
-      <!---->
-      <!--   <MDBRow class="mx-auto text-center">  -->
-      <!--   <MDBCol col="4" class="mx-auto" > -->
-      <!--     <MDBFile -->
-      <!--       label="Upload your dog image" -->
-      <!--       role="button" -->
-      <!--       tabindex="0" -->
-      <!--       text="ABSOLUTELY" -->
-      <!--       accept="image/*" -->
-      <!--       @change=uploadImageDogBreedRecognition -->
-      <!--     ></MDBFile> -->
-      <!--   </MDBCol> -->
-      <!--   </MDBRow> -->
-      <!-- </MDBContainer> -->
+      <MDBContainer class="text-center mt-4" id="dogbreedai_container">
+        <MDBRow columns="12"> 
+        <div class="text-center fw-bold section_header">
+            Do you want to find out what breed your dog is? 🧪👨🏼‍💻
+          </div>
+        </MDBRow>
+
+        <MDBRow v-if="dog_breed_loading" class="mx-auto text-center">
+        <MDBCol>
+          <MDBSpinner />
+          </MDBCol>
+        </MDBRow>
+
+        <MDBRow
+          v-if="dog_breed_guesses.length > 0"
+          class="mx-auto"
+        >
+          <div class="text-center fw-bold section_header_small">
+            My guesses are :
+          </div>
+          <MDBListGroup>
+            <MDBListGroupItem v-for="breed in dog_breed_guesses" :key="breed">
+              <div class="mx-auto">
+                <div class="dog_breed_guesses">{{
+                  breed.breed
+                }}</div >
+                <div>{{ (Math.round(breed.confidence * 10000) / 100).toFixed(2) }} %</div>
+              </div>
+            </MDBListGroupItem>
+          </MDBListGroup>
+        </MDBRow>
+
+        <MDBRow class="mx-auto text-center"> 
+        <MDBCol col="4" class="mx-auto" >
+          <MDBFile
+            label="Upload your dog image"
+            role="button"
+            tabindex="0"
+            text="ABSOLUTELY"
+            accept="image/*"
+            @change=uploadImageDogBreedRecognition
+          ></MDBFile>
+        </MDBCol>
+        </MDBRow>
+      </MDBContainer>
 
       <MDBContainer class="text-center mt-4" id="catbreedai_container">
         <MDBRow columns="12">
@@ -359,10 +359,23 @@ export default {
         >
         <MDBContainer>
          <MDBRow  class="mx-auto">
-         <MDBCol sm="12" md="12"  class="mx-auto text-center"  >
-          <img :src=img_your_cat width="100" height="100" />
+         <MDBCol sm="6" md="6"  class="mx-auto text-center"  >
+             Your cat
           </MDBCol>
+         <MDBCol sm="6" md="6" class="mx-auto text-center" aria-live="polite" >
+             Guessed cat
+          </MDBCol>
+          </MDBRow>
+         <!-- <MDBRow  class="mx-auto"> -->
+         <!-- <MDBCol sm="6" md="6"  class="mx-auto text-center"  > -->
+         <!--  <img :src=img_your_cat alt="your cat" width="100" height="100" /> -->
+         <!--  </MDBCol> -->
+         <!-- <MDBCol sm="6" md="6" class="mx-auto text-center" aria-live="polite" > -->
+         <!--  <img :src=img_cat_breed columns="2" alt="guessed cat" class="mx-auto text-center" width="100" height="100" /> -->
+         <!--  </MDBCol> -->
+         <!--  </MDBRow> -->
 
+         <MDBRow  class="mx-auto">
          <MDBCol sm="12" md="12" class="mx-auto text-center"  >
           <div class="text-center mx-auto fw-bold section_header_small">
             My guesses are :
@@ -371,17 +384,14 @@ export default {
             <MDBListGroupItem v-for="breed in cat_breed_guesses" :key="breed">
               <div class="mx-auto">
                 <div class="cat_breed_guesses">{{
-                  breed.name
+                  breed.breed
                 }}</div >
-                <div>{{ breed.perc }} %</div>
+                <div>{{ (Math.round(breed.confidence * 10000) / 100).toFixed(2) }} %</div>
               </div>
             </MDBListGroupItem>
           </MDBListGroup>
           </MDBCol>
 
-         <MDBCol sm="12" md="12" class="mx-auto text-center" aria-live="polite" >
-          <img :src=img_cat_breed columns="2" class="mx-auto text-center" width="100" height="100" />
-          </MDBCol>
           </MDBRow>
         </MDBContainer>
         </MDBRow>
@@ -413,7 +423,7 @@ export default {
           </MDBRow>
           <MDBRow >
           <MDBCol class="col-sm-12 col-md-12 mx-auto text-center">
-            <MDBBtn raised @click="showRandomFact()">Tell me more!</MDBBtn>
+            <MDBBtn raised @click="showRandomFact()">What's next!</MDBBtn>
             </MDBCol>
           </MDBRow>
       </MDBContainer>
@@ -447,7 +457,7 @@ export default {
         <div class="fw-bold section_header">Take a look at our products !</div>
       </MDBRow>
       <MDBRow >
-      <MDBCol class="col-sm-12 col-md-12 col-lg-8 col-xs-12 mx-auto text-center">
+      <MDBCol class="col-sm-12 col-md-12 col-lg-8 col-xs-12 mx-auto text-center" aria-live="polite">
         <MDBSpinner v-if="shop_loading"/>
           <MDBRow v-if="!shop_loading && products && products.length > 0">
               <MDBCol class="col-6 mx-auto text-center mb-2" height="100" v-for="(prod, i) in products">

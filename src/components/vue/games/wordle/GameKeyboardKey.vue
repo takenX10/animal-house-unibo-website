@@ -1,8 +1,8 @@
 <template>
-  <div class="gamekeyboard__key" :class="classObj" @click="emits('click', kkey)">
+  <button class="gamekeyboard__key" :class="classObj" @click="emits('click', kkey)">
     <ph-backspace v-if="kkey === ValidKey.BACKSPACE" :size="24" weight="fill"></ph-backspace>
     <span v-else>{{ kkey }}</span>
-  </div>
+  </button>
 </template>
 
 <script setup lang="ts">

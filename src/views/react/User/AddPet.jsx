@@ -84,9 +84,17 @@ export default function AddPet() {
               <Form.Label>Name</Form.Label>
               <Form.Control value={name} type="text" id="name" onChange={onChange} placeholder="Add name" />
             </Form.Group>
-            <Form.Group className="mb-3" >
+            <Form.Group>
               <Form.Label>Race</Form.Label>
-              <Form.Control value={race} type="text" id="race" onChange={onChange} placeholder="Add race" />
+              <Form.Control as="select" id="race" onChange={onChange} value={race}>
+                <option value="dog">dog</option>
+                <option value="cat">cat</option>
+                <option value="bird">bird</option>
+                <option value="dolphin">dolphin</option>
+                <option value="gopher">gopher</option>
+                <option value="fish">fish</option>
+                <option value="racoon">racoon</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group className="mb-3" >
               <Form.Label>Description</Form.Label>

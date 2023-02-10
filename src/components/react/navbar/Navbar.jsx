@@ -157,10 +157,10 @@ export default function Navbar() {
             {userInfo ? (
               <>
                 <Link to="/profile" className="nav-link">
-                  Profile 
+                  Profile
                 </Link>
                 <Link to="/shop/orderhistory" className="nav-link">
-                   Order History
+                  Order History
                 </Link>
                 <Link to="#" class="nav-link" onClick={signoutHandler}>
                   Logout

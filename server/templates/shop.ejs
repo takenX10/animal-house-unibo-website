@@ -230,6 +230,7 @@
 </template>
 
 <template id="product-template">
+<<<<<<< Updated upstream
     <div class="row mb-4  p-3 rounded border border-dark">
         <div class="col-xs-12 col-sm-8 ml-auto text-left">
             <h3 id="name" name="name">Name</h3>
@@ -242,100 +243,28 @@
         <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
             <button type="button" class="btn btn-secondary m-2" id="product-edit" data-toggle="modal" data-target="#editModal">Edit</button>
             <button type="button" class="btn btn-danger m-2" id="product-delete">Delete</button>
+=======
+    <div class="row mb-2  p-3 rounded">
+      <div class="col-8 mx-auto">
+        <div class="row mx-auto">
+            <div class="col-xs-12 col-sm-8 ml-auto text-left">
+                <h3 id="name" name="name">Name</h3>
+                <div id="description" name="description">Description</div>
+                <div> Price: <span id="price" name="price">Price</span></div>
+                <div> In stock: <span id="count" name="count">Count</span></div>
+                <div> Categories: <span id="cat" name="cat">Categories</span></div>
+                <div> Brand: <span id="brand" name="brand">Brand</span></div>
+            </div>
+            <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-secondary m-2" id="product-edit" data-toggle="modal" data-target="#editModal">Edit</button>
+                <button type="button" class="btn btn-danger m-2" id="product-delete">Delete</button>
+            </div>
+          </div>
+>>>>>>> Stashed changes
         </div>
     </div>
 </template>
 
-<template id="tr-template">
-  <tr>
-    <td class="begin"></td>
-    <td class="end"></td>
-    <td class="capacity"></td>
-  </tr>
-</template>
-<template id="ava-template">
-  <div class="mb-2 border border-gray p-3 rounded">
-    <div class="row ">
-        <div class="col-xs-12 col-sm-12 ml-auto text-left">
-            <h4 id="title" name="title">Title</h4>
-            <div id="where" name="where">Where</div>
-        </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col-xs-12 col-sm-12 ml-auto text-left">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Begin</th>
-                <th scope="col">End</th>
-                <th scope="col">Capacity</th>
-              </tr>
-            </thead>
-            <tbody class="tbody">
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-
-<template id="service-template">
-    <div class="row mb-2 p-3 rounded">
-        <div class="col-xs-12 col-sm-12 ml-auto mb-3 text-center">
-            <h3 id="title">Title</h3>
-            <div id="slug">Slug</div>
-        </div>
-        <div class="col-xs-12 col-sm-12 mb-3 d-flex justify-content-center align-items-center">
-            <button style="background-color: #0000FF" class="btn collapse-btn text-white" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
-              Show
-            </button>
-        </div>
-        <div class="collapse collapse-table col to-collapse mt-3">
-        </div>
-        <div class="col-xs-12 col-sm-12 d-flex justify-content-center align-items-center">
-            <button style="background-color: #0000FF" class="btn collapse-add-btn text-white" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse">
-             Add 
-            </button>
-        </div>
-        <div class="collapse collapse-add col to-collapse mt-3">
-           <form class="form-group">
-             <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                <span class="input-group-text" class="citylabel" id="citylabel">City</span>
-              </div>
-              <input type="text" class="form-control cityinput" aria-label="City" aria-describedby="addresslabel" required>
-              </div>
-             <div class="input-group mb-3">
-               <div class="input-group-prepend"> <span class="input-group-text" class="addresslabel" id="addresslabel">Address</span>
-              </div>
-              <input type="text" class="form-control addressinput" aria-label="Address" aria-describedby="addresslabel" required>
-              </div>
-             <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                <span class="input-group-text" class="beginlabel" id="beginlabel">Begin</span>
-              </div>
-              <input type="datetime-local" class="form-control begininput" aria-label="Begin"  aria-describedby="beginlabel" required>
-              </div>
-             <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                <span class="input-group-text" class="endlabel" id="endlabel">End</span>
-              </div>
-              <input type="datetime-local" class="form-control endinput" aria-label="End" aria-describedby="endlabel" required>
-              </div>
-             <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                <span class="input-group-text" class="maxlabel" id="maxlabel">Max clients</span>
-              </div>
-              <input type="number" class="form-control maxinput" aria-label="Max clients" aria-describedby="maxlabel" required>
-              </div>
-              <button style="background-color: #0000FF" type="submit" onclick="add(this,event)" class="btn text-white mb-3">Confirm</button>
-            </form>
-        </div>
-    </div>
-    <hr>
-</template>
 
 
 <!-- Modal -->

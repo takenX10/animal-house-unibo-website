@@ -5,7 +5,7 @@ interface KeyInfo {
   state: EvaluationState
 }
 
-function initialize(): KeyInfo[] {
+function initialize() {
   const keys = [
     ValidKey.Q,
     ValidKey.W,
@@ -42,7 +42,7 @@ function initialize(): KeyInfo[] {
 }
 
 export class Keyboard {
-  private _state: KeyInfo[]
+  private _state;
 
   constructor() {
     this._state = initialize()
@@ -52,7 +52,7 @@ export class Keyboard {
     return this._state
   }
 
-  public updateKeyState(key: ValidKey, state: EvaluationState) {
+  public updateKeyState(key, state) {
     const k = this._state.find((value) => value.key === key)
     if (!k) {
       return

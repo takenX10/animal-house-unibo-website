@@ -263,7 +263,7 @@ export default function Profile() {
                     </tr>
                   </tbody>
                 </Table>
-                <Button variant="danger" onClick={() => { getConfirmation(p._id) }}>Delete</Button>
+                <Button className='red-back text-white ' onClick={() => { getConfirmation(p._id) }}>Delete</Button>
               </Col>
             );
           })}
@@ -285,7 +285,7 @@ export default function Profile() {
                           <h3 className='fw-bold'>{b.title}</h3>
                         </Col>
                         <Col xs={1} className='mx-auto' >
-                          <Button onClick={() => deleteBooking(b)} className='fw-bold red-back text-black text-end'>X</Button>
+                          <Button onClick={() => deleteBooking(b)} className='fw-bold red-back text-white text-end'>X</Button>
                         </Col>
                       </Row>
                       <Row>
