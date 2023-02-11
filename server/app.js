@@ -17,7 +17,7 @@ const upload = multer({ dest: "./server/uploads" });
 const app = express();
 const port = 8000;
 
-app.use(express.static(__dirname + "/server/uploads"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.static(__dirname + "/static"));
 app.use(express.static(__dirname + "/static/dist"));
 app.use(express.static(__dirname + "/static/dist/assets"));
@@ -26,7 +26,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/template"));
 
 var whitelist = ["http://localhost:3000", "http://localhost:8000"];
-var corsOptionsDelegate = function (req, callback) {
+var corsOptionsDelegate = function(req, callback) {
   var corsOptions;
   if (whitelist.indexOf(req.header("Origin")) !== -1) {
     corsOptions = {
@@ -112,7 +112,7 @@ function isInRouter(path) {
   return false;
 }
 
-app.post("/upload", upload.any("files"), function (req, res) {
+app.post("/upload", upload.any("files"), function(req, res) {
   const files = req.files;
   let paths = [];
   for (const file of files) {
@@ -121,7 +121,7 @@ app.post("/upload", upload.any("files"), function (req, res) {
   res.json(paths);
 });
 
-app.get("*", function (req, res, next) {
+app.get("*", function(req, res, next) {
   if (isInRouter(req.url)) {
     return next();
   }
