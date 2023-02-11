@@ -13,11 +13,11 @@ import cookieParser from "cookie-parser";
 import { __dirname, CLIENT_URL } from "./utils.js";
 import METHODS from "./methods.js";
 
-const upload = multer({ dest: "./uploads" });
+const upload = multer({ dest: "./server/uploads" });
 const app = express();
 const port = 8000;
 
-app.use(express.static(__dirname + "/uploads"));
+app.use(express.static(__dirname + "/server/uploads"));
 app.use(express.static(__dirname + "/static"));
 app.use(express.static(__dirname + "/static/dist"));
 app.use(express.static(__dirname + "/static/dist/assets"));
@@ -112,12 +112,13 @@ function isInRouter(path) {
   return false;
 }
 
-app.post("/upload", upload.single("file"), function (req, res) {
-  console.log("post");
-  const file = req.file;
-  console.log(file);
-  console.log(req.body);
-  res.json({});
+app.post("/upload", upload.any("files"), function (req, res) {
+  const files = req.files;
+  let paths = [];
+  for (const file of files) {
+    paths.push(file.path.replace("server/", ""));
+  }
+  res.json(paths);
 });
 
 app.get("*", function (req, res, next) {

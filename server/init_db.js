@@ -12,7 +12,9 @@ var fakeUsers = [
     petList: [],
   },
   {
-    name: "Giovanni", surname: "Storti", email: "giovanni@storti.tk",
+    name: "Giovanni",
+    surname: "Storti",
+    email: "giovanni@storti.tk",
     contact: "+39 444 444 4444",
     password: bcrypt.hashSync("giovannistorti", genSaltSync()),
     petList: [],
@@ -109,7 +111,7 @@ const products = [
     name: "Nika Slim shirt",
     slug: "nika-slim-shirt",
     categories: ["/accessories"],
-    poster: "/assets/products/p1.jpg",
+    poster: "assets/products/p1.jpg",
     images: [],
     price: 120,
     countInStock: 5,
@@ -122,7 +124,7 @@ const products = [
     name: "Nika Slim Pant",
     slug: "nika-slim-pant",
     categories: ["/accessories/pants"],
-    poster: "/assets/products/p1.jpg",
+    poster: "assets/products/p1.jpg",
     images: [],
     price: 25,
     countInStock: 0,
@@ -135,7 +137,7 @@ const products = [
     name: "Supreme jacket",
     slug: "supreme-drip",
     categories: ["/accessories/jackets"],
-    poster: "/assets/products/drip.jpg",
+    poster: "assets/products/drip.jpg",
     images: [],
     price: 999999,
     countInStock: 1,
@@ -148,7 +150,7 @@ const products = [
     name: "Pink litter box",
     slug: "litter-box",
     categories: ["/sanitary/litter-boxes"],
-    poster: "/assets/products/litter.jpg",
+    poster: "assets/products/litter.jpg",
     images: [],
     price: 30,
     countInStock: 2,
@@ -161,7 +163,7 @@ const products = [
     name: "Scooby Snacks",
     slug: "scooby-snacks",
     categories: ["/food/snacks"],
-    poster: "/assets/products/snacks.webp",
+    poster: "assets/products/snacks.webp",
     images: [],
     price: 12,
     countInStock: 200,
@@ -231,9 +233,9 @@ const services = [
                 begin: 1667811600000,
                 end: 1667815200000,
                 maxClients: 3,
-                currentClients: 0
-              }
-            ]
+                currentClients: 0,
+              },
+            ],
           },
           {
             day: 1667907908000,
@@ -242,7 +244,7 @@ const services = [
                 begin: 1667808000000,
                 end: 1667811600000,
                 maxClients: 3,
-                currentClients: 0
+                currentClients: 0,
               },
               {
                 begin: 1667811600000,
@@ -265,12 +267,7 @@ const services = [
         name: "animal",
         label: "Animal",
         required: true,
-        fields: [
-          "Cat",
-          "Dog",
-          "Airplane",
-          "Frog"
-        ],
+        fields: ["Cat", "Dog", "Airplane", "Frog"],
       },
       {
         type: "checkbox",
@@ -321,7 +318,7 @@ const services = [
                 begin: 1667808000000,
                 end: 1667811600000,
                 maxClients: 3,
-                currentClients: 0
+                currentClients: 0,
               },
               {
                 begin: 1667811600000,
@@ -338,7 +335,7 @@ const services = [
                 begin: 16684200000000,
                 end: 1668423600000,
                 maxClients: 3,
-                currentClients: 0
+                currentClients: 0,
               },
               {
                 begin: 16684380000000,
@@ -390,7 +387,8 @@ const services = [
   {
     slug: "conf-vet",
     title: "Video conf with vet!",
-    poster: "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
+    poster:
+      "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
     category: "animal-vet",
     isOnline: true,
     availabilities: [
@@ -405,7 +403,7 @@ const services = [
                 begin: 1667808000000,
                 end: 1667811600000,
                 maxClients: 3,
-                currentClients: 0
+                currentClients: 0,
               },
               {
                 begin: 1667811600000,
@@ -422,7 +420,7 @@ const services = [
                 begin: 1668420000000,
                 end: 1668423600000,
                 maxClients: 3,
-                currentClients: 0
+                currentClients: 0,
               },
               {
                 begin: 1668438000000,
@@ -435,7 +433,9 @@ const services = [
         ],
       },
     ],
-    images: ['https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg'],
+    images: [
+      "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
+    ],
     hourlyRate: 10,
     description: "Something idk this should be videoconf with vet",
     rating: 0,
@@ -446,13 +446,7 @@ const services = [
         name: "animal",
         label: "Animal",
         required: true,
-        labels: [
-          'Dog',
-          'Cat',
-          'Bird',
-          'Fish',
-          'Racoon',
-        ]
+        labels: ["Dog", "Cat", "Bird", "Fish", "Racoon"],
       },
       {
         type: "text",
@@ -464,7 +458,7 @@ const services = [
     ],
     bookings: [],
   },
-]
+];
 
 async function initDB() {
   let mongoose = await DATABASE.connect();

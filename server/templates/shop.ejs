@@ -189,10 +189,9 @@
     }
     }
   async function addProduct() {
+    console.log("Adding Product");
     let name = $("#nameaddmodal").val();
-    let slug = $("#slugaddmodal").val();
-    let poster = "PosterURL";
-    let images = "ImagesURL";
+    let slug = name.replace(/\s+/g, "-").toLowerCase();
     let brand = $("#brandaddmodal").val();
     let cat = [$("#cataddmodal").val()];
     let desc = $("#descaddmodal").val();
@@ -204,13 +203,18 @@
 
       const data = new FormData();
 
-      data.append("file",files[0])
+      for(let i=0;i<files.length;i++){
+        data.append("files",files[i]);
+        }
 
-      let res_a = fetch("/upload", {
+      let res_a = await fetch("/upload", {
         method: 'POST',
         body: data,
       });
 
+      let paths = await res_a.json();
+      const poster = paths.shift();
+      let images = paths;
       let b = await fetch(`/api/backoffice/add_product`, {
         method: "PUT",
         credentials: "include",
@@ -375,12 +379,6 @@
               </div>
               <input role="input" type="text" id="nameaddmodal" class="form-control nameaddinput" aria-label="Name" aria-describedby="addressmodallabel" required>
               </div>
-            <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                 <label class="input-group-text" for="slugaddmodal" class="slugaddmodallabel" id="slugaddmodallabel">Slug</label>
-                </div>
-                <input role="input" type="text" id="slugaddmodal" class="form-control slugaddinput" aria-label="Slug" aria-describedby="slugaddmodallabel" required>
-            </div>
             <div class="input-group mb-3">
                <div class="input-group-prepend">
                  <label class="input-group-text" for="imagesaddmodal" class="imagesaddmodallabel" id="imagesaddmodallabel">Images</label>
