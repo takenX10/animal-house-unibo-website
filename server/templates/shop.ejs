@@ -191,14 +191,26 @@
   async function addProduct() {
     let name = $("#nameaddmodal").val();
     let slug = $("#slugaddmodal").val();
-    let poster = $("#posteraddmodal").val();
-    let images = $("#imagesaddmodal").val().split(",");
+    let poster = "PosterURL";
+    let images = "ImagesURL";
     let brand = $("#brandaddmodal").val();
     let cat = [$("#cataddmodal").val()];
     let desc = $("#descaddmodal").val();
     let price = $("#priceaddmodal").val();
     let count = $("#countaddmodal").val();
     try {
+
+      let files = $("#imagesaddmodal").prop('files');
+
+      const data = new FormData();
+
+      data.append("file",files[0])
+
+      let res_a = fetch("/upload", {
+        method: 'POST',
+        body: data,
+      });
+
       let b = await fetch(`/api/backoffice/add_product`, {
         method: "PUT",
         credentials: "include",
@@ -275,7 +287,6 @@
 </template>
 
 <template id="product-template">
-<<<<<<< Updated upstream
     <div class="row mb-4  p-3 rounded border border-dark">
         <div class="col-xs-12 col-sm-8 ml-auto text-left">
             <h3 id="name" name="name">Name</h3>
@@ -288,24 +299,6 @@
         <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
             <button type="button" class="btn btn-secondary m-2" id="product-edit" data-toggle="modal" data-target="#editModal">Edit</button>
             <button type="button" class="btn btn-danger m-2" id="product-delete">Delete</button>
-=======
-    <div class="row mb-2  p-3 rounded">
-      <div class="col-8 mx-auto">
-        <div class="row mx-auto">
-            <div class="col-xs-12 col-sm-8 ml-auto text-left">
-                <h3 id="name" name="name">Name</h3>
-                <div id="description" name="description">Description</div>
-                <div> Price: <span id="price" name="price">Price</span></div>
-                <div> In stock: <span id="count" name="count">Count</span></div>
-                <div> Categories: <span id="cat" name="cat">Categories</span></div>
-                <div> Brand: <span id="brand" name="brand">Brand</span></div>
-            </div>
-            <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
-                <button type="button" class="btn btn-secondary m-2" id="product-edit" data-toggle="modal" data-target="#editModal">Edit</button>
-                <button type="button" class="btn btn-danger m-2" id="product-delete">Delete</button>
-            </div>
-          </div>
->>>>>>> Stashed changes
         </div>
     </div>
 </template>
@@ -390,15 +383,9 @@
             </div>
             <div class="input-group mb-3">
                <div class="input-group-prepend">
-                 <label class="input-group-text" for="posteraddmodal" class="posteraddmodallabel" id="posteraddmodallabel">Poster url</label>
+                 <label class="input-group-text" for="imagesaddmodal" class="imagesaddmodallabel" id="imagesaddmodallabel">Images</label>
                 </div>
-                <input role="input" type="text" id="posteraddmodal" class="form-control posteraddinput" aria-label="Poster url" aria-describedby="posteraddmodallabel" required>
-            </div>
-            <div class="input-group mb-3">
-               <div class="input-group-prepend">
-                 <label class="input-group-text" for="imagesaddmodal" class="imagesaddmodallabel" id="imagesaddmodallabel">Images urls (, separated)</label>
-                </div>
-                <input role="input" type="text" id="imagesaddmodal" class="form-control imagesaddinput" aria-label="Images urls (, separated)" aria-describedby="imagesaddmodallabel" required>
+                <input role="input" type="file" accept="image/*" id="imagesaddmodal" class="form-control imagesaddinput" aria-label="Images" aria-describedby="imagesaddmodallabel" required multiple / >
             </div>
             <div class="input-group mb-3">
                <div class="input-group-prepend">
@@ -411,7 +398,7 @@
                  <label class="input-group-text" for="cataddmodal" class="cataddmodallabel" id="cataddmodallabel">Category</label>
                 </div>
                 <select id="cataddmodal" class="form-control cataddinput" aria-label="Category" aria-describedby="cataddmodallabel" required>
-                <option value="">Select a category</option>
+                <option value="/">Select a category</option>
                 </select>
             </div>
              <div class="input-group mb-3">
