@@ -119,7 +119,7 @@ export const CreateReactApp = () => {
             <header>
               <Navbar />
             </header>
-            <main className="pt-3 min-vh-100 ">
+            <main className="pt-3 ">
               <Routes>
                 {ReactRoutes.map((route) => {
                   return createRoute(route);
