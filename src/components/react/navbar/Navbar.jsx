@@ -151,7 +151,7 @@ export default function Navbar() {
         </Bar.Toggle>
         <Bar.Collapse id="basic-navbar-nav" className="text-black">
           <Nav className="me-auto w-100 justify-content-end ">
-            <Link to="/comunita" className="nav-link">
+            <Link to="/comunita" className="nav-link fw-semibold">
               Community
             </Link>
             <Link to="/services/facetoface" className="nav-link">

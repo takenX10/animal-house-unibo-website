@@ -1,17 +1,15 @@
 import path from "path";
-import { fileURLToPath } from 'url';
-import AUTH from './authentication.js';
-import bodyParser from 'body-parser';
+import { fileURLToPath } from "url";
+import AUTH from "./authentication.js";
+import bodyParser from "body-parser";
 
 const jsonParser = bodyParser.json();
-
 
 const SERVER_URL = "http://localhost:8000";
 const CLIENT_URL = "http://localhost:3000";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 
 async function isAuth(req, res, next) {
   if (await AUTH.check_login(req)) {
@@ -36,4 +34,12 @@ function showError(res) {
   res.redirect("/errore");
 }
 
-export { isAuth, CLIENT_URL, __dirname, jsonParser, isAdmin, showError };
+export {
+  isAuth,
+  SERVER_URL,
+  CLIENT_URL,
+  __dirname,
+  jsonParser,
+  isAdmin,
+  showError,
+};
