@@ -1,35 +1,79 @@
 import React from "react";
-import Navbar from '@/components/react/navbar/Navbar';
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 
-export default function HomeComunita(){
-    const stylecol = {
-        height:"100%",
-        width: "100%"
-    };
-    return (
-        <>
-                <div className="container-fluid">
-                    <div className="row justify-content-center">
-                        <div className="col-8 mt-5">
-                            <h2 className="fs-1 mb-3">Servizi della comunita</h2>
-                            <p>Nei servizi della comunita... Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi distinctio iusto iste, pariatur error qui cumque adipisci modi esse perspiciatis dignissimos mollitia vitae dolores nemo dolor laborum numquam dolorum quaerat.</p>
-                        </div>
-                    </div>
-                    <div className="row justify-content-around text-center mt-5">
-                        <div className="col">
-                            <button type="button" className="btn btn-success rounded-pill p-4 fs-3 fw-bold" onClick={()=>{window.location.pathname="/comunita/leaderboard"}}>LEADERBOARD DEI GIOCHI</button>
-                        </div>
-                        <div className="col">
-                            <button type="button" className="btn btn-success rounded-pill p-4 fs-3 fw-bold" onClick={()=>{window.location.pathname="/comunita/eccolo-qua"}}>BACHECA ECCOLO QUA</button>
-                        </div>
-                        <div className="col">
-                            <button type="button" className="btn btn-success rounded-pill p-4 fs-3 fw-bold" onClick={()=>{window.location.pathname="/comunita/cerco-partner"}}>BACHECA CERCO PARTNER</button>
-                        </div>
-                        <div className="col">
-                            <button type="button" style={stylecol} className="btn btn-success rounded-pill p-4 fs-3 fw-bold" onClick={()=>{window.location.pathname="/comunita/aiutatemi"}}>CERCO AIUTO</button>
-                        </div>
-                    </div>
-                </div>
-        </>
-    );
+export default function HomeComunita() {
+  const stylecol = {
+    height: "100%",
+    width: "100%",
+  };
+  return (
+    <Container>
+      <Helmet>
+        <title>Community Services</title>
+      </Helmet>
+      <h1 className="display-5 text-center my-3">Check out our boards!</h1>
+      <Row className="">
+        <Col md={6} className="mb-4 m-md-0">
+          <Link to="/comunita/leaderboard">
+            <Button
+              aria-labelledby="btn1-text"
+              style={{ height: "250px" }}
+              className="w-100"
+            >
+              <span id="btn1-text" className="display-5 ">
+                {" "}
+                Game Leaderboards
+              </span>
+            </Button>
+          </Link>
+        </Col>
+        <Col md={6} className="">
+          <Link to="/comunita/eccolo-qua">
+            <Button
+              aria-labelledby="btn2-text"
+              style={{ height: "250px" }}
+              className="w-100 "
+            >
+              <span id="btn2-text" className="display-5">
+                {" "}
+                Eccolo qua Board
+              </span>
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+      <Row className="my-4">
+        <Col md={6} className="mb-4 m-md-0">
+          <Link to="/comunita/cerco-partner">
+            <Button
+              aria-labelledby="btn3-text"
+              style={{ height: "250px" }}
+              className="w-100"
+            >
+              <span id="btn3-text" className="display-5 ">
+                {" "}
+                Partner Finder
+              </span>
+            </Button>
+          </Link>
+        </Col>
+        <Col md={6} className="">
+          <Link to="/comunita/aiutatemi">
+            <Button
+              aria-labelledby="btn2-text"
+              style={{ height: "250px" }}
+              className="w-100 "
+            >
+              <span id="btn2-text" className="display-5">
+                {" "}
+                Help Board
+              </span>
+            </Button>
+          </Link>
+        </Col>
+      </Row>
+    </Container>
+  );
 }

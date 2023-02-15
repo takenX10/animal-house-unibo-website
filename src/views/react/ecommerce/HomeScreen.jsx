@@ -126,8 +126,9 @@ export default function HomeScreen() {
       <Row className="butstrap bg-light py-2 mx-1">
         <Col className="ps-1 pe-1 mb-2" sm={6} md={6} lg={3}>
           <Button
-            className="bg-light text-white justify-content-center text-center w-100"
+            className="bg-light text-white justify-content-center text-center py-3 w-100"
             onClick={() => fetchData("/accessories", "accessories")}
+            aria-labelledby="acc-btntext"
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/accessories2.jpg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
               ...catButtonStyle,
@@ -139,13 +140,16 @@ export default function HomeScreen() {
               style={{ filter: "none" }}
               size="2xl"
             />
-            <p className="lead mx-auto fw-semibold">Accessories</p>
+            <p id="acc-btntext" className="lead mx-auto fw-semibold my-auto">
+              Accessories
+            </p>
           </Button>
         </Col>
         <Col className="mb-2 px-1" sm={6} md={6} lg={3}>
           <Button
-            className="bg-white fw-bold text-white justify-content-center text-center w-100"
+            className="bg-white fw-bold text-white justify-content-center text-center py-3 w-100"
             onClick={() => fetchData("/sanitary", "sanitary")}
+            aria-labelledby="san-btntext"
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/sanitary.jpeg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
               ...catButtonStyle,
@@ -156,12 +160,15 @@ export default function HomeScreen() {
               className="mx-auto"
               size="2xl"
             />
-            <p className="lead mx-auto fw-semibold">Sanitary</p>
+            <p id="san-btntext" className="lead mx-auto fw-semibold my-auto">
+              Sanitary
+            </p>
           </Button>
         </Col>
         <Col className="px-1 mb-2" sm={6} md={6} lg={3}>
           <Button
-            className="bg-light fw-bold text-white justify-content-center text-center w-100"
+            aria-labelledby="food-btntext"
+            className="bg-light fw-bold text-white justify-content-center py-3 text-center w-100"
             onClick={() => fetchData("/food", "food")}
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/petfood.jpg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
@@ -169,12 +176,15 @@ export default function HomeScreen() {
             }}
           >
             <FontAwesomeIcon icon={faBowlFood} className="mx-auto" size="2xl" />
-            <p className="lead mx-auto fw-semibold">Pet Food</p>
+            <p id="food-btntext" className="lead mx-auto fw-semibold my-auto">
+              Pet Food
+            </p>
           </Button>
         </Col>
         <Col className="mb-2 ps-1 pe-1" sm={6} md={6} lg={3}>
           <Button
-            className="bg-light fw-bold text-white justify-content-center text-center w-100"
+            aria-labelledby="feat-btntext"
+            className="bg-light fw-bold text-white justify-content-center text-center py-3 w-100"
             onClick={() => fetchData()}
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/more.jpg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
@@ -182,7 +192,9 @@ export default function HomeScreen() {
             }}
           >
             <FontAwesomeIcon icon={faPlus} className="mx-auto" size="2xl" />
-            <p className="lead mx-auto fw-semibold">Featured</p>
+            <p id="feat-btntext" className="lead mx-auto fw-semibold my-auto">
+              Featured
+            </p>
           </Button>
         </Col>
       </Row>

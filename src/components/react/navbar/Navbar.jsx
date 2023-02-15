@@ -130,7 +130,7 @@ export default function Navbar() {
   };
 
   return (
-    <Bar className=" text-black our-nav py-3" expand="lg">
+    <Bar className=" text-black our-nav px-3 py-3" expand="lg">
       <Container fluid className="px-5 flex justify-content-between">
         <Link to="/">
           <img
