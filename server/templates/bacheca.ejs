@@ -1,0 +1,78 @@
+<%- include('./head.ejs', {headTitle:title}); %>
+    <h1 class="text-center mt-5 m-3 p-2 font-weight-bold font-size-2">Post list</h1>
+    <div class="container-fluid w-100 post-container">
+    </div>
+    <template class="post-template">
+        <div class="row m-5 border border-dark p-3">
+            <div class="col">
+                <h3 id="email">email@email.com</h3>
+                <h4 id="type">tipo</h4>
+                <p id="text">text of the post</p>
+                <p>answer: <code id="answer">false</code></p>
+                <p id="id">198374F5980274F9KERS55TSU</p>
+            </div>
+            <div class="col d-flex justify-content-end align-items-center">
+                <button type="button" id="delete-button" class="btn btn-danger
+                    m-2">Delete post</button>
+            </div>
+        </div>
+    </template>
+    <script>
+
+async function delete_post_by_id(id){
+    try {
+        let res = await fetch(`/backoffice/delete_post`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({id:id})
+        });
+        console.log(res);
+        res = await res.json();
+        console.log(res);
+        if (res.success) {
+          getPosts();
+        }
+    } catch (e) {
+        alert("Unable to delete post: ", e);
+    }
+}
+
+async function loadPosts(data){
+    for(let p of data.posts){
+        const newPost = $(".post-template").clone()[0].content;
+        $("#email",newPost).text(p.author);
+        $("#text",newPost).text(p.message);
+        $("#type",newPost).text(p.type);
+        $("#id",newPost).text(p.id);
+        $("#answer",newPost).text(p.answer);
+        $("#delete-button", newPost).click(()=>{delete_post_by_id(p.id)});
+        $('.post-container').append(newPost);
+    }
+}
+
+async function getPosts() {
+    $('.post-container').empty();
+    try {
+        let res = await fetch(`/backoffice/get_all_posts`,{
+            method:"GET",
+            credentials:'include',
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+        });
+        let posts = await res.json();
+        loadPosts(posts);
+    }catch(e) {
+        alert("Unable to get all posts: ", e)
+    }
+}
+
+getPosts();
+</script>
+
+        <%- include('./foot.ejs'); %>

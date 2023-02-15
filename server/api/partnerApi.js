@@ -10,7 +10,7 @@ let ENDPOINTS = [
   { endpoint: "/api/backoffice/get_a_puppy", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_a_puppy },
   { endpoint: "/backoffice/get_matches", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_matches },
   { endpoint: "/api/backoffice/get_my_puppies", method: METHODS.POST, opts: [jsonParser, isAuth], function: get_my_puppies },
-  { endpoint: "/backoffice/pets", method: METHODS.GET, opts: [jsonParser, isAuth], function: officePets },
+  { endpoint: "/backoffice/pets", method: METHODS.GET, opts: [jsonParser, isAuth, isAdmin], function: officePets },
   { endpoint: "/backoffice/unmatch", method: METHODS.POST, opts: [jsonParser, isAuth], function: unmatch },
   { endpoint: "/backoffice/petadd", method: METHODS.POST, opts: [jsonParser, isAuth], function: addpet },
   { endpoint: "/backoffice/update_pet_by_id", method: METHODS.PATCH, opts: [jsonParser, isAdmin], function: update_pet_by_id },
