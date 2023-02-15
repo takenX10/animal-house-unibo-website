@@ -69,7 +69,7 @@ export default function OrderHistoryScreen() {
         <table className="table">
           <thead>
             <tr>
-              <th className="d-none d-md-table-cell">ID</th>
+              <th className="d-none d-lg-table-cell">ID</th>
               <th>DATE</th>
               <th>TOTAL</th>
               <th className="d-none d-md-table-cell">PAID</th>
@@ -80,7 +80,7 @@ export default function OrderHistoryScreen() {
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
-                <td className="d-none d-md-table-cell">{order._id}</td>
+                <td className="d-none d-lg-table-cell">{order._id}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>{order.totalPrice.toFixed(2)}</td>
                 <td className="d-none d-md-table-cell">

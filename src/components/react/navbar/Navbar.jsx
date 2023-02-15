@@ -1,9 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
+import { SERVER_URL } from "@/context/utils";
 import "./Navbar.scss";
 //import Dropdown from './Dropdown';
 import { LinkContainer } from "react-router-bootstrap";
 //import { FaBars } from 'react-icons/fa'
-import { Container, NavDropdown, Nav } from "react-bootstrap";
+import { Container, Nav } from "react-bootstrap";
 import { Store } from "@/context/store";
 import { check_login, logout } from "@/context/utils";
 import { Routes, useNavigate } from "react-router-dom";
@@ -129,11 +130,16 @@ export default function Navbar() {
   };
 
   return (
-    <Bar className=" text-black our-nav py-4" expand="lg">
-      <Container className="flex justify-content-between">
-        <LinkContainer to="/">
-          <Bar.Brand>AnimalHouse</Bar.Brand>
-        </LinkContainer>
+    <Bar className=" text-black our-nav py-3" expand="lg">
+      <Container fluid className="px-5 flex justify-content-between">
+        <Link to="/">
+          <img
+            src={`${SERVER_URL}/assets/logo.png`}
+            className="logo-img me-2"
+            alt="immagine logo"
+            height={80}
+          />
+        </Link>
         <Routes>
           <Route
             path="/shop/*"
