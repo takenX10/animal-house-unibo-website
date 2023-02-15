@@ -42,7 +42,6 @@ async function delete_post(req, res){
             res.json({success:false, message:"missing body id"})
             return
         }
-        console.log("boh");
         await DATABASE.Post.findByIdAndDelete(req.body.id);
         res.json({success:true});
     }catch(e){

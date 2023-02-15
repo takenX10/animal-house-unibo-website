@@ -36,7 +36,6 @@ async function leaderboardGetter(req, res) {
 }
 
 async function leaderboardInsert(req, res) {
-  console.log("insert...");
   if (!req?.body?.leaderboard || !req?.body?.score) {
     res.json({ success: false, message: "missing some parameters" });
     return;
@@ -48,10 +47,8 @@ async function leaderboardInsert(req, res) {
   let lead = req.body.leaderboard;
   let score = req.body.score;
   const user = await AUTH.get_user(req);
-  console.log(user);
   const name = `${user.name} ${user.surname} (${user.email})`;
   let scoredb = await DATABASE.Score.findOne({ authorId: user.id }).exec();
-  console.log(scoredb);
   await DATABASE.Score.update({ authorId: user.id }, {
     leaderboard: lead,
     author: name,

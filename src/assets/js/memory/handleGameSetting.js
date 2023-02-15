@@ -11,7 +11,6 @@ export default function handleGameSetting(deck,attempts) {
 
   const restartGame = () => {
     attempts.value = 0;
-    console.log(attempts.value);
     deck.value = _.shuffle(deck.value);
 
     deck.value = deck.value.map((card, index) => {

@@ -64,8 +64,6 @@ export default function PlaceOrderScreen() {
       const data = await result.json();
 
       if (!result.ok) throw new Error(data.message);
-      console.log(data);
-
       ctxDispatch({ type: "CART_CLEAR" });
       dispatch({ type: "CREATE_SUCCESS" });
       navigate(`/shop/order/${data.order._id}`);

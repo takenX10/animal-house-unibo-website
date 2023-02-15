@@ -131,7 +131,6 @@ export const useGame = defineStore(name, {
     },
     handleKeypress(key: ValidKey) {
       if (this.getCurr() == name) {
-        console.log(key)
         this.board.updateCell(this.board.nextEmptyCellIndex, { value: key })
       }
     },

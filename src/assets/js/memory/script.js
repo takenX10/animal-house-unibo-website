@@ -84,11 +84,6 @@ export function initGame() {
 	// 	deck.append($('<li class="card" name="' + cards[i] + '"><i class="fa fa-' + cards[i] + '"></i></li>'))
 	// 	deck.append("ciao")
 	// }
-
-
-	console.log("INIT GAME")
-
-
 };
 
 // Set Rating and final Score

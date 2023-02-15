@@ -9,9 +9,7 @@ let ENDPOINTS = [
 ]
 
 async function get_all_users(req, res) {
-  console.log("get_all_users");
   const usr = await DATABASE.User.find({});
-  console.log(usr);
   res.json({ users: usr });
 }
 

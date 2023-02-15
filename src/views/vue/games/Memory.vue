@@ -143,7 +143,6 @@ export default {
             c++;
           }
           this.shuffle(this.cells);
-          console.log(this.cells);
           this.loading = false;
         }catch(e) {
           this.loading = false;

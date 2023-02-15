@@ -30,9 +30,7 @@ async function delete_post_by_id(id){
             },
             body: JSON.stringify({id:id})
         });
-        console.log(res);
         res = await res.json();
-        console.log(res);
         if (res.success) {
           getPosts();
         }

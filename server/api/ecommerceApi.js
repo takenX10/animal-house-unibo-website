@@ -86,7 +86,6 @@ async function productOrderPost(req, res) {
   });
   newOrder.orderItems.forEach(async (item) => {
     const prod = await DATABASE.Product.findById(item.product);
-    console.log(prod);
     prod.countInStock -= item.quantity;
     prod.save();
   });

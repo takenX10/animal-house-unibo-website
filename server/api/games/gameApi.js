@@ -109,7 +109,6 @@ async function getRandomImageAPI(req, res) {
   try {
     let r = getRandomIntInclusive(0, animtypes.length - 1);
     let link = `https://some-random-api.ml/animal/${animtypes[r]}`;
-    console.log(link)
     let data = await (await fetch(link)).json();
     res.json({ success: true, data });
   } catch (e) {
@@ -216,7 +215,6 @@ async function getScoreboardAll() {
     let l = await getScoreboard(s);
     all.push({ title: s, scoreboard: l.data });
   }
-  console.log(all)
   let board = {
     success: true,
     data: all

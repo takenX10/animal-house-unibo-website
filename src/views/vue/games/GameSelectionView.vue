@@ -178,7 +178,6 @@ export default {
       });
       let data = await res.json();
       if (data.success == true) {
-        console.log(data);
         this.dog_breed_guesses = data.data.results;
         this.dog_breed_loading = false;
         this.refreshPage();
@@ -201,7 +200,6 @@ export default {
       });
       let data = await res.json();
       if (data.success == true) {
-        console.log(data.data.results)
         this.cat_breed_guesses = data.data.results;
         this.cat_breed_loading = false;
         this.img_cat_breed = `${this.BACKEND_SERVER}${data.data.results[0].img_name}`
