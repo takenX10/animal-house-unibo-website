@@ -73,7 +73,7 @@ async function save_score(score, scoreboard) {
 async function deletePost(id) {
   try {
     let res = await fetch(`${SERVER_URL}/backoffice/delete_post`, {
-      method: "POST",
+      method: "DELETE",
       credentials: "include",
       headers: {
         'Accept': '*/*',
