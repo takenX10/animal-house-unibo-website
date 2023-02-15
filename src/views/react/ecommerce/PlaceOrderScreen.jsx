@@ -1,23 +1,22 @@
-import React, { useContext, useEffect, useReducer } from 'react';
-import LoadingBox from '@/components/react/utils/LoadingBox';
-import { Button, Card, Col, Container, ListGroup, Row, } from 'react-bootstrap';
-import { Helmet } from 'react-helmet-async';
-import { Link, useNavigate } from 'react-router-dom';
-import CheckoutSteps from '@/components/react/ecommerce/CheckoutSteps';
-import { Store } from '@/context/store';
+import React, { useContext, useEffect, useReducer } from "react";
+import LoadingBox from "@/components/react/utils/LoadingBox";
+import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
+import { Link, useNavigate } from "react-router-dom";
+import CheckoutSteps from "@/components/react/ecommerce/CheckoutSteps";
+import { Store } from "@/context/store";
 import { SERVER_URL } from "@/context/utils";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "@/assets/css/ecommerce.css";
-
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'CREATE_REQUEST':
+    case "CREATE_REQUEST":
       return { ...state, loading: true };
-    case 'CREATE_SUCCESS':
+    case "CREATE_SUCCESS":
       return { ...state, loading: false };
-    case 'CREATE_FAIL':
+    case "CREATE_FAIL":
       return { ...state, loading: false };
     default:
       return state;
@@ -41,16 +40,15 @@ export default function PlaceOrderScreen() {
   cart.taxPrice = round(0.15 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
-
   const placeOrderHandler = async () => {
     try {
-      dispatch({ type: 'CREATE_REQUEST' });
+      dispatch({ type: "CREATE_REQUEST" });
       const result = await fetch(`${SERVER_URL}/api/shop/orders`, {
-        method: 'POST',
+        method: "POST",
         credentials: "include",
         headers: {
-          'Accept': '*/*',
-          'Content-Type': 'application/json'
+          Accept: "*/*",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           orderItems: cart.cartItems,
@@ -60,148 +58,156 @@ export default function PlaceOrderScreen() {
           taxPrice: cart.taxPrice,
           shippingPrice: cart.shippingPrice,
           totalPrice: cart.totalPrice,
-        })
+        }),
       });
-
 
       const data = await result.json();
 
-      if (!result.ok)
-        throw new Error(data.message);
+      if (!result.ok) throw new Error(data.message);
       console.log(data);
 
-      ctxDispatch({ type: 'CART_CLEAR' });
-      dispatch({ type: 'CREATE_SUCCESS' })
+      ctxDispatch({ type: "CART_CLEAR" });
+      dispatch({ type: "CREATE_SUCCESS" });
       navigate(`/shop/order/${data.order._id}`);
     } catch (err) {
       toast.error(err.message);
-      dispatch({ type: 'CREATE_FAIL' });
+      dispatch({ type: "CREATE_FAIL" });
     }
   };
 
   useEffect(() => {
-
-    if (!cart.paymentMethod)
-      navigate('/shop/payment');
-
+    if (!cart.paymentMethod) navigate("/shop/payment");
   }, [navigate, cart]);
 
-  return <div>
-    <CheckoutSteps step1 step2 step3 step4C></CheckoutSteps>
-    <Helmet>
-      <title>Order Preview</title>
-    </Helmet>
-    <Container>
-    <h1 className='my-3'>Order Preview</h1>
-    <Row>
-      <Col md={8}>
-        <Card className='mb-3'>
-          <Card.Body>
-            <Card.Title>Shipping</Card.Title>
-            <Card.Text>
-              <strong>Name:</strong> {cart.shippingAddress.fullName}<br />
-              <strong>Address:</strong>
-              {cart.shippingAddress.address},{cart.shippingAddress.city},
-              {cart.shippingAddress.postalCode},{cart.shippingAddress.country}
-            </Card.Text>
-            <Link
-              className='text-decoration-none link-primary'
-              to='/shop/shipping'>
-              Edit
-            </Link>
-          </Card.Body>
-        </Card>
-        <Card className='mb-3'>
-          <Card.Body>
-            <Card.Title>Payment</Card.Title>
-            <Card.Text>
-              <strong>Method:</strong> {cart.paymentMethod}
-            </Card.Text>
-            <Link
-              className='text-decoration-none link-primary'
-              to='/shop/payment'>
-              Edit
-            </Link>
-          </Card.Body>
-        </Card>
-        <Card className='mb-3'>
-          <Card.Body>
-            <Card.Title>Cart</Card.Title>
-            <ListGroup className='my-2' variant='flush'>
-              {cart.cartItems.map((item) => (
-                <ListGroup.Item key={item._id}>
-                  <Row className="align-items-center">
-                    <Col className=' justify-content-around' md={8}>
-                      <img src={`${SERVER_URL}/${item.poster}`} alt={item.name}
-                        className='me-2 img-fluid rounded item-thumbnail'></img>
-                      <Link
-                        className='ms-2 text-decoration-none link-secondary'
-                        to={`/product/${item.slug}`}>{item.name}</Link>
-                    </Col>
-                    <Col md={2}><span>{item.quantity}</span></Col>
-                    <Col md={2}>${item.price}</Col>
-                  </Row>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-            <Link
-              className='text-decoration-none link-primary'
-              to='/shop/cart'>
-              Edit
-            </Link>
-          </Card.Body>
-        </Card>
-      </Col>
-      <Col md={4}>
-        <Card>
-          <Card.Body>
-            <Card.Title>Order Summary</Card.Title>
-            <ListGroup variant='flush'>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Items</Col>
-                  <Col>${cart.itemsPrice.toFixed(2)}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Shipping</Col>
-                  <Col>${cart.shippingPrice.toFixed(2)}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Tax</Col>
-                  <Col>${cart.taxPrice.toFixed(2)}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item className='fw-bold'>
-                <Row>
-                  <Col>Order total</Col>
-                  <Col>${cart.totalPrice.toFixed(2)}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <div className='d-grid mt-2'>
-                  <Button
-                    type='button'
-                    onClick={placeOrderHandler}
-                    disabled={cart.cartItems.length === 0}
-                  >
-                    Place Order
-                  </Button>
-
-                </div>
-                {loading && <LoadingBox></LoadingBox>}
-                <ToastContainer/>
-              </ListGroup.Item>
-            </ListGroup>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
-
-    </Container>
-
-  </div>
+  return (
+    <div className="mt-3">
+      <CheckoutSteps step1 step2 step3 step4C></CheckoutSteps>
+      <Helmet>
+        <title>Order Preview</title>
+      </Helmet>
+      <Container>
+        <h1 className="my-4 fw-semibold display-5 text-dark">Order Preview</h1>
+        <Row>
+          <Col md={8}>
+            <Card className="mb-3">
+              <Card.Body>
+                <Card.Title>Shipping</Card.Title>
+                <Card.Text>
+                  <strong>Name:</strong> {cart.shippingAddress.fullName}
+                  <br />
+                  <strong>Address:</strong>
+                  {cart.shippingAddress.address},{cart.shippingAddress.city},
+                  {cart.shippingAddress.postalCode},
+                  {cart.shippingAddress.country}
+                </Card.Text>
+                <Link
+                  className="text-decoration-none link-primary"
+                  to="/shop/shipping"
+                >
+                  Edit
+                </Link>
+              </Card.Body>
+            </Card>
+            <Card className="mb-3">
+              <Card.Body>
+                <Card.Title>Payment</Card.Title>
+                <Card.Text>
+                  <strong>Method:</strong> {cart.paymentMethod}
+                </Card.Text>
+                <Link
+                  className="text-decoration-none link-primary"
+                  to="/shop/payment"
+                >
+                  Edit
+                </Link>
+              </Card.Body>
+            </Card>
+            <Card className="mb-3">
+              <Card.Body>
+                <Card.Title>Cart</Card.Title>
+                <ListGroup className="my-2" variant="flush">
+                  {cart.cartItems.map((item) => (
+                    <ListGroup.Item key={item._id}>
+                      <Row className="align-items-center">
+                        <Col className=" justify-content-around" md={8}>
+                          <img
+                            src={`${SERVER_URL}/${item.poster}`}
+                            alt={item.name}
+                            className="me-2 img-fluid rounded item-thumbnail"
+                          ></img>
+                          <Link
+                            className="ms-2 text-decoration-none text-dark fw-bold"
+                            to={`/product/${item.slug}`}
+                          >
+                            {item.name}
+                          </Link>
+                        </Col>
+                        <Col md={2}>
+                          <span>{item.quantity}</span>
+                        </Col>
+                        <Col md={2}>€{item.price}</Col>
+                      </Row>
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+                <Link
+                  className="text-decoration-none link-primary"
+                  to="/shop/cart"
+                >
+                  Edit
+                </Link>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4}>
+            <Card>
+              <Card.Body>
+                <Card.Title>Order Summary</Card.Title>
+                <ListGroup variant="flush">
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Items</Col>
+                      <Col>€{cart.itemsPrice.toFixed(2)}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Shipping</Col>
+                      <Col>€{cart.shippingPrice.toFixed(2)}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Tax</Col>
+                      <Col>€{cart.taxPrice.toFixed(2)}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item className="fw-bold">
+                    <Row>
+                      <Col>Order total</Col>
+                      <Col>€{cart.totalPrice.toFixed(2)}</Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <div className="d-grid mt-2">
+                      <Button
+                        type="button"
+                        onClick={placeOrderHandler}
+                        disabled={cart.cartItems.length === 0}
+                        className="cool-orange-bg fw-bold"
+                      >
+                        Place Order
+                      </Button>
+                    </div>
+                    {loading && <LoadingBox></LoadingBox>}
+                    <ToastContainer />
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
 }

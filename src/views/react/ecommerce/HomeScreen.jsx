@@ -103,7 +103,11 @@ export default function HomeScreen() {
           .map((cat) => (
             <span key={cat.category}>
               <ListGroup.Item>
-                <a href="#" onClick={() => fetchData(cat.category, cat.name)}>
+                <a
+                  href="#"
+                  className="text-dark fw-bold"
+                  onClick={() => fetchData(cat.category, cat.name)}
+                >
                   {">".repeat(cat.category.split("/").length - 1) + cat.name}
                 </a>
               </ListGroup.Item>
@@ -122,10 +126,10 @@ export default function HomeScreen() {
       <Row className="butstrap bg-light py-2 mx-1">
         <Col className="ps-1 pe-1 mb-2" sm={6} md={6} lg={3}>
           <Button
-            className="bg-light fw-bold text-white justify-content-center text-center w-100"
+            className="bg-light text-white justify-content-center text-center w-100"
             onClick={() => fetchData("/accessories", "accessories")}
             style={{
-              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/accessories2.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
+              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/accessories2.jpg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
               ...catButtonStyle,
             }}
           >
@@ -135,7 +139,7 @@ export default function HomeScreen() {
               style={{ filter: "none" }}
               size="2xl"
             />
-            <p className="lead mx-auto">Accessories</p>
+            <p className="lead mx-auto fw-semibold">Accessories</p>
           </Button>
         </Col>
         <Col className="mb-2 px-1" sm={6} md={6} lg={3}>
@@ -143,7 +147,7 @@ export default function HomeScreen() {
             className="bg-white fw-bold text-white justify-content-center text-center w-100"
             onClick={() => fetchData("/sanitary", "sanitary")}
             style={{
-              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/sanitary.jpeg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
+              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/sanitary.jpeg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
               ...catButtonStyle,
             }}
           >
@@ -152,7 +156,7 @@ export default function HomeScreen() {
               className="mx-auto"
               size="2xl"
             />
-            <p className="lead mx-auto">Sanitary</p>
+            <p className="lead mx-auto fw-semibold">Sanitary</p>
           </Button>
         </Col>
         <Col className="px-1 mb-2" sm={6} md={6} lg={3}>
@@ -160,12 +164,12 @@ export default function HomeScreen() {
             className="bg-light fw-bold text-white justify-content-center text-center w-100"
             onClick={() => fetchData("/food", "food")}
             style={{
-              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/petfood.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
+              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/petfood.jpg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
               ...catButtonStyle,
             }}
           >
             <FontAwesomeIcon icon={faBowlFood} className="mx-auto" size="2xl" />
-            <p className="lead mx-auto">Pet Food</p>
+            <p className="lead mx-auto fw-semibold">Pet Food</p>
           </Button>
         </Col>
         <Col className="mb-2 ps-1 pe-1" sm={6} md={6} lg={3}>
@@ -173,18 +177,21 @@ export default function HomeScreen() {
             className="bg-light fw-bold text-white justify-content-center text-center w-100"
             onClick={() => fetchData()}
             style={{
-              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/more.jpg),linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4) )`,
+              backgroundImage: `url(${SERVER_URL}/assets/ecommerce/more.jpg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
               ...catButtonStyle,
             }}
           >
             <FontAwesomeIcon icon={faPlus} className="mx-auto" size="2xl" />
-            <p className="lead mx-auto">Featured</p>
+            <p className="lead mx-auto fw-semibold">Featured</p>
           </Button>
         </Col>
       </Row>
       <Row className="butstrap bg-light py-2 mx-1">
-        <Col className="" lg={9}>
-          <h1 className="text-capitalize"> {title} </h1>
+        <Col className="" lg={9} aria-live="polite">
+          <h1 className="text-capitalize display-5 text-dark fw-semibold">
+            {" "}
+            {title}{" "}
+          </h1>
           <div className="products">
             {loadingProds ? (
               <LoadingBox />
@@ -202,7 +209,7 @@ export default function HomeScreen() {
           </div>
         </Col>
         <Col lg={3}>
-          <h1>Categories</h1>
+          <h1 className="text-dark display-5">Categories</h1>
           {loadingCats ? (
             <LoadingBox />
           ) : catError ? (

@@ -498,5 +498,5 @@ async function initDB() {
   console.log("done!");
 }
 
-initDB();
+//initDB();
 export default initDB;

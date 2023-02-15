@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function Rating(props) {
   const { rating, numReviews } = props;
   return (
-    <div className="rating">
+    <div className="cool-orange">
       <span>
         <FontAwesomeIcon
           icon={

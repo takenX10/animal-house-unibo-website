@@ -1,8 +1,15 @@
-$theme-colors:(
-  "primary":orange
+$theme-colors: (
+  "primary": orange,
 );
 
-.butstrap{
-  background-color:black !important;
+.butstrap {
+  background-color: black !important;
+}
+
+.cool-orange-bg {
+  background-color: #973902 !important;
+}
+.cool-orange {
+  color: #973902 !important;
 }
 @import "bootstrap/scss/bootstrap";

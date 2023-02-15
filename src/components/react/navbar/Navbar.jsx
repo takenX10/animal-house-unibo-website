@@ -124,6 +124,7 @@ export default function Navbar() {
 
   const signoutHandler = () => {
     logout(ctxDispatch);
+    ctxDispatch({ type: "CART_CLEAR" });
     navigate("/backoffice/login");
   };
 
@@ -134,7 +135,10 @@ export default function Navbar() {
           <Bar.Brand>AnimalHouse</Bar.Brand>
         </LinkContainer>
         <Routes>
-          <Route path="/shop" element={<ShopNav cart={cart} />} />
+          <Route
+            path="/shop/*"
+            element={<ShopNav aria-live="polite" cart={cart} />}
+          />
         </Routes>
         <Bar.Toggle className="p-2 px-3" aria-controls="basic-navbar-nav">
           <FontAwesomeIcon icon={faBars} />
@@ -162,7 +166,7 @@ export default function Navbar() {
                 <Link to="/shop/orderhistory" className="nav-link">
                   Order History
                 </Link>
-                <Link to="#" class="nav-link" onClick={signoutHandler}>
+                <Link to="#" className="nav-link" onClick={signoutHandler}>
                   Logout
                 </Link>
               </>

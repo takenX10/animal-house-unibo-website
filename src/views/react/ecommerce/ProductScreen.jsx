@@ -169,7 +169,7 @@ function ProductScreen() {
         <title>{product.name}</title>
       </Helmet>
       <Row className="">
-        <h1 className="display-4 fw-bold mx-auto">{product.name}</h1>
+        <h1 className="display-4 fw-semibold  mx-auto">{product.name}</h1>
       </Row>
       <Row>
         <Col md={6}>
@@ -188,7 +188,7 @@ function ProductScreen() {
             <ListGroup.Item>
               <Row>
                 <Col>
-                  <b>Price: </b>${product.price}
+                  <b>Price: </b>€{product.price}
                 </Col>
                 <Col>
                   <b>Status: </b>
@@ -213,8 +213,8 @@ function ProductScreen() {
                 <div className="w-50 mx-auto d-grid">
                   <Button
                     onClick={addToCartHandler}
-                    className="border-0"
-                    variant="primary"
+                    className="border-0 cool-orange-bg fw-bold text-white"
+                    variant=""
                   >
                     Add to Cart
                   </Button>
@@ -225,7 +225,7 @@ function ProductScreen() {
         </Col>
       </Row>
       <Row className=" my-2">
-        <h1>Reviews</h1>
+        <h2 className="display-6 fw-semibold">Reviews</h2>
         {loadingRevs ? (
           <LoadingBox />
         ) : revError ? (
@@ -249,22 +249,24 @@ function ProductScreen() {
       </Row>
       {loggedIn && (
         <Row>
-          <Col md={6}>
-            <h1>Share your review!</h1>
+          <Col lg={6}>
+            <h2 className="display-6 fw-semibold">Share your review!</h2>
             <Form id="review-form" onSubmit={handleSubmit(submitHandler)}>
               <Form.Group className="mb-3" controlId="text">
                 <Form.Label>What did you think?</Form.Label>
                 <StarInput
-                  className="mb-2 ms-2 "
+                  className="mb-2 ms-2 cool-orange"
                   initialValue={rating}
                   onClick={handleRating}
                   allowFraction={true}
-                  fillColor={"#00afb9"}
+                  fillColor={"#973902"}
                 />
                 <Form.Control as="textarea" rows={3} {...register("text")} />
               </Form.Group>
-              <div className="mb-3 d-grid ">
-                <Button type="submit">Send</Button>
+              <div className="mb-3 d-grid">
+                <Button type="submit" className="cool-orange-bg fw-bold">
+                  Send
+                </Button>
               </div>
             </Form>
           </Col>
