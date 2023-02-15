@@ -46,7 +46,6 @@ export default function OrderHistoryScreen() {
         const data = await request.json();
 
         if (!request.ok) throw new Error(data.message);
-        console.log(data);
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({ type: "FETCH_FAILURE", payload: err.message });

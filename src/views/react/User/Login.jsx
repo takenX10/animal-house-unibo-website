@@ -33,7 +33,6 @@ export default function Login() {
       if (!res.ok) throw new Error((await res.json()).message);
 
       const data = await res.json();
-      console.log(data);
       ctxDispatch({ type: "USER_SIGNIN", payload: data });
       navigate(redirect);
     } catch (err) {

@@ -70,7 +70,6 @@
     let scoreboards = (await res.json()).data;
     $('.scoreboards-container').html('');
     for(let scoreboard of scoreboards){
-        console.log(scoreboard)
         const newScoreboard= $("#scoreboard-template").clone()[0].content;
         $("#title",newScoreboard).text(scoreboard.title.toUpperCase());
         for (let ss of scoreboard.scoreboard) {

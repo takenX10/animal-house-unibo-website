@@ -67,7 +67,6 @@ export function ResCarouselSize() {
   var itemsSplit = '';
   var sampwidth = $(itemsMainDiv).width()
   var bodyWidth = $('body').width();
-  console.log(sampwidth)
   $(itemsDiv).each(function () {
     id = id + 1;
     var itemNumbers = $(this).find(itemClass).length;

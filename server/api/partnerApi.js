@@ -26,7 +26,6 @@ async function officePets(req, res) {
 
 async function get_all_pets(req, res) {
   let pets = await DATABASE.Pet.find({});
-  console.log(pets);
   res.json({ success: true, petList: pets });
 }
 
@@ -69,9 +68,7 @@ async function addpet(req, res) {
       "sex": req.body.sex,
       "ownerid": user.id,
     });
-    console.log(p);
     await DATABASE.User.updateOne({ _id: user.id }, { petList: [p.id, ...user.petList] });
-    console.log(user.petList);
     res.status(200).json({ success: true });
   }
 }
@@ -84,7 +81,6 @@ async function removepet(req, res) {
     user.petList.splice(user.petList.indexOf(req.body.id), 1);
     await DATABASE.User.updateOne({ _id: user._id }, { petList: user.petList })
     let p = await DATABASE.Pet.findByIdAndDelete(req.body.id);
-    console.log(p);
     res.json({ success: true });
   }
 }
@@ -99,14 +95,12 @@ async function removepetadmin(req, res) {
   user.petList.splice(user.petList.indexOf(req.body.id), 1);
   await DATABASE.User.updateOne({ _id: user._id }, { petList: user.petList })
   let p = await DATABASE.Pet.findByIdAndDelete(req.body.id);
-  console.log(p);
   res.json({ success: true });
 }
 
 async function getpets(req, res) {
   const user = await AUTH.get_user(req);
   let petlist = [];
-  console.log(user.petList);
   for (let p of user.petList) {
     let newpet = await DATABASE.Pet.findById(p);
     // TODO: remove matchlist and other useless data from json

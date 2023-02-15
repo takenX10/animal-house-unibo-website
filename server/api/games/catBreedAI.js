@@ -196,7 +196,6 @@ async function getCatBreedAI(path) {
       let img_name = base_path + findBreedImgByKey(breeds[i].breed_key, session_token);
       results.push({ name, perc, img_name });
     }
-    console.log(results)
     // console.log({ type, results });
     return { type, results };
   } catch (e) {

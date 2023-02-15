@@ -36,7 +36,6 @@ function raw_logout() {
 function logout(ctxDispatch) {
   raw_logout();
   ctxDispatch({ type: 'USER_SIGNOUT' });
-  console.log("logging out...");
 }
 
 async function save_score(score, scoreboard) {
@@ -45,7 +44,6 @@ async function save_score(score, scoreboard) {
       score: score,
       leaderboard: scoreboard
     };
-    console.log(data);
     if (await check_login()) {
       let res = await fetch(`${SERVER_URL}/backoffice/insert_leaderboard`, {
         method: "PUT",

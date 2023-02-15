@@ -4,8 +4,6 @@ const cardList = ref([]);
 
 
 const initDeck = (deckData) => {
-  
-    console.log("deckData",deckData);
     deckData.forEach((item) => {
         cardList.value.push({
             value: item,

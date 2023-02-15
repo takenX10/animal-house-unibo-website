@@ -197,7 +197,6 @@ async function update_user_by_id(req, res) {
     res.status(400).json({ success: false, message: "missing fields" });
     return;
   }
-  console.log("password: ", req.body.password);
   const thisuser = await DATABASE.User.findById(req.body.id);
   const user = await DATABASE.User.findByIdAndUpdate(req.body.id, {
     $set: {

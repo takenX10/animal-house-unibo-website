@@ -46,7 +46,6 @@ export default function EccoloQua({type}){
                 body: JSON.stringify({type:type})
             });
             res = await res.json();
-            console.log(res.posts);
             return res.posts;
         }catch(e){
             toast.error(e);

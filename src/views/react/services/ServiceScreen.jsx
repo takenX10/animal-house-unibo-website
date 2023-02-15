@@ -144,7 +144,6 @@ function ServiceScreen() {
       }
       const item = await result.json();
       dispatch({ type: 'FETCH_SUCCESS', payload: item });
-      console.log('Success ma boy fr fr');
       setCityIndex(0);
       setDayIndex(0);
       setHours([])

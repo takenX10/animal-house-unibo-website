@@ -10,7 +10,6 @@ export default function Register(){
     const navigate = useNavigate();
     async function submitForm(data){
         try{
-            console.log(data);
             if(data.password != data["repeat-password"]){
                 alert("Password and repeat password are different");
                 return;

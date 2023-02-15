@@ -51,7 +51,6 @@ export default function Leaderboard() {
   }
   async function init() {
     let leaders = await getValidLeaderboards()
-    console.log(leaders);
     setValidLeaderboards(leaders);
     if (await isAdmin()) {
       setIsadmin(true);

@@ -53,7 +53,6 @@ export default function OrderScreen() {
         const data = await response.json();
 
         if (!response.ok) throw new Error(data.message);
-        console.log("fetch success!");
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({ type: "FETCH_FAIL", payload: err.message });

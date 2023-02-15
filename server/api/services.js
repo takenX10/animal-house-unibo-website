@@ -259,7 +259,6 @@ async function saveReviewService(req, res) {
 async function reviewsBySlug(req, res) {
   const service = await DATABASE.Service.findOne({ slug: req.params.slug });
   if (service.reviews) {
-    console.log(service.reviews);
     res.json(service.reviews);
   } else {
     res.status(404).json({ message: "Reviews not found" });
