@@ -133,12 +133,15 @@ export default function Navbar() {
     <Bar className=" text-black our-nav px-3 py-3" expand="lg">
       <Container fluid className="px-5 flex justify-content-between">
         <Link to="/">
-          <img
-            src={`${SERVER_URL}/assets/logo.png`}
-            className="logo-img me-2"
-            alt="immagine logo"
-            height={80}
-          />
+          <Bar.Brand className="m-0 p-0">
+            <img
+              src={`${SERVER_URL}/assets/logo.png`}
+              className="logo-img me-2"
+              alt="immagine logo"
+              height={80}
+            />
+            <b className="d-none d-md-inline-flex">Animal House</b>
+          </Bar.Brand>
         </Link>
         <Routes>
           <Route
@@ -154,24 +157,31 @@ export default function Navbar() {
             <Link to="/comunita" className="nav-link fw-semibold">
               Community
             </Link>
+            <hr className="w-100 my-0 py-0 bg-dark d-lg-none pb-0" />
             <Link to="/services/facetoface" className="nav-link">
               FaceToFace
             </Link>
+            <hr className="w-100 my-0 py-0 bg-dark d-lg-none pb-0" />
             <Link to="/services/online" className="nav-link">
               Online
             </Link>
+            <hr className="w-100 my-0 py-0 bg-dark d-lg-none pb-0" />
             <Link to="/shop" className="nav-link">
               Shop
             </Link>
+            <hr className="w-100 my-0 py-0 bg-dark d-lg-none pb-0" />
             <Nav.Link href="/games">Games</Nav.Link>
+            <hr className="w-100 my-0 py-0 bg-dark d-lg-none pb-0" />
             {userInfo ? (
               <>
                 <Link to="/profile" className="nav-link">
                   Profile
                 </Link>
+                <hr className="w-100 my-0 py-0 bg-dark d-lg-none pb-0" />
                 <Link to="/shop/orderhistory" className="nav-link">
                   Order History
                 </Link>
+                <hr className="w-100 my-0 py-0 bg-dark d-lg-none pb-0" />
                 <Link to="#" className="nav-link" onClick={signoutHandler}>
                   Logout
                 </Link>

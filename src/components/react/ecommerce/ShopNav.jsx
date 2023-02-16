@@ -10,7 +10,7 @@ export default function ShopNav({ cart }) {
       to="/shop/cart"
       aria-live="polite"
       aria-label="Icona Carrello"
-      className="nav-link me-auto"
+      className="nav-link my-auto me-auto"
     >
       <FontAwesomeIcon className="align-middle" icon={faShoppingCart} />{" "}
       {cart.cartItems.length > 0 && (
