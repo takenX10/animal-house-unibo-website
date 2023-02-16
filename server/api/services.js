@@ -127,6 +127,12 @@ async function serviceRoutes(req, res, isOnline) {
 async function serviceBook(req, res, isOnline) {
   try {
     const user = await AUTH.get_user(req);
+    console.log(req.body);
+    let opts = req.body;
+    delete opts['cityIndex']
+    delete opts['dayIndex']
+    delete opts['hourIndex']
+    // delete opts['id']
     let service = await DATABASE.Service.findOne({ slug: req.params.slug, isOnline: isOnline });
     let hourId = new mongoose.Types.ObjectId(req.body.id);
     if (service == undefined) {
@@ -146,11 +152,11 @@ async function serviceBook(req, res, isOnline) {
     await DATABASE.Service.findByIdAndUpdate(service._id, { availabilities: service.availabilities });
     let booking = { userId: user._id, avaId, shiftId, hourId };
     await DATABASE.Service.updateOne({ _id: service._id }, { $push: { bookings: booking } });
-    let userBooking = { slug: req.params.slug, serviceId: service._id, avaId, shiftId, hourId, isOnline };
+    let userBooking = { slug: req.params.slug, serviceId: service._id, avaId, shiftId, hourId, isOnline, opts: opts };
     await DATABASE.User.updateOne({ _id: user._id }, { $push: { bookings: userBooking } });
     res.status(200).json({ message: 'Booking completed' })
   } catch (e) {
-    console.log("not found");
+    console.log("not found : " + e);
     notfound(res)
   }
 }

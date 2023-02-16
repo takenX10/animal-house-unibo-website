@@ -151,7 +151,7 @@ export default function HomeServiceOnline() {
           ) : (
             <>
               <Row className="mx-auto">
-                <Col md={6} sm={6} className="mx-auto">
+                <Col md={4} sm={6} className="mx-auto">
                   <div className="content">
                     <label htmlFor="platformFilters">
                       <b>Platform filter</b>
@@ -172,7 +172,7 @@ export default function HomeServiceOnline() {
                 </Col>
               </Row>
               <Row className="mx-auto">
-                <Col md={6} sm={6} className="mx-auto">
+                <Col md={4} sm={6} className="mx-auto">
                   <div className="content">
                     <label htmlFor="dayFilters">
                       <b>Day filter</b>

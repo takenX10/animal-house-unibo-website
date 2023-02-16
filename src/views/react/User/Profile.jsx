@@ -305,6 +305,14 @@ export default function Profile() {
                                 <td className='fw-bold'>HOUR/PERIOD</td>
                                 <td>{getHourLabel(b.hour.begin)} - {getHourLabel(b.hour.end)}</td>
                               </tr>
+                              {Object.keys(b.opts).map((key, i) => {
+                                if (b.opts[key])
+                                  return (
+                                    <tr key={key}>
+                                      <td className='fw-bold'>{key.replaceAll("_", " ").toUpperCase()}</td>
+                                      <td>{String(b.opts[key])}</td>
+                                    </tr>);
+                              })}
                             </tbody>
                           </Table>
                         </Col>

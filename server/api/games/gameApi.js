@@ -21,6 +21,8 @@ const IMAGE_CAT_API = "https://api.thecatapi.com/v1/images/search";
 const RANDOM_FACT = "https://fungenerators.com/random/facts/animal/";
 const RANDOM_ANIMAL = "https://zoo-animal-api.herokuapp.com/animals/rand";
 
+const ANIMALS = ["dog", "cat", "bird", "fox", "racoon"]
+
 const ENDPOINTS = [
   { endpoint: "/api/randomimage", method: METHODS.GET, function: getRandomImageAPI },
   { endpoint: "/api/dogimage", method: METHODS.GET, function: getDogImageAPI },
@@ -110,6 +112,7 @@ async function getRandomImageAPI(req, res) {
     let r = getRandomIntInclusive(0, animtypes.length - 1);
     let link = `https://some-random-api.ml/animal/${animtypes[r]}`;
     let data = await (await fetch(link)).json();
+    data.image = data.image.replaceAll('"', "");
     res.json({ success: true, data });
   } catch (e) {
     console.log(e);
@@ -288,8 +291,8 @@ async function getRandomAnimal() {
 
 async function getRandomFactAPI(req, res) {
   try {
-    let jsonBody = await getRandomFact();
-    res.json(jsonBody);
+    let rnd = Math.floor(Math.random() * ANIMALS.length);
+    return getRandomFactByAnimal(req, res, ANIMALS[rnd]);
   } catch (e) {
     showError(res);
   }
@@ -297,16 +300,8 @@ async function getRandomFactAPI(req, res) {
 
 async function getRandomFact() {
   try {
-    let r = await fetch(RANDOM_FACT);
-    let data = await r.text();
-    let reg = /data-wow-delay.*?>(.*?)<span class="text-muted"><small>/;
-    let jsonBody = JSON.parse('{"success":false, "text": ""}');
-    if (reg.test(data)) {
-      let fact = reg.exec(data)[1];
-      jsonBody.success = true;
-      jsonBody.text = fact;
-    }
-    return jsonBody;
+    let rnd = Math.floor(Math.random() * ANIMALS.length);
+    return getRandomFactByAnimal(ANIMALS[rnd]);
   } catch (e) {
     throw e;
   }

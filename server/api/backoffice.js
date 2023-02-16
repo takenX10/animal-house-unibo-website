@@ -258,6 +258,7 @@ async function get_bookings(req, res) {
       if (typeof shiftId !== String) shiftId = shiftId.toString();
       if (typeof hourId !== String) hourId = hourId.toString();
       let serv = await DATABASE.Service.findOne({ slug: slug });
+      // delete user.bookings[i].opts['id']
       let { availability, shift, hour } = getAvailabilityInfo(
         serv.availabilities,
         avaId,
@@ -266,12 +267,14 @@ async function get_bookings(req, res) {
       );
       availability.shifts = [];
       shift.hours = [];
+      delete user.bookings[i].opts['id']
       let booking = {
         slug: slug,
         availability,
         shift,
         hour,
         title: serv.title,
+        opts: user.bookings[i].opts,
       };
       bookings.push(booking);
     }
@@ -309,6 +312,7 @@ async function get_all_bookings(req, res) {
         );
         availability.shifts = [];
         shift.hours = [];
+        delete user.bookings[i].opts['id']
         let booking = {
           userName: user.name,
           email: user.email,
@@ -318,6 +322,7 @@ async function get_all_bookings(req, res) {
           hour,
           title: serv.title,
           isOnline,
+          opts: user.bookings[i].opts,
         };
         bookings.push(booking);
       }

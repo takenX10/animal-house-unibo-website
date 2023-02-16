@@ -71,7 +71,7 @@ export default {
       this.usedLetters = "";
       this.fails = 0;
       this.guessedWord = this.secretWord.split('').map(() => '_').join("");
-      //console.log(this.secretWord);
+      console.log(this.secretWord);
     },
     keyPressed(e) {
       var key = e.key.toUpperCase();

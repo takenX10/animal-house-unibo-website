@@ -94,11 +94,11 @@ export default function Leaderboard() {
   return (
     <>
       <Container fluid className='justify-content-center'>
-        <Row>
+        <Row className="mx-auto">
           {validLeaderboards &&
             validLeaderboards.map((l) => {
               return (
-                <Col key={l} className='justify-content-center align-items-center d-flex'>
+                <Col key={`leaderboard-${l}`} md="6" sm="12" lg="6" className='justify-content-center align-items-center d-flex'>
                   {(!leaderboard[l] ? <></> :
                     <Table striped bordered hover style={{ width: "min-content", whiteSpace: "nowrap" }}>
                       <caption className='fw-bold fs-2 text-center' style={{ captionSide: "top" }}>{l}</caption>
@@ -114,7 +114,7 @@ export default function Leaderboard() {
                         {
                           leaderboard[l].map((e) => {
                             return (
-                              <tr key={e.position}>
+                              <tr key={`${l}-${e.position}`}>
                                 <td className='p-3'>{e.position}</td>
                                 <td className='p-3'>{e.author}</td>
                                 <td className='p-3'>{e.score}</td>

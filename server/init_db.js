@@ -209,10 +209,10 @@ const productCategories = [
 
 const services = [
   {
-    slug: "wow-vet",
-    title: "Vet wow!",
+    slug: "vet",
+    title: "Veterinary!",
     poster:
-      "https://img.freepik.com/free-photo/close-up-veterinarian-taking-care-cat_23-2149100168.jpg?w=2000",
+      "assets/services/vet_poster.jpg",
     category: "vet",
     isOnline: false,
     availabilities: [
@@ -258,7 +258,7 @@ const services = [
       },
     ],
     hourlyRate: 10,
-    description: "Something idk this should be vet",
+    description: "Veterinarians care for the health of animals and work to protect public health. They diagnose, treat, and research medical conditions and diseases of pets, livestock, and other animals",
     rating: 0,
     numReviews: 0,
     opts: [
@@ -267,21 +267,14 @@ const services = [
         name: "animal",
         label: "Animal",
         required: true,
-        fields: ["Cat", "Dog", "Airplane", "Frog"],
+        fields: ["cat", "dog", "dolphin", "other"],
       },
       {
-        type: "checkbox",
-        name: "properties",
-        label: "Properties",
-        required: false,
-        labels: ["is aggressive"],
-      },
-      {
-        type: "radio",
+        type: "select",
         name: "gender",
         label: "Gender",
-        required: false,
-        labels: ["male", "female"],
+        required: true,
+        fields: ["none", "male", "female"],
       },
       {
         type: "text",
@@ -299,96 +292,12 @@ const services = [
       },
     ],
   },
-  {
-    slug: "wow-sitter",
-    title: "Dog sitter wow!",
-    poster:
-      "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
-    category: "animal-sitter",
-    isOnline: false,
-    availabilities: [
-      {
-        city: "Rimini",
-        address: "via non lo so 23",
-        shifts: [
-          {
-            day: 1667821508000,
-            hours: [
-              {
-                begin: 1667808000000,
-                end: 1667811600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-              {
-                begin: 1667811600000,
-                end: 1667815200000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-            ],
-          },
-          {
-            day: 1668420000000,
-            hours: [
-              {
-                begin: 16684200000000,
-                end: 1668423600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-              {
-                begin: 16684380000000,
-                end: 1668441600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    hourlyRate: 15,
-    description: "Something idk this should be dog sitter",
-    rating: 0,
-    numReviews: 0,
-    opts: [
-      {
-        type: "checkbox",
-        name: "properties",
-        label: "Properties",
-        required: false,
-        labels: ["is aggressive", "shit often"],
-      },
-      {
-        type: "radio",
-        name: "gender",
-        label: "Gender",
-        required: true,
-        labels: ["male", "female"],
-      },
-      {
-        type: "text",
-        name: "pet_name",
-        label: "Pet name",
-        required: true,
-        description: "So what's your pet name?",
-      },
-      {
-        type: "text",
-        name: "pet_best_place_to_shit",
-        label: "Pet best place to shit",
-        required: true,
-        description: "Where does your pet shit?",
-      },
-    ],
-    bookings: [],
-  },
+
   {
     slug: "conf-vet",
     title: "Video conf with vet!",
     poster:
-      "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
+      "assets/services/vet_poster.jpg",
     category: "animal-vet",
     isOnline: true,
     availabilities: [
@@ -434,19 +343,19 @@ const services = [
       },
     ],
     images: [
-      "https://www.zooplus.it/magazine/wp-content/uploads/2020/06/dog-sitter.jpeg",
+      "assets/services/vet_poster.jpg",
     ],
     hourlyRate: 10,
-    description: "Something idk this should be videoconf with vet",
+    description: "Veterinarians care for the health of animals and work to protect public health. They diagnose, treat, and research medical conditions and diseases of pets, livestock, and other animals.",
     rating: 0,
     numReviews: 0,
     opts: [
       {
-        type: "radio",
+        type: "select",
         name: "animal",
         label: "Animal",
         required: true,
-        labels: ["Dog", "Cat", "Bird", "Fish", "Racoon"],
+        fields: ["cat", "dog", "dolphin", "other"],
       },
       {
         type: "text",
@@ -458,10 +367,277 @@ const services = [
     ],
     bookings: [],
   },
+
+  {
+    slug: "sitter",
+    title: "Animal sitter!",
+    poster:
+      "assets/services/dog_sitter_poster.jpg",
+    category: "animal-sitter",
+    isOnline: false,
+    availabilities: [
+      {
+        city: "Rimini",
+        address: "via non lo so 23",
+        shifts: [
+          {
+            day: 1667821508000,
+            hours: [
+              {
+                begin: 1667808000000,
+                end: 1667811600000,
+                maxClients: 3,
+                currentClients: 0,
+              },
+              {
+                begin: 1667811600000,
+                end: 1667815200000,
+                maxClients: 3,
+                currentClients: 0,
+              },
+            ],
+          },
+          {
+            day: 1668420000000,
+            hours: [
+              {
+                begin: 16684200000000,
+                end: 1668423600000,
+                maxClients: 3,
+                currentClients: 0,
+              },
+              {
+                begin: 16684380000000,
+                end: 1668441600000,
+                maxClients: 3,
+                currentClients: 0,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    hourlyRate: 15,
+    description: "Pet sitters care for various pets while their owners are away on vacation or working long hours. They may either stay in pet owners' homes, host pets in their own homes, or perform daily visits to provide pets with food, freshwater, medication, and companionship.",
+    rating: 0,
+    numReviews: 0,
+    opts: [
+      {
+        type: "checkbox",
+        name: "aggressive",
+        label: "Aggressiveness",
+        required: false,
+        labels: ["is it aggressive ?"],
+      },
+      {
+        type: "select",
+        name: "gender",
+        label: "Gender",
+        required: true,
+        fields: ["none", "male", "female"],
+      },
+      {
+        type: "text",
+        name: "pet_name",
+        label: "Pet name",
+        required: true,
+        description: "So what's your pet name?",
+      },
+      {
+        type: "text",
+        name: "pet_best_place_to_shit",
+        label: "Pet best place to shit",
+        required: true,
+        description: "Where does your pet shit?",
+      },
+    ],
+    bookings: [],
+  },
+
+  {
+    slug: "psycho",
+    title: "Psychologist!",
+    poster:
+      "assets/services/psycho_poster.jpg",
+    category: "vet",
+    isOnline: false,
+    availabilities: [
+      {
+        city: "Bologna",
+        address: "via non lo so 23",
+        shifts: [
+          {
+            day: 1667821508000,
+            hours: [
+              {
+                begin: 1667808000000,
+                end: 1667811600000,
+                maxClients: 1,
+                currentClients: 0,
+              },
+              {
+                begin: 1667811600000,
+                end: 1667815200000,
+                maxClients: 1,
+                currentClients: 0,
+              },
+            ],
+          },
+          {
+            day: 1667907908000,
+            hours: [
+              {
+                begin: 1667808000000,
+                end: 1667811600000,
+                maxClients: 1,
+                currentClients: 0,
+              },
+              {
+                begin: 1667811600000,
+                end: 1667815200000,
+                maxClients: 1,
+                currentClients: 0,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    hourlyRate: 40,
+    description: "Psychologists study cognitive, emotional, and social processes and behavior by observing, interpreting, and recording how people relate to one another and to their environments. They use their findings to help improve processes and behaviors.",
+    rating: 0,
+    numReviews: 0,
+    opts: [
+      {
+        type: "select",
+        name: "animal",
+        label: "Animal",
+        required: true,
+        fields: ["cat", "dog", "dolphin", "other"],
+      },
+      {
+        type: "select",
+        name: "gender",
+        label: "Gender",
+        required: true,
+        fields: ["none", "male", "female"],
+      },
+      {
+        type: "checkbox",
+        name: "sadness",
+        label: "Sadness",
+        required: false,
+        labels: ["is it sad?"],
+      },
+      {
+        type: "text",
+        name: "pet_name",
+        label: "Pet name",
+        required: false,
+        description: "So what's your pet name?",
+      },
+    ],
+  },
+  {
+    slug: "conf-psycho",
+    title: "Call with psychologist!",
+    poster:
+      "assets/services/psycho_poster.jpg",
+    category: "conf-psycho",
+    isOnline: true,
+    availabilities: [
+      {
+        city: "Bologna",
+        address: "via non lo so 23",
+        shifts: [
+          {
+            day: 1667821508000,
+            hours: [
+              {
+                begin: 1667808000000,
+                end: 1667811600000,
+                maxClients: 1,
+                currentClients: 0,
+              },
+              {
+                begin: 1667811600000,
+                end: 1667815200000,
+                maxClients: 1,
+                currentClients: 0,
+              },
+            ],
+          },
+          {
+            day: 1667907908000,
+            hours: [
+              {
+                begin: 1667808000000,
+                end: 1667811600000,
+                maxClients: 1,
+                currentClients: 0,
+              },
+              {
+                begin: 1667811600000,
+                end: 1667815200000,
+                maxClients: 1,
+                currentClients: 0,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    hourlyRate: 40,
+    description: "Psychologists study cognitive, emotional, and social processes and behavior by observing, interpreting, and recording how people relate to one another and to their environments. They use their findings to help improve processes and behaviors.",
+    rating: 0,
+    numReviews: 0,
+    opts: [
+      {
+        type: "select",
+        name: "animal",
+        label: "Animal",
+        required: true,
+        fields: ["cat", "dog", "dolphin", "other"],
+      },
+      {
+        type: "select",
+        name: "gender",
+        label: "Gender",
+        required: true,
+        fields: ["none", "male", "female"],
+      },
+      {
+        type: "checkbox",
+        name: "sadness",
+        label: "Sadness",
+        required: false,
+        labels: ["is it sad?"],
+      },
+      {
+        type: "checkbox",
+        name: "webcam",
+        label: "webcam",
+        required: false,
+        labels: ["do you have a webcam?"],
+      },
+      {
+        type: "text",
+        name: "pet_name",
+        label: "Pet name",
+        required: false,
+        description: "So what's your pet name?",
+      },
+    ],
+  },
+
 ];
 
-async function initDB() {
+async function initDB(forced) {
   let mongoose = await DATABASE.connect();
+  let users = await DATABASE.User.find();
+  if (!forced && users != undefined && users.length > 0)
+    return 0;
+
   console.log("Clearing database...");
   await mongoose.connection.db.dropDatabase(
     console.log(`${mongoose.connection.db.databaseName}-db has been cleared`)
@@ -498,5 +674,4 @@ async function initDB() {
   console.log("done!");
 }
 
-//initDB();
 export default initDB;

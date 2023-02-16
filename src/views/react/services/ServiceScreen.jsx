@@ -258,7 +258,7 @@ function ServiceScreen() {
               <Col md={6}>
                 <img
                   className="w-100"
-                  src={service.poster}
+                  src={`../${service.poster}`}
                   alt={service.title}
                 ></img>
               </Col>
