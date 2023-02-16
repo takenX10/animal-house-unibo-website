@@ -19,7 +19,7 @@ export default function HomePage() {
             <Button
               aria-labelledby="btn1-text"
               style={{ height: "350px" }}
-              className="w-100"
+              className="w-100 my-1"
             >
               <span id="btn1-text" className="display-5 ">
                 {" "}
@@ -33,7 +33,7 @@ export default function HomePage() {
             <Button
               aria-labelledby="btn2-text"
               style={{ height: "350px" }}
-              className="w-100 "
+              className="w-100 my-1"
             >
               <span id="btn2-text" className="display-5">
                 {" "}
@@ -52,7 +52,7 @@ export default function HomePage() {
             <Button
               aria-labelledby="btn3-text"
               style={{ height: "150px" }}
-              className="w-100 "
+              className="w-100 my-1"
             >
               <span id="btn3-text" className="display-6 ">
                 Games
@@ -64,7 +64,7 @@ export default function HomePage() {
           <Button
             aria-labelledby="btn4-text"
             style={{ height: "150px" }}
-            className="w-100 "
+            className="w-100 my-1"
           >
             <span id="btn4-text" className="display-6 ">
               Face To Face
@@ -75,7 +75,7 @@ export default function HomePage() {
           <Button
             aria-labelledby="btn5-text"
             style={{ height: "150px" }}
-            className="w-100 "
+            className="w-100 my-1"
           >
             <span id="btn5-text" className="display-6 ">
               Online
