@@ -43,7 +43,10 @@ export default {
 
 <template>
   <MDBNavbar expand="lg" class="game-nav" bg="#642afb" container>
-    <MDBNavbarBrand href="/">AnimalHouse - Games</MDBNavbarBrand>
+    <MDBNavbarBrand href="/">
+        <img src="/assets/logo.png" alt="" height="80" class="" />
+        <b class="my-auto"> - Games</b>
+    </MDBNavbarBrand>
     <MDBNavbarToggler @click="collapse1 = !collapse1" target="#navbarSupportedContent"></MDBNavbarToggler>
     <MDBCollapse v-model="collapse1" id="navbarSupportedContent">
       <MDBNavbarNav class="w-100 mb-2 mb-lg-0 justify-content-end">

@@ -12,7 +12,7 @@ function Service(props) {
   return (
     <Card className="h-100" key={service.slug}>
       <Link to={`/services/${serviceType}/${service.slug}`}>
-        <img src={`../${service.images[0]}`} className="prod-img card-img-top" alt={service.title} />
+        <img src={`/${service.poster}`} className="prod-img card-img-top" alt={service.title} />
       </Link>
       <Card.Body>
         <Link className="text-decoration-none text-dark " to={`/services/${serviceType}/${service.slug}`}>
