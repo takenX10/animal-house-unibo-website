@@ -131,7 +131,7 @@ export default function Navbar() {
 
   return (
     <Bar className=" text-black our-nav px-3 py-3" expand="lg">
-      <Container fluid className="px-5 flex justify-content-between">
+      <Container fluid className="px-lg-5 px-md-3 flex justify-content-between">
         <Link to="/">
           <Bar.Brand className="m-0 p-0">
             <img
@@ -149,7 +149,11 @@ export default function Navbar() {
             element={<ShopNav aria-live="polite" cart={cart} />}
           />
         </Routes>
-        <Bar.Toggle className="p-2 px-3" aria-controls="basic-navbar-nav">
+        <Bar.Toggle
+          className="p-2 px-3"
+          aria-label="toggle navigation"
+          aria-controls="basic-navbar-nav"
+        >
           <FontAwesomeIcon icon={faBars} />
         </Bar.Toggle>
         <Bar.Collapse id="basic-navbar-nav" className="text-black">

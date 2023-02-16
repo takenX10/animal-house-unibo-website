@@ -12,7 +12,7 @@ export default function Post({
   refresh,
 }) {
   return (
-    <div className="border border-dark border-width-1 p-3 m-2">
+    <div className="border rounded border-secondary border-width-1 p-3 m-2">
       <h3 className="fw-bold">{author}</h3>
       <p>{text}</p>
       <Button

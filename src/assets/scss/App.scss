@@ -12,4 +12,13 @@ $theme-colors: (
 .cool-orange {
   color: #973902 !important;
 }
+
+.cool-btn:focus {
+  background-color: rgba(76, 94, 80, 0.5) !important;
+  transition: 0.8s;
+}
+.cool-btn:hover {
+  background-color: rgba(76, 94, 80, 0.5) !important;
+  transition: 0.8s;
+}
 @import "bootstrap/scss/bootstrap";

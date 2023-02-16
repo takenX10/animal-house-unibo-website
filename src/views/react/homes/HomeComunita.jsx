@@ -2,11 +2,17 @@ import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { SERVER_URL } from "@/context/utils";
 
 export default function HomeComunita() {
   const stylecol = {
     height: "100%",
     width: "100%",
+  };
+  const buttonStyle = {
+    backgroundBlendMode: "multiply",
+    backgroundSize: "cover",
+    backgroundPosition: "50% 25%",
   };
   return (
     <Container>
@@ -19,8 +25,12 @@ export default function HomeComunita() {
           <Link to="/comunita/leaderboard" tabIndex={-1}>
             <Button
               aria-labelledby="btn1-text"
-              style={{ height: "250px" }}
-              className="w-100"
+              style={{
+                ...buttonStyle,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/leaderboard.webp),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+                height: "250px",
+              }}
+              className="w-100 bg-light cool-btn"
             >
               <span id="btn1-text" className="display-5 ">
                 {" "}
@@ -33,8 +43,12 @@ export default function HomeComunita() {
           <Link to="/comunita/eccolo-qua" tabIndex={-1}>
             <Button
               aria-labelledby="btn2-text"
-              style={{ height: "250px" }}
-              className="w-100 "
+              style={{
+                ...buttonStyle,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/eccolo.webp),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+                height: "250px",
+              }}
+              className="w-100 bg-light cool-btn"
             >
               <span id="btn2-text" className="display-5">
                 {" "}
@@ -49,8 +63,12 @@ export default function HomeComunita() {
           <Link to="/comunita/cerco-partner" tabIndex={-1}>
             <Button
               aria-labelledby="btn3-text"
-              style={{ height: "250px" }}
-              className="w-100"
+              style={{
+                ...buttonStyle,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/partner.jpg),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+                height: "250px",
+              }}
+              className="w-100 bg-light cool-btn"
             >
               <span id="btn3-text" className="display-5 ">
                 {" "}
@@ -63,8 +81,13 @@ export default function HomeComunita() {
           <Link to="/comunita/aiutatemi" tabIndex={-1}>
             <Button
               aria-labelledby="btn2-text"
-              style={{ height: "250px" }}
-              className="w-100 "
+              style={{
+                ...buttonStyle,
+                backgroundPosition: "top",
+                backgroundImage: `url(${SERVER_URL}/assets/homes/help.jpg),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+                height: "250px",
+              }}
+              className="w-100 bg-light cool-btn"
             >
               <span id="btn2-text" className="display-5">
                 {" "}

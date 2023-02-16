@@ -133,7 +133,7 @@ export default function HomeScreen() {
       <Row className="butstrap bg-light py-2 mx-1">
         <Col className="ps-1 pe-1 mb-2" sm={6} md={6} lg={3}>
           <Button
-            className="bg-light text-white justify-content-center text-center py-3 w-100"
+            className="bg-light cool-btn text-white justify-content-center text-center py-3 w-100"
             onClick={() => fetchData("/accessories", "accessories")}
             aria-labelledby="acc-btntext"
             style={{
@@ -154,7 +154,7 @@ export default function HomeScreen() {
         </Col>
         <Col className="mb-2 px-1" sm={6} md={6} lg={3}>
           <Button
-            className="bg-white fw-bold text-white justify-content-center text-center py-3 w-100"
+            className="bg-white cool-btn fw-bold text-white justify-content-center text-center py-3 w-100"
             onClick={() => fetchData("/sanitary", "sanitary")}
             aria-labelledby="san-btntext"
             style={{
@@ -175,7 +175,7 @@ export default function HomeScreen() {
         <Col className="px-1 mb-2" sm={6} md={6} lg={3}>
           <Button
             aria-labelledby="food-btntext"
-            className="bg-light fw-bold text-white justify-content-center py-3 text-center w-100"
+            className="bg-light fw-bold text-white cool-btn justify-content-center py-3 text-center w-100"
             onClick={() => fetchData("/food", "food")}
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/petfood.jpg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
@@ -191,7 +191,7 @@ export default function HomeScreen() {
         <Col className="mb-2 ps-1 pe-1" sm={6} md={6} lg={3}>
           <Button
             aria-labelledby="feat-btntext"
-            className="bg-light fw-bold text-white justify-content-center text-center py-3 w-100"
+            className="bg-light fw-bold cool-btn text-white justify-content-center text-center py-3 w-100"
             onClick={() => fetchData()}
             style={{
               backgroundImage: `url(${SERVER_URL}/assets/ecommerce/more.jpg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,

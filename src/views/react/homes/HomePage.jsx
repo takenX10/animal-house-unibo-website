@@ -1,9 +1,16 @@
 import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
+import { SERVER_URL } from "@/context/utils";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
+  const buttonStyle = {
+    backgroundBlendMode: "multiply",
+    backgroundSize: "cover",
+    backgroundPosition: "50% 25%",
+  };
+
   return (
     <Container>
       <Helmet>
@@ -17,8 +24,12 @@ export default function HomePage() {
           <Link to="/comunita" tabIndex={-1}>
             <Button
               aria-labelledby="btn1-text"
-              style={{ height: "350px" }}
-              className="w-100 my-1"
+              style={{
+                ...buttonStyle,
+                height: "350px",
+                backgroundImage: `url(${SERVER_URL}/assets/homes/p-community.jpg),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+              }}
+              className="w-100 my-1 bg-light cool-btn"
             >
               <span id="btn1-text" className="display-5 ">
                 {" "}
@@ -31,8 +42,12 @@ export default function HomePage() {
           <Link to="/shop" tabIndex={-1}>
             <Button
               aria-labelledby="btn2-text"
-              style={{ height: "350px" }}
-              className="w-100 my-1"
+              style={{
+                ...buttonStyle,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/shop.jpg),linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6) )`,
+                height: "350px",
+              }}
+              className="w-100 my-1 bg-light cool-btn"
             >
               <span id="btn2-text" className="display-5">
                 {" "}
@@ -50,8 +65,12 @@ export default function HomePage() {
           <a href="/games" tabIndex={-1}>
             <Button
               aria-labelledby="btn3-text"
-              style={{ height: "150px" }}
-              className="w-100 my-1"
+              style={{
+                ...buttonStyle,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/games.jpg),linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7) )`,
+                height: "150px",
+              }}
+              className="w-100 my-1 bg-light cool-btn"
             >
               <span id="btn3-text" className="display-6 ">
                 Games
@@ -63,8 +82,12 @@ export default function HomePage() {
           <Link to="/services/facetoface" tabIndex={-1}>
             <Button
               aria-labelledby="btn4-text"
-              style={{ height: "150px" }}
-              className="w-100 my-1"
+              style={{
+                ...buttonStyle,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/face.webp),linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7) )`,
+                height: "150px",
+              }}
+              className="w-100 my-1 bg-light cool-btn"
             >
               <span id="btn4-text" className="display-6 ">
                 Face To Face
@@ -76,8 +99,13 @@ export default function HomePage() {
           <Link to="/services/online" tabIndex={-1}>
             <Button
               aria-labelledby="btn5-text"
-              style={{ height: "150px" }}
-              className="w-100 my-1"
+              style={{
+                ...buttonStyle,
+                backgroundPosition: "25%",
+                backgroundImage: `url(${SERVER_URL}/assets/homes/online.jpg),linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7) )`,
+                height: "150px",
+              }}
+              className="w-100 my-1 bg-light cool-btn"
             >
               <span id="btn5-text" className="display-6 ">
                 Online
