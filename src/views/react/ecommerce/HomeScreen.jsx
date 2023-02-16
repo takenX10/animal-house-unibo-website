@@ -1,5 +1,12 @@
 import { useEffect, useReducer, useState } from "react";
-import { Row, Col, Container, Button, ListGroup } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Container,
+  Button,
+  ListGroup,
+  ToastContainer,
+} from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import Product from "@/components/react/ecommerce/Product";
 import MessageBox from "@/components/react/utils/MessageBox";
@@ -105,10 +112,10 @@ export default function HomeScreen() {
               <ListGroup.Item>
                 <a
                   href="#"
-                  className="text-dark fw-bold"
+                  className="cool-orange text-lowercase "
                   onClick={() => fetchData(cat.category, cat.name)}
                 >
-                  {">".repeat(cat.category.split("/").length - 1) + cat.name}
+                  {cat.category}
                 </a>
               </ListGroup.Item>
               <MapCategories parent={cat.category} />

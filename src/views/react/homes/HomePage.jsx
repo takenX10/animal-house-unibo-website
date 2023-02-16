@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
@@ -14,8 +13,8 @@ export default function HomePage() {
         Welcome! How may we help you?
       </h1>
       <Row className="">
-        <Col md={4} className="">
-          <Link to="/comunita">
+        <Col md={6} lg={4} className="">
+          <Link to="/comunita" tabIndex={-1}>
             <Button
               aria-labelledby="btn1-text"
               style={{ height: "350px" }}
@@ -28,8 +27,8 @@ export default function HomePage() {
             </Button>
           </Link>
         </Col>
-        <Col md={8} className="">
-          <Link to="/shop">
+        <Col lg={8} md={6} className="">
+          <Link to="/shop" tabIndex={-1}>
             <Button
               aria-labelledby="btn2-text"
               style={{ height: "350px" }}
@@ -48,7 +47,7 @@ export default function HomePage() {
       </h2>
       <Row className="my-3 ">
         <Col md={4} className="">
-          <a href="/games">
+          <a href="/games" tabIndex={-1}>
             <Button
               aria-labelledby="btn3-text"
               style={{ height: "150px" }}
@@ -61,7 +60,7 @@ export default function HomePage() {
           </a>
         </Col>
         <Col md={4}>
-          <Link to="/services/facetoface">
+          <Link to="/services/facetoface" tabIndex={-1}>
             <Button
               aria-labelledby="btn4-text"
               style={{ height: "150px" }}
@@ -74,7 +73,7 @@ export default function HomePage() {
           </Link>
         </Col>
         <Col md={4}>
-          <Link to="/services/online">
+          <Link to="/services/online" tabIndex={-1}>
             <Button
               aria-labelledby="btn5-text"
               style={{ height: "150px" }}

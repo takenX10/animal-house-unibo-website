@@ -295,7 +295,7 @@ function ServiceScreen() {
                   <CustomForm register={register} opts={service.opts} />
                   <Row className="mb-4 text-center mx-auto">
                     <Col md={4} sm={12} sx={12} className="mx-auto">
-                      <FormLabel htmlFor="cityIndex">City</FormLabel>
+                      <FormLabel htmlFor="cityIndex">Place</FormLabel>
                       <Form.Select
                         id="cityIndex"
                         {...register("cityIndex")}

@@ -63,7 +63,9 @@ export default function Login() {
             <Form.Control type="password" required {...register("password")} />
           </Form.Group>
           <div className="mb-3 d-grid">
-            <Button type="submit">Log in</Button>
+            <Button type="submit" className="cool-orange-bg">
+              Log in
+            </Button>
           </div>
           <div className="mb-3">
             Ya new 'round ere?{" "}

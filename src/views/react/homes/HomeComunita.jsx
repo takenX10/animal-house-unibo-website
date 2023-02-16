@@ -16,7 +16,7 @@ export default function HomeComunita() {
       <h1 className="display-5 text-center my-3">Check out our boards!</h1>
       <Row className="">
         <Col md={6} className="mb-4 m-md-0">
-          <Link to="/comunita/leaderboard">
+          <Link to="/comunita/leaderboard" tabIndex={-1}>
             <Button
               aria-labelledby="btn1-text"
               style={{ height: "250px" }}
@@ -30,7 +30,7 @@ export default function HomeComunita() {
           </Link>
         </Col>
         <Col md={6} className="">
-          <Link to="/comunita/eccolo-qua">
+          <Link to="/comunita/eccolo-qua" tabIndex={-1}>
             <Button
               aria-labelledby="btn2-text"
               style={{ height: "250px" }}
@@ -46,7 +46,7 @@ export default function HomeComunita() {
       </Row>
       <Row className="my-4">
         <Col md={6} className="mb-4 m-md-0">
-          <Link to="/comunita/cerco-partner">
+          <Link to="/comunita/cerco-partner" tabIndex={-1}>
             <Button
               aria-labelledby="btn3-text"
               style={{ height: "250px" }}
@@ -60,7 +60,7 @@ export default function HomeComunita() {
           </Link>
         </Col>
         <Col md={6} className="">
-          <Link to="/comunita/aiutatemi">
+          <Link to="/comunita/aiutatemi" tabIndex={-1}>
             <Button
               aria-labelledby="btn2-text"
               style={{ height: "250px" }}

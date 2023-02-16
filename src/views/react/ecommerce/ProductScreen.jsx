@@ -224,7 +224,7 @@ function ProductScreen() {
           </ListGroup>
         </Col>
       </Row>
-      <Row className=" my-2">
+      <Row aria-live="polite" className=" my-2">
         <h2 className="display-6 fw-semibold">Reviews</h2>
         {loadingRevs ? (
           <LoadingBox />
