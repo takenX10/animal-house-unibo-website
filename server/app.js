@@ -23,7 +23,7 @@ app.use(express.static(__dirname + "/static/dist"));
 app.use(express.static(__dirname + "/static/dist/assets"));
 app.use(cookieParser());
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "/template"));
+app.set("views", path.join(__dirname, "/templates"));
 
 var whitelist = ["http://localhost:3000", "http://localhost:8000"];
 var corsOptionsDelegate = function(req, callback) {

@@ -131,7 +131,7 @@ let ENDPOINTS = [
 ];
 
 async function showFaceToFace(req, res) {
-  res.render("../templates/services", {
+  res.render("services", {
     clientUrl: CLIENT_URL,
     title: "Face to face",
     type: "facetoface",
@@ -139,7 +139,7 @@ async function showFaceToFace(req, res) {
   });
 }
 async function showOnline(req, res) {
-  res.render("../templates/services", {
+  res.render("services", {
     clientUrl: CLIENT_URL,
     title: "Online",
     type: "online",
@@ -148,7 +148,7 @@ async function showOnline(req, res) {
 }
 
 async function showShop(req, res) {
-  res.render("../templates/shop", {
+  res.render("shop", {
     title: "Shop",
     type: "online",
     clientUrl: CLIENT_URL,
@@ -156,7 +156,7 @@ async function showShop(req, res) {
 }
 
 async function showGames(req, res) {
-  res.render("../templates/games", { title: "Games", clientUrl: CLIENT_URL });
+  res.render("games", { title: "Games", clientUrl: CLIENT_URL });
 }
 
 async function is_admin(req, res) {

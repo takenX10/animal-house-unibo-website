@@ -304,7 +304,7 @@ export default {
           v-if="dog_breed_guesses.length > 0"
           class="mx-auto"
         >
-          <MDBCol md="6" sm="12"  class="mx-auto" >
+          <MDBCol md="4" sm="12"  class="mx-auto" >
             <div class="text-center fw-bold section_header_small">
               My guesses are :
             </div>
@@ -436,7 +436,7 @@ export default {
               <MDBCol class="col-6 mx-auto text-center mb-2" height="100" v-for="(prod, i) in products">
                 <MDBCard class="mx-auto" style="height:350px">
                   <MDBCardImg
-                    :src="BACKEND_SERVER + '/' + prod.poster"
+                    :src="prod.poster"
                     style="height: 100%; max-height: 150px; width: 100%; max-width: 150px !important;"
                     top
                     class="mx-auto" 

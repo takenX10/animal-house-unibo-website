@@ -13,7 +13,7 @@ let ENDPOINTS = [
 ]
 
 async function officePosts(req, res) {
-    res.render("../templates/bacheca", { title: "Posts Api", clientUrl: CLIENT_URL });
+    res.render("bacheca", { title: "Posts Api", clientUrl: CLIENT_URL });
   }
 
 async function get_all_posts(req, res){

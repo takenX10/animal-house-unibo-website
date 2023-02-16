@@ -35,14 +35,14 @@ let ENDPOINTS = [
 ];
 
 async function officeHome(req, res) {
-  res.render("../templates/home", {
+  res.render("home", {
     clientUrl: CLIENT_URL,
     title: "Backoffice Home",
   });
 }
 
 async function officeAnagraphic(req, res) {
-  res.render("../templates/anagrafica", {
+  res.render("anagrafica", {
     clientUrl: CLIENT_URL,
     title: "Client anagraphics",
   });

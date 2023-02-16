@@ -6,7 +6,7 @@
 
     <div class="row">
       <div class="col mx-auto text-center">
-        <Board ref="board" v-show="playing" @restart="restart" />
+        <Board ref="board" v-show="playing" @restart="restart" aria-live="polite"/>
       </div>
     </div>
 
