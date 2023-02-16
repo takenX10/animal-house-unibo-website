@@ -60,27 +60,31 @@ export default function HomePage() {
             </Button>
           </a>
         </Col>
-        <Col md={4} className="">
-          <Button
-            aria-labelledby="btn4-text"
-            style={{ height: "150px" }}
-            className="w-100 my-1"
-          >
-            <span id="btn4-text" className="display-6 ">
-              Face To Face
-            </span>
-          </Button>
+        <Col md={4}>
+          <Link to="/services/facetoface">
+            <Button
+              aria-labelledby="btn4-text"
+              style={{ height: "150px" }}
+              className="w-100 my-1"
+            >
+              <span id="btn4-text" className="display-6 ">
+                Face To Face
+              </span>
+            </Button>
+          </Link>
         </Col>
-        <Col md={4} className="">
-          <Button
-            aria-labelledby="btn5-text"
-            style={{ height: "150px" }}
-            className="w-100 my-1"
-          >
-            <span id="btn5-text" className="display-6 ">
-              Online
-            </span>
-          </Button>
+        <Col md={4}>
+          <Link to="/services/online">
+            <Button
+              aria-labelledby="btn5-text"
+              style={{ height: "150px" }}
+              className="w-100 my-1"
+            >
+              <span id="btn5-text" className="display-6 ">
+                Online
+              </span>
+            </Button>
+          </Link>
         </Col>
       </Row>
     </Container>
