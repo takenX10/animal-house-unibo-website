@@ -114,7 +114,7 @@ export default function EccoloQua({ type }) {
               );
             })}
           </Col>
-          <Col lg="5" aria-live="polite" style={myStyle}>
+          <Col lg="5" id="answers" aria-live="polite" style={myStyle}>
             <Button variant="danger" className="m-3 " onClick={hideAnswers}>
               Hide Answers
             </Button>

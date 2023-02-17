@@ -16,8 +16,9 @@ export default function Post({
       <h3 className="fw-bold">{author}</h3>
       <p>{text}</p>
       <Button
-        variant="success"
-        className="m-3 cool-orange-bg"
+        href="#answers"
+        variant="secondary"
+        className="m-3 text-white cool-orange-bg"
         onClick={() => {
           showAnswersHandler(id);
         }}
