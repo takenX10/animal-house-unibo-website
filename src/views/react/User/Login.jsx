@@ -52,7 +52,7 @@ export default function Login() {
         <Helmet>
           <title>Sign In</title>
         </Helmet>
-        <h1 className="my-3 text-center mt-5 pt-5">Sign In</h1>
+        <h1 className="my-3 display-6 text-center mt-5 pt-5">Sign In</h1>
         <Form onSubmit={handleSubmit(submitHandler)}>
           <Form.Group className="mb-3" controlId="email">
             <Form.Label>Email</Form.Label>
@@ -68,7 +68,7 @@ export default function Login() {
             </Button>
           </div>
           <div className="mb-3">
-            Ya new 'round ere?{" "}
+            You new around these parts?{" "}
             <Link
               className="text-decoration-none link-primary"
               to={`/backoffice/register`}

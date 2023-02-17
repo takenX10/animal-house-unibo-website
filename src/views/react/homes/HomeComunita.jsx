@@ -27,7 +27,7 @@ export default function HomeComunita() {
               aria-labelledby="btn1-text"
               style={{
                 ...buttonStyle,
-                backgroundImage: `url(${SERVER_URL}/assets/homes/leaderboard.webp),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/leaderboard.webp),linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7) )`,
                 height: "250px",
               }}
               className="w-100 bg-light cool-btn"
@@ -45,7 +45,7 @@ export default function HomeComunita() {
               aria-labelledby="btn2-text"
               style={{
                 ...buttonStyle,
-                backgroundImage: `url(${SERVER_URL}/assets/homes/eccolo.webp),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/eccolo.webp),linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7) )`,
                 height: "250px",
               }}
               className="w-100 bg-light cool-btn"
@@ -65,7 +65,7 @@ export default function HomeComunita() {
               aria-labelledby="btn3-text"
               style={{
                 ...buttonStyle,
-                backgroundImage: `url(${SERVER_URL}/assets/homes/partner.jpg),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/partner.jpg),linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7) )`,
                 height: "250px",
               }}
               className="w-100 bg-light cool-btn"
@@ -84,7 +84,7 @@ export default function HomeComunita() {
               style={{
                 ...buttonStyle,
                 backgroundPosition: "top",
-                backgroundImage: `url(${SERVER_URL}/assets/homes/help.jpg),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/help.jpg),linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7) )`,
                 height: "250px",
               }}
               className="w-100 bg-light cool-btn"

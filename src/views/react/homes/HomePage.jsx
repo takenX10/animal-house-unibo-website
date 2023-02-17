@@ -27,7 +27,7 @@ export default function HomePage() {
               style={{
                 ...buttonStyle,
                 height: "350px",
-                backgroundImage: `url(${SERVER_URL}/assets/homes/p-community.jpg),linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8) )`,
+                backgroundImage: `url(${SERVER_URL}/assets/homes/p-community.jpg),linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7) )`,
               }}
               className="w-100 my-1 bg-light cool-btn"
             >
