@@ -416,7 +416,7 @@ export default {
           <MDBRow class="mx-auto mt-2 text-center" >
             <MDBCol class="col-sm-12 col-md-8 mx-auto">
               <MDBRow class="mx-auto text-center" >
-                <MDBCol class="col-sm-3 mx-auto" v-for="game in games" :key="game">
+                <MDBCol class="col-sm-3 col-3 mx-auto" v-for="game in games" :key="game">
                   <MDBBtn role="button" raised @click="changeGame(game.component);updateScoreboard(game.component);">{{
                     game.title
                   }}</MDBBtn>
@@ -437,7 +437,7 @@ export default {
                 <MDBCard class="mx-auto" style="height:350px">
                   <MDBCardImg
                     :src="prod.poster"
-                    style="height: 100%; max-height: 150px; width: 100%; max-width: 150px !important;"
+                    style="height: 100%; max-height: 150px; width: 100%; max-width: 150px !important; object-fit: cover; "
                     top
                     class="mx-auto" 
                     :alt="'poster' + prod.poster"

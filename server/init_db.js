@@ -9,6 +9,7 @@ var fakeUsers = [
     email: "admin@admin.tk",
     contact: "+39 111 111 1111",
     password: bcrypt.hashSync("admin", genSaltSync()),
+    isAdmin: true,
     petList: [],
   },
   {
@@ -17,6 +18,7 @@ var fakeUsers = [
     email: "admin2@admin.tk",
     contact: "+39 111 111 1111",
     password: bcrypt.hashSync("admin2", genSaltSync()),
+    isAdmin: true,
     petList: [],
   },
   {
@@ -232,12 +234,6 @@ const services = [
     category: "vet",
     isOnline: false,
     availabilities: [
-      {
-        city: "Bologna",
-        address: "via non lo so 23",
-        shifts: [
-        ],
-      },
     ],
     hourlyRate: 10,
     description: "Veterinarians care for the health of animals and work to protect public health. They diagnose, treat, and research medical conditions and diseases of pets, livestock, and other animals",
@@ -283,12 +279,6 @@ const services = [
     category: "animal-vet",
     isOnline: true,
     availabilities: [
-      {
-        city: "Teams",
-        address: "https://teams/sample.link",
-        shifts: [
-        ],
-      },
     ],
     images: [
       "assets/services/vet_poster.jpg",
@@ -324,16 +314,6 @@ const services = [
     category: "home-visit",
     isOnline: false,
     availabilities: [
-      {
-        city: "Padova",
-        address: "via aldo 23",
-        shifts: [
-        ],
-        city: "Roma",
-        address: "via romeo 41",
-        shifts: [
-        ],
-      },
     ],
     hourlyRate: 50,
     description: "Is your animal feeling lonely? Our experts could take care of it!",
@@ -387,16 +367,6 @@ const services = [
     category: "animal-groomer",
     isOnline: false,
     availabilities: [
-      {
-        city: "Catanzaro",
-        address: "via non lo so 23",
-        shifts: [
-        ],
-        city: "Palermo",
-        address: "via oronzo 45",
-        shifts: [
-        ],
-      },
     ],
     hourlyRate: 25,
     description: "A Pet Groomer is mainly responsible for bathing, conditioning, cutting, drying, and styling dog hair or fur. Furthermore, other responsibilities include trimming the nails, brushing the teeth, cleaning the ears, and other general cosmetic services.",
@@ -450,12 +420,6 @@ const services = [
     category: "animal-sitter",
     isOnline: false,
     availabilities: [
-      {
-        city: "Rimini",
-        address: "via non lo so 23",
-        shifts: [
-        ],
-      },
     ],
     hourlyRate: 15,
     description: "Pet sitters care for various pets while their owners are away on vacation or working long hours. They may either stay in pet owners' homes, host pets in their own homes, or perform daily visits to provide pets with food, freshwater, medication, and companionship.",
@@ -502,12 +466,6 @@ const services = [
     category: "vet",
     isOnline: false,
     availabilities: [
-      {
-        city: "Bologna",
-        address: "via non lo so 23",
-        shifts: [
-        ],
-      },
     ],
     hourlyRate: 40,
     description: "Psychologists study cognitive, emotional, and social processes and behavior by observing, interpreting, and recording how people relate to one another and to their environments. They use their findings to help improve processes and behaviors.",
@@ -552,12 +510,6 @@ const services = [
     category: "conf-psycho",
     isOnline: true,
     availabilities: [
-      {
-        city: "Bologna",
-        address: "via non lo so 23",
-        shifts: [
-        ],
-      },
     ],
     hourlyRate: 40,
     description: "Psychologists study cognitive, emotional, and social processes and behavior by observing, interpreting, and recording how people relate to one another and to their environments. They use their findings to help improve processes and behaviors.",
