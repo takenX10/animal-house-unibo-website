@@ -90,7 +90,7 @@ async function deletePost(id) {
 
 async function isAdmin() {
   try {
-    let res = await fetch(`${SERVER_URL}/backoffice/is_admin`, { method: "POST", credentials: "include" });
+    let res = await fetch(`${SERVER_URL}/api/backoffice/is_admin`, { method: "POST", credentials: "include" });
     res = await res.json();
     return res.success;
   } catch (e) {

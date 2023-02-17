@@ -21,10 +21,15 @@ async function isAuth(req, res, next) {
 }
 
 async function isAdmin(req, res, next) {
-  const usr = await AUTH.get_user(req);
-  if (usr?.isAdmin) {
-    next();
-  } else {
+  try{
+    const usr = await AUTH.get_user(req);
+    if (usr?.isAdmin) {
+      next();
+    } else {
+      res.json({ success: false, message: "you are not the admin" });
+    }
+  }catch(e){
+    console.log("ciao");
     res.json({ success: false, message: "you are not the admin" });
   }
 }

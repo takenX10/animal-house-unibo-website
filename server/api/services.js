@@ -127,7 +127,7 @@ async function serviceRoutes(req, res, isOnline) {
 async function serviceBook(req, res, isOnline) {
   try {
     const user = await AUTH.get_user(req);
-    console.log(req.body);
+    //console.log(req.body);
     let opts = req.body;
     delete opts['cityIndex']
     delete opts['dayIndex']

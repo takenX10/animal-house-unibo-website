@@ -73,10 +73,7 @@ export default function Leaderboard() {
         body: JSON.stringify({ id: id })
       });
       res = await res.json();
-      if (!res.success) {
-        console.log(res.message)
-      } else {
-        // alert("Position removed");
+      if (res.success) {
         setValidLeaderboards(await getValidLeaderboards());
       }
     } catch (e) {
@@ -93,14 +90,14 @@ export default function Leaderboard() {
 
   return (
     <>
-      <Container fluid className='justify-content-center'>
+      <Container fluid className='justify-content-center w-100'>
         <Row className="mx-auto">
           {validLeaderboards &&
             validLeaderboards.map((l) => {
               return (
-                <Col key={`leaderboard-${l}`} md="6" sm="12" lg="6" className='justify-content-center align-items-center d-flex'>
+                <Col key={`leaderboard-${l}`} md="6" sm="11" lg="6" className='justify-content-center align-items-center d-flex'>
                   {(!leaderboard[l] ? <></> :
-                    <Table striped bordered hover style={{ width: "min-content", whiteSpace: "nowrap" }}>
+                    <Table striped bordered hover responsive>
                       <caption className='fw-bold fs-2 text-center' style={{ captionSide: "top" }}>{l}</caption>
                       <thead>
                         <tr className="text-center">
