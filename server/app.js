@@ -18,10 +18,7 @@ const app = express();
 const port = 8000;
 
 app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use(express.static(__dirname + "/static"));
-app.use(express.static(__dirname + "/static/dist"));
-app.use(express.static(__dirname + "/static/dist/assets"));
-app.use(cookieParser());
+app.use(express.static(__dirname + "/static")); app.use(express.static(__dirname + "/static/dist")); app.use(express.static(__dirname + "/static/dist/assets")); app.use(cookieParser());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/templates"));
 
@@ -131,7 +128,7 @@ app.get("*", function(req, res, next) {
 app.listen(port, async () => {
   console.log(`Animalhouse Backend listening on port ${port}`);
   await DATABASE.connect();
-  await initDB();
+  // await initDB();
   await importAPI();
   initAPI();
 });
