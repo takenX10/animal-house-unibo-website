@@ -363,7 +363,7 @@ function ServiceScreen() {
                   </Row>
                   {success > 0 && (
                     <Row>
-                      <MessageBox variant="success">
+                      <MessageBox variant="success" aria-live="polite">
                         Booking successfully done!
                       </MessageBox>{" "}
                     </Row>
@@ -416,7 +416,7 @@ function ServiceScreen() {
                 <MessageBox className>Log in to book!</MessageBox>
               </div>
             )}
-            <Row className="mx-auto text-center mb-2">
+            <Row className="mx-auto text-center mb-2" aria-live="polite">
               <h2>Reviews</h2>
               {loadingRevs ? (
                 <LoadingBox />

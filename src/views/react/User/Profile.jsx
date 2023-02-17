@@ -163,6 +163,13 @@ export default function Profile() {
     }
   }
 
+  function convert_date(unix_date) {
+    let dd = new Date(unix_date);
+    dd = dd.toString()
+    dd = dd.replace(dd.substring(dd.indexOf("GMT")), "")
+    return dd;
+  }
+
   async function init() {
     if (!await check_login()) {
       navigate("/backoffice/login");
@@ -181,7 +188,7 @@ export default function Profile() {
             <h1 className='fw-bold fs-1 text-center'>{user.name} {user.surname}</h1>
           </Col>
           <Col xs={12} className='text-center d-flex align-items-center justify-content-center'>
-            <Button className="m-4 red-back text-white" onClick={() => {
+            <Button className="m-4 red-back text-black" onClick={() => {
               if (confirm("Are you sure you want to delete your account?")) { delete_account() }
             }}>
               Delete account
@@ -214,7 +221,7 @@ export default function Profile() {
             </Table>
           </Col>
           <Col xs={12} className='text-center d-flex align-items-center justify-content-center'>
-            <Button className="m-4 red-back text-white" onClick={() => {
+            <Button className="m-4 red-back text-black" onClick={() => {
               if (confirm("Are you sure you want to delete your account?")) { delete_account() }
             }}>
               Delete account
@@ -263,7 +270,7 @@ export default function Profile() {
                     </tr>
                   </tbody>
                 </Table>
-                <Button className='red-back text-white ' onClick={() => { getConfirmation(p._id) }}>Delete</Button>
+                <Button className='red-back text-black' onClick={() => { getConfirmation(p._id) }}>Delete</Button>
               </Col>
             );
           })}
@@ -299,11 +306,11 @@ export default function Profile() {
                               </tr>
                               <tr>
                                 <td className='fw-bold'>SHIFT/MONTH</td>
-                                <td>{getDayLabel(b.shift.day)}</td>
+                                <td>{convert_date(b.shift.day)}</td>
                               </tr>
                               <tr>
                                 <td className='fw-bold'>HOUR/PERIOD</td>
-                                <td>{getHourLabel(b.hour.begin)} - {getHourLabel(b.hour.end)}</td>
+                                <td>{convert_date(b.hour.begin)} - {convert_date(b.hour.end)}</td>
                               </tr>
                               {Object.keys(b.opts).map((key, i) => {
                                 if (b.opts[key])
