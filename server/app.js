@@ -13,7 +13,7 @@ import cookieParser from "cookie-parser";
 import { __dirname, CLIENT_URL } from "./utils.js";
 import METHODS from "./methods.js";
 
-const upload = multer({ dest: "./server/uploads" });
+const upload = multer({ dest: __dirname + "/uploads" });
 const app = express();
 const port = 8000;
 

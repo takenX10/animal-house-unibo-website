@@ -635,8 +635,6 @@ const services = [
 async function initDB(forced) {
   let mongoose = await DATABASE.connect();
   let users = await DATABASE.User.find();
-  if (!forced && users != undefined && users.length > 0)
-    return 0;
 
   console.log("Clearing database...");
   await mongoose.connection.db.dropDatabase(
