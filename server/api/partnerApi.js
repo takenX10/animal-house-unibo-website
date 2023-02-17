@@ -86,14 +86,16 @@ async function removepet(req, res) {
 }
 
 async function removepetadmin(req, res) {
-  if (!req.body?.id) {
+  if (!req?.body?.id) {
     res.status(404).json({ success: false, message: "Missing id on request" });
     return;
   }
   const pet = await DATABASE.Pet.findById(req.body.id);
   const user = await DATABASE.User.findById(pet.ownerid);
-  user.petList.splice(user.petList.indexOf(req.body.id), 1);
-  await DATABASE.User.updateOne({ _id: user._id }, { petList: user.petList })
+  if(user != null){
+    user.petList.splice(user.petList.indexOf(req.body.id), 1);
+    await DATABASE.User.updateOne({ _id: user._id }, { petList: user.petList })
+  }
   let p = await DATABASE.Pet.findByIdAndDelete(req.body.id);
   res.json({ success: true });
 }

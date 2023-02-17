@@ -56,7 +56,7 @@ export default function CreatePostModal({
           }}
         >
           <Form.Group>
-            <Form.Label for="modaltext">Write your message:</Form.Label>
+            <Form.Label htmlFor="modaltext">Write your message:</Form.Label>
             <Form.Control
               as="textarea"
               id="modaltext"
