@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { SERVER_URL, isAdmin } from "@/context/utils";
 import { ToastContainer, toast } from "react-toastify";
+import MessageBox from "@/components/react/utils/MessageBox";
 import "react-toastify/dist/ReactToastify.css";
 
 import CreatePostModal from "./CreatePostModal";
@@ -94,44 +95,56 @@ export default function EccoloQua({ type }) {
                 Post Something!
               </Button>
             ) : (
-              <></>
+              <p className="mx-3"> Log in to post and answer posts!</p>
             )}
-            {posts.map((thispost) => {
-              return (
-                <Post
-                  key={thispost.id}
-                  author={thispost.author}
-                  text={thispost.message}
-                  id={thispost.id}
-                  showAnswersHandler={showAnswers}
-                  answerHandler={setCurrentAnswer}
-                  isLoggedIn={loggedin}
-                  isAdmin={admin}
-                  refresh={async () => {
-                    setPosts(await getPosts());
-                  }}
-                />
-              );
-            })}
+            {posts.length == 0 ? (
+              <MessageBox>No posts yet!</MessageBox>
+            ) : (
+              <>
+                {posts.map((thispost) => {
+                  return (
+                    <Post
+                      key={thispost.id}
+                      author={thispost.author}
+                      text={thispost.message}
+                      id={thispost.id}
+                      showAnswersHandler={showAnswers}
+                      answerHandler={setCurrentAnswer}
+                      isLoggedIn={loggedin}
+                      isAdmin={admin}
+                      refresh={async () => {
+                        setPosts(await getPosts());
+                      }}
+                    />
+                  );
+                })}
+              </>
+            )}
           </Col>
           <Col lg="5" id="answers" aria-live="polite" style={myStyle}>
             <Button variant="danger" className="m-3 " onClick={hideAnswers}>
               Hide Answers
             </Button>
-            {answers.map((ans) => {
-              return (
-                <Answer
-                  key={ans.id}
-                  id={ans.id}
-                  author={ans.author}
-                  text={ans.message}
-                  isAdmin={admin}
-                  refresh={async () => {
-                    setAnswers(await getAnswers(ans.id));
-                  }}
-                />
-              );
-            })}
+            {answers.length == 0 ? (
+              <MessageBox>No answers yet!</MessageBox>
+            ) : (
+              <>
+                {answers.map((ans) => {
+                  return (
+                    <Answer
+                      key={ans.id}
+                      id={ans.id}
+                      author={ans.author}
+                      text={ans.message}
+                      isAdmin={admin}
+                      refresh={async () => {
+                        setAnswers(await getAnswers(ans.id));
+                      }}
+                    />
+                  );
+                })}
+              </>
+            )}
           </Col>
         </Row>
       </Container>

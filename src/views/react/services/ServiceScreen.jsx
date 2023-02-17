@@ -252,7 +252,7 @@ function ServiceScreen() {
               <title>{service.title}</title>
             </Helmet>
             <Row className="text-center">
-              <h1 className="display-4 fw-bold mx-auto">{service.title}</h1>
+              <h1 className="display-4 fw-semibold mx-auto">{service.title}</h1>
             </Row>
             <Row>
               <Col md={6}>
@@ -286,7 +286,7 @@ function ServiceScreen() {
               </Col>
             </Row>
 
-            {loggedIn && (
+            {loggedIn ? (
               <>
                 <Row className="mx-auto mt-3 text-center">
                   <h2 className="fw-bold mx-auto">Booking</h2>
@@ -411,6 +411,10 @@ function ServiceScreen() {
                   </Col>
                 </Row>
               </>
+            ) : (
+              <div className="text-center">
+                <MessageBox className>Log in to book!</MessageBox>
+              </div>
             )}
             <Row className="mx-auto text-center mb-2">
               <h2>Reviews</h2>
