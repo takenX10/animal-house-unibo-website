@@ -4,11 +4,9 @@ import Rating from "@/components/react/utils/Rating";
 import { Store } from "@/context/store";
 import { SERVER_URL } from "@/context/utils";
 import { useContext } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 function Product(props) {
-  const { product } = props;
+  const { product, toast } = props;
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
     cart: { cartItems },
@@ -28,7 +26,6 @@ function Product(props) {
   };
   return (
     <Card className="" key={product.slug}>
-      <ToastContainer />
       <Link to={`/shop/product/${product.slug}`}>
         <img
           src={

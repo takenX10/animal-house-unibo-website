@@ -21,4 +21,7 @@ $theme-colors: (
   background-color: rgba(76, 94, 80, 0.5) !important;
   transition: 0.8s;
 }
+.btn-danger {
+  background-color: #880000 !important;
+}
 @import "bootstrap/scss/bootstrap";

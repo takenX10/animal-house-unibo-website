@@ -140,7 +140,7 @@ export default function HomeServiceOnline() {
     <>
       <div className="container-fluid text-center">
         <Helmet>
-          <title>Animal house</title>
+          <title>Online Services - Animal House</title>
         </Helmet>
         <h1 className="display-4">Online Services </h1>
         <div className="services mx-auto">

@@ -1,12 +1,5 @@
 import { useEffect, useReducer, useState } from "react";
-import {
-  Row,
-  Col,
-  Container,
-  Button,
-  ListGroup,
-  ToastContainer,
-} from "react-bootstrap";
+import { Row, Col, Container, Button, ListGroup } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import Product from "@/components/react/ecommerce/Product";
 import MessageBox from "@/components/react/utils/MessageBox";
@@ -14,6 +7,8 @@ import LoadingBox from "@/components/react/utils/LoadingBox";
 import "@/assets/css/ecommerce.css";
 import { SERVER_URL } from "@/context/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   faBowlFood,
   faGlasses,
@@ -127,6 +122,7 @@ export default function HomeScreen() {
 
   return (
     <Container fluid>
+      <ToastContainer />
       <Helmet>
         <title>Shop</title>
       </Helmet>
@@ -220,7 +216,7 @@ export default function HomeScreen() {
               <Row>
                 {products.map((product) => (
                   <Col key={product.slug} sm={6} md={6} lg={4} className="mb-3">
-                    <Product product={product}></Product>
+                    <Product toast={toast} product={product}></Product>
                   </Col>
                 ))}
               </Row>

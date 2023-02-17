@@ -140,7 +140,7 @@ export default function HomeServiceFaceToFace() {
     <>
       <div className="container-fluid text-center">
         <Helmet>
-          <title>Animal house</title>
+          <title>Face To Face Services - Animal House</title>
         </Helmet>
         <h1 className="display-4">Face To Face Services </h1>
         <div className="services mx-auto">
