@@ -95,7 +95,7 @@ export default function Leaderboard() {
           {validLeaderboards &&
             validLeaderboards.map((l) => {
               return (
-                <Col key={`leaderboard-${l}`} md="6" sm="12" lg="6" className='justify-content-center align-items-center d-flex'>
+                <Col key={`leaderboard-${l}`} md="4" sm="12" lg="3" className='justify-content-center align-items-center d-flex'>
                   {(!leaderboard[l] ? <></> :
                     <Table striped bordered hover responsive>
                       <caption className='fw-bold fs-2 text-center' style={{ captionSide: "top" }}>{l}</caption>

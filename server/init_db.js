@@ -4,6 +4,22 @@ import bcrypt, { genSaltSync } from "bcrypt";
 // s3cr3t_aldo
 var fakeUsers = [
   {
+    name: "admin",
+    surname: "admin",
+    email: "admin@admin.tk",
+    contact: "+39 111 111 1111",
+    password: bcrypt.hashSync("admin", genSaltSync()),
+    petList: [],
+  },
+  {
+    name: "admin2",
+    surname: "admin2",
+    email: "admin2@admin.tk",
+    contact: "+39 111 111 1111",
+    password: bcrypt.hashSync("admin2", genSaltSync()),
+    petList: [],
+  },
+  {
     name: "Aldo",
     surname: "Baglio",
     email: "aldo@baglio.tk",

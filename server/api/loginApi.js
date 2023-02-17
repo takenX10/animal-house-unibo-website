@@ -21,6 +21,12 @@ let ENDPOINTS = [
     function: officePostRegister,
   },
   {
+    endpoint: "/backoffice",
+    method: METHODS.GET,
+    opts: [jsonParser, isAdmin],
+    function: officeHome,
+  },
+  {
     endpoint: "/backoffice/home",
     method: METHODS.GET,
     opts: [jsonParser, isAdmin],

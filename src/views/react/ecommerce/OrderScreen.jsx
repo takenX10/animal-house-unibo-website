@@ -120,7 +120,7 @@ export default function OrderScreen() {
                     <Row className="align-items-center">
                       <Col md={8}>
                         <img
-                          src={`${item.poster}`}
+                          src={`/${item.poster}`}
                           alt={item.name}
                           className="img-fluid me-2 rounded item-thumbnail"
                         />{" "}

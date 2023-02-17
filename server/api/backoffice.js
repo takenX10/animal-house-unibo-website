@@ -4,10 +4,17 @@ import AUTH from "../authentication.js";
 import SERVICES from "./services.js";
 import bcrypt, { genSaltSync } from "bcrypt";
 import { CLIENT_URL } from "../utils.js";
+import initDB from "../init_db.js";
 
 import { isAdmin, isAuth, jsonParser } from "../utils.js";
 
 let ENDPOINTS = [
+  {
+    endpoint: "/api/backoffice/reset_db",
+    method: METHODS.GET,
+    opts: [jsonParser, isAuth],
+    function: init_db,
+  },
   {
     endpoint: "/api/backoffice/get_user",
     method: METHODS.GET,
@@ -209,6 +216,11 @@ async function update_user_by_id(req, res) {
       contact: req.body.contact,
     },
   });
+  res.json({ success: true });
+}
+
+async function init_db(req, res) {
+  await initDB();
   res.json({ success: true });
 }
 
