@@ -49,7 +49,7 @@ function Product(props) {
           numReviews={product.numReviews}
         ></Rating>
         <Card.Text className="d-flex justify-content-between pt-2 align-items-center">
-          ${product.price}
+          €{product.price}
           {product.countInStock === 0 ? (
             <Button
               className="rounded-pill text-black fw-bold"
