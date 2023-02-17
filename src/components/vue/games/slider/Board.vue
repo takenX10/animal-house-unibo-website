@@ -1,5 +1,5 @@
 <template>
-  <div class="board">
+  <div class="board" aria-live="polite">
     <div class="frame-wrapper" :style="frameSize">
       <p v-if="valid" class="win">You Win!</p>
       <div
@@ -21,26 +21,33 @@
     </div>
 
     <div class="controls text-center">
-      <MDBContainer>
+      <MDBContainer >
         <MDBRow >
-        <MDBCol class="mx-auto col-sm-6 col-md-6">
+        <MDBCol class="mx-auto col-sm-6 col-md-4">
           <MDBBtn
             raised
             class="toggle-original w-100 text-light"
             @click="showingOriginal = !showingOriginal"
           >Toggle Original Image</MDBBtn>
           </MDBCol>
-        <MDBCol class="mx-auto col-sm-6 col-md-6">
-        <MDBBtn raised class="shuffle w-100 text-light" @click="shuffleTiles">Reshuffle</MDBBtn>
-        </MDBCol>
         </MDBRow>
-        <MDBRow >
-        <MDBCol class="mx-auto col-sm-6 col-md-6">
-        <MDBBtn raised class="reset w-100" @click="reset">Reset</MDBBtn>
-        </MDBCol>
-        <MDBCol class="mx-auto col-sm-6 col-md-6">
-        <MDBBtn raised class="restart w-100 text-light" @click="restart">New Game</MDBBtn>
-        </MDBCol>
+
+        <MDBRow>
+          <MDBCol class="mx-auto col-sm-6 col-md-4">
+          <MDBBtn raised class="shuffle w-100 text-light" @click="shuffleTiles">Reshuffle</MDBBtn>
+          </MDBCol>
+        </MDBRow>
+
+        <MDBRow>
+          <MDBCol class="mx-auto col-sm-6 col-md-4">
+          <MDBBtn raised class="reset w-100" @click="reset">Reset</MDBBtn>
+          </MDBCol>
+        </MDBRow>
+
+        <MDBRow>
+          <MDBCol class="mx-auto col-sm-6 col-md-4">
+          <MDBBtn raised class="restart w-100 text-light" @click="restart">New Game</MDBBtn>
+          </MDBCol>
         </MDBRow>
       </MDBContainer>
     </div>
@@ -63,6 +70,7 @@ export default {
     return {
       image: null,
       showingOriginal: false,
+      valid: false,
       size: {
         horizontal: 0,
         vertical: 0
@@ -106,8 +114,10 @@ export default {
           return false
         }
       }
-      // TODO: handle win
       save_score( this.MAX_SCORE - this.score, "slider");
+      this.valid = true;
+
+      //handle win
       this.score = 0;
       return true
     }
@@ -115,10 +125,10 @@ export default {
 
   methods: {
     start({ image, size }) {
+      this.valid = false;
       this.size = size
       this.image = image
       this.score = 0;
-      // TODO: Handle the score in a better way
       this.MAX_SCORE = 500;
 
       // detect the width and height of the frame

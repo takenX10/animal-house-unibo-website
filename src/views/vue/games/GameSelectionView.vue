@@ -27,10 +27,6 @@ const Memory = defineAsyncComponent(() =>
 const Hangman = defineAsyncComponent(() =>
   import("@/views/vue/games/Hangman.vue")
 );
-// import Wordle from '@/views/vue/games/Wordle.vue'
-const Wordle = defineAsyncComponent(() =>
-  import("@/views/vue/games/Wordle.vue")
-);
 // import Slider from '@/views/vue/games/Slider.vue'
 const Slider = defineAsyncComponent(() =>
   import("@/views/vue/games/Slider.vue")
@@ -56,10 +52,6 @@ let games = [
     component: "Hangman",
   },
   {
-    title: "Wordle",
-    component: "Wordle",
-  },
-  {
     title: "Slider",
     component: "Slider",
   },
@@ -69,7 +61,6 @@ export default {
   components: {
     Quiz,
     Memory,
-    Wordle,
     Hangman,
     Slider,
     Carousel,
@@ -249,11 +240,14 @@ export default {
       <vueper-slide v-for="i in 5" :key="i" :title="i.toString()" />
       </vueper-slides>-->
       <div v-if="scoreboards" class="row mb-5 mt-4 mx-5">
+        <MDBRow>
         <b-button
-          class="col col-lg-8 col-md-8 col-sm-8 mx-auto my-bg mb-2"
+          class="col col-lg-6 col-md-6 col-sm-6 mx-auto my-bg mb-2"
           v-b-toggle.collapse-1
           >Scoreboard</b-button
         >
+        </MDBRow>
+        <MDBRow>
         <b-collapse id="collapse-1" style="width:50% !important; margin:0px auto !important;" class="mt-2 mx-auto text-center">
           <MDBListGroup single-selection>
             <MDBListGroupItem v-for="(user, i) in scoreboards" style="width:100% !important;" class="text-center mx-auto" :key="i">
@@ -270,6 +264,7 @@ export default {
             <hr />
           </MDBListGroup>
         </b-collapse>
+        </MDBRow>
       </div>
     </div>
     <div aria-live="polite"  v-else>
@@ -309,19 +304,21 @@ export default {
           v-if="dog_breed_guesses.length > 0"
           class="mx-auto"
         >
-          <div class="text-center fw-bold section_header_small">
-            My guesses are :
-          </div>
-          <MDBListGroup>
-            <MDBListGroupItem v-for="breed in dog_breed_guesses" :key="breed">
-              <div class="mx-auto">
-                <div class="dog_breed_guesses">{{
-                  breed.breed
-                }}</div >
-                <div>{{ (Math.round(breed.confidence * 10000) / 100).toFixed(2) }} %</div>
-              </div>
-            </MDBListGroupItem>
-          </MDBListGroup>
+          <MDBCol md="4" sm="12"  class="mx-auto" >
+            <div class="text-center fw-bold section_header_small">
+              My guesses are :
+            </div>
+            <MDBListGroup>
+              <MDBListGroupItem v-for="breed in dog_breed_guesses" :key="breed">
+                <div class="mx-auto">
+                  <div class="dog_breed_guesses">{{
+                    breed.breed
+                  }}</div >
+                  <div>{{ (Math.round(breed.confidence * 10000) / 100).toFixed(2) }} %</div>
+                </div>
+              </MDBListGroupItem>
+            </MDBListGroup>
+          </MDBCol>
         </MDBRow>
 
         <MDBRow class="mx-auto text-center"> 
@@ -357,37 +354,20 @@ export default {
         >
         <MDBContainer>
          <MDBRow  class="mx-auto">
-         <MDBCol sm="6" md="6"  class="mx-auto text-center"  >
-             Your cat
-          </MDBCol>
-         <MDBCol sm="6" md="6" class="mx-auto text-center" aria-live="polite" >
-             Guessed cat
-          </MDBCol>
-          </MDBRow>
-         <!-- <MDBRow  class="mx-auto"> -->
-         <!-- <MDBCol sm="6" md="6"  class="mx-auto text-center"  > -->
-         <!--  <img :src=img_your_cat alt="your cat" width="100" height="100" /> -->
-         <!--  </MDBCol> -->
-         <!-- <MDBCol sm="6" md="6" class="mx-auto text-center" aria-live="polite" > -->
-         <!--  <img :src=img_cat_breed columns="2" alt="guessed cat" class="mx-auto text-center" width="100" height="100" /> -->
-         <!--  </MDBCol> -->
-         <!--  </MDBRow> -->
-
-         <MDBRow  class="mx-auto">
-         <MDBCol sm="12" md="12" class="mx-auto text-center"  >
-          <div class="text-center mx-auto fw-bold section_header_small">
-            My guesses are :
-          </div>
-          <MDBListGroup :type="2" aria-live="polite" aria-atomic="true">
-            <MDBListGroupItem v-for="breed in cat_breed_guesses" :key="breed">
-              <div class="mx-auto">
-                <div class="cat_breed_guesses">{{
-                  breed.breed
-                }}</div >
-                <div>{{ (Math.round(breed.confidence * 10000) / 100).toFixed(2) }} %</div>
-              </div>
-            </MDBListGroupItem>
-          </MDBListGroup>
+          <MDBCol md="4" sm="12" class="mx-auto" >
+            <div class="text-center mx-auto fw-bold section_header_small">
+              My guesses are :
+            </div>
+            <MDBListGroup :type="2" aria-live="polite" aria-atomic="true">
+              <MDBListGroupItem v-for="breed in cat_breed_guesses" :key="breed">
+                <div class="mx-auto">
+                  <div class="cat_breed_guesses">{{
+                    breed.breed
+                  }}</div >
+                  <div>{{ (Math.round(breed.confidence * 10000) / 100).toFixed(2) }} %</div>
+                </div>
+              </MDBListGroupItem>
+            </MDBListGroup>
           </MDBCol>
 
           </MDBRow>
@@ -409,7 +389,7 @@ export default {
 
       </MDBContainer>
 
-      <MDBContainer class="text-center mt-4" id="randomfact_container" v-if="random_fact">
+      <MDBContainer class="text-center mt-4" id="randomfact_container" >
           <MDBRow >
             <div class="fw-bold section_header">🧠 Did you know that ...</div>
           </MDBRow>
@@ -420,34 +400,29 @@ export default {
             </MDBCol>
           </MDBRow>
           <MDBRow >
-          <MDBCol class="col-sm-12 col-md-12 mx-auto text-center">
+          <MDBCol class="col-sm-12 col-md-12 mx-auto text-center mt-2" v-if="random_fact">
             <MDBBtn raised @click="showRandomFact()">What's next!</MDBBtn>
             </MDBCol>
           </MDBRow>
       </MDBContainer>
     </div>
 
-      <MDBContainer class="game-area text-center my-4" id="randomfact_container" v-if="random_fact">
+      <MDBContainer class="game-area text-center my-4" id="games_container">
           <MDBRow >
       <div class="fw-bold text-center section_header">
         Are you getting bored?
       </div>
           </MDBRow >
-          <MDBRow class="mx-auto text-center" >
-          <MDBCol class="col-sm-12 col-md-8 mx-auto">
-      <carousel tabindex="0" role="region" :items-to-show="3" style="margin: 0 10px 0 10px">
-        <slide tabindex="0" role="region" class="item" v-for="game in games" :key="game">
-            <MDBBtn role="button" raised @click="changeGame(game.component);updateScoreboard(game.component);">{{
-              game.title
-            }}</MDBBtn>
-        </slide>
-
-        <template #addons>
-          <navigation role="navigation"/>
-          <!-- <pagination class="margin-left: -20px !important" /> -->
-        </template>
-      </carousel>
-      </MDBCol>
+          <MDBRow class="mx-auto mt-2 text-center" >
+            <MDBCol class="col-sm-12 col-md-8 mx-auto">
+              <MDBRow class="mx-auto text-center" >
+                <MDBCol class="col-sm-3 mx-auto" v-for="game in games" :key="game">
+                  <MDBBtn role="button" raised @click="changeGame(game.component);updateScoreboard(game.component);">{{
+                    game.title
+                  }}</MDBBtn>
+                </MDBCol>
+              </MDBRow >
+            </MDBCol>
           </MDBRow >
   </MDBContainer>
   <MDBContainer class="text-center mt-4" id="shop_container">
@@ -459,11 +434,12 @@ export default {
         <MDBSpinner v-if="shop_loading"/>
           <MDBRow v-if="!shop_loading && products && products.length > 0">
               <MDBCol class="col-6 mx-auto text-center mb-2" height="100" v-for="(prod, i) in products">
-                <MDBCard style="height:350px">
+                <MDBCard class="mx-auto" style="height:350px">
                   <MDBCardImg
-                    :src="'http://localhost:8000/' + prod.poster"
-                    style="height: 100%; max-height: 150px"
+                    :src="prod.poster"
+                    style="height: 100%; max-height: 150px; width: 100%; max-width: 150px !important;"
                     top
+                    class="mx-auto" 
                     :alt="'poster' + prod.poster"
                   />
                   <MDBCardBody>

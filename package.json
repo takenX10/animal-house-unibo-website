@@ -8,7 +8,7 @@
     "build": "vite build",
     "build-dev": "vite build && rm -rf server/static/dist && cp -r dist server/static/. && node server/app.js",
     "server": "nodemon server/app.js",
-    "init-db": "node server/init_db.js",
+    "init-db": "node server/force_db.js",
     "env-server": "$TERM npm run server &",
     "env-client": "$TERM npm run client &",
     "env-db": "bash -c 'if [[ \"bash -c (cat /etc/os-release| head -n 1)\" == *\"Arch Linux\"* ]]; then bash -c \"sudo systemctl start mongod\"; else bash -c \"sudo systemctl start mongodb\"; fi'",

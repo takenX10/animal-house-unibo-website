@@ -151,7 +151,7 @@ export default function HomeServiceFaceToFace() {
           ) : (
             <>
               <Row className="mx-auto">
-                <Col md={6} sm={6} className="mx-auto">
+                <Col md={4} sm={6} className="mx-auto">
                   <div className="content">
                     <label htmlFor="placeFilters">
                       <b>Place filter</b>
@@ -172,7 +172,7 @@ export default function HomeServiceFaceToFace() {
                 </Col>
               </Row>
               <Row className="mx-auto">
-                <Col md={6} sm={6} className="mx-auto">
+                <Col md={4} sm={6} className="mx-auto">
                   <div className="content">
                     <label htmlFor="dayFilters">
                       <b>Day filter</b>

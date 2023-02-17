@@ -22,11 +22,11 @@ export const VueRoutes = [
     name: "memory",
     component: () => import("@/views/vue/games/Memory.vue"),
   },
-  {
-    path: "/games/wordle",
-    name: "wordle",
-    component: () => import("@/views/vue/games/Wordle.vue"),
-  },
+  // {
+  //   path: "/games/wordle",
+  //   name: "wordle",
+  //   component: () => import("@/views/vue/games/Wordle.vue"),
+  // },
   {
     path: "/games/hangman",
     name: "hangman",

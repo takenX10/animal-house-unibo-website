@@ -48,6 +48,11 @@
   let type = "<%= type %>";
   let isOnline = <%= isOnline %>;
 
+$.fn.multiline = function(text){
+    this.text(text);
+    this.html(this.html().replace(/\n/g,'<br/>'));
+    return this;
+}
 
   async function getBookings() {
     try {
@@ -75,6 +80,14 @@
         $("#end",newUser).text("End: " + end);
         $("#who",newUser).text("User: " + book.userName);
         $("#email",newUser).text("Email: " + book.email);
+        let optsText = ""
+        Object.keys(book.opts).map((key, i) => {
+            if (book.opts[key]) {
+             optsText += "\n\t" + key.replaceAll("_", " ").toUpperCase();
+             optsText += ": " + book.opts[key]
+            }
+        })
+        $("#opts",newUser).multiline(optsText);
         $("#booking-edit",newUser).click(()=>{showEditBooking(book, {city: book.availability.city, address: book.availability.address, begin: book.hour.begin, end: book.hour.end})});
         $("#booking-delete",newUser).click(()=>{deleteBooking(book)});
         $('.bookings-container').append(newUser);
@@ -265,6 +278,8 @@
 
 <template id="booking-template">
     <div class="row mb-2  p-3 rounded">
+    <div class="col-md-8 col-sm-12 mx-auto">
+    <div class="row">
         <div class="col-xs-12 col-sm-8 ml-auto text-left">
             <h3 id="title" name="title">Title</h3>
             <div id="where" name="where">Where</div>
@@ -272,10 +287,13 @@
             <div id="end" name="end">end</div>
             <div id="who" name="username">Who</div>
             <div id="email" name="useremail">Email</div>
+            <div id="opts" name="opts">Opts</div>
         </div>
         <div class="col-xs-12 col-sm-4 d-flex justify-content-end align-items-center">
             <button type="button" class="btn btn-secondary m-2" id="booking-edit" data-toggle="modal" data-target="#editModal">Edit</button>
             <button type="button" class="btn btn-danger m-2" id="booking-delete">Delete</button>
+        </div>
+        </div>
         </div>
     </div>
     <hr>

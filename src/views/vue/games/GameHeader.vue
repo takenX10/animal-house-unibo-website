@@ -47,7 +47,7 @@ export default {
     <MDBNavbarToggler @click="collapse1 = !collapse1" target="#navbarSupportedContent"></MDBNavbarToggler>
     <MDBCollapse v-model="collapse1" id="navbarSupportedContent">
       <MDBNavbarNav class="w-100 mb-2 mb-lg-0 justify-content-end">
-        <MDBNavbarItem href="/communita"> Community </MDBNavbarItem>
+        <MDBNavbarItem href="/comunita"> Community </MDBNavbarItem>
         <MDBNavbarItem href="/services/facetoface"> FaceToFace </MDBNavbarItem>
         <MDBNavbarItem href="/services/online"> Online </MDBNavbarItem>
         <MDBNavbarItem href="/shop"> Shop </MDBNavbarItem>
