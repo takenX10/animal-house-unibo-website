@@ -220,40 +220,6 @@ const services = [
         city: "Bologna",
         address: "via non lo so 23",
         shifts: [
-          {
-            day: 1667821508000,
-            hours: [
-              {
-                begin: 1667808000000,
-                end: 1667811600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-              {
-                begin: 1667811600000,
-                end: 1667815200000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-            ],
-          },
-          {
-            day: 1667907908000,
-            hours: [
-              {
-                begin: 1667808000000,
-                end: 1667811600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-              {
-                begin: 1667811600000,
-                end: 1667815200000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-            ],
-          },
         ],
       },
     ],
@@ -305,40 +271,6 @@ const services = [
         city: "Teams",
         address: "https://teams/sample.link",
         shifts: [
-          {
-            day: 1667821508000,
-            hours: [
-              {
-                begin: 1667808000000,
-                end: 1667811600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-              {
-                begin: 1667811600000,
-                end: 1667815200000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-            ],
-          },
-          {
-            day: 1668420000000,
-            hours: [
-              {
-                begin: 1668420000000,
-                end: 1668423600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-              {
-                begin: 1668438000000,
-                end: 1668441600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-            ],
-          },
         ],
       },
     ],
@@ -369,6 +301,132 @@ const services = [
   },
 
   {
+    slug: "home-visit",
+    title: "Home visit!",
+    poster:
+      "assets/services/home_visit_poster.jpg",
+    category: "home-visit",
+    isOnline: false,
+    availabilities: [
+      {
+        city: "Padova",
+        address: "via aldo 23",
+        shifts: [
+        ],
+        city: "Roma",
+        address: "via romeo 41",
+        shifts: [
+        ],
+      },
+    ],
+    hourlyRate: 50,
+    description: "Is your animal feeling lonely? Our experts could take care of it!",
+    rating: 0,
+    numReviews: 0,
+    opts: [
+      {
+        type: "select",
+        name: "animal",
+        label: "Animal",
+        required: true,
+        fields: ["cat", "dog", "dolphin", "other"],
+      },
+      {
+        type: "checkbox",
+        name: "aggressive",
+        label: "Aggressiveness",
+        required: false,
+        labels: ["is it aggressive ?"],
+      },
+      {
+        type: "select",
+        name: "gender",
+        label: "Gender",
+        required: true,
+        fields: ["none", "male", "female"],
+      },
+      {
+        type: "select",
+        name: "size",
+        label: "Size",
+        required: true,
+        fields: ["small", "medium", "large"],
+      },
+      {
+        type: "text",
+        name: "pet_name",
+        label: "Pet name",
+        required: true,
+        description: "So what's your pet name?",
+      },
+    ],
+    bookings: [],
+  },
+
+  {
+    slug: "groomer",
+    title: "Animal groomer!",
+    poster:
+      "assets/services/groomer_poster.jpg",
+    category: "animal-groomer",
+    isOnline: false,
+    availabilities: [
+      {
+        city: "Catanzaro",
+        address: "via non lo so 23",
+        shifts: [
+        ],
+        city: "Palermo",
+        address: "via oronzo 45",
+        shifts: [
+        ],
+      },
+    ],
+    hourlyRate: 25,
+    description: "A Pet Groomer is mainly responsible for bathing, conditioning, cutting, drying, and styling dog hair or fur. Furthermore, other responsibilities include trimming the nails, brushing the teeth, cleaning the ears, and other general cosmetic services.",
+    rating: 0,
+    numReviews: 0,
+    opts: [
+      {
+        type: "checkbox",
+        name: "aggressive",
+        label: "Aggressiveness",
+        required: false,
+        labels: ["is it aggressive ?"],
+      },
+      {
+        type: "checkbox",
+        name: "nails",
+        label: "Nails",
+        required: false,
+        labels: ["does it have long nails ?"],
+      },
+      {
+        type: "select",
+        name: "gender",
+        label: "Gender",
+        required: true,
+        fields: ["none", "male", "female"],
+      },
+      {
+        type: "select",
+        name: "size",
+        label: "Size",
+        required: true,
+        fields: ["small", "medium", "large"],
+      },
+      {
+        type: "text",
+        name: "pet_name",
+        label: "Pet name",
+        required: true,
+        description: "So what's your pet name?",
+      },
+    ],
+    bookings: [],
+  },
+
+  {
     slug: "sitter",
     title: "Animal sitter!",
     poster:
@@ -380,40 +438,6 @@ const services = [
         city: "Rimini",
         address: "via non lo so 23",
         shifts: [
-          {
-            day: 1667821508000,
-            hours: [
-              {
-                begin: 1667808000000,
-                end: 1667811600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-              {
-                begin: 1667811600000,
-                end: 1667815200000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-            ],
-          },
-          {
-            day: 1668420000000,
-            hours: [
-              {
-                begin: 16684200000000,
-                end: 1668423600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-              {
-                begin: 16684380000000,
-                end: 1668441600000,
-                maxClients: 3,
-                currentClients: 0,
-              },
-            ],
-          },
         ],
       },
     ],
@@ -466,40 +490,6 @@ const services = [
         city: "Bologna",
         address: "via non lo so 23",
         shifts: [
-          {
-            day: 1667821508000,
-            hours: [
-              {
-                begin: 1667808000000,
-                end: 1667811600000,
-                maxClients: 1,
-                currentClients: 0,
-              },
-              {
-                begin: 1667811600000,
-                end: 1667815200000,
-                maxClients: 1,
-                currentClients: 0,
-              },
-            ],
-          },
-          {
-            day: 1667907908000,
-            hours: [
-              {
-                begin: 1667808000000,
-                end: 1667811600000,
-                maxClients: 1,
-                currentClients: 0,
-              },
-              {
-                begin: 1667811600000,
-                end: 1667815200000,
-                maxClients: 1,
-                currentClients: 0,
-              },
-            ],
-          },
         ],
       },
     ],
@@ -550,40 +540,6 @@ const services = [
         city: "Bologna",
         address: "via non lo so 23",
         shifts: [
-          {
-            day: 1667821508000,
-            hours: [
-              {
-                begin: 1667808000000,
-                end: 1667811600000,
-                maxClients: 1,
-                currentClients: 0,
-              },
-              {
-                begin: 1667811600000,
-                end: 1667815200000,
-                maxClients: 1,
-                currentClients: 0,
-              },
-            ],
-          },
-          {
-            day: 1667907908000,
-            hours: [
-              {
-                begin: 1667808000000,
-                end: 1667811600000,
-                maxClients: 1,
-                currentClients: 0,
-              },
-              {
-                begin: 1667811600000,
-                end: 1667815200000,
-                maxClients: 1,
-                currentClients: 0,
-              },
-            ],
-          },
         ],
       },
     ],

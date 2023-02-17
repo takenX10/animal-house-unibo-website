@@ -116,7 +116,7 @@ app.post("/upload", upload.any("files"), function(req, res) {
   const files = req.files;
   let paths = [];
   for (const file of files) {
-    paths.push(`/uploads/${file.filename}`);
+    paths.push(`uploads/${file.filename}`);
   }
   res.json(paths);
 });
