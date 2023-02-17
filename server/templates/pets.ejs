@@ -27,11 +27,11 @@
             </div>
             <div class="col d-flex justify-content-end align-items-center">
                 <button type="button" class="btn btn-secondary m-2"
-                    id="account-edit"
+                    id="pet-edit"
                     data-toggle="modal"
-                    data-target="#editModal">Edit account</button>
+                    data-target="#editModal">Edit pet</button>
                 <button type="button" id="delete-button" class="btn btn-danger
-                    m-2">Delete account</button>
+                    m-2">Delete pet</button>
             </div>
         </div>
     </template>
@@ -212,7 +212,7 @@ function loadPets(petList){
         $("#sex", newPet).text(p.sex);
         $("#weight", newPet).text(p.weight);
         $("#description", newPet).text(p.description);
-        $("#account-edit",newPet).click(()=>{edit_values(p._id, p.name, p.race, p.age, p.sex, p.weight, p.description)});
+        $("#pet-edit",newPet).click(()=>{edit_values(p._id, p.name, p.race, p.age, p.sex, p.weight, p.description)});
         $("#delete-button", newPet).click(()=>{delete_pet_by_id(p._id)});
         $('.pet-container').append(newPet);
     }

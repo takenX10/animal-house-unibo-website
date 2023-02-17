@@ -116,7 +116,7 @@ app.post("/upload", upload.any("files"), function(req, res) {
   const files = req.files;
   let paths = [];
   for (const file of files) {
-    paths.push(file.path.replace("server/", ""));
+    paths.push(`/uploads/${file.filename}`);
   }
   res.json(paths);
 });
@@ -131,7 +131,7 @@ app.get("*", function(req, res, next) {
 app.listen(port, async () => {
   console.log(`Animalhouse Backend listening on port ${port}`);
   await DATABASE.connect();
-  await initDB();
+  // await initDB();
   await importAPI();
   initAPI();
 });

@@ -95,16 +95,15 @@ export default function Leaderboard() {
           {validLeaderboards &&
             validLeaderboards.map((l) => {
               return (
-                <Col key={`leaderboard-${l}`} md="6" sm="11" lg="6" className='justify-content-center align-items-center d-flex'>
+                <Col key={`leaderboard-${l}`} md="6" sm="12" lg="6" className='justify-content-center align-items-center d-flex'>
                   {(!leaderboard[l] ? <></> :
                     <Table striped bordered hover responsive>
                       <caption className='fw-bold fs-2 text-center' style={{ captionSide: "top" }}>{l}</caption>
                       <thead>
                         <tr className="text-center">
-                          <th>Position</th>
+                          <th>#</th>
                           <th>Name</th>
                           <th>Score</th>
-                          <th>Date</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -115,7 +114,6 @@ export default function Leaderboard() {
                                 <td className='p-3'>{e.position}</td>
                                 <td className='p-3'>{e.author}</td>
                                 <td className='p-3'>{e.score}</td>
-                                <td className='p-3'>{formatDate(e.date)}</td>
                                 {isadmin ?
                                   <td className='p-3'>
                                     <Button variant="danger" onClick={() => { removeLeaderboard(e.id) }}>Remove</Button>

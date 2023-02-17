@@ -15,7 +15,7 @@ import {
 </script>
 
 <script>
-import { check_login, raw_logout } from "@/context/utils.jsx";
+import { check_login, raw_logout, SERVER_URL } from "@/context/utils.jsx";
 
 export default {
   components: {},
@@ -44,7 +44,7 @@ export default {
 <template>
   <MDBNavbar expand="lg" class="game-nav" bg="#642afb" container>
     <MDBNavbarBrand href="/">
-        <img src="/assets/logo.png" alt="" height="80" class="" />
+        <img :src="`${SERVER_URL}/assets/logo.png`" alt="" height="80" class="" />
         <b class="my-auto"> - Games</b>
     </MDBNavbarBrand>
     <MDBNavbarToggler @click="collapse1 = !collapse1" target="#navbarSupportedContent"></MDBNavbarToggler>

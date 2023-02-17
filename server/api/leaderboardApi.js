@@ -30,7 +30,12 @@ async function leaderboardGetter(req, res) {
   const scores = await DATABASE.Score.find({ leaderboard: req.body.leaderboard });
   let final = scores.sort((a, b) => { return a.score == b.score ? a.date > b.date : a.score > b.score });
   let p = 0;
-  final = final.map((f) => { p++; return { author: f.author, score: f.score, position: p, id: f.id, date: f.date } })
+  final = await Promise.all(final.map(async (f) => {
+    p++;
+    let u = await DATABASE.User.findOne({ _id: f.authorId });
+    const name = `${u.name} ${u.surname}`;
+    return { author: name, score: f.score, position: p, id: f.id, date: f.date }
+  }))
   res.json({ success: true, name: req.body.leaderboard, leaderboard: final });
   return;
 }
