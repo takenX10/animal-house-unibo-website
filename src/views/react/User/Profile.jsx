@@ -151,7 +151,7 @@ export default function Profile() {
   async function delete_account() {
     try {
       let res = await fetch(`${SERVER_URL}/api/backoffice/delete_user`, {
-        method: "POST",
+        method: "DELETE",
         credentials: "include"
       });
       res = await res.json();
