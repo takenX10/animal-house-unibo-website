@@ -67,28 +67,28 @@ import { MDBBtn,MDBRow,MDBCol,MDBContainer,MDBListGroup,MDBListGroupItem,MDBFile
               <MDBRow class="mx-auto" aria-live="polite" aria-atomic="true">
                 <MDBCol v-for="(image,i) in cells.slice(0,4)" class="col-3 my-4 mx-auto my-col" >
                   <div class="border border-gray border-5 rounded bg-white" style="width: 100%; height: 100%">
-                    <input type="image"  @click="cellClicked(i)"  :src="image" :id="i" tabindex="0" class="hide-cell" :alt="i+'-image'" style="width: 100%; height: 100%"/>
+                    <input type="image"  @click="cellClicked(i)"  :src="image" :id="i" tabindex="0" class="hide-cell" :alt="i+'-image'" style="width: 100%; height: 100%; object-fit: cover;"/>
                   </div>
                 </MDBCol>
               </MDBRow>
               <MDBRow class="mx-auto" aria-live="polite" aria-atomic="true">
                 <MDBCol v-for="(image,i) in cells.slice(4,8)" class="col-3 my-4 mx-auto my-col" >
                   <div class="border border-gray border-5 rounded bg-white" style="width: 100%; height: 100%">
-                    <input type="image"  @click="cellClicked(i+4)"  :src="image" :id="i+4" tabindex="0" class="hide-cell" :alt="(i+4)+'-image'" style="width: 100%; height: 100%"/>
+                    <input type="image"  @click="cellClicked(i+4)"  :src="image" :id="i+4" tabindex="0" class="hide-cell" :alt="(i+4)+'-image'" style="width: 100%; height: 100%; object-fit: cover;"/>
                   </div>
                 </MDBCol>
               </MDBRow>
               <MDBRow class="mx-auto" aria-live="polite" aria-atomic="true">
                 <MDBCol v-for="(image,i) in cells.slice(8,12)" class="col-3 my-4 mx-auto my-col" >
                   <div class="border border-gray border-5 rounded bg-white" style="width: 100%; height: 100%">
-                    <input type="image"  @click="cellClicked(i+8)"  :src="image" :id="i+8" tabindex="0" class="hide-cell" :alt="(i+8)+'-image'" style="width: 100%; height: 100%"/>
+                    <input type="image"  @click="cellClicked(i+8)"  :src="image" :id="i+8" tabindex="0" class="hide-cell" :alt="(i+8)+'-image'" style="width: 100%; height: 100%; object-fit: cover;"/>
                   </div>
                 </MDBCol>
               </MDBRow>
               <MDBRow class="mx-auto" aria-live="polite" aria-atomic="true">
                 <MDBCol v-for="(image,i) in cells.slice(12,16)" class="col-3 my-4 mx-auto my-col" >
                   <div class="border border-gray border-5 rounded bg-white" style="width: 100%; height: 100%">
-                    <input type="image"  @click="cellClicked(i+12)"  :src="image" :id="i+12" tabindex="0" class="hide-cell" :alt="(i+12)+'-image'" style="width: 100%; height: 100%"/>
+                    <input type="image"  @click="cellClicked(i+12)"  :src="image" :id="i+12" tabindex="0" class="hide-cell" :alt="(i+12)+'-image'" style="width: 100%; height: 100%; object-fit: cover;"/>
                   </div>
                 </MDBCol>
               </MDBRow>

@@ -1,6 +1,6 @@
 <template>
   <form id="optionsForm" @submit.prevent="start">
-    <img class="preview" :src="image" v-if="image" />
+    <img class="preview" :src="image"  v-if="image" style="height: 100%; max-height: 150px; width: 100%; max-width: 150px !important; object-fit: contain; " />
         <div v-if="!image">
           <MDBSpinner />
         </div>

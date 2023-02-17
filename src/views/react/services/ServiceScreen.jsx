@@ -276,7 +276,7 @@ function ServiceScreen() {
                   </ListGroup.Item>
                   <ListGroup.Item tabIndex={0} role="listitem">
                     <b>Price: </b>
-                    {service.hourlyRate} $/h
+                    {service.hourlyRate} €/h
                   </ListGroup.Item>
                   <ListGroup.Item tabIndex={0} role="listitem">
                     {" "}

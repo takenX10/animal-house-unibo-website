@@ -12,7 +12,6 @@ const upload = multer({ dest: os.tmpdir() });
 import DATABASE from '../../database.js';
 import { showError } from '../../utils.js';
 import leaderboards from '../leaderboardApi.js';
-import CatBreedAI from "./catBreedAI.js";
 import Quiz from "./quiz.js";
 const validLeaderboards = leaderboards.validLeaderboards
 
@@ -83,18 +82,6 @@ const ENDPOINTS = [
     function: getScoreboardAPI,
   },
   {
-    endpoint: "/api/dogbreedrec",
-    method: METHODS.POST,
-    opts: upload.single("dog"),
-    function: getDogBreedAIAPI,
-  },
-  {
-    endpoint: "/api/catbreedrec",
-    method: METHODS.POST,
-    opts: upload.single("cat"),
-    function: getCatBreedAIAPI,
-  },
-  {
     endpoint: "/api/quiz",
     method: METHODS.GET,
     function: Quiz.getQuiz
@@ -117,65 +104,6 @@ async function getRandomImageAPI(req, res) {
   } catch (e) {
     console.log(e);
     showError(res);
-  }
-}
-
-async function getDogBreedAIAPI(req, res) {
-  try {
-    const file = req.file;
-    let data = await getDogBreedAI(file.path);
-    res.json({ success: true, data });
-  } catch (e) {
-    showError(res);
-  }
-}
-
-async function getDogBreedAIResponsePage(path) {
-  try {
-    const form = new FormData();
-    const file = fileFromSync(path);
-    form.append("image", file);
-    let res = await fetch("https://dog-breeds-detector.herokuapp.com/predict", {
-      body: form,
-      method: "POST",
-    });
-    let data = await res.text();
-    return data;
-  } catch (e) {
-    throw e;
-  }
-}
-
-async function getDogBreedAI(path) {
-  try {
-    let page = await getDogBreedAIResponsePage(path);
-    const { document } = new JSDOM(page).window;
-    let res = document.querySelectorAll("h4");
-    let perc_regex = new RegExp("[0-9]{1,2}.[0-9]{1,2}%");
-    let name_regex = new RegExp("is '(.*?)'");
-    let percs = [];
-    for (let i = 1; i < res.length; i++) {
-      let text = res[i].textContent.trim();
-      let r = perc_regex.exec(text);
-      if (r) {
-        let perc = r[0].replace("%", "");
-        let name = name_regex.exec(text)[1];
-        percs.push({ perc, name });
-      }
-    }
-    return percs;
-  } catch (e) {
-    throw e;
-  }
-}
-
-async function getCatBreedAIAPI(req, res) {
-  try {
-    let file = req.file;
-    let data = await CatBreedAI.getCatBreedAI(file.path);
-    res.json({ success: true, data });
-  } catch (e) {
-    throw e;
   }
 }
 

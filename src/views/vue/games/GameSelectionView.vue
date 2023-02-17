@@ -139,13 +139,17 @@ export default {
     },
     showRandomFact: async function () {
       this.random_fact_loading = true;
-      let res = await fetch(`${this.BACKEND_SERVER}/api/randomfact`);
-      let data = await res.json();
-      this.random_fact_loading = false;
-      if (data.success == true) {
-        // $toast({ message: "Random fact : " + data.text, timeoutMs: 3500 })
-        this.random_fact = data.text;
-        this.refreshPage();
+      try {
+        let res = await fetch(`${this.BACKEND_SERVER}/api/randomfact`);
+        let data = await res.json();
+        this.random_fact_loading = false;
+        if (data.success == true) {
+          // $toast({ message: "Random fact : " + data.text, timeoutMs: 3500 })
+          this.random_fact = data.text;
+          this.refreshPage();
+        }
+      } catch(e) {
+         this.showRandomFact(); 
       }
     },
     getFunnyVideos: async function () {
@@ -239,13 +243,15 @@ export default {
       <!-- <vueper-slides>
       <vueper-slide v-for="i in 5" :key="i" :title="i.toString()" />
       </vueper-slides>-->
-      <div v-if="scoreboards" class="row mb-5 mt-4 mx-5">
+      <div v-if="scoreboards" class="row mb-5 mt-4 mx-auto">
         <MDBRow>
+        <MDBCol class="col col-lg-6 col-md-6 col-sm-6 mx-auto text-center">
         <b-button
-          class="col col-lg-6 col-md-6 col-sm-6 mx-auto my-bg mb-2"
+          class=" my-bg mb-2 w-100"
           v-b-toggle.collapse-1
           >Scoreboard</b-button
         >
+        </MDBCol>
         </MDBRow>
         <MDBRow>
         <b-collapse id="collapse-1" style="width:50% !important; margin:0px auto !important;" class="mt-2 mx-auto text-center">
@@ -416,7 +422,7 @@ export default {
           <MDBRow class="mx-auto mt-2 text-center" >
             <MDBCol class="col-sm-12 col-md-8 mx-auto">
               <MDBRow class="mx-auto text-center" >
-                <MDBCol class="col-sm-3 col-3 mx-auto" v-for="game in games" :key="game">
+                <MDBCol class="col-12 mx-auto" v-for="game in games" :key="game">
                   <MDBBtn role="button" raised @click="changeGame(game.component);updateScoreboard(game.component);">{{
                     game.title
                   }}</MDBBtn>
