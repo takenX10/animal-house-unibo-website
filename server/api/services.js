@@ -10,6 +10,7 @@ const ENDPOINTS = [
   { endpoint: "/api/services/facetoface", method: METHODS.GET, function: serviceFaceToFaceRoutes },
   { endpoint: "/api/services/facetoface/book/:slug", method: METHODS.POST, opts: [jsonParser, isAuth], function: serviceFaceToFaceBook },
   { endpoint: "/api/services/online/slug/:slug", method: METHODS.GET, function: serviceOnlineBySlug },
+  { endpoint: "/api/services/back/online/slug/:slug/add", method: METHODS.PUT, opts: [jsonParser, isAuth, isAdmin], function: serviceOnlineAddAvaBySlug },
   { endpoint: "/api/services/online", method: METHODS.GET, function: serviceOnlineRoutes },
   { endpoint: "/api/services/online/book/:slug", method: METHODS.POST, opts: [jsonParser, isAuth], function: serviceOnlineBook },
   { endpoint: "/api/services/:slug/reviews", method: METHODS.PUT, opts: [jsonParser, isAuth], function: saveReviewService },
@@ -242,6 +243,9 @@ async function serviceAddAvaBySlug(req, res, isOnline) {
 
 async function serviceFaceToFaceAddAvaBySlug(req, res) {
   return serviceAddAvaBySlug(req, res, false);
+}
+async function serviceOnlineAddAvaBySlug(req, res) {
+  return serviceAddAvaBySlug(req, res, true);
 }
 
 async function saveReviewService(req, res) {
